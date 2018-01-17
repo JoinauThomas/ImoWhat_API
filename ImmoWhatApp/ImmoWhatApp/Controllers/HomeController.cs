@@ -13,32 +13,8 @@ namespace ImmoWhatApp.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            List<Models.Commune> Communes = new List<Models.Commune>();
-
-            using (var client = new HttpClient())
-            {
-               
-
-                client.BaseAddress = new Uri("http://localhost:49383/api/Commune/");
-                var responseTask = client.GetAsync("mesCommunes");
-                var result = responseTask.Result;
-                responseTask.Wait();
-
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<List<Models.Commune>>();
-                    readTask.Wait();
-                    var maListe = readTask.Result;
-                    Communes = maListe.ToList();
-                }
-                else
-                {
-                    var content = result.Content.ReadAsStringAsync();
-                    content.Wait();
-                    ModelState.AddModelError(string.Empty, "Server error : " + content.Result);
-                }
-            }
-            return View(Communes);
+           
+            return View();
         }
 
         [HttpPost]
@@ -48,9 +24,9 @@ namespace ImmoWhatApp.Controllers
 
             using (var client = new HttpClient())
             {
-                
 
-                client.BaseAddress = new Uri("http://http://localhost:49383/api/Commune");
+
+                client.BaseAddress = new Uri("http://localhost:49383/api/Commune/");
                 var responseTask = client.GetAsync("mesCommunes");
                 var result = responseTask.Result;
                 responseTask.Wait();
