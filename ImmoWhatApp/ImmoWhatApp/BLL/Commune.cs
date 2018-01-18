@@ -1,28 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
-using System.Net;
-using System.Net.Http;
 
-namespace ImmoWhatApp.Controllers
+namespace ImmoWhatApp.BLL
 {
-    public class HomeController : Controller
+    public class Commune
     {
-        // GET: Home
-        public ActionResult Index()
-        {
-            List<Models.Commune> listeCommunes = new List<Models.Commune>();
-            listeCommunes = BLL.Commune.GetAllCommunesCompleteBLL();
-
-            ViewBag.ListeCommunes = listeCommunes;
-
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult mesCommunes()
+        public static List<Models.Commune> GetAllCommunesCompleteBLL()
         {
             List<Models.Commune> Communes = new List<Models.Commune>();
 
@@ -31,7 +18,7 @@ namespace ImmoWhatApp.Controllers
 
 
                 client.BaseAddress = new Uri("http://localhost:49383/api/Commune/");
-                var responseTask = client.GetAsync("mesCommunes");
+                var responseTask = client.GetAsync("GetCommunesComplet");
                 var result = responseTask.Result;
                 responseTask.Wait();
 
@@ -44,13 +31,10 @@ namespace ImmoWhatApp.Controllers
                 }
                 else
                 {
-                    var content = result.Content.ReadAsStringAsync();
-                    content.Wait();
-                    ModelState.AddModelError(string.Empty, "Server error : " + content.Result);
+                    Communes = new List<Models.Commune>();
                 }
             }
-            return View(Communes);
+            return Communes;
         }
-        
     }
 }

@@ -11,9 +11,9 @@ namespace ImmoWhat_API.Controllers
     {
 
         [HttpGet]
-        public List<Models.Commune> mesCommunes()
+        public List<Models.CommuneComplet> GetCommunesComplet()
         {
-            List<Models.Commune> MaListe = new List<Models.Commune>();
+            List<Models.CommuneComplet> MaListe = new List<Models.CommuneComplet>();
 
             DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
             List<DAL.COMMUNES> LaListe = new List<DAL.COMMUNES>();
@@ -21,11 +21,27 @@ namespace ImmoWhat_API.Controllers
 
             foreach(var i in LaListe)
             {
-                MaListe.Add(new Models.Commune { CodePostal = i.CodePostal, id = i.id, langue = i.langue, Localite = i.Localité, Province = i.Province });
+                MaListe.Add(new Models.CommuneComplet { CodePostal = i.CodePostal, id = i.id, langue = i.langue, Localite = i.Localité, Province = i.Province });
             }
 
             return MaListe;
         }
+        //[HttpGet]
+        //public List<Models.CommuneComplet> GetCommunesForDropDown()
+        //{
+        //    List<Models.CommuneComplet> MaListe = new List<Models.CommuneComplet>();
+
+        //    DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+        //    List<DAL.COMMUNES> LaListe = new List<DAL.COMMUNES>();
+        //    LaListe = dbContext.COMMUNES.ToList();
+
+        //    foreach (var i in LaListe)
+        //    {
+        //        MaListe.Add(new Models.CommuneComplet { CodePostal = i.CodePostal, id = i.id, langue = i.langue, Localite = i.Localité, Province = i.Province });
+        //    }
+
+        //    return MaListe;
+        //}
 
         
     }

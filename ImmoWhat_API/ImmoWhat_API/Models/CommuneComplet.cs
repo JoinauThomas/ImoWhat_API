@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ImmoWhat_API.Models
 {
-    public class Commune
+    public class CommuneComplet
     {
         public int id { get; set; }
         public int CodePostal { get; set; }
