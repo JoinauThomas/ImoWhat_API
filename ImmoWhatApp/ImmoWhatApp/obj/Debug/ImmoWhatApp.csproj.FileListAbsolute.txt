@@ -92,3 +92,5 @@ C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\bin\WebGr
 C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\bin\Antlr3.Runtime.pdb
 C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\bin\System.Web.Optimization.xml
 C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\bin\fr\System.Web.Optimization.resources.dll
+C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\bin\Json.dll
+C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\bin\Json.pdb

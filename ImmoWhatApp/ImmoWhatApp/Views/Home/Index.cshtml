@@ -18,38 +18,91 @@
 
 </div>
 
+<input type="text" id="search" placeholder="Search for a product" required />
+<input type="submit" value="Go" id="submit" />
+@*<script>
+        $('#aaa').click(function () {
+
+            var x = @Html.Raw(Json.Encode(ViewBag.ListeCommunes));
+            alert(x.length);
+        });
+    </script>*@
+
+@*<script>
+
+
+
+
+    $(document).ready(function () {
+
+        $("#test").autocomplete({
+            autoFocus: true,
+            source: function (requete, reponse) {
+                $.ajax({
+                    type: 'GET',
+                    datatype: 'json',
+                    url: '@Url.Action("GetCommunesInJson", "Home")',
+                    success: function (donnee) {
+                        reponse($.map(donnee.commune, function (objet) {
+                            return {
+                                label: objet.Localite,
+                                value: objet.Localite,
+                                desc: objet.id
+                        }
+                        }));
+                    }
+                })
+            },
+            minLength: 3,
+
+            select: function (event, ui) { // lors de la sélection d'une proposition
+                $('#submit').val(ui.item.value);
+                $('#search').val(ui.item.desc);
+            }
+
+        })
+    });
+</script>*@
 
 <script>
-    $(function () {
-        var availableTags = [
-            "ActionScript",
-            "AppleScript",
-            "Asp",
-            "BASIC",
-            "C",
-            "C++",
-            "Clojure",
-            "COBOL",
-            "ColdFusion",
-            "Erlang",
-            "Fortran",
-            "Groovy",
-            "Haskell",
-            "Java",
-            "JavaScript",
-            "Lisp",
-            "Perl",
-            "PHP",
-            "Python",
-            "Ruby",
-            "Scala",
-            "Scheme"
-        ];
+
+
+
+
+    $(document).ready(function () {
+
         $("#test").autocomplete({
-            source: availableTags
-        });
+            autoFocus: true,
+            source: function (requete, reponse) {
+                var name = $('#test').val();
+                //alert(name);
+                $.ajax({
+                    type: 'GET',
+                    datatype: 'json',
+                    data: { nom: name },
+                    url: '@Url.Action("GetCommunesByNameInJson", "Home")',
+                    success: function (donnee) {
+                        reponse($.map(donnee.commune, function (objet) {
+                            return {
+                                label: objet.Localite,
+                                value: objet.Localite,
+                                desc: objet.id
+                        }
+                        }));
+                    }
+                })
+            },
+            minLength: 3,
+
+            select: function (event, ui) { // lors de la sélection d'une proposition
+                $('#submit').val(ui.item.value);
+                $('#search').val(ui.item.desc);
+            }
+
+        })
     });
 </script>
+
 
 
 

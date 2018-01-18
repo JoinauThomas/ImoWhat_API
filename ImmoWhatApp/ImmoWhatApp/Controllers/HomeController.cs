@@ -14,7 +14,7 @@ namespace ImmoWhatApp.Controllers
         public ActionResult Index()
         {
             List<Models.Commune> listeCommunes = new List<Models.Commune>();
-            listeCommunes = BLL.Commune.GetAllCommunesCompleteBLL();
+            listeCommunes = BLL.CommuneBLL.GetAllCommunesCompleteBLL();
 
             ViewBag.ListeCommunes = listeCommunes;
 
@@ -51,6 +51,36 @@ namespace ImmoWhatApp.Controllers
             }
             return View(Communes);
         }
-        
+        [HttpGet]
+        public JsonResult GetCommunesInJson()
+        {
+            IList<Models.Commune> ListeDeCommunes = BLL.CommuneBLL.GetAllCommunesCompleteBLL();
+            List<string> CommuneStr = new List<string>();
+
+            foreach (var i in ListeDeCommunes)
+            {
+                CommuneStr.Add(i.ToString());
+            }
+
+            return Json(new { result = "OK", commune = ListeDeCommunes }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult GetCommunesByNameInJson(string nom)
+        {
+            List<Models.Commune> ListeDeCommunes = BLL.CommuneBLL.GetAllCommunesCompleteBLL();
+            List<Models.Commune> CommuneByName = new List<Models.Commune>();
+
+            CommuneByName = ListeDeCommunes.FindAll(x => x.Localite.Contains(nom)).Take(5).ToList();
+
+            List<string> CommuneStr = new List<string>();
+
+            foreach (var i in ListeDeCommunes)
+            {
+                CommuneStr.Add(i.ToString());
+            }
+
+            return Json(new { result = "OK", commune = CommuneByName }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
