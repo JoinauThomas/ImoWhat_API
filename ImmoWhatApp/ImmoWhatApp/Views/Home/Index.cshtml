@@ -10,67 +10,19 @@
         <input id="test" type="text" class="form-control col-lg-3 ui-widget" placeholder="exemple : Uccle" aria-label="Recipient's username" aria-describedby="basic-addon2">
 
         <div class="input-group-append col-lg-1 ui-widget">
-            <button id="btnCommune" class="btn btn-success" type="button"><span class="oi" data-glyph="magnifying-glass" title="magnifying-glass" aria-hidden="true"></span><span class="glyphicon glyphicon-envelope"></span></button>
+            <button id="btnValidCommune" class="btn btn-success" type="button"><span class="oi" data-glyph="magnifying-glass" title="magnifying-glass" aria-hidden="true"></span><span class="glyphicon glyphicon-envelope"></span></button>
         </div>
     </div>
-    <button id="aaa">test</button>
-
 
 </div>
-
-<input type="text" id="search" placeholder="Search for a product" required />
-<input type="submit" value="Go" id="submit" />
-@*<script>
-        $('#aaa').click(function () {
-
-            var x = @Html.Raw(Json.Encode(ViewBag.ListeCommunes));
-            alert(x.length);
-        });
-    </script>*@
-
-@*<script>
-
-
-
-
-    $(document).ready(function () {
-
-        $("#test").autocomplete({
-            autoFocus: true,
-            source: function (requete, reponse) {
-                $.ajax({
-                    type: 'GET',
-                    datatype: 'json',
-                    url: '@Url.Action("GetCommunesInJson", "Home")',
-                    success: function (donnee) {
-                        reponse($.map(donnee.commune, function (objet) {
-                            return {
-                                label: objet.Localite,
-                                value: objet.Localite,
-                                desc: objet.id
-                        }
-                        }));
-                    }
-                })
-            },
-            minLength: 3,
-
-            select: function (event, ui) { // lors de la sélection d'une proposition
-                $('#submit').val(ui.item.value);
-                $('#search').val(ui.item.desc);
-            }
-
-        })
-    });
-</script>*@
 
 <script>
 
 
-
+    var idCommune
 
     $(document).ready(function () {
-
+        
         $("#test").autocomplete({
             autoFocus: true,
             source: function (requete, reponse) {
@@ -79,14 +31,14 @@
                 $.ajax({
                     type: 'GET',
                     datatype: 'json',
-                    data: { nom: name },
+                    data: { nom: name.toLowerCase() },
                     url: '@Url.Action("GetCommunesByNameInJson", "Home")',
                     success: function (donnee) {
                         reponse($.map(donnee.commune, function (objet) {
                             return {
                                 label: objet.Localite,
                                 value: objet.Localite,
-                                desc: objet.id
+                                id: objet.id
                         }
                         }));
                     }
@@ -95,12 +47,15 @@
             minLength: 3,
 
             select: function (event, ui) { // lors de la sélection d'une proposition
-                $('#submit').val(ui.item.value);
-                $('#search').val(ui.item.desc);
+                idCommune = ui.item.id
             }
 
         })
+        
     });
+    $('#btnValidCommune').click(function () {
+        alert(idCommune);
+    })
 </script>
 
 

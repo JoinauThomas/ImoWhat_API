@@ -33,7 +33,7 @@ namespace ImmoWhat_API.DAL
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<BIENS> BIENS { get; set; }
-        public virtual DbSet<COMMUNES> COMMUNES { get; set; }
+        public virtual DbSet<COMMUNE> COMMUNE { get; set; }
         public virtual DbSet<MEMBRE> MEMBRE { get; set; }
         public virtual DbSet<OPTIONS> OPTIONS { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }

@@ -10,6 +10,7 @@ namespace ImmoWhatApp.Controllers
 {
     public class HomeController : Controller
     {
+        string lang = "fr";
         // GET: Home
         public ActionResult Index()
         {
@@ -70,7 +71,7 @@ namespace ImmoWhatApp.Controllers
             List<Models.Commune> ListeDeCommunes = BLL.CommuneBLL.GetAllCommunesCompleteBLL();
             List<Models.Commune> CommuneByName = new List<Models.Commune>();
 
-            CommuneByName = ListeDeCommunes.FindAll(x => x.Localite.Contains(nom)).Take(5).ToList();
+            CommuneByName = ListeDeCommunes.FindAll(x => ( x.Localite.Contains(nom) || x.CodePostal.StartsWith(nom)) && x.langue == lang).Take(5).ToList();
 
             List<string> CommuneStr = new List<string>();
 

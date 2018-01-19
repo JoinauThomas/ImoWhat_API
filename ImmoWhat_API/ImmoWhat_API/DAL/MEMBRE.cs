@@ -31,6 +31,6 @@ namespace ImmoWhat_API.DAL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BIENS> BIENS { get; set; }
-        public virtual COMMUNES COMMUNES { get; set; }
+        public virtual COMMUNE COMMUNE { get; set; }
     }
 }

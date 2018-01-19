@@ -12,18 +12,18 @@ namespace ImmoWhat_API.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class COMMUNES
+    public partial class COMMUNE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public COMMUNES()
+        public COMMUNE()
         {
             this.BIENS = new HashSet<BIENS>();
             this.MEMBRE = new HashSet<MEMBRE>();
         }
     
-        public int id { get; set; }
-        public int CodePostal { get; set; }
-        public string Localité { get; set; }
+        public int idCommune { get; set; }
+        public string CodePostal { get; set; }
+        public string Localite { get; set; }
         public string Province { get; set; }
         public string langue { get; set; }
     

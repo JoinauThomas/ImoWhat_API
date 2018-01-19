@@ -32,7 +32,7 @@ namespace ImmoWhat_API.DAL
         public int BIEN_NbChambre { get; set; }
         public int BIEN_NbSDB { get; set; }
     
-        public virtual COMMUNES COMMUNES { get; set; }
+        public virtual COMMUNE COMMUNE { get; set; }
         public virtual MEMBRE MEMBRE { get; set; }
         public virtual TYPEBIEN TYPEBIEN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

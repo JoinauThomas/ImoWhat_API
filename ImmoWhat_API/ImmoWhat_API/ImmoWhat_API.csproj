@@ -247,7 +247,7 @@
     <Compile Include="DAL\BIENS.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\COMMUNES.cs">
+    <Compile Include="DAL\COMMUNE.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\C__MigrationHistory.cs">
