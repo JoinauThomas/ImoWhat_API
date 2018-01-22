@@ -27,24 +27,6 @@ namespace ImmoWhat_API.Controllers
             return MaListe;
         }
 
-
-        //[HttpGet]
-        //public List<Models.CommuneComplet> GetCommunesForDropDown()
-        //{
-        //    List<Models.CommuneComplet> MaListe = new List<Models.CommuneComplet>();
-
-        //    DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
-        //    List<DAL.COMMUNES> LaListe = new List<DAL.COMMUNES>();
-        //    LaListe = dbContext.COMMUNES.ToList();
-
-        //    foreach (var i in LaListe)
-        //    {
-        //        MaListe.Add(new Models.CommuneComplet { CodePostal = i.CodePostal, id = i.id, langue = i.langue, Localite = i.Localité, Province = i.Province });
-        //    }
-
-        //    return MaListe;
-        //}
-
         
     }
     

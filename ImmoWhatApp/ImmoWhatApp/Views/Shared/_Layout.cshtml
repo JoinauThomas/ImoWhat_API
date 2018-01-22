@@ -28,11 +28,11 @@
                     <span class="nav-link" style="background-color: grey">The true value of your property <span class="sr-only">(current)</span></span>
                 </li>
 
-                <li class="nav-item col-lg-2">
-                    <a class="nav-link" href="#">se connecter</a>
+                <li class="nav-item col-lg-2 liste navbar">
+                    @Html.ActionLink("se connecter", "CreerCompte", "User", new { area = "" }, null) 
                 </li>
                 <li class="nav-item col-lg-2">
-                    <a class="nav-link" href="#">s'inscrire</a>
+                    @Html.ActionLink("s'inscrire", "Connexion", "User", new { area = "" }, null)
                 </li>
                 <li class="nav-item dropdown col-lg-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

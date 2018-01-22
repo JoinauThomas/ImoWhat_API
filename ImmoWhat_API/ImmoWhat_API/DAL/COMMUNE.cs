@@ -18,7 +18,6 @@ namespace ImmoWhat_API.DAL
         public COMMUNE()
         {
             this.BIENS = new HashSet<BIENS>();
-            this.MEMBRE = new HashSet<MEMBRE>();
         }
     
         public int idCommune { get; set; }
@@ -29,7 +28,5 @@ namespace ImmoWhat_API.DAL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BIENS> BIENS { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MEMBRE> MEMBRE { get; set; }
     }
 }

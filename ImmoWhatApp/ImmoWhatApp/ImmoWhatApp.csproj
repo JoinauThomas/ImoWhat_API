@@ -3182,10 +3182,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BLL\CommuneBLL.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Commune.cs" />
+    <Compile Include="Models\Membre.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -3205,6 +3207,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\testjq\package.json" />
+    <Content Include="Views\User\CreerCompte.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

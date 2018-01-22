@@ -231,6 +231,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommuneApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MembreController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DAL\AspNetRoles.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>

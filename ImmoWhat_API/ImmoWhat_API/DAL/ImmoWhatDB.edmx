@@ -105,13 +105,17 @@
             <PropertyRef Name="idMembre" />
           </Key>
           <Property Name="idMembre" Type="int" Nullable="false" />
-          <Property Name="nom" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="prenom" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="idCommune" Type="int" Nullable="false" />
-          <Property Name="rue" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="mail" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Commune" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="rue" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="numero" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="boite" Type="nvarchar" MaxLength="50" />
-          <Property Name="idCompte" Type="int" />
+          <Property Name="role" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="telephone" Type="nvarchar" MaxLength="50" />
+          <Property Name="dateDeNaissance" Type="date" />
         </EntityType>
         <EntityType Name="OPTIONS">
           <Key>
@@ -253,18 +257,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MEMBRE_COMMUNE">
-          <End Role="COMMUNE" Type="Self.COMMUNE" Multiplicity="1" />
-          <End Role="MEMBRE" Type="Self.MEMBRE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="COMMUNE">
-              <PropertyRef Name="idCommune" />
-            </Principal>
-            <Dependent Role="MEMBRE">
-              <PropertyRef Name="idCommune" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -346,10 +338,6 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_MEMBRE_COMMUNE" Association="Self.FK_MEMBRE_COMMUNE">
-            <End Role="COMMUNE" EntitySet="COMMUNE" />
-            <End Role="MEMBRE" EntitySet="MEMBRE" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -417,10 +405,6 @@
             <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
             <End Role="BIENS" EntitySet="BIENS" />
           </AssociationSet>
-          <AssociationSet Name="FK_MEMBRE_COMMUNE" Association="ImmoWhatModel.FK_MEMBRE_COMMUNE">
-            <End Role="COMMUNE" EntitySet="COMMUNE" />
-            <End Role="MEMBRE" EntitySet="MEMBRE" />
-          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="ImmoWhatModel.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -429,7 +413,7 @@
             <End Role="BIENS" EntitySet="BIENS" />
             <End Role="OPTIONS" EntitySet="OPTIONS" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -530,22 +514,24 @@
           <Property Name="Province" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="langue" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BIENS" Relationship="ImmoWhatModel.FK_BIENS_COMMUNE" FromRole="COMMUNE" ToRole="BIENS" />
-          <NavigationProperty Name="MEMBRE" Relationship="ImmoWhatModel.FK_MEMBRE_COMMUNE" FromRole="COMMUNE" ToRole="MEMBRE" />
         </EntityType>
         <EntityType Name="MEMBRE">
           <Key>
             <PropertyRef Name="idMembre" />
           </Key>
           <Property Name="idMembre" Type="Int32" Nullable="false" />
-          <Property Name="nom" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="prenom" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="idCommune" Type="Int32" Nullable="false" />
-          <Property Name="rue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mail" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="nom" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="prenom" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Commune" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="rue" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="numero" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="boite" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="idCompte" Type="Int32" />
+          <Property Name="role" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dateDeNaissance" Type="DateTime" Precision="0" />
           <NavigationProperty Name="BIENS" Relationship="ImmoWhatModel.FK_BIENS_MEMBRE" FromRole="MEMBRE" ToRole="BIENS" />
-          <NavigationProperty Name="COMMUNE" Relationship="ImmoWhatModel.FK_MEMBRE_COMMUNE" FromRole="MEMBRE" ToRole="COMMUNE" />
         </EntityType>
         <EntityType Name="OPTIONS">
           <Key>
@@ -637,18 +623,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MEMBRE_COMMUNE">
-          <End Type="ImmoWhatModel.COMMUNE" Role="COMMUNE" Multiplicity="1" />
-          <End Type="ImmoWhatModel.MEMBRE" Role="MEMBRE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="COMMUNE">
-              <PropertyRef Name="idCommune" />
-            </Principal>
-            <Dependent Role="MEMBRE">
-              <PropertyRef Name="idCommune" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AspNetUserRoles">
           <End Type="ImmoWhatModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
           <End Type="ImmoWhatModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
@@ -657,7 +631,7 @@
           <End Type="ImmoWhatModel.BIENS" Role="BIENS" Multiplicity="*" />
           <End Type="ImmoWhatModel.OPTIONS" Role="OPTIONS" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -773,13 +747,17 @@
           <EntitySetMapping Name="MEMBRE">
             <EntityTypeMapping TypeName="ImmoWhatModel.MEMBRE">
               <MappingFragment StoreEntitySet="MEMBRE">
-                <ScalarProperty Name="idCompte" ColumnName="idCompte" />
+                <ScalarProperty Name="dateDeNaissance" ColumnName="dateDeNaissance" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="role" ColumnName="role" />
                 <ScalarProperty Name="boite" ColumnName="boite" />
                 <ScalarProperty Name="numero" ColumnName="numero" />
                 <ScalarProperty Name="rue" ColumnName="rue" />
-                <ScalarProperty Name="idCommune" ColumnName="idCommune" />
+                <ScalarProperty Name="Commune" ColumnName="Commune" />
                 <ScalarProperty Name="prenom" ColumnName="prenom" />
                 <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
                 <ScalarProperty Name="idMembre" ColumnName="idMembre" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -827,7 +805,7 @@
               <ScalarProperty Name="BIEN_Id" ColumnName="IdBien" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

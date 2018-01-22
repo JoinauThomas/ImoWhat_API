@@ -21,16 +21,19 @@ namespace ImmoWhat_API.DAL
         }
     
         public int idMembre { get; set; }
+        public string mail { get; set; }
+        public string password { get; set; }
         public string nom { get; set; }
         public string prenom { get; set; }
-        public int idCommune { get; set; }
+        public string Commune { get; set; }
         public string rue { get; set; }
         public string numero { get; set; }
         public string boite { get; set; }
-        public Nullable<int> idCompte { get; set; }
+        public string role { get; set; }
+        public string telephone { get; set; }
+        public Nullable<System.DateTime> dateDeNaissance { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BIENS> BIENS { get; set; }
-        public virtual COMMUNE COMMUNE { get; set; }
     }
 }
