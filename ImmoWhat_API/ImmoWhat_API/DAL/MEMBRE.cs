@@ -17,23 +17,25 @@ namespace ImmoWhat_API.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MEMBRE()
         {
-            this.BIENS = new HashSet<BIENS>();
+            this.BIEN = new HashSet<BIEN>();
         }
     
         public int idMembre { get; set; }
         public string mail { get; set; }
-        public string password { get; set; }
         public string nom { get; set; }
         public string prenom { get; set; }
         public string Commune { get; set; }
         public string rue { get; set; }
         public string numero { get; set; }
         public string boite { get; set; }
-        public string role { get; set; }
-        public string telephone { get; set; }
-        public Nullable<System.DateTime> dateDeNaissance { get; set; }
+        public System.DateTime dateDeNaissance { get; set; }
+        public bool estProprietaire { get; set; }
+        public string photo { get; set; }
+        public bool deleted { get; set; }
+        public string idUser { get; set; }
     
+        public virtual AspNetUsers AspNetUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BIENS> BIENS { get; set; }
+        public virtual ICollection<BIEN> BIEN { get; set; }
     }
 }

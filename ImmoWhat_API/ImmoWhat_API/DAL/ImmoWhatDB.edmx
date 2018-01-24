@@ -66,19 +66,11 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
-        <EntityType Name="BIEN_OPTION">
-          <Key>
-            <PropertyRef Name="IdBien" />
-            <PropertyRef Name="IdOption" />
-          </Key>
-          <Property Name="IdBien" Type="int" Nullable="false" />
-          <Property Name="IdOption" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="BIENS">
+        <EntityType Name="BIEN">
           <Key>
             <PropertyRef Name="BIEN_Id" />
           </Key>
-          <Property Name="BIEN_Id" Type="int" Nullable="false" />
+          <Property Name="BIEN_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BIEN_IdType" Type="int" Nullable="false" />
           <Property Name="BIEN_IdProprietaire" Type="int" Nullable="false" />
           <Property Name="BIEN_Prix" Type="float" Nullable="false" />
@@ -89,6 +81,25 @@
           <Property Name="BIEN_Boite" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="BIEN_NbChambre" Type="int" Nullable="false" />
           <Property Name="BIEN_NbSDB" Type="int" Nullable="false" />
+          <Property Name="BIEN_Vendu" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BIEN_OPTION">
+          <Key>
+            <PropertyRef Name="IdBien" />
+            <PropertyRef Name="IdOption" />
+          </Key>
+          <Property Name="IdBien" Type="int" Nullable="false" />
+          <Property Name="IdOption" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="BIEN_PHOTOS">
+          <Key>
+            <PropertyRef Name="idBien" />
+            <PropertyRef Name="lien" />
+          </Key>
+          <Property Name="idBien" Type="int" Nullable="false" />
+          <Property Name="lien" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <EntityType Name="COMMUNE">
           <Key>
@@ -104,18 +115,19 @@
           <Key>
             <PropertyRef Name="idMembre" />
           </Key>
-          <Property Name="idMembre" Type="int" Nullable="false" />
-          <Property Name="mail" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="password" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="idMembre" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mail" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="nom" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="prenom" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Commune" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="rue" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="numero" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="boite" Type="nvarchar" MaxLength="50" />
-          <Property Name="role" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="telephone" Type="nvarchar" MaxLength="50" />
-          <Property Name="dateDeNaissance" Type="date" />
+          <Property Name="dateDeNaissance" Type="date" Nullable="false" />
+          <Property Name="estProprietaire" Type="bit" Nullable="false" />
+          <Property Name="photo" Type="nvarchar" MaxLength="50" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="idUser" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="OPTIONS">
           <Key>
@@ -142,10 +154,10 @@
           <Property Name="Libelle" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_BIEN_OPTION_BIENS">
-          <End Role="BIENS" Type="Self.BIENS" Multiplicity="1" />
+          <End Role="BIEN" Type="Self.BIEN" Multiplicity="1" />
           <End Role="BIEN_OPTION" Type="Self.BIEN_OPTION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="BIENS">
+            <Principal Role="BIEN">
               <PropertyRef Name="BIEN_Id" />
             </Principal>
             <Dependent Role="BIEN_OPTION">
@@ -167,36 +179,36 @@
         </Association>
         <Association Name="FK_BIENS_COMMUNE">
           <End Role="COMMUNE" Type="Self.COMMUNE" Multiplicity="1" />
-          <End Role="BIENS" Type="Self.BIENS" Multiplicity="*" />
+          <End Role="BIEN" Type="Self.BIEN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="COMMUNE">
               <PropertyRef Name="idCommune" />
             </Principal>
-            <Dependent Role="BIENS">
+            <Dependent Role="BIEN">
               <PropertyRef Name="BIEN_idCommune" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BIENS_MEMBRE">
           <End Role="MEMBRE" Type="Self.MEMBRE" Multiplicity="1" />
-          <End Role="BIENS" Type="Self.BIENS" Multiplicity="*" />
+          <End Role="BIEN" Type="Self.BIEN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MEMBRE">
               <PropertyRef Name="idMembre" />
             </Principal>
-            <Dependent Role="BIENS">
+            <Dependent Role="BIEN">
               <PropertyRef Name="BIEN_IdProprietaire" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BIENS_TYPEBIEN">
           <End Role="TYPEBIEN" Type="Self.TYPEBIEN" Multiplicity="1" />
-          <End Role="BIENS" Type="Self.BIENS" Multiplicity="*" />
+          <End Role="BIEN" Type="Self.BIEN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TYPEBIEN">
               <PropertyRef Name="idTypeBien" />
             </Principal>
-            <Dependent Role="BIENS">
+            <Dependent Role="BIEN">
               <PropertyRef Name="BIEN_IdType" />
             </Dependent>
           </ReferentialConstraint>
@@ -257,6 +269,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MEMBRE_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="MEMBRE" Type="Self.MEMBRE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MEMBRE">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="addNewMembre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="mail" Type="nvarchar" Mode="In" />
+          <Parameter Name="nom" Type="nvarchar" Mode="In" />
+          <Parameter Name="prenom" Type="nvarchar" Mode="In" />
+          <Parameter Name="commune" Type="nvarchar" Mode="In" />
+          <Parameter Name="rue" Type="nvarchar" Mode="In" />
+          <Parameter Name="numero" Type="nvarchar" Mode="In" />
+          <Parameter Name="boite" Type="nvarchar" Mode="In" />
+          <Parameter Name="dateDeNaissance" Type="date" Mode="In" />
+          <Parameter Name="telephone" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="CommunesToLower" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -295,15 +331,21 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BIEN" EntityType="Self.BIEN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BIEN_OPTION" EntityType="Self.BIEN_OPTION" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BIENS" EntityType="Self.BIENS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="COMMUNE" EntityType="Self.COMMUNE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MEMBRE" EntityType="Self.MEMBRE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OPTIONS" EntityType="Self.OPTIONS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TYPEBIEN" EntityType="Self.TYPEBIEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BIEN_PHOTOS" EntityType="Self.BIEN_PHOTOS" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [BIEN_PHOTOS].[idBien] AS [idBien], 
+    [BIEN_PHOTOS].[lien] AS [lien]
+    FROM [dbo].[BIEN_PHOTOS] AS [BIEN_PHOTOS]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_BIEN_OPTION_BIENS" Association="Self.FK_BIEN_OPTION_BIENS">
-            <End Role="BIENS" EntitySet="BIENS" />
+            <End Role="BIEN" EntitySet="BIEN" />
             <End Role="BIEN_OPTION" EntitySet="BIEN_OPTION" />
           </AssociationSet>
           <AssociationSet Name="FK_BIEN_OPTION_OPTIONS" Association="Self.FK_BIEN_OPTION_OPTIONS">
@@ -312,15 +354,15 @@
           </AssociationSet>
           <AssociationSet Name="FK_BIENS_COMMUNE" Association="Self.FK_BIENS_COMMUNE">
             <End Role="COMMUNE" EntitySet="COMMUNE" />
-            <End Role="BIENS" EntitySet="BIENS" />
+            <End Role="BIEN" EntitySet="BIEN" />
           </AssociationSet>
           <AssociationSet Name="FK_BIENS_MEMBRE" Association="Self.FK_BIENS_MEMBRE">
             <End Role="MEMBRE" EntitySet="MEMBRE" />
-            <End Role="BIENS" EntitySet="BIENS" />
+            <End Role="BIEN" EntitySet="BIEN" />
           </AssociationSet>
           <AssociationSet Name="FK_BIENS_TYPEBIEN" Association="Self.FK_BIENS_TYPEBIEN">
             <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
-            <End Role="BIENS" EntitySet="BIENS" />
+            <End Role="BIEN" EntitySet="BIEN" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -337,6 +379,10 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEMBRE_AspNetUsers" Association="Self.FK_MEMBRE_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -374,17 +420,30 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="addNewMembre">
+            <Parameter Name="mail" Mode="In" Type="String" />
+            <Parameter Name="nom" Mode="In" Type="String" />
+            <Parameter Name="prenom" Mode="In" Type="String" />
+            <Parameter Name="commune" Mode="In" Type="String" />
+            <Parameter Name="rue" Mode="In" Type="String" />
+            <Parameter Name="numero" Mode="In" Type="String" />
+            <Parameter Name="boite" Mode="In" Type="String" />
+            <Parameter Name="dateDeNaissance" Mode="In" Type="DateTime" />
+            <Parameter Name="telephone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CommunesToLower" />
           <EntitySet Name="C__MigrationHistory" EntityType="ImmoWhatModel.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="ImmoWhatModel.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="ImmoWhatModel.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="ImmoWhatModel.AspNetUserLogins" />
           <EntitySet Name="AspNetUsers" EntityType="ImmoWhatModel.AspNetUsers" />
-          <EntitySet Name="BIENS" EntityType="ImmoWhatModel.BIENS" />
+          <EntitySet Name="BIEN" EntityType="ImmoWhatModel.BIEN" />
           <EntitySet Name="COMMUNE" EntityType="ImmoWhatModel.COMMUNE" />
           <EntitySet Name="MEMBRE" EntityType="ImmoWhatModel.MEMBRE" />
           <EntitySet Name="OPTIONS" EntityType="ImmoWhatModel.OPTIONS" />
           <EntitySet Name="sysdiagrams" EntityType="ImmoWhatModel.sysdiagrams" />
           <EntitySet Name="TYPEBIEN" EntityType="ImmoWhatModel.TYPEBIEN" />
+          <EntitySet Name="BIEN_PHOTOS" EntityType="ImmoWhatModel.BIEN_PHOTOS" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="ImmoWhatModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -393,24 +452,28 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
+          <AssociationSet Name="FK_MEMBRE_AspNetUsers" Association="ImmoWhatModel.FK_MEMBRE_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+          </AssociationSet>
           <AssociationSet Name="FK_BIENS_COMMUNE" Association="ImmoWhatModel.FK_BIENS_COMMUNE">
             <End Role="COMMUNE" EntitySet="COMMUNE" />
-            <End Role="BIENS" EntitySet="BIENS" />
+            <End Role="BIEN" EntitySet="BIEN" />
           </AssociationSet>
           <AssociationSet Name="FK_BIENS_MEMBRE" Association="ImmoWhatModel.FK_BIENS_MEMBRE">
             <End Role="MEMBRE" EntitySet="MEMBRE" />
-            <End Role="BIENS" EntitySet="BIENS" />
+            <End Role="BIEN" EntitySet="BIEN" />
           </AssociationSet>
           <AssociationSet Name="FK_BIENS_TYPEBIEN" Association="ImmoWhatModel.FK_BIENS_TYPEBIEN">
             <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
-            <End Role="BIENS" EntitySet="BIENS" />
+            <End Role="BIEN" EntitySet="BIEN" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="ImmoWhatModel.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           <AssociationSet Name="BIEN_OPTION" Association="ImmoWhatModel.BIEN_OPTION">
-            <End Role="BIENS" EntitySet="BIENS" />
+            <End Role="BIEN" EntitySet="BIEN" />
             <End Role="OPTIONS" EntitySet="OPTIONS" />
           </AssociationSet>
           </EntityContainer>
@@ -482,13 +545,14 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="ImmoWhatModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="ImmoWhatModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="MEMBRE" Relationship="ImmoWhatModel.FK_MEMBRE_AspNetUsers" FromRole="AspNetUsers" ToRole="MEMBRE" />
           <NavigationProperty Name="AspNetRoles" Relationship="ImmoWhatModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
-        <EntityType Name="BIENS">
+        <EntityType Name="BIEN">
           <Key>
             <PropertyRef Name="BIEN_Id" />
           </Key>
-          <Property Name="BIEN_Id" Type="Int32" Nullable="false" />
+          <Property Name="BIEN_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="BIEN_IdType" Type="Int32" Nullable="false" />
           <Property Name="BIEN_IdProprietaire" Type="Int32" Nullable="false" />
           <Property Name="BIEN_Prix" Type="Double" Nullable="false" />
@@ -499,10 +563,11 @@
           <Property Name="BIEN_Boite" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BIEN_NbChambre" Type="Int32" Nullable="false" />
           <Property Name="BIEN_NbSDB" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="COMMUNE" Relationship="ImmoWhatModel.FK_BIENS_COMMUNE" FromRole="BIENS" ToRole="COMMUNE" />
-          <NavigationProperty Name="MEMBRE" Relationship="ImmoWhatModel.FK_BIENS_MEMBRE" FromRole="BIENS" ToRole="MEMBRE" />
-          <NavigationProperty Name="TYPEBIEN" Relationship="ImmoWhatModel.FK_BIENS_TYPEBIEN" FromRole="BIENS" ToRole="TYPEBIEN" />
-          <NavigationProperty Name="OPTIONS" Relationship="ImmoWhatModel.BIEN_OPTION" FromRole="BIENS" ToRole="OPTIONS" />
+          <Property Name="BIEN_Vendu" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="COMMUNE" Relationship="ImmoWhatModel.FK_BIENS_COMMUNE" FromRole="BIEN" ToRole="COMMUNE" />
+          <NavigationProperty Name="MEMBRE" Relationship="ImmoWhatModel.FK_BIENS_MEMBRE" FromRole="BIEN" ToRole="MEMBRE" />
+          <NavigationProperty Name="TYPEBIEN" Relationship="ImmoWhatModel.FK_BIENS_TYPEBIEN" FromRole="BIEN" ToRole="TYPEBIEN" />
+          <NavigationProperty Name="OPTIONS" Relationship="ImmoWhatModel.BIEN_OPTION" FromRole="BIEN" ToRole="OPTIONS" />
         </EntityType>
         <EntityType Name="COMMUNE">
           <Key>
@@ -513,25 +578,27 @@
           <Property Name="Localite" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Province" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="langue" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BIENS" Relationship="ImmoWhatModel.FK_BIENS_COMMUNE" FromRole="COMMUNE" ToRole="BIENS" />
+          <NavigationProperty Name="BIEN" Relationship="ImmoWhatModel.FK_BIENS_COMMUNE" FromRole="COMMUNE" ToRole="BIEN" />
         </EntityType>
         <EntityType Name="MEMBRE">
           <Key>
             <PropertyRef Name="idMembre" />
           </Key>
-          <Property Name="idMembre" Type="Int32" Nullable="false" />
-          <Property Name="mail" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="password" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="idMembre" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mail" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="nom" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="prenom" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Commune" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="rue" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="numero" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="boite" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="role" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="dateDeNaissance" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="BIENS" Relationship="ImmoWhatModel.FK_BIENS_MEMBRE" FromRole="MEMBRE" ToRole="BIENS" />
+          <Property Name="dateDeNaissance" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="estProprietaire" Type="Boolean" Nullable="false" />
+          <Property Name="photo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="idUser" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="ImmoWhatModel.FK_MEMBRE_AspNetUsers" FromRole="MEMBRE" ToRole="AspNetUsers" />
+          <NavigationProperty Name="BIEN" Relationship="ImmoWhatModel.FK_BIENS_MEMBRE" FromRole="MEMBRE" ToRole="BIEN" />
         </EntityType>
         <EntityType Name="OPTIONS">
           <Key>
@@ -539,7 +606,7 @@
           </Key>
           <Property Name="IdOption" Type="Int32" Nullable="false" />
           <Property Name="Libelle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BIENS" Relationship="ImmoWhatModel.BIEN_OPTION" FromRole="OPTIONS" ToRole="BIENS" />
+          <NavigationProperty Name="BIEN" Relationship="ImmoWhatModel.BIEN_OPTION" FromRole="OPTIONS" ToRole="BIEN" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -557,7 +624,15 @@
           </Key>
           <Property Name="idTypeBien" Type="Int32" Nullable="false" />
           <Property Name="Libelle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BIENS" Relationship="ImmoWhatModel.FK_BIENS_TYPEBIEN" FromRole="TYPEBIEN" ToRole="BIENS" />
+          <NavigationProperty Name="BIEN" Relationship="ImmoWhatModel.FK_BIENS_TYPEBIEN" FromRole="TYPEBIEN" ToRole="BIEN" />
+        </EntityType>
+        <EntityType Name="BIEN_PHOTOS">
+          <Key>
+            <PropertyRef Name="idBien" />
+            <PropertyRef Name="lien" />
+          </Key>
+          <Property Name="idBien" Type="Int32" Nullable="false" />
+          <Property Name="lien" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="ImmoWhatModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -587,38 +662,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MEMBRE_AspNetUsers">
+          <End Type="ImmoWhatModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="ImmoWhatModel.MEMBRE" Role="MEMBRE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MEMBRE">
+              <PropertyRef Name="idUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BIENS_COMMUNE">
           <End Type="ImmoWhatModel.COMMUNE" Role="COMMUNE" Multiplicity="1" />
-          <End Type="ImmoWhatModel.BIENS" Role="BIENS" Multiplicity="*" />
+          <End Type="ImmoWhatModel.BIEN" Role="BIEN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="COMMUNE">
               <PropertyRef Name="idCommune" />
             </Principal>
-            <Dependent Role="BIENS">
+            <Dependent Role="BIEN">
               <PropertyRef Name="BIEN_idCommune" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BIENS_MEMBRE">
           <End Type="ImmoWhatModel.MEMBRE" Role="MEMBRE" Multiplicity="1" />
-          <End Type="ImmoWhatModel.BIENS" Role="BIENS" Multiplicity="*" />
+          <End Type="ImmoWhatModel.BIEN" Role="BIEN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MEMBRE">
               <PropertyRef Name="idMembre" />
             </Principal>
-            <Dependent Role="BIENS">
+            <Dependent Role="BIEN">
               <PropertyRef Name="BIEN_IdProprietaire" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BIENS_TYPEBIEN">
           <End Type="ImmoWhatModel.TYPEBIEN" Role="TYPEBIEN" Multiplicity="1" />
-          <End Type="ImmoWhatModel.BIENS" Role="BIENS" Multiplicity="*" />
+          <End Type="ImmoWhatModel.BIEN" Role="BIEN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TYPEBIEN">
               <PropertyRef Name="idTypeBien" />
             </Principal>
-            <Dependent Role="BIENS">
+            <Dependent Role="BIEN">
               <PropertyRef Name="BIEN_IdType" />
             </Dependent>
           </ReferentialConstraint>
@@ -628,7 +715,7 @@
           <End Type="ImmoWhatModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
         <Association Name="BIEN_OPTION">
-          <End Type="ImmoWhatModel.BIENS" Role="BIENS" Multiplicity="*" />
+          <End Type="ImmoWhatModel.BIEN" Role="BIEN" Multiplicity="*" />
           <End Type="ImmoWhatModel.OPTIONS" Role="OPTIONS" Multiplicity="*" />
         </Association>
         </Schema>
@@ -661,6 +748,8 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ImmoWhatModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ImmoWhatModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="addNewMembre" FunctionName="ImmoWhatModel.Store.addNewMembre" />
+          <FunctionImportMapping FunctionImportName="CommunesToLower" FunctionName="ImmoWhatModel.Store.CommunesToLower" />
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="ImmoWhatModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -716,9 +805,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BIENS">
-            <EntityTypeMapping TypeName="ImmoWhatModel.BIENS">
-              <MappingFragment StoreEntitySet="BIENS">
+          <EntitySetMapping Name="BIEN">
+            <EntityTypeMapping TypeName="ImmoWhatModel.BIEN">
+              <MappingFragment StoreEntitySet="BIEN">
+                <ScalarProperty Name="BIEN_Vendu" ColumnName="BIEN_Vendu" />
                 <ScalarProperty Name="BIEN_NbSDB" ColumnName="BIEN_NbSDB" />
                 <ScalarProperty Name="BIEN_NbChambre" ColumnName="BIEN_NbChambre" />
                 <ScalarProperty Name="BIEN_Boite" ColumnName="BIEN_Boite" />
@@ -747,16 +837,17 @@
           <EntitySetMapping Name="MEMBRE">
             <EntityTypeMapping TypeName="ImmoWhatModel.MEMBRE">
               <MappingFragment StoreEntitySet="MEMBRE">
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="estProprietaire" ColumnName="estProprietaire" />
                 <ScalarProperty Name="dateDeNaissance" ColumnName="dateDeNaissance" />
-                <ScalarProperty Name="telephone" ColumnName="telephone" />
-                <ScalarProperty Name="role" ColumnName="role" />
                 <ScalarProperty Name="boite" ColumnName="boite" />
                 <ScalarProperty Name="numero" ColumnName="numero" />
                 <ScalarProperty Name="rue" ColumnName="rue" />
                 <ScalarProperty Name="Commune" ColumnName="Commune" />
                 <ScalarProperty Name="prenom" ColumnName="prenom" />
                 <ScalarProperty Name="nom" ColumnName="nom" />
-                <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="mail" ColumnName="mail" />
                 <ScalarProperty Name="idMembre" ColumnName="idMembre" />
               </MappingFragment>
@@ -789,6 +880,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BIEN_PHOTOS">
+            <EntityTypeMapping TypeName="ImmoWhatModel.BIEN_PHOTOS">
+              <MappingFragment StoreEntitySet="BIEN_PHOTOS">
+                <ScalarProperty Name="lien" ColumnName="lien" />
+                <ScalarProperty Name="idBien" ColumnName="idBien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="ImmoWhatModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetUsers">
               <ScalarProperty Name="Id" ColumnName="UserId" />
@@ -801,7 +900,7 @@
             <EndProperty Name="OPTIONS">
               <ScalarProperty Name="IdOption" ColumnName="IdOption" />
             </EndProperty>
-            <EndProperty Name="BIENS">
+            <EndProperty Name="BIEN">
               <ScalarProperty Name="BIEN_Id" ColumnName="IdBien" />
             </EndProperty>
           </AssociationSetMapping>

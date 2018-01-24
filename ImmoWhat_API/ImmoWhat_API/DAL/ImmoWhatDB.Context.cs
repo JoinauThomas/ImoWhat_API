@@ -32,12 +32,13 @@ namespace ImmoWhat_API.DAL
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public virtual DbSet<BIENS> BIENS { get; set; }
+        public virtual DbSet<BIEN> BIEN { get; set; }
         public virtual DbSet<COMMUNE> COMMUNE { get; set; }
         public virtual DbSet<MEMBRE> MEMBRE { get; set; }
         public virtual DbSet<OPTIONS> OPTIONS { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TYPEBIEN> TYPEBIEN { get; set; }
+        public virtual DbSet<BIEN_PHOTOS> BIEN_PHOTOS { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -140,6 +141,52 @@ namespace ImmoWhat_API.DAL
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual int addNewMembre(string mail, string nom, string prenom, string commune, string rue, string numero, string boite, Nullable<System.DateTime> dateDeNaissance, string telephone)
+        {
+            var mailParameter = mail != null ?
+                new ObjectParameter("mail", mail) :
+                new ObjectParameter("mail", typeof(string));
+    
+            var nomParameter = nom != null ?
+                new ObjectParameter("nom", nom) :
+                new ObjectParameter("nom", typeof(string));
+    
+            var prenomParameter = prenom != null ?
+                new ObjectParameter("prenom", prenom) :
+                new ObjectParameter("prenom", typeof(string));
+    
+            var communeParameter = commune != null ?
+                new ObjectParameter("commune", commune) :
+                new ObjectParameter("commune", typeof(string));
+    
+            var rueParameter = rue != null ?
+                new ObjectParameter("rue", rue) :
+                new ObjectParameter("rue", typeof(string));
+    
+            var numeroParameter = numero != null ?
+                new ObjectParameter("numero", numero) :
+                new ObjectParameter("numero", typeof(string));
+    
+            var boiteParameter = boite != null ?
+                new ObjectParameter("boite", boite) :
+                new ObjectParameter("boite", typeof(string));
+    
+            var dateDeNaissanceParameter = dateDeNaissance.HasValue ?
+                new ObjectParameter("dateDeNaissance", dateDeNaissance) :
+                new ObjectParameter("dateDeNaissance", typeof(System.DateTime));
+    
+            var telephoneParameter = telephone != null ?
+                new ObjectParameter("telephone", telephone) :
+                new ObjectParameter("telephone", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addNewMembre", mailParameter, nomParameter, prenomParameter, communeParameter, rueParameter, numeroParameter, boiteParameter, dateDeNaissanceParameter, telephoneParameter);
+        }
+    
+        public virtual int CommunesToLower()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CommunesToLower");
         }
     }
 }

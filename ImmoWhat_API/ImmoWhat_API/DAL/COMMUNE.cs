@@ -17,7 +17,7 @@ namespace ImmoWhat_API.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public COMMUNE()
         {
-            this.BIENS = new HashSet<BIENS>();
+            this.BIEN = new HashSet<BIEN>();
         }
     
         public int idCommune { get; set; }
@@ -27,6 +27,6 @@ namespace ImmoWhat_API.DAL
         public string langue { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BIENS> BIENS { get; set; }
+        public virtual ICollection<BIEN> BIEN { get; set; }
     }
 }

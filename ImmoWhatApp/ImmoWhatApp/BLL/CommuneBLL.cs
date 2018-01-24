@@ -23,7 +23,7 @@ namespace ImmoWhatApp.BLL
 
             using (var client = new HttpClient())
             {
-
+                
 
                 client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
                 var responseTask = client.GetAsync("GetCommunesComplet");

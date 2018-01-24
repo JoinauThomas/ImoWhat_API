@@ -245,7 +245,10 @@
     <Compile Include="DAL\AspNetUsers.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\BIENS.cs">
+    <Compile Include="DAL\BIEN.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\BIEN_PHOTOS.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\COMMUNE.cs">
@@ -294,6 +297,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommuneComplet.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\MembreModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

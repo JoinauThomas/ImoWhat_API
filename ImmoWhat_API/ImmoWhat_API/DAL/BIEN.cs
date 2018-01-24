@@ -12,10 +12,10 @@ namespace ImmoWhat_API.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class BIENS
+    public partial class BIEN
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BIENS()
+        public BIEN()
         {
             this.OPTIONS = new HashSet<OPTIONS>();
         }
@@ -31,6 +31,7 @@ namespace ImmoWhat_API.DAL
         public string BIEN_Boite { get; set; }
         public int BIEN_NbChambre { get; set; }
         public int BIEN_NbSDB { get; set; }
+        public bool BIEN_Vendu { get; set; }
     
         public virtual COMMUNE COMMUNE { get; set; }
         public virtual MEMBRE MEMBRE { get; set; }
