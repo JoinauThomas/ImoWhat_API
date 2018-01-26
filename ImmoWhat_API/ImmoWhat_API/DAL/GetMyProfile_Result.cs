@@ -10,16 +10,9 @@
 namespace ImmoWhat_API.DAL
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class MEMBRE
+    public partial class GetMyProfile_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MEMBRE()
-        {
-            this.BIEN = new HashSet<BIEN>();
-        }
-    
         public int idMembre { get; set; }
         public string mail { get; set; }
         public string nom { get; set; }
@@ -36,9 +29,6 @@ namespace ImmoWhat_API.DAL
         public System.DateTime DateEnregistrement { get; set; }
         public Nullable<System.DateTime> DateSuppression { get; set; }
         public string Role { get; set; }
-    
-        public virtual AspNetUsers AspNetUsers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BIEN> BIEN { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

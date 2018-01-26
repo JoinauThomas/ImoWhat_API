@@ -3198,9 +3198,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Commune.cs" />
+    <Compile Include="Models\ResultRequest.cs" />
     <Compile Include="Models\Identification.cs" />
-    <Compile Include="Models\Membre.cs" />
     <Compile Include="Models\MembreModels.cs" />
+    <Compile Include="Models\ResultInscription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -3223,9 +3224,9 @@
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\User\CreerCompte.cshtml" />
     <Content Include="Views\User\Connexion.cshtml" />
-    <Content Include="Views\User\CreerCpte.cshtml" />
     <Content Include="Views\Account\CreerCompte.cshtml" />
     <Content Include="Views\Account\Connexion.cshtml" />
+    <Content Include="Views\User\CreerCpte.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

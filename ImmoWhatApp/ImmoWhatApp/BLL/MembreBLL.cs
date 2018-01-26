@@ -11,8 +11,13 @@ namespace ImmoWhatApp.BLL
 {
     public class MembreBLL
     {
-        public static string CreerCompte(Models.MembreModels newMembre)
+        public static Models.ResultInscription CreerCompte(Models.MembreModels newMembre)
         {
+            Models.ResultInscription resultInscription = new Models.ResultInscription();
+
+            
+
+            // inscription du membre dans la DB
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:49383");
@@ -33,49 +38,57 @@ namespace ImmoWhatApp.BLL
                 //var currentSession = HttpContext.Current.Session;
                 //var token = currentSession["monToken"];
 
-                client.BaseAddress = new Uri("http://localhost:49383/api/Membre/");
+                client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 //client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
                 var responseTask = client.PostAsJsonAsync("AddNewMembre", newMembre);
                 responseTask.Wait();
                 var result = responseTask.Result;
-
                 
                 if (result.IsSuccessStatusCode)
                 {
-                    return "ok";
+                    resultInscription.resultQuery = "ok";
+
+
                 }
                 else
                 {
                     var content = result.Content.ReadAsStringAsync();
                     content.Wait();
-                    return content.ToString();
+                    resultInscription.resultQuery = content.ToString();
                 }
             }
-            //HttpCookie monCookie = Request.Cookies["monToken"];
-            //string token = "";
-            //if (monCookie != null)
-            //{
-            //    token = monCookie["monToken"];
-            //}
-            //using (var client = new HttpClient())
-            //{
-            //    client.BaseAddress = new Uri("http://localhost:49383");
-            //    client.DefaultRequestHeaders.Accept.Clear();
-            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-            //    var responseTask = client.GetAsync("api/AddNewMembre");
-            //    responseTask.Wait();
-            //    var result = responseTask.Result;
-            //    var responseString = result.Content.ReadAsStringAsync();
-            //}
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+
+                //client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                //var responseTask = client.PostAsJsonAsync("GetMyId", mail);
+                var responseTask = client.GetAsync("GetMyId?mail=" + newMembre.mail);
+                responseTask.Wait();
+                var result = responseTask.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<int>();
+                    readTask.Wait();
+                    resultInscription.idMembre = readTask.Result;
+                }
+                else
+                {
+                    resultInscription.idMembre = 0;
+                }
+            }
+
+            return resultInscription;
         }
 
-        public static string Connexion(Models.Identification moi)
+        public static Models.ResultRequest Connexion(Models.Identification moi)
         {
             var MyToken = "";
-            string resultat = "";
-
+            Models.ResultRequest resultRequest = new Models.ResultRequest();
+            
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:49383");
@@ -93,7 +106,10 @@ namespace ImmoWhatApp.BLL
                 if (!result.IsSuccessStatusCode)
                 {
                     var responseString = result.Content.ReadAsStringAsync();
-                    resultat = responseString.Result;
+                    resultRequest.msg = responseString.Result;
+                    resultRequest.idError = responseString.Id;
+                    
+                    return resultRequest;
                 }
                 else
                 {
@@ -103,14 +119,37 @@ namespace ImmoWhatApp.BLL
                     var jObject = JObject.Parse(responseString.Result);
                     MyToken = jObject.GetValue("access_token").ToString();
 
-                    resultat = "ok";
+                    resultRequest.idError = 0;
+                    resultRequest.msg = "ok";
                 }
             }
             var currentSession = HttpContext.Current.Session;
             var token = currentSession["monToken"];
             currentSession["monToken"] = MyToken;
 
-            return resultat;
+            return resultRequest;
         }
+
+        public static Models.MembreModels GetMyProfile(string mail)
+        {
+            using (var client = new HttpClient())
+            {
+                Models.MembreModels moi = new Models.MembreModels();
+                client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+                var responseTask = client.GetAsync("GetMyProfile?mail=" + mail);
+                responseTask.Wait();
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<Models.MembreModels>();
+                    readTask.Wait();
+
+                    moi = readTask.Result;
+                }
+                return moi;
+            }
+        }
+
+        
     }
 }

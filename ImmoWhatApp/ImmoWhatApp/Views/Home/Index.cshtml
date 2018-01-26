@@ -1,5 +1,12 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    if (Session["moi"] != null)
+    {
+        ImmoWhatApp.Models.MembreModels moi = (ImmoWhatApp.Models.MembreModels)Session["moi"];
+        string nom = moi.nom;
+        string prenom = moi.prenom;
+        <h2>@prenom @nom</h2>
+    }
 }
 
 <div id="corps" class="row">
@@ -22,7 +29,7 @@
     var idCommune
 
     $(document).ready(function () {
-        
+
         $("#test").autocomplete({
             autoFocus: true,
             source: function (requete, reponse) {
@@ -51,7 +58,7 @@
             }
 
         })
-        
+
     });
     $('#btnValidCommune').click(function () {
         alert(idCommune);

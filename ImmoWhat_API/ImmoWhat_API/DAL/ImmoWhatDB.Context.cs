@@ -188,5 +188,41 @@ namespace ImmoWhat_API.DAL
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CommunesToLower");
         }
+    
+        public virtual ObjectResult<Nullable<int>> GetMyId(string mail)
+        {
+            var mailParameter = mail != null ?
+                new ObjectParameter("mail", mail) :
+                new ObjectParameter("mail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetMyId", mailParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetMyIds(string mail)
+        {
+            var mailParameter = mail != null ?
+                new ObjectParameter("mail", mail) :
+                new ObjectParameter("mail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetMyIds", mailParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetIdMmbre(string mail)
+        {
+            var mailParameter = mail != null ?
+                new ObjectParameter("mail", mail) :
+                new ObjectParameter("mail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetIdMmbre", mailParameter);
+        }
+    
+        public virtual ObjectResult<GetMyProfile_Result> GetMyProfile(string mail)
+        {
+            var mailParameter = mail != null ?
+                new ObjectParameter("mail", mail) :
+                new ObjectParameter("mail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyProfile_Result>("GetMyProfile", mailParameter);
+        }
     }
 }

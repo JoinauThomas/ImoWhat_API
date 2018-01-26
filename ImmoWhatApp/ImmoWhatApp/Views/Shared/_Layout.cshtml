@@ -27,26 +27,41 @@
                 <li class="nav-item active col-lg-7">
                     <span class="nav-link" style="background-color: grey">The true value of your property <span class="sr-only">(current)</span></span>
                 </li>
+                @{
+        ImmoWhatApp.Models.MembreModels moi = (ImmoWhatApp.Models.MembreModels)Session["moi"];
+        if (Session["moi"] == null)
+        {
+            <li class="nav-item col-lg-2 liste navbar">
+                @Html.ActionLink("se connecter", "connexion", "Account", new { area = "" }, null)
+            </li>
+            <li class="nav-item col-lg-2 navbar">
+                @Html.ActionLink("s'inscrire", "CreerCompte", "Account", new { area = "" }, null)
+            </li>
+}
+else
+{
+            <li class="nav-item col-lg-2 liste navbar">
+                @Html.ActionLink("mon frofile", "connexion", "Account", new { area = "" }, null)
+            </li>
+            <li class="nav-item col-lg-2 navbar">
+                @Html.ActionLink("se déconnecter", "CreerCompte", "Account", new { area = "" }, null)
+            </li>
+}
+                }
 
-                <li class="nav-item col-lg-2 liste navbar">
-                    @Html.ActionLink("se connecter", "connexion", "Account", new { area = "" }, null)
-                </li>
-                <li class="nav-item col-lg-2">
-                    @Html.ActionLink("s'inscrire", "CreerCompte", "Account", new { area = "" }, null)
-                </li>
-                <li class="nav-item col-lg-2">
-                    @Html.ActionLink("s'inscrireeee", "CreerCpte", "User", new { area = "" }, null)
-                </li>
-                <li class="nav-item dropdown col-lg-1">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <li class="nav-item dropdown col-lg-1 ">
+               
+                <div class="btn-group dropleft">
+                    <button type="button" class="btn btn-secondary btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         FR
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="#">EN</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href="#">FR</a>
+                        <a class="dropdown-item" href="#">NL</a>
                     </div>
-                </li>
+                </div>
+            </li>
             </ul>
         </div>
     </nav>
