@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace ImmoWhatApp.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         [HttpGet]
         public ActionResult CreerCompte()

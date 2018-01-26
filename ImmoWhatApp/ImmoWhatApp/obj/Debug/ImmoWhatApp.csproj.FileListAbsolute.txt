@@ -96,3 +96,8 @@ C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\bin\Json.
 C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\bin\Json.pdb
 C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\bin\System.Security.Cryptography.Algorithms.dll
 C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\bin\System.Security.Cryptography.Primitives.dll
+C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\bin\en\ImmoWhatApp.resources.dll
+C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\obj\Debug\ImmoWhatApp.Resource.resources
+C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\obj\Debug\ImmoWhatApp.Resource.en.resources
+C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\obj\Debug\ImmoWhatApp.csproj.GenerateResource.Cache
+C:\Users\thoma\OneDrive\EPHEC\TFE\immowhat-API\ImmoWhatApp\ImmoWhatApp\obj\Debug\en\ImmoWhatApp.resources.dll
