@@ -21,44 +21,69 @@ namespace ImmoWhat_API.Controllers
             {
                 DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
                 dbContext.addNewMembre(newMembre.mail, newMembre.nom, newMembre.prenom, newMembre.Commune, newMembre.rue, newMembre.numero, newMembre.boite, newMembre.dateDeNaissance, newMembre.telephone);
+                return Ok();
             }
-            catch
+            catch (Exception ex)
             {
-
+                throw ex;
             }
-           
-
-            return Ok();
         }
 
         [HttpGet]
         [Route("GetMyId")]
         public int GetMyId(string mail)
         {
+            try
+            {
+                // récuperation de l'id du nveau membre
 
-            // récuperation de l'id du nveau membre
-
-            DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
-            List<DAL.MEMBRE> Membres = new List<DAL.MEMBRE>();
-            Membres = dbContext.MEMBRE.ToList();
-            DAL.MEMBRE moi = Membres.Find(x => (x.mail == mail));
-            return moi.idMembre;
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                List<DAL.MEMBRE> Membres = new List<DAL.MEMBRE>();
+                Membres = dbContext.MEMBRE.ToList();
+                DAL.MEMBRE moi = Membres.Find(x => (x.mail == mail));
+                return moi.idMembre;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+           
         }
 
         [HttpGet]
         [Route("GetMyProfile")]
         public Models.MembreModels GetMyProfile(string mail)
         {
-            DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
 
-            List<DAL.GetMyProfile_Result> moiDB = dbContext.GetMyProfile(mail).ToList();
+                List<DAL.GetMyProfile_Result> moiDB = dbContext.GetMyProfile(mail).ToList();
 
 
-            Models.MembreModels moi = new Models.MembreModels { idMembre = moiDB[0].idMembre, nom = moiDB[0].nom, prenom = moiDB[0].prenom
-                , dateDeNaissance = moiDB[0].dateDeNaissance, Commune = moiDB[0].Commune, rue = moiDB[0].rue, numero = moiDB[0].numero, boite = moiDB[0].boite,
-                mail = moiDB[0].mail, roleUser = moiDB[0].Role, telephone = moiDB[0].PhoneNumber, photo = moiDB[0].photo
-            };
-            return moi;
+                Models.MembreModels moi = new Models.MembreModels
+                {
+                    idMembre = moiDB[0].idMembre,
+                    nom = moiDB[0].nom,
+                    prenom = moiDB[0].prenom
+                    ,
+                    dateDeNaissance = moiDB[0].dateDeNaissance,
+                    Commune = moiDB[0].Commune,
+                    rue = moiDB[0].rue,
+                    numero = moiDB[0].numero,
+                    boite = moiDB[0].boite,
+                    mail = moiDB[0].mail,
+                    roleUser = moiDB[0].Role,
+                    telephone = moiDB[0].PhoneNumber,
+                    photo = moiDB[0].photo
+                };
+                return moi;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
     }
 }

@@ -20,29 +20,35 @@ namespace ImmoWhatApp.BLL
         public static List<Models.Commune> GetAllCommunesCompleteBLL()
         {
             List<Models.Commune> Communes = new List<Models.Commune>();
-
-            using (var client = new HttpClient())
+            try
             {
-                
-
-                client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
-                var responseTask = client.GetAsync("GetCommunesComplet");
-                var result = responseTask.Result;
-                responseTask.Wait();
-
-                if (result.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    var readTask = result.Content.ReadAsAsync<List<Models.Commune>>();
-                    readTask.Wait();
-                    var maListe = readTask.Result;
-                    Communes = maListe.ToList();
+
+
+                    client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
+                    var responseTask = client.GetAsync("GetCommunesComplet");
+                    var result = responseTask.Result;
+                    responseTask.Wait();
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<List<Models.Commune>>();
+                        readTask.Wait();
+                        var maListe = readTask.Result;
+                        Communes = maListe.ToList();
+                    }
+                    else
+                    {
+                        Communes = new List<Models.Commune>();
+                    }
                 }
-                else
-                {
-                    Communes = new List<Models.Commune>();
-                }
+                return Communes;
             }
-            return Communes;
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         //public static List<Models.Commune> GetCommunesByNameBLL(string name)
