@@ -17,6 +17,8 @@ namespace ImmoWhatApp.BLL
 {
     public class CommuneBLL
     {
+        public static List<Models.Commune> ListeTtesCommunes = GetAllCommunesCompleteBLL();
+
         public static List<Models.Commune> GetAllCommunesCompleteBLL()
         {
             List<Models.Commune> Communes = new List<Models.Commune>();
@@ -63,7 +65,19 @@ namespace ImmoWhatApp.BLL
 
         //    return Communes;
         //}
+        public static bool checkIfCommuneExistsBLL (string nomCommune)
+        {
+            try
+            {
+                bool result = ListeTtesCommunes.Any(item => item.Localite == nomCommune.ToLower());
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
+        }
 
     }
 }

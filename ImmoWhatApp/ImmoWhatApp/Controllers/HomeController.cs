@@ -103,5 +103,12 @@ namespace ImmoWhatApp.Controllers
             return Json(new { result = "OK", commune = CommuneByName }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public bool checkIfCommuneExists(string nomCommune)
+        {
+            bool result = BLL.CommuneBLL.checkIfCommuneExistsBLL(nomCommune);
+            return result;
+        }
+
     }
 }

@@ -14,13 +14,16 @@
     <img id="logo" src="~/img/logo.png" />
     <div class="input-group mb-3 row justify-content-lg-center col-lg-12 " id="inputCommune">
 
-        <input id="test" type="text" class="form-control col-lg-3 ui-widget" placeholder="exemple : Uccle" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <input id="inputComm" type="text" class="form-control col-lg-3 ui-widget" placeholder="exemple : Uccle" aria-label="Recipient's username" aria-describedby="basic-addon2">
 
         <div class="input-group-append col-lg-1 ui-widget">
             <button id="btnValidCommune" class="btn btn-success" type="button"><span class="oi" data-glyph="magnifying-glass" title="magnifying-glass" aria-hidden="true"></span><span class="glyphicon glyphicon-envelope"></span></button>
         </div>
     </div>
 
+</div>
+<div id="modal_commune" style="display:none">
+    <p id="modalTexte" class="modal-contents">aaaaaaa</p>
 </div>
 
 <script>
@@ -30,10 +33,10 @@
 
     $(document).ready(function () {
 
-        $("#test").autocomplete({
+        $("#inputComm").autocomplete({
             autoFocus: true,
             source: function (requete, reponse) {
-                var name = $('#test').val();
+                var name = $('#inputComm').val();
                 //alert(name);
                 $.ajax({
                     type: 'GET',
@@ -61,7 +64,32 @@
 
     });
     $('#btnValidCommune').click(function () {
-        alert(idCommune);
+        var nomCommune = $('#inputComm').val();
+         $.ajax({
+                    type: 'GET',
+                    datatype: 'json',
+                    data: { nomCommune: nomCommune },
+                    url: '@Url.Action("checkIfCommuneExists", "Home")',
+                    success: function (donnee) {
+                        if (donnee == "True") {
+                            alert("ok");
+                        }
+                        else {
+                             $('#modalTexte').html("commune inexistante");
+                             $('#modal_commune').dialog({
+                            open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
+                            resizable: false,
+                            height: "auto",
+                            width: "400",
+                            modal: true,
+                            title: 'commune inexistante',
+                            buttons: {
+                                "ok": function () { $(this).dialog("close") }
+                            }
+                        })
+                        }
+                    }
+                })
     })
 </script>
 
