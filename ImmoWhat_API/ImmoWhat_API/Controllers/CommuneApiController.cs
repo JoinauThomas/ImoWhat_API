@@ -21,7 +21,7 @@ namespace ImmoWhat_API.Controllers
 
             foreach(var i in LaListe)
             {
-                MaListe.Add(new Models.CommuneComplet { CodePostal = i.CodePostal, id = i.idCommune, langue = i.langue, Localite = i.Localite, Province = i.Province });
+                MaListe.Add(new Models.CommuneComplet { CodePostal = i.CodePostal, id = i.idCommune, langue = i.langue, Localite = i.Localite, Province = i.Province, latitude = i.latitude, longitude = i.longitude });
             }
 
             return MaListe;

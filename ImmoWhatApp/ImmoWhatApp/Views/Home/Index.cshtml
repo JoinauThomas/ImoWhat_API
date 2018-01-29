@@ -23,7 +23,7 @@
 
 </div>
 <div id="modal_commune" style="display:none">
-    <p id="modalTexte" class="modal-contents">aaaaaaa</p>
+    <p id="modalTexte" class="modal-contents"></p>
 </div>
 
 <script>
@@ -46,7 +46,7 @@
                     success: function (donnee) {
                         reponse($.map(donnee.commune, function (objet) {
                             return {
-                                label: objet.Localite,
+                                label: objet.Localite + " ( " + objet.CodePostal+" )",
                                 value: objet.Localite,
                                 id: objet.id
                         }

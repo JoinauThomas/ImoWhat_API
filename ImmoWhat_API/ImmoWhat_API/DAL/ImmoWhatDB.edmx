@@ -110,6 +110,8 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <Property Name="Localite" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Province" Type="nvarchar" MaxLength="255" />
           <Property Name="langue" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="longitude" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="latitude" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="MEMBRE">
           <Key>
@@ -434,6 +436,15 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <FunctionImport Name="GetMyId" ReturnType="Collection(Int32)">
           <Parameter Name="mail" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetMyIds" ReturnType="Collection(Int32)">
+          <Parameter Name="mail" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetIdMmbre" ReturnType="Collection(Int32)">
+          <Parameter Name="mail" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetMyProfile" ReturnType="Collection(ImmoWhatModel.GetMyProfile_Result)">
+          <Parameter Name="mail" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="C__MigrationHistory" EntityType="ImmoWhatModel.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="ImmoWhatModel.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="ImmoWhatModel.AspNetUserClaims" />
@@ -453,10 +464,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="ImmoWhatModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MEMBRE_AspNetUsers" Association="ImmoWhatModel.FK_MEMBRE_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="MEMBRE" EntitySet="MEMBRE" />
           </AssociationSet>
           <AssociationSet Name="FK_BIENS_COMMUNE" Association="ImmoWhatModel.FK_BIENS_COMMUNE">
             <End Role="COMMUNE" EntitySet="COMMUNE" />
@@ -478,15 +485,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
             <End Role="BIEN" EntitySet="BIEN" />
             <End Role="OPTIONS" EntitySet="OPTIONS" />
           </AssociationSet>
-          <FunctionImport Name="GetMyIds" ReturnType="Collection(Int32)">
-          <Parameter Name="mail" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetIdMmbre" ReturnType="Collection(Int32)">
-          <Parameter Name="mail" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetMyProfile" ReturnType="Collection(ImmoWhatModel.GetMyProfile_Result)">
-            <Parameter Name="mail" Mode="In" Type="String" />
-          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -498,6 +496,25 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetMyProfile_Result">
+          <Property Type="Int32" Name="idMembre" Nullable="false" />
+          <Property Type="String" Name="mail" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="nom" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="prenom" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Commune" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="rue" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="numero" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="boite" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="dateDeNaissance" Nullable="false" />
+          <Property Type="Boolean" Name="estProprietaire" Nullable="false" />
+          <Property Type="String" Name="photo" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="deleted" Nullable="false" />
+          <Property Type="String" Name="idUser" Nullable="false" MaxLength="128" />
+          <Property Type="DateTime" Name="DateEnregistrement" Nullable="false" />
+          <Property Type="DateTime" Name="DateSuppression" Nullable="true" />
+          <Property Type="String" Name="Role" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PhoneNumber" Nullable="true" />
         </ComplexType>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -556,7 +573,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="ImmoWhatModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="ImmoWhatModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="MEMBRE" Relationship="ImmoWhatModel.FK_MEMBRE_AspNetUsers" FromRole="AspNetUsers" ToRole="MEMBRE" />
           <NavigationProperty Name="AspNetRoles" Relationship="ImmoWhatModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
         <EntityType Name="BIEN">
@@ -589,6 +605,8 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <Property Name="Localite" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Province" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="langue" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="longitude" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="latitude" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BIEN" Relationship="ImmoWhatModel.FK_BIENS_COMMUNE" FromRole="COMMUNE" ToRole="BIEN" />
         </EntityType>
         <EntityType Name="MEMBRE">
@@ -610,9 +628,8 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <Property Name="idUser" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="DateEnregistrement" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DateSuppression" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="AspNetUsers" Relationship="ImmoWhatModel.FK_MEMBRE_AspNetUsers" FromRole="MEMBRE" ToRole="AspNetUsers" />
-          <NavigationProperty Name="BIEN" Relationship="ImmoWhatModel.FK_BIENS_MEMBRE" FromRole="MEMBRE" ToRole="BIEN" />
           <Property Name="Role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BIEN" Relationship="ImmoWhatModel.FK_BIENS_MEMBRE" FromRole="MEMBRE" ToRole="BIEN" />
         </EntityType>
         <EntityType Name="OPTIONS">
           <Key>
@@ -676,18 +693,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MEMBRE_AspNetUsers">
-          <End Type="ImmoWhatModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
-          <End Type="ImmoWhatModel.MEMBRE" Role="MEMBRE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MEMBRE">
-              <PropertyRef Name="idUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_BIENS_COMMUNE">
           <End Type="ImmoWhatModel.COMMUNE" Role="COMMUNE" Multiplicity="1" />
           <End Type="ImmoWhatModel.BIEN" Role="BIEN" Multiplicity="*" />
@@ -732,25 +737,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <End Type="ImmoWhatModel.BIEN" Role="BIEN" Multiplicity="*" />
           <End Type="ImmoWhatModel.OPTIONS" Role="OPTIONS" Multiplicity="*" />
         </Association>
-        <ComplexType Name="GetMyProfile_Result">
-          <Property Type="Int32" Name="idMembre" Nullable="false" />
-          <Property Type="String" Name="mail" Nullable="false" MaxLength="256" />
-          <Property Type="String" Name="nom" Nullable="false" MaxLength="250" />
-          <Property Type="String" Name="prenom" Nullable="false" MaxLength="250" />
-          <Property Type="String" Name="Commune" Nullable="false" MaxLength="250" />
-          <Property Type="String" Name="rue" Nullable="false" MaxLength="250" />
-          <Property Type="String" Name="numero" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="boite" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="dateDeNaissance" Nullable="false" />
-          <Property Type="Boolean" Name="estProprietaire" Nullable="false" />
-          <Property Type="String" Name="photo" Nullable="true" MaxLength="50" />
-          <Property Type="Boolean" Name="deleted" Nullable="false" />
-          <Property Type="String" Name="idUser" Nullable="false" MaxLength="128" />
-          <Property Type="DateTime" Name="DateEnregistrement" Nullable="false" />
-          <Property Type="DateTime" Name="DateSuppression" Nullable="true" />
-          <Property Type="String" Name="Role" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="PhoneNumber" Nullable="true" />
-        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -784,6 +770,31 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <FunctionImportMapping FunctionImportName="addNewMembre" FunctionName="ImmoWhatModel.Store.addNewMembre" />
           <FunctionImportMapping FunctionImportName="CommunesToLower" FunctionName="ImmoWhatModel.Store.CommunesToLower" />
           <FunctionImportMapping FunctionImportName="GetMyId" FunctionName="ImmoWhatModel.Store.GetMyId" />
+          <FunctionImportMapping FunctionImportName="GetMyIds" FunctionName="ImmoWhatModel.Store.GetMyIds" />
+          <FunctionImportMapping FunctionImportName="GetIdMmbre" FunctionName="ImmoWhatModel.Store.GetIdMmbre" />
+          <FunctionImportMapping FunctionImportName="GetMyProfile" FunctionName="ImmoWhatModel.Store.GetMyProfile">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetMyProfile_Result">
+                <ScalarProperty Name="idMembre" ColumnName="idMembre" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="Commune" ColumnName="Commune" />
+                <ScalarProperty Name="rue" ColumnName="rue" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="boite" ColumnName="boite" />
+                <ScalarProperty Name="dateDeNaissance" ColumnName="dateDeNaissance" />
+                <ScalarProperty Name="estProprietaire" ColumnName="estProprietaire" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="DateEnregistrement" ColumnName="DateEnregistrement" />
+                <ScalarProperty Name="DateSuppression" ColumnName="DateSuppression" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="ImmoWhatModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -860,6 +871,8 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <EntitySetMapping Name="COMMUNE">
             <EntityTypeMapping TypeName="ImmoWhatModel.COMMUNE">
               <MappingFragment StoreEntitySet="COMMUNE">
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
                 <ScalarProperty Name="langue" ColumnName="langue" />
                 <ScalarProperty Name="Province" ColumnName="Province" />
                 <ScalarProperty Name="Localite" ColumnName="Localite" />
@@ -941,31 +954,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
               <ScalarProperty Name="BIEN_Id" ColumnName="IdBien" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="GetMyIds" FunctionName="ImmoWhatModel.Store.GetMyIds" />
-          <FunctionImportMapping FunctionImportName="GetIdMmbre" FunctionName="ImmoWhatModel.Store.GetIdMmbre" />
-          <FunctionImportMapping FunctionImportName="GetMyProfile" FunctionName="ImmoWhatModel.Store.GetMyProfile">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ImmoWhatModel.GetMyProfile_Result">
-                <ScalarProperty Name="idMembre" ColumnName="idMembre" />
-                <ScalarProperty Name="mail" ColumnName="mail" />
-                <ScalarProperty Name="nom" ColumnName="nom" />
-                <ScalarProperty Name="prenom" ColumnName="prenom" />
-                <ScalarProperty Name="Commune" ColumnName="Commune" />
-                <ScalarProperty Name="rue" ColumnName="rue" />
-                <ScalarProperty Name="numero" ColumnName="numero" />
-                <ScalarProperty Name="boite" ColumnName="boite" />
-                <ScalarProperty Name="dateDeNaissance" ColumnName="dateDeNaissance" />
-                <ScalarProperty Name="estProprietaire" ColumnName="estProprietaire" />
-                <ScalarProperty Name="photo" ColumnName="photo" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="idUser" ColumnName="idUser" />
-                <ScalarProperty Name="DateEnregistrement" ColumnName="DateEnregistrement" />
-                <ScalarProperty Name="DateSuppression" ColumnName="DateSuppression" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

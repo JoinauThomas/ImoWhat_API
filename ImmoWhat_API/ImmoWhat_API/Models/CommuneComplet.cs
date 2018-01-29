@@ -12,5 +12,7 @@ namespace ImmoWhat_API.Models
         public string Localite { get; set; }
         public string Province { get; set; }
         public string langue { get; set; }
+        public string longitude { get; set; }
+        public string latitude { get; set; }
     }
 }

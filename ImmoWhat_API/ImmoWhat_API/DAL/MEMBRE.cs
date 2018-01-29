@@ -37,7 +37,6 @@ namespace ImmoWhat_API.DAL
         public Nullable<System.DateTime> DateSuppression { get; set; }
         public string Role { get; set; }
     
-        public virtual AspNetUsers AspNetUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BIEN> BIEN { get; set; }
     }

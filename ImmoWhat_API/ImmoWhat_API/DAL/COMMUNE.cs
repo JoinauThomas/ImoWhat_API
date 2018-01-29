@@ -25,6 +25,8 @@ namespace ImmoWhat_API.DAL
         public string Localite { get; set; }
         public string Province { get; set; }
         public string langue { get; set; }
+        public string longitude { get; set; }
+        public string latitude { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BIEN> BIEN { get; set; }

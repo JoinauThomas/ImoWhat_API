@@ -29,7 +29,7 @@ namespace ImmoWhatApp.Controllers
             Response.Cookies.Add(cookie);
             return Redirect(Request.UrlReferrer.AbsoluteUri);
         }
-        string lang = "fr";
+        //string lang = "fr";
         // GET: Home
         public ActionResult Index()
         {
