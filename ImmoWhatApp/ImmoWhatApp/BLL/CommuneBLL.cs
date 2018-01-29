@@ -65,11 +65,11 @@ namespace ImmoWhatApp.BLL
 
         //    return Communes;
         //}
-        public static bool checkIfCommuneExistsBLL (string nomCommune)
+        public static Models.Commune checkIfCommuneExistsBLL (string nomCommune)
         {
             try
             {
-                bool result = ListeTtesCommunes.Any(item => item.Localite == nomCommune.ToLower());
+                Models.Commune result = ListeTtesCommunes.Find(item => item.Localite == nomCommune.ToLower());
                 return result;
             }
             catch (Exception ex)

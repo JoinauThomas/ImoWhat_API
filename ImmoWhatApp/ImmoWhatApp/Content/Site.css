@@ -97,3 +97,65 @@ li a {
     border: 5px solid #CCC;
     z-index: 200;
 }
+
+/*pour label MainPage*/
+
+body {
+    width: 100%;
+}
+
+#header {
+    height: 10vh;
+    background-color: red;
+    color: white;
+}
+
+#navigation {
+    height: 78vh;
+    background-color: green;
+    color: white;
+    text-align: center;
+}
+
+#menuNav {
+    background-color: black;
+}
+
+#SearchMenu {
+    color: white;
+}
+
+#menuInfoCommune {
+    background-color: black;
+    height: 10%;
+    text-align: center;
+}
+
+#menuTypeBien {
+    background-color: green;
+    height: 15%;
+    text-align: center;
+}
+
+#menuPrixMoyen {
+    text-align: center;
+    background-color: brown;
+}
+
+#carte {
+    height: 78vh;
+    background-color: grey;
+    color: white;
+}
+
+#biens {
+    height: 78vh;
+    background-color: purple;
+    color: white;
+}
+
+#footer {
+    height: 9vh;
+    background-color: blue;
+    color: white;
+}

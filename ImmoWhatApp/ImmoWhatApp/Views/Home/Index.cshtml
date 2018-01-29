@@ -42,7 +42,7 @@
                     type: 'GET',
                     datatype: 'json',
                     data: { nom: name.toLowerCase() },
-                    url: '@Url.Action("GetCommunesByNameInJson", "Home")',
+                    url: '@Url.Action("GetCommunesByNameInJson", "Commune")',
                     success: function (donnee) {
                         reponse($.map(donnee.commune, function (objet) {
                             return {
@@ -69,10 +69,12 @@
                     type: 'GET',
                     datatype: 'json',
                     data: { nomCommune: nomCommune },
-                    url: '@Url.Action("checkIfCommuneExists", "Home")',
+                    url: '@Url.Action("checkIfCommuneExists", "Commune")',
                     success: function (donnee) {
-                        if (donnee == "True") {
-                            alert("ok");
+                        if (donnee.result == "OK") {
+                            var nom = donnee.nom;
+                            var url = "/Home/MainPage?nomCommune=" + nom;
+                            window.location.href = url;
                         }
                         else {
                              $('#modalTexte').html("commune inexistante");

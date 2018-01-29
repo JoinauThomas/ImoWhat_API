@@ -42,73 +42,15 @@ namespace ImmoWhatApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult mesCommunes()
+        public ActionResult MainPage(string nomCommune)
         {
-            List<Models.Commune> Communes = new List<Models.Commune>();
-
-            using (var client = new HttpClient())
-            {
-
-
-                client.BaseAddress = new Uri("http://localhost:49383/api/Commune/");
-                var responseTask = client.GetAsync("mesCommunes");
-                var result = responseTask.Result;
-                responseTask.Wait();
-
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<List<Models.Commune>>();
-                    readTask.Wait();
-                    var maListe = readTask.Result;
-                    Communes = maListe.ToList();
-                }
-                else
-                {
-                    var content = result.Content.ReadAsStringAsync();
-                    content.Wait();
-                    ModelState.AddModelError(string.Empty, "Server error : " + content.Result);
-                }
-            }
-            return View(Communes);
-        }
-        [HttpGet]
-        public JsonResult GetCommunesInJson()
-        {
-            IList<Models.Commune> ListeDeCommunes = BLL.CommuneBLL.GetAllCommunesCompleteBLL();
-            List<string> CommuneStr = new List<string>();
-
-            foreach (var i in ListeDeCommunes)
-            {
-                CommuneStr.Add(i.ToString());
-            }
-
-            return Json(new { result = "OK", commune = ListeDeCommunes }, JsonRequestBehavior.AllowGet);
-        }
-        [HttpGet]
-        public JsonResult GetCommunesByNameInJson(string nom)
-        {
-            List<Models.Commune> ListeDeCommunes = BLL.CommuneBLL.GetAllCommunesCompleteBLL();
-            List<Models.Commune> CommuneByName = new List<Models.Commune>();
-
-            CommuneByName = ListeDeCommunes.FindAll(x => ( x.Localite.Contains(nom) || x.CodePostal.StartsWith(nom)) && x.langue == lang).Take(5).ToList();
-
-            List<string> CommuneStr = new List<string>();
-
-            foreach (var i in ListeDeCommunes)
-            {
-                CommuneStr.Add(i.ToString());
-            }
-
-            return Json(new { result = "OK", commune = CommuneByName }, JsonRequestBehavior.AllowGet);
+            Models.Commune maCommune = BLL.CommuneBLL.checkIfCommuneExistsBLL(nomCommune);
+            return View(maCommune);
         }
 
-        [HttpGet]
-        public bool checkIfCommuneExists(string nomCommune)
-        {
-            bool result = BLL.CommuneBLL.checkIfCommuneExistsBLL(nomCommune);
-            return result;
-        }
+
+        
+        
 
     }
 }
