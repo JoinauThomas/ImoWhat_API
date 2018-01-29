@@ -61,6 +61,60 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à nom d&apos;utilisateur ou mot de pass pas valide.
+        /// </summary>
+        public static string connectionNotOk {
+            get {
+                return ResourceManager.GetString("connectionNotOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Bienvenue.
+        /// </summary>
+        public static string connectionOk {
+            get {
+                return ResourceManager.GetString("connectionOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à connexion reussie.
+        /// </summary>
+        public static string connectionReussie {
+            get {
+                return ResourceManager.GetString("connectionReussie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à connexion.
+        /// </summary>
+        public static string connexion {
+            get {
+                return ResourceManager.GetString("connexion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Desole.
+        /// </summary>
+        public static string desole {
+            get {
+                return ResourceManager.GetString("desole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à s&apos;enregistrer.
+        /// </summary>
+        public static string SEnregistrer {
+            get {
+                return ResourceManager.GetString("SEnregistrer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à 3 clics pour tout savoir sur vos m².
         /// </summary>
         public static string slogan {

@@ -6,10 +6,10 @@
 
 <h2>Connexion</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Identification</h4>
         <hr />
@@ -18,7 +18,7 @@
             @Html.LabelFor(model => model.login, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.login, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.login, "", new { @class = "text-danger" })
+                <span id="errorLogin" class="text-danger"></span>
             </div>
         </div>
 
@@ -26,18 +26,97 @@
             @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                <span id="errorPassword" class="text-danger"></span>
             </div>
         </div>
-
-        <div class="form-group">
+        <div class="form-group" style="margin-top:5%">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input id="connection" type="button" value="@Resource.connexion" class="btn btn-default col-md-3" />
+                <a class="col-md-push-1 col-md-1">@Html.ActionLink(Resource.SEnregistrer, "InsertNewMembre", "Membre", new { area = "" }, null)</a>
             </div>
         </div>
     </div>
-}
-
+} 
+<img id="chargement" src="~/img/loaders/infini.gif" style="display: none" alt="Chargement en cours..." class="loaderConnection col-md-offset-5 col-md-2 col-md-offset-5" />
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<div id="modal_connection" style="display:none">
+    <p id="modalTexte" class="modal-contents">aaaaaaa</p>
+</div>
+
+<script>
+
+    $('#connection').click(function () {
+        var a = $('#login').val();
+        var b = $('#password').val();
+
+        if (a == "" || b == "") {
+            if (a == "")
+                $('#errorLogin').text("login vide");
+            else
+                $('#errorLogin').text("");
+            if (b == "")
+                $('#errorPassword').text("password vide");
+            else
+                $('#errorPassword').text("");
+        }
+        else {
+            $('#errorLogin').text("");
+            $('#errorPassword').text("");
+
+            $("#chargement").show();
+
+            $.ajax({
+                type: 'POST',
+                datatype: 'json',
+                url: '@Url.Action("Connexion", "Account")',
+                data: { login: a, password: b, },
+                success:
+                function (response) {
+                    if (response.result != "OK") {
+                        $("#chargement").hide();
+                        $('#modalTexte').html("@Resource.connectionNotOk");
+                        $('#modal_connection').dialog({
+                            open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
+                            resizable: false,
+                            height: "auto",
+                            width: "400",
+                            modal: true,
+                            title: '@Resource.desole',
+                            buttons: {
+                                "ok": function () { $(this).dialog("close") }
+                            }
+                        })
+                    }
+                    else {
+                        $("#chargement").hide();
+                        $('#modalTexte').html("@Resource.connectionOk" + " " + response.nom + " " + response.prenom);
+                        $('#modal_connection').dialog({
+
+                            open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+                            resizable: false,
+                            height: "auto",
+                            width: "400",
+                            modal: true,
+                            title: '@Resource.connectionReussie',
+
+                            buttons: {
+                                "ok": function () {
+                                    $(this).dialog("close");
+                                    location.href = "../Home/Index";
+                                }
+                            }
+                        });
+
+                    }
+                },
+                error:
+                function (response) {
+                    alert("un problème a été détecté... " + response.nom);
+                }
+            })
+        }
+        });
+
+</script>

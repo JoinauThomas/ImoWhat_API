@@ -53,29 +53,55 @@ namespace ImmoWhatApp.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Connexion(Models.Identification moi)
+        public JsonResult Connexion(string login, string password)
         {
-            if(!ModelState.IsValid)
-            {
-                return View(moi);
-            }
+            Models.Identification moi = new Models.Identification { login = login, password = password };
+            
             Models.ResultRequest resultRequest = BLL.MembreBLL.Connexion(moi);
             if(resultRequest.msg == "ok")
             {
                 Models.MembreModels monProfile = BLL.MembreBLL.GetMyProfile(moi.login);
                 Session["moi"] = monProfile;
-                return RedirectToAction("Index","Home" );
+
+
+                return Json(new { result = "OK", nom = monProfile.nom, prenom = monProfile.prenom });
             }
             else
             {
-                if(resultRequest.idError == 65)
-                {
-                    return View();
-                }
-                return View("error");
+                return null;
             }
 
             
+        }
+
+        public JsonResult deconnexion()
+        {
+            try
+            {
+               
+                Models.MembreModels moi = (Models.MembreModels)Session["moi"];
+                Session["monToken"] = null;
+                Session["moi"] = null;
+
+                HttpCookie myToken;
+                string cookieName;
+                int limit = Request.Cookies.Count;
+                for (int i = 0; i < limit; i++)
+                {
+                    cookieName = Request.Cookies[i].Name;
+                    myToken = new HttpCookie(cookieName);
+                    myToken.Value = "";
+                    Response.Cookies.Add(myToken);
+                }
+
+
+                return Json(new { result = "OK", nom = moi.nom, prenom = moi.prenom });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }

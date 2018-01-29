@@ -21,36 +21,32 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light col-lg-12" style="background-color: green">
         <a class="navbar-brand col-lg-2" href="#">IMMOWHAT</a>
+        <span class="col-lg-6" style="background-color: grey">The true value of your property <span class="sr-only">(current)</span></span>
 
-        <div class="collapse navbar-collapse col-lg-10" id="navbarNavDropdown">
-            <ul class="navbar-nav col-lg-12">
-                <li class="nav-item active col-lg-7">
-                    <span class="nav-link" style="background-color: grey">The true value of your property <span class="sr-only">(current)</span></span>
-                </li>
-                @{
-        ImmoWhatApp.Models.MembreModels moi = (ImmoWhatApp.Models.MembreModels)Session["moi"];
-        if (Session["moi"] == null)
-        {
-            <li class="nav-item col-lg-2 liste navbar">
-                @Html.ActionLink("se connecter", "connexion", "Account", new { area = "" }, null)
-            </li>
-            <li class="nav-item col-lg-2 navbar">
-                @Html.ActionLink("s'inscrire", "CreerCompte", "Account", new { area = "" }, null)
-            </li>
-}
-else
-{
-            <li class="nav-item col-lg-2 liste navbar">
-                @Html.ActionLink("mon frofile", "connexion", "Account", new { area = "" }, null)
-            </li>
-            <li class="nav-item col-lg-2 navbar">
-                @Html.ActionLink("se déconnecter", "CreerCompte", "Account", new { area = "" }, null)
-            </li>
-}
-                }
 
+
+
+        @{
+            ImmoWhatApp.Models.MembreModels moi = (ImmoWhatApp.Models.MembreModels)Session["moi"];
+            if (Session["moi"] == null)
+            {
+                <nav class="nav col-lg-3">
+                    <a class="nav-link col-lg" href="#">@Html.ActionLink("se connecter", "connexion", "Account", new { area = "" }, null)</a>
+                    <a class="nav-link col-lg" href="#" id="deconnexion">@Html.ActionLink("s'inscrire", "CreerCompte", "Account", new { area = "" }, null)</a>
+                </nav>
+            }
+            else
+            {
+                <nav class="nav col-lg-3">
+                    <a class="nav-link col-lg" href="#">mon profile</a>
+                    <a class="nav-link col-lg" href="#" id="deconnexion">se deconnecter</a>
+                </nav>
+
+            }
+        }
+        <ul class="nav navbar-nav col-lg-1">
             <li class="nav-item dropdown col-lg-1 ">
-               
+
                 <div class="btn-group dropleft">
                     <button type="button" class="btn btn-secondary btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         FR
@@ -62,8 +58,7 @@ else
                     </div>
                 </div>
             </li>
-            </ul>
-        </div>
+        </ul>
     </nav>
 
     <div class="body-content">
@@ -73,7 +68,60 @@ else
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
+    <div id="modal_connection" style="display:none">
+        <p id="modalTexte" class="modal-contents">aaaaaaa</p>
+    </div>
+    <script>
+        $('#deconnexion').click(function () {
 
+            $.ajax({
+                type: 'POST',
+                datatype: 'json',
+                url: '@Url.Action("deconnexion", "Account")',
+                success:
+                function (response) {
+                    if (response.result != "OK") {
+                        $('#modalTexte').html("probleme detecté");
+                        $('#modal_connection').dialog({
+                            open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
+                            resizable: false,
+                            height: "auto",
+                            width: "400",
+                            modal: true,
+                            title: '@Resource.desole',
+                            buttons: {
+                                "ok": function () { $(this).dialog("close") }
+                            }
+                        })
+                    }
+                    else {
+                        $('#modalTexte').html("au revoir " + " " + response.nom + " " + response.prenom);
+                        $('#modal_connection').dialog({
+
+                            open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+                            resizable: false,
+                            height: "auto",
+                            width: "400",
+                            modal: true,
+                            title: 'au revoir',
+
+                            buttons: {
+                                "ok": function () {
+                                    $(this).dialog("close");
+                                    location.href = "../Home/Index";
+                                }
+                            }
+                        });
+
+                    }
+                },
+                error:
+                function (response) {
+                    alert("un problème a été détecté... " + response.nom);
+                }
+            })
+        });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

@@ -165,8 +165,15 @@ namespace ImmoWhatApp.BLL
                         readTask.Wait();
 
                         moi = readTask.Result;
+                        return moi;
                     }
-                    return moi;
+                    else
+                    {
+                        var responseString = result.Content.ReadAsStringAsync();
+                        var res = responseString.Result;
+                        return null;
+                    }
+                    
                 }
             }
             catch(Exception ex)

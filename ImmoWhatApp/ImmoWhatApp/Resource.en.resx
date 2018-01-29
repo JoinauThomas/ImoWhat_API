@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="connectionNotOk" xml:space="preserve">
+    <value>User or password not valid</value>
+  </data>
+  <data name="connectionOk" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="connectionReussie" xml:space="preserve">
+    <value>Successful connection</value>
+  </data>
+  <data name="connexion" xml:space="preserve">
+    <value>connection</value>
+  </data>
+  <data name="desole" xml:space="preserve">
+    <value>Sorry</value>
+  </data>
+  <data name="SEnregistrer" xml:space="preserve">
+    <value>register</value>
+  </data>
   <data name="slogan" xml:space="preserve">
     <value>3 clicks to know everything about your m²</value>
   </data>

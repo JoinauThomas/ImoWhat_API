@@ -1756,6 +1756,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Global.asax" />
     <Content Include="img\Bruxelles.jpg" />
+    <Content Include="img\loaders\infini.gif" />
     <Content Include="img\logo.png" />
     <Content Include="img\membre\photo0.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
