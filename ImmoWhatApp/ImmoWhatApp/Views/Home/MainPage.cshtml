@@ -4,43 +4,57 @@
     ViewBag.Title = "MainPage";
 }
 
-
-<div class="row">
-    <nav id="navigation" class="col-lg-3">
-        <div id="menuNav" class="col-lg-12">
-            Home/carte/prixWaterloo
-        </div>
-        <div class="input-group mb-3 row justify-content-lg-center col-lg-12 " id="inputCommune">
-
-            <input id="inputComm" type="text" class="form-control col-lg-10 ui-widget"  placeholder="@Model.Localite" aria-label="Recipient's username" aria-describedby="basic-addon2">
-
-            <div class="input-group-append col-lg-2 ui-widget">
-                <button id="inputComm" class="btn btn-success" type="button"><span class="oi" data-glyph="magnifying-glass" title="magnifying-glass" aria-hidden="true"></span><span class="glyphicon glyphicon-envelope"></span></button>
+<div id="corpsMainPage">
+    <div class="row">
+        <nav id="navigation" class="col-lg-2">
+            <div id="menuNav" class="col-lg-12">
+                Home/carte/prixWaterloo
             </div>
-        </div>
-        <div id="menuInfoCommune" class="col-lg-12">
-            @Model.CodePostal @Model.Localite
-        </div>
-        <div id="menuTypeBien" class="col-lg-12">
-            <a class="col-lg-3 btn-danger">flat</a>
-            <a class="col-lg-3 btn-danger">house</a>
-            <a class="col-lg-3 btn-danger">villa</a>
-            <a class="col-lg-3 btn-danger">field</a>
-        </div>
-        <div id="menuPrixMoyen" class="col-lg-12">
-            <span>prix moyen à @Model.Localite :</span>
-            <br>
-            <span>14500€</span>
-        </div>
-    </nav>
-    <div id="carte" class="col-lg-6">
-        <div id="googleMap" style="width:100%; height:100%;"></div>
-    </div>
-    <div id="biens" class="col-lg-3">
-        ccc
+            <div class="input-group mb-3 row justify-content-lg-center col-lg-12 " id="inputCommune">
 
+                <input id="inputComm" type="text" class="form-control col-lg-10 ui-widget" placeholder="@Model.Localite" aria-label="Recipient's username" aria-describedby="basic-addon2">
+
+                <div class="input-group-append col-lg-2 ui-widget">
+                    <button id="inputComm" class="btn btn-success" type="button"><span class="oi" data-glyph="magnifying-glass" title="magnifying-glass" aria-hidden="true"></span><span class="glyphicon glyphicon-envelope"></span></button>
+                </div>
+            </div>
+            <div id="menuInfoCommune" class="col-lg-12">
+                @Model.CodePostal @Model.Localite
+            </div>
+            <div id="menuTypeBien" class="col-lg-12">
+                <a class="col-lg-3 btn-danger">flat</a>
+                <a class="col-lg-3 btn-danger">house</a>
+                <a class="col-lg-3 btn-danger">villa</a>
+                <a class="col-lg-3 btn-danger">field</a>
+            </div>
+            <div id="menuPrixMoyen" class="col-lg-12">
+                <span>prix moyen à @Model.Localite :</span>
+                <br>
+                <span>14500€</span>
+            </div>
+            <ul class="col-lg-12 list-group">
+                <li id="col1" class="list-group-item">0 € / 100.000 €</li>
+                <li id="col2" class="list-group-item">100.000 € / 150.000 €</li>
+                <li id="col3" class="list-group-item">150.000 € / 200.000 €</li>
+                <li id="col4" class="list-group-item">200.000 € / 225.000 €</li>
+                <li id="col5" class="list-group-item">225.000 € / 250.000 €</li>
+                <li id="col6" class="list-group-item">250.000 € / 275.000 €</li>
+                <li id="col7" class="list-group-item">275.000 € / 300.000 €</li>
+                <li id="col8" class="list-group-item">300.000 € / 325.000 €</li>
+                <li id="col9" class="list-group-item">325.000 € / 350.000 €</li>
+                <li id="col10" class="list-group-item">350.000 € / ... €</li>
+            </ul>
+        </nav>
+        <div id="carte" class="col-lg-7">
+            <div id="googleMap" style="width:100%; height:100%;"></div>
+        </div>
+        <div id="biens" class="col-lg-3">
+            ccc
+
+        </div>
     </div>
 </div>
+
 <script>
     function myMap() {
         var mapProp = {

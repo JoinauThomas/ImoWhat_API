@@ -26,8 +26,6 @@ namespace ImmoWhatApp.BLL
             {
                 using (var client = new HttpClient())
                 {
-
-
                     client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
                     var responseTask = client.GetAsync("GetCommunesComplet");
                     var result = responseTask.Result;
@@ -53,6 +51,13 @@ namespace ImmoWhatApp.BLL
             }
         }
 
+        public static List<Models.Commune> GetAllCommunesCompleteWithLanguageBLL(string langue)
+        {
+            List<Models.Commune> mesCommunes = GetAllCommunesCompleteBLL();
+            List<Models.Commune> result = mesCommunes.FindAll(item => item.langue == langue);
+            return result;
+        }
+
         //public static List<Models.Commune> GetCommunesByNameBLL(string name)
         //{
         //    List<Models.Commune> ListCommunesCompl = new List<Models.Commune>();
@@ -60,7 +65,7 @@ namespace ImmoWhatApp.BLL
 
         //    ListeCommuneByName = ListCommunesCompl.Find(x => x.Localite.StartsWith(name));
 
-            
+
 
 
         //    return Communes;

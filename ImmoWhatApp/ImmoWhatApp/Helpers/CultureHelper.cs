@@ -9,7 +9,8 @@ namespace ImmoWhatApp.Helpers
     {
         private static readonly List<string> _cultures = new List<string> {
             "fr", // first culture is the DEFAULT french NEUTRAL culture
-            "en" // english NEUTRAL culture
+            "en", // english NEUTRAL culture
+            "nl" // nl culture
         };
         /// <summary>
         /// Returns a valid NEUTRAL culture, if is not valid, returns default NEUTRAL culture "fr"

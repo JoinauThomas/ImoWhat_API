@@ -47,16 +47,41 @@
         <ul class="nav navbar-nav col-lg-1">
             <li class="nav-item dropdown col-lg-1 ">
 
-                <div class="btn-group dropleft">
-                    <button type="button" class="btn btn-secondary btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        FR
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#">@Html.ActionLink("EN", "SetCulture", "Home", new { culture = "en" }, null)</a>
-                        <a class="dropdown-item" href="#">@Html.ActionLink("FR", "SetCulture", "Home", new { culture = "fr" }, null)</a>
-                        <a class="dropdown-item" href="#">NL</a>
-                    </div>
-                </div>
+                @*<div class="btn-group dropleft">
+                        <button id="aaaaa" type="button" class="btn btn-secondary btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            FR
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" id="langue">
+                            <a id="lnEN" class="dropdown-item" href="EN">@Html.ActionLink("EN", "SetCulture", "Home", new { culture = "en" }, null)</a>
+                            <a id="lnFR" class="dropdown-item" href="FR">@Html.ActionLink("FR", "SetCulture", "Home", new { culture = "fr" }, null)</a>
+                            <a id="lnNL" class="dropdown-item" href="NL">@Html.ActionLink("NL", "SetCulture", "Home", new { culture = "nl" }, null)</a>
+                        </div>
+                    </div>*@
+                <select name="langue" id="langue" class="btn btn-danger dropdown-toggle">
+                    @{
+                        var langue = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+                        if (langue == "fr")
+                        {
+                            <option value="fr" selected="selected">FR</option>
+                            <option value="en">EN</option>
+                            <option value="nl">NL</option>
+                        }
+                        else if (langue == "en")
+                        {
+                            <option value="fr">FR</option>
+                            <option value="en" selected="selected">EN</option>
+                            <option value="nl">NL</option>
+                        }
+                        else
+                        {
+                            <option value="fr">FR</option>
+                            <option value="en">EN</option>
+                            <option value="nl" selected="selected">NL</option>
+                        }
+
+                    }
+                </select>
+
             </li>
         </ul>
     </nav>
@@ -72,8 +97,12 @@
         <p id="modalTexte" class="modal-contents">aaaaaaa</p>
     </div>
     <script>
-        $('#deconnexion').click(function () {
 
+
+        
+    </script>
+    <script>
+        $('#deconnexion').click(function () {
             $.ajax({
                 type: 'POST',
                 datatype: 'json',
@@ -121,6 +150,28 @@
                 }
             })
         });
+
+
+
+    </script>
+
+    <script>
+        $('#langue').change(function () {
+            var langue = $('#langue').val();
+            $.ajax({
+                url: '@Url.Action("SetCulture", "Home")',
+                data: { culture: langue },
+                success:
+                function () {
+                    location.reload()
+                },
+                error:
+                function (response) {
+                    alert("un problème a été détecté... " + response.nom);
+                }
+            })
+        });
+
     </script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

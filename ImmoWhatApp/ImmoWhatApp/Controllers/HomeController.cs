@@ -19,12 +19,15 @@ namespace ImmoWhatApp.Controllers
             // Save culture in a cookie
             HttpCookie cookie = Request.Cookies["_culture"];
             if (cookie != null)
+            {
                 cookie.Value = culture; // update cookie value
+            }
             else
             {
                 cookie = new HttpCookie("_culture");
                 cookie.Value = culture;
                 cookie.Expires = DateTime.Now.AddYears(1);
+
             }
             Response.Cookies.Add(cookie);
             return Redirect(Request.UrlReferrer.AbsoluteUri);
@@ -33,9 +36,9 @@ namespace ImmoWhatApp.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            
+            var langue = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
             List<Models.Commune> listeCommunes = new List<Models.Commune>();
-            listeCommunes = BLL.CommuneBLL.GetAllCommunesCompleteBLL();
+            listeCommunes = BLL.CommuneBLL.GetAllCommunesCompleteWithLanguageBLL(langue);
 
             ViewBag.ListeCommunes = listeCommunes;
 

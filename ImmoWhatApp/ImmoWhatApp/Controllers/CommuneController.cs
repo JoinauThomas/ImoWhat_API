@@ -28,7 +28,7 @@ namespace ImmoWhatApp.Controllers
             Response.Cookies.Add(cookie);
             return Redirect(Request.UrlReferrer.AbsoluteUri);
         }
-        string lang = "fr";
+        
         // GET: Home
 
         [HttpPost]
@@ -62,7 +62,8 @@ namespace ImmoWhatApp.Controllers
         [HttpGet]
         public JsonResult GetCommunesInJson()
         {
-            IList<Models.Commune> ListeDeCommunes = BLL.CommuneBLL.GetAllCommunesCompleteBLL();
+            var langue = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+            IList<Models.Commune> ListeDeCommunes = BLL.CommuneBLL.GetAllCommunesCompleteWithLanguageBLL(langue);
             List<string> CommuneStr = new List<string>();
 
             foreach (var i in ListeDeCommunes)
@@ -75,17 +76,22 @@ namespace ImmoWhatApp.Controllers
         [HttpGet]
         public JsonResult GetCommunesByNameInJson(string nom)
         {
+            var langue = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+            if(langue == "en")
+            {
+                langue = "fr";
+            }
             List<Models.Commune> ListeDeCommunes = BLL.CommuneBLL.GetAllCommunesCompleteBLL();
             List<Models.Commune> CommuneByName = new List<Models.Commune>();
 
-            CommuneByName = ListeDeCommunes.FindAll(x => (x.Localite.Contains(nom) || x.CodePostal.StartsWith(nom)) && x.langue == lang).Take(5).ToList();
+            CommuneByName = ListeDeCommunes.FindAll(x => (x.Localite.Contains(nom) || x.CodePostal.StartsWith(nom)) && x.langue == langue).Take(5).ToList();
 
             List<string> CommuneStr = new List<string>();
 
-            foreach (var i in ListeDeCommunes)
-            {
-                CommuneStr.Add(i.ToString());
-            }
+            //foreach (var i in ListeDeCommunes)
+            //{
+            //    CommuneStr.Add(i.ToString());
+            //}
 
             return Json(new { result = "OK", commune = CommuneByName }, JsonRequestBehavior.AllowGet);
         }
