@@ -83,6 +83,69 @@ namespace ImmoWhatApp.BLL
             }
 
         }
+        
+        public static int GetAveragePrice(int annee, string typeBien, string codePostale)
+        {
+            try
+            {
+                int moyennePrix;
+                using (var client = new HttpClient())
+                {
+                    
+                    client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
+                    var responseTask = client.GetAsync("GetAveragePrice?annee="+annee+ "&typeBien="+typeBien+ "&codePostale="+codePostale);
+                    var result = responseTask.Result;
+                    responseTask.Wait();
 
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<int>();
+                        readTask.Wait();
+                        moyennePrix = readTask.Result;
+                    }
+                    else
+                    {
+                        moyennePrix = -1;
+                    }
+                }
+                return moyennePrix;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static int GetAverageClass(int annee, string typeBien, string codePostale)
+        {
+            try
+            {
+                int classePrix;
+                using (var client = new HttpClient())
+                {
+
+                    client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
+                    var responseTask = client.GetAsync("GetAverageClass?annee=" + annee + "&typeBien=" + typeBien + "&codePostale=" + codePostale);
+                    var result = responseTask.Result;
+                    responseTask.Wait();
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<int>();
+                        readTask.Wait();
+                        classePrix = readTask.Result;
+                    }
+                    else
+                    {
+                        classePrix = -1;
+                    }
+                }
+                return classePrix;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

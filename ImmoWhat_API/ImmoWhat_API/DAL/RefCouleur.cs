@@ -12,20 +12,19 @@ namespace ImmoWhat_API.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class TYPEBIEN
+    public partial class RefCouleur
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TYPEBIEN()
+        public RefCouleur()
         {
-            this.BIEN = new HashSet<BIEN>();
             this.VAL_PRIX_MOYEN_BIEN = new HashSet<VAL_PRIX_MOYEN_BIEN>();
         }
     
-        public int idTypeBien { get; set; }
-        public string Libelle { get; set; }
+        public int id { get; set; }
+        public string refColor { get; set; }
+        public int valeurMin { get; set; }
+        public int valeurMax { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BIEN> BIEN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VAL_PRIX_MOYEN_BIEN> VAL_PRIX_MOYEN_BIEN { get; set; }
     }

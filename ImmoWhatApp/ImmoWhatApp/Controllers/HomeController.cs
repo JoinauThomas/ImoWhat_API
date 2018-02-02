@@ -32,7 +32,6 @@ namespace ImmoWhatApp.Controllers
             Response.Cookies.Add(cookie);
             return Redirect(Request.UrlReferrer.AbsoluteUri);
         }
-        //string lang = "fr";
         // GET: Home
         public ActionResult Index()
         {
@@ -48,6 +47,7 @@ namespace ImmoWhatApp.Controllers
         public ActionResult MainPage(string nomCommune)
         {
             Models.Commune maCommune = BLL.CommuneBLL.checkIfCommuneExistsBLL(nomCommune);
+            ViewBag.aaa = "test";
             return View(maCommune);
         }
 

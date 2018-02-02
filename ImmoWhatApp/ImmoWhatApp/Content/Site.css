@@ -135,7 +135,7 @@ body {
 }
 
 #menuTypeBien {
-    background-color: green;
+    background-color: green!important;
     height: 10%;
     text-align: center;
 }
@@ -163,19 +163,43 @@ body {
     color: white;
 }
 
-#col1
-{
-    background-color:#46cb00;
+#col1 {
+    background-color: #4AB648;
 }
 #col2 {
-    background-color: #9dcb00;
+    background-color: #76C043;
 }
 #col3 {
-    background-color: #b0cb00;
+    background-color: #9ccb3b;
 }
 #col4 {
-    background-color: #cbc100;
+    background-color: #c9da2a;
 }
 #col5 {
-    background-color: #cb7c00;
+    background-color: #ebe70d;
+}
+#col6 {
+    background-color: #ffe207;
+}
+
+#col7 {
+    background-color: #fec438;
+}
+
+#col8 {
+    background-color: #faa84a;
+}
+
+#col9 {
+    background-color: #f37132;
+}
+
+#col10 {
+    background-color: #ed1c24;
+}
+
+.test {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
 }

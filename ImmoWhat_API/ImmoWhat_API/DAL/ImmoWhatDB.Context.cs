@@ -36,9 +36,13 @@ namespace ImmoWhat_API.DAL
         public virtual DbSet<COMMUNE> COMMUNE { get; set; }
         public virtual DbSet<MEMBRE> MEMBRE { get; set; }
         public virtual DbSet<OPTIONS> OPTIONS { get; set; }
+        public virtual DbSet<RefCouleur> RefCouleur { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TYPEBIEN> TYPEBIEN { get; set; }
+        public virtual DbSet<VAL_PRIX_MOYEN_BIEN> VAL_PRIX_MOYEN_BIEN { get; set; }
         public virtual DbSet<BIEN_PHOTOS> BIEN_PHOTOS { get; set; }
+        public virtual DbSet<MapsParams> MapsParams { get; set; }
+        public virtual DbSet<StatImmo> StatImmo { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -223,6 +227,260 @@ namespace ImmoWhat_API.DAL
                 new ObjectParameter("mail", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyProfile_Result>("GetMyProfile", mailParameter);
+        }
+    
+        public virtual int GetAveragePrice(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAveragePrice", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        public virtual int GetAveragePrice2(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAveragePrice2", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        public virtual int GetAveragePrice3(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAveragePrice3", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        public virtual int GetAveragePrice5(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAveragePrice5", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        public virtual int ajoutIdCouleursDsMapsParams()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ajoutIdCouleursDsMapsParams");
+        }
+    
+        public virtual int insertCodePostInCsvTemplate()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insertCodePostInCsvTemplate");
+        }
+    
+        public virtual int insertCodePostInStatImmo()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insertCodePostInStatImmo");
+        }
+    
+        public virtual int test(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("test", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        public virtual int GetAveragePrices(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAveragePrices", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        public virtual int GetAveragePricess(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAveragePricess", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        [DbFunction("ImmoWhatEntities", "GetAveragePrice0")]
+        public virtual IQueryable<GetAveragePrice0_Result> GetAveragePrice0(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetAveragePrice0_Result>("[ImmoWhatEntities].[GetAveragePrice0](@annee, @type, @codePostCommune)", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        public virtual ObjectResult<GetAveragePrice00_Result> GetAveragePrice00(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAveragePrice00_Result>("GetAveragePrice00", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        public virtual ObjectResult<GetAveragePrice1_Result> GetAveragePrice1(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAveragePrice1_Result>("GetAveragePrice1", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetClassePrice(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetClassePrice", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetClassePrices(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetClassePrices", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetClassePrices0(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetClassePrices0", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetClassePrices00(Nullable<int> annee, string type, string codePostCommune)
+        {
+            var anneeParameter = annee.HasValue ?
+                new ObjectParameter("annee", annee) :
+                new ObjectParameter("annee", typeof(int));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var codePostCommuneParameter = codePostCommune != null ?
+                new ObjectParameter("codePostCommune", codePostCommune) :
+                new ObjectParameter("codePostCommune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetClassePrices00", anneeParameter, typeParameter, codePostCommuneParameter);
         }
     }
 }

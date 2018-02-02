@@ -7,46 +7,65 @@
 <div id="corpsMainPage">
     <div class="row">
         <nav id="navigation" class="col-lg-2">
-            <div id="menuNav" class="col-lg-12">
-                Home/carte/prixWaterloo
-            </div>
-            <div class="input-group mb-3 row justify-content-lg-center col-lg-12 " id="inputCommune">
-
-                <input id="inputComm" type="text" class="form-control col-lg-10 ui-widget" placeholder="@Model.Localite" aria-label="Recipient's username" aria-describedby="basic-addon2">
-
-                <div class="input-group-append col-lg-2 ui-widget">
-                    <button id="inputComm" class="btn btn-success" type="button"><span class="oi" data-glyph="magnifying-glass" title="magnifying-glass" aria-hidden="true"></span><span class="glyphicon glyphicon-envelope"></span></button>
+           
+            <div class="row">
+                <div id="menuNav" class="col-lg-12">
+                    Home/carte/prixWaterloo
                 </div>
             </div>
-            <div id="menuInfoCommune" class="col-lg-12">
-                @Model.CodePostal @Model.Localite
+            <div class="row" style="margin-top:3%; margin-bottom:3%">
+                @*<div class="input-group mb-3 col-lg-12 " id="inputCommune">
+
+                    <input id="inputComm" type="text" class="form-control col-lg-10 ui-widget" placeholder="@Model.Localite" aria-label="Recipient's username" aria-describedby="basic-addon2">
+
+                    <div class="input-group-append col-lg-2 ui-widget">
+                        <button id="inputComm" class="btn btn-success" type="button"><span class="oi" data-glyph="magnifying-glass" title="magnifying-glass" aria-hidden="true"></span><span class="glyphicon glyphicon-envelope"></span></button>
+                    </div>
+                </div>*@
+                <div class="input-group col-lg-10 offset-lg-1">
+                    <input id="inputComm" type="text" class="form-control" placeholder="@Model.Localite" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button id="btnValidCommune" class="btn btn-success" type="button"><span class="oi" data-glyph="magnifying-glass" title="magnifying-glass" aria-hidden="true"></span><span class="glyphicon glyphicon-envelope"></span></button>
+                    </div>
+                </div>
             </div>
-            <div id="menuTypeBien" class="col-lg-12">
-                <a class="col-lg-3 btn-danger">flat</a>
-                <a class="col-lg-3 btn-danger">house</a>
-                <a class="col-lg-3 btn-danger">villa</a>
-                <a class="col-lg-3 btn-danger">field</a>
+            <div class="row">
+                <div id="menuInfoCommune" class="col-lg-12">
+                    @Model.CodePostal @Model.Localite
+                </div>
             </div>
-            <div id="menuPrixMoyen" class="col-lg-12">
-                <span>prix moyen à @Model.Localite :</span>
-                <br>
-                <span>14500€</span>
+            <div id="typeBien" class="row justify-content-lg-around" style="margin-top:3%; margin-bottom:3%" >
+                
+                    <div style="width:20%" id="appartement" class="btn btn-danger">flat</div>
+                    <div style="width:20%" id="maison" class="btn btn-danger">house</div>
+                    <div style="width:20%" id="villa" class="btn btn-danger">villa</div>
+                    <div style="width:20%" id="terrain" class="btn btn-danger">field</div>
             </div>
-            <ul class="col-lg-12 list-group">
-                <li id="col1" class="list-group-item">0 € / 100.000 €</li>
-                <li id="col2" class="list-group-item">100.000 € / 150.000 €</li>
-                <li id="col3" class="list-group-item">150.000 € / 200.000 €</li>
-                <li id="col4" class="list-group-item">200.000 € / 225.000 €</li>
-                <li id="col5" class="list-group-item">225.000 € / 250.000 €</li>
-                <li id="col6" class="list-group-item">250.000 € / 275.000 €</li>
-                <li id="col7" class="list-group-item">275.000 € / 300.000 €</li>
-                <li id="col8" class="list-group-item">300.000 € / 325.000 €</li>
-                <li id="col9" class="list-group-item">325.000 € / 350.000 €</li>
-                <li id="col10" class="list-group-item">350.000 € / ... €</li>
-            </ul>
+            <div class="row">
+                <div id="menuPrixMoyen" class="col-lg-12">
+                    <span>prix moyen à @Model.Localite:</span>
+                    <br>
+                    <span>14500€</span>
+                </div>
+            </div>
+            <div class="row">
+                <ul class="col-lg-12 ">
+                    <li id="col1">0 € / 100.000 €</li>
+                    <li id="col2">100.000 € / 150.000 €</li>
+                    <li id="col3">150.000 € / 200.000 €</li>
+                    <li id="col4">200.000 € / 225.000 €</li>
+                    <li id="col5">225.000 € / 250.000 €</li>
+                    <li id="col6">250.000 € / 275.000 €</li>
+                    <li id="col7">275.000 € / 300.000 €</li>
+                    <li id="col8">300.000 € / 325.000 €</li>
+                    <li id="col9">325.000 € / 350.000 €</li>
+                    <li id="col10">350.000 € / ... €</li>
+                </ul>
+            </div>
+           
         </nav>
         <div id="carte" class="col-lg-7">
-            <div id="googleMap" style="width:100%; height:100%;"></div>
+            <div id="map" style="width:100%; height:100%;"></div>
         </div>
         <div id="biens" class="col-lg-3">
             ccc
@@ -54,14 +73,196 @@
         </div>
     </div>
 </div>
+<div id="modal_commune" style="display:none">
+    <p id="modalTexte" class="modal-contents"></p>
+</div>
 
 <script>
+
     function myMap() {
         var mapProp = {
             center: new google.maps.LatLng(@Model.latitude, @Model.longitude),
             zoom: 13,
         };
-        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        var map = new google.maps.Map(document.getElementById("map"), mapProp);
     }
 </script>
+<script>
+    function myMap() {
+        var stavanger = new google.maps.LatLng(58.983991, 5.734863);
+        var amsterdam = new google.maps.LatLng(52.395715, 4.888916);
+        var london = new google.maps.LatLng(51.508742, -0.120850);
+
+        var waterloo = new google.maps.LatLng(50.7173563, 4.3978047);
+        var braine = new google.maps.LatLng(50.6940942, 4.3548145440335);
+        var uccle = new google.maps.LatLng(50.8018201, 4.3372348);
+
+
+        var mapCanvas = document.getElementById("map");
+        var mapOptions = { center: amsterdam, zoom: 4 };
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+
+        var flightPath = new google.maps.Polygon({
+            path: [stavanger, amsterdam, london],
+            strokeColor: "#0000FF",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#0000FF",
+            fillOpacity: 0.4
+        });
+        var flightPath2 = new google.maps.Polygon({
+            path: [waterloo, braine, uccle],
+            strokeColor: "#c9da2a",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#ed1c24",
+            fillOpacity: 0.4
+        });
+        flightPath.setMap(map);
+        flightPath2.setMap(map);
+    }
+</script>
+<script type="text/javascript">
+    google.charts.load('current', {
+        'packages': ['geochart'],
+        // Note: you will need to get a mapsApiKey for your project.
+        // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+        'mapsApiKey': 'AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0'
+    });
+    google.charts.setOnLoadCallback(drawRegionsMap);
+
+    function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable([
+            ['Country', 'Popularity'],
+            ['Germany', 200],
+            ['United States', 300],
+            ['Brazil', 400],
+            ['Canada', 500],
+            ['France', 600],
+            ['RU', 700]
+        ]);
+
+        var options = {};
+
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+        chart.draw(data, options);
+    }
+</script>
+<script>
+    var classCommune;
+    $(document).ready(function () {
+        var annee = 2014;
+        var codePostal = @Model.CodePostal;
+        var type = "maison";
+        $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            url: '@Url.Action("GetAverageClass", "Commune")',
+            data: { annee: annee, typeBien: type, codePostale: codePostal, },
+            success: function (donnee) {
+                classCommune = "col" + donnee.classe;
+                $('#' + classCommune).css('border', '4px blue groove');
+                $('#maison').css('background-color', 'blue');
+                reponse($.map(donnee.commune, function (objet) {
+                    return {
+                        label: objet.Localite + " ( " + objet.CodePostal + " )",
+                        value: objet.Localite,
+                        id: objet.id
+                    }
+                }));
+            }
+        })
+
+        $("#inputComm").autocomplete({
+            autoFocus: true,
+            source: function (requete, reponse) {
+                var name = $('#inputComm').val();
+                //alert(name);
+                $.ajax({
+                    type: 'GET',
+                    datatype: 'json',
+                    data: { nom: name.toLowerCase() },
+                    url: '@Url.Action("GetCommunesByNameInJson", "Commune")',
+                    success: function (donnee) {
+                        reponse($.map(donnee.commune, function (objet) {
+                            return {
+                                label: objet.Localite + " ( " + objet.CodePostal+" )",
+                                value: objet.Localite,
+                                id: objet.id
+                        }
+                        }));
+                    }
+                })
+            },
+            minLength: 3,
+
+            select: function (event, ui) { // lors de la sélection d'une proposition
+                idCommune = ui.item.id
+            }
+
+        })
+
+    });
+
+    $('#typeBien').click(function (event) {
+        var type = $(event.target).attr('id');
+        var codePostal = @Model.CodePostal;
+        var annee = 2014;
+        $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            url: '@Url.Action("GetAverageClass", "Commune")',
+            data: { annee: annee, typeBien: type, codePostale: codePostal, },
+            success: function (donnee) {
+                $('#' + classCommune).css('border', 'none');
+                classCommune = "col" + donnee.classe;
+                $('#' + classCommune).css('border', '4px blue groove');
+                $('#maison').css('background-color', 'blue');
+                reponse($.map(donnee.commune, function (objet) {
+                    return {
+                        label: objet.Localite + " ( " + objet.CodePostal + " )",
+                        value: objet.Localite,
+                        id: objet.id
+                    }
+                }));
+            }
+        })
+
+    });
+
+     $('#btnValidCommune').click(function () {
+        var nomCommune = $('#inputComm').val();
+         $.ajax({
+                    type: 'GET',
+                    datatype: 'json',
+                    data: { nomCommune: nomCommune },
+                    url: '@Url.Action("checkIfCommuneExists", "Commune")',
+                    success: function (donnee) {
+                        if (donnee.result == "OK") {
+                            var nom = donnee.nom;
+                            var url = "/Home/MainPage?nomCommune=" + nom;
+                            window.location.href = url;
+                        }
+                        else {
+                             $('#modalTexte').html("commune inexistante");
+                             $('#modal_commune').dialog({
+                            open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
+                            resizable: false,
+                            height: "auto",
+                            width: "400",
+                            modal: true,
+                            title: 'commune inexistante',
+                            buttons: {
+                                "ok": function () { $(this).dialog("close") }
+                            }
+                        })
+                        }
+                    }
+                })
+    })
+</script>
+
+
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0&callback=myMap"></script>

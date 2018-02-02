@@ -113,6 +113,77 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <Property Name="longitude" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="latitude" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6013: Aucune clé primaire n'est définie pour la table/vue 'ImmoWhat.dbo.CsvTemplate' ; en outre, aucune clé primaire valide n'a pu être déduite. Cette table/vue a été exclue. Pour utiliser l'entité, vous devez passer en revue votre schéma, ajouter les clés appropriées et supprimer le commentaire associé.
+        <EntityType Name="CsvTemplate">
+          <Property Name="codePostal" Type="varchar" MaxLength="50" />
+          <Property Name="nomCommune" Type="varchar" MaxLength="50" />
+          <Property Name="GMapZonePartRecord_Id" Type="varchar" MaxLength="50" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Trimester" Type="varchar" MaxLength="50" />
+          <Property Name="HouseTransactions" Type="int" />
+          <Property Name="HouseTotalPrice" Type="int" />
+          <Property Name="HouseTotalSurface" Type="int" />
+          <Property Name="HouseAveragePrice" Type="int" />
+          <Property Name="HouseQ10" Type="int" />
+          <Property Name="HouseQ25" Type="int" />
+          <Property Name="HouseQ50" Type="int" />
+          <Property Name="HouseQ75" Type="int" />
+          <Property Name="HouseQ90" Type="int" />
+          <Property Name="HousePricePerM2" Type="int" />
+          <Property Name="VillaTransactions" Type="int" />
+          <Property Name="VillaAveragePrice" Type="int" />
+          <Property Name="VillaTotalPrice" Type="int" />
+          <Property Name="VillaTotalSurface" Type="int" />
+          <Property Name="VillaQ10" Type="int" />
+          <Property Name="VillaQ25" Type="int" />
+          <Property Name="VillaQ50" Type="int" />
+          <Property Name="VillaQ75" Type="int" />
+          <Property Name="VillaQ90" Type="int" />
+          <Property Name="VillaPricePerM2" Type="int" />
+          <Property Name="FlatTransactions" Type="int" />
+          <Property Name="FlatTotalPrice" Type="int" />
+          <Property Name="FlatTotalSurface" Type="int" />
+          <Property Name="FlatAveragePrice" Type="int" />
+          <Property Name="FlatQ10" Type="int" />
+          <Property Name="FlatQ25" Type="int" />
+          <Property Name="FlatQ50" Type="int" />
+          <Property Name="FlatQ75" Type="int" />
+          <Property Name="FlatQ90" Type="int" />
+          <Property Name="FlatPricePerM2" Type="int" />
+          <Property Name="FieldTransactions" Type="int" />
+          <Property Name="FieldTotalPrice" Type="int" />
+          <Property Name="FieldTotalSurface" Type="int" />
+          <Property Name="FieldAveragePrice" Type="int" />
+          <Property Name="FieldQ10" Type="int" />
+          <Property Name="FieldQ25" Type="int" />
+          <Property Name="FieldQ50" Type="int" />
+          <Property Name="FieldQ75" Type="int" />
+          <Property Name="FieldQ90" Type="int" />
+          <Property Name="FieldPricePerM2" Type="int" />
+        </EntityType>-->
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'ImmoWhat.dbo.MapsParams' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="MapsParams">
+          <Key>
+            <PropertyRef Name="codePostal" />
+          </Key>
+          <Property Name="codePostal" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="idCouleur" Type="int" />
+          <Property Name="GMapPartRecord_Id" Type="varchar" MaxLength="50" />
+          <Property Name="StartZoom" Type="varchar" MaxLength="50" />
+          <Property Name="StopZoom" Type="varchar" MaxLength="50" />
+          <Property Name="Commune" Type="varchar" MaxLength="50" />
+          <Property Name="Quarter" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="bigint" />
+          <Property Name="idCouleurApp" Type="int" />
+          <Property Name="idCouleurTer" Type="int" />
+          <Property Name="idCouleurVilla" Type="int" />
+          <Property Name="PriceA" Type="bigint" />
+          <Property Name="PriceT" Type="bigint" />
+          <Property Name="PriceV" Type="bigint" />
+        </EntityType>
         <EntityType Name="MEMBRE">
           <Key>
             <PropertyRef Name="idMembre" />
@@ -141,6 +212,105 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <Property Name="IdOption" Type="int" Nullable="false" />
           <Property Name="Libelle" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="RefCouleur">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="refColor" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="valeurMin" Type="int" Nullable="false" />
+          <Property Name="valeurMax" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="StatImmo">
+          <Key>
+            <PropertyRef Name="codePostal" />
+            <PropertyRef Name="refnis" />
+            <PropertyRef Name="localite" />
+            <PropertyRef Name="annee" />
+            <PropertyRef Name="trimestre" />
+            <PropertyRef Name="classeDeSuperficie" />
+            <PropertyRef Name="Maison_nbTransactions" />
+            <PropertyRef Name="Maison_prixTotal" />
+            <PropertyRef Name="Maison_superficieTotal" />
+            <PropertyRef Name="Maison_prixMoyen" />
+            <PropertyRef Name="Maison_P10Prix" />
+            <PropertyRef Name="Maison_Q25Prix" />
+            <PropertyRef Name="Maison_Q50Prix" />
+            <PropertyRef Name="Maison_Q75Prix" />
+            <PropertyRef Name="Maison_P90Prix" />
+            <PropertyRef Name="Villa_nbTransactions" />
+            <PropertyRef Name="Villa_prixTotal" />
+            <PropertyRef Name="Villa_superficieTotale" />
+            <PropertyRef Name="Villa_prixMoyen" />
+            <PropertyRef Name="Villa_P10Prix" />
+            <PropertyRef Name="Villa_Q25Prix" />
+            <PropertyRef Name="Villa_Q50Prix" />
+            <PropertyRef Name="Villa_Q75Prix" />
+            <PropertyRef Name="Villa_P90Prix" />
+            <PropertyRef Name="Appart_nbTransactions" />
+            <PropertyRef Name="Appart_prixTotal" />
+            <PropertyRef Name="Appart_superficieTotale" />
+            <PropertyRef Name="Appart_prixMoyen" />
+            <PropertyRef Name="Appart_P10Prix" />
+            <PropertyRef Name="Appart_Q25Prix" />
+            <PropertyRef Name="Appart_Q50Prix" />
+            <PropertyRef Name="Appart_Q75Prix" />
+            <PropertyRef Name="Appart_P90Prix" />
+            <PropertyRef Name="Terrain_nbTransactions" />
+            <PropertyRef Name="Terrain_prixTotal" />
+            <PropertyRef Name="Terrain_superficieTotale" />
+            <PropertyRef Name="Terrain_prixMoyen" />
+            <PropertyRef Name="Terrain_P10Prix" />
+            <PropertyRef Name="Terrain_Q25Prix" />
+            <PropertyRef Name="Terrain_Q50Prix" />
+            <PropertyRef Name="Terrain_Q75Prix" />
+            <PropertyRef Name="Terrain_P90Prix" />
+          </Key>
+          <Property Name="codePostal" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="refnis" Type="int" Nullable="false" />
+          <Property Name="localite" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="annee" Type="int" Nullable="false" />
+          <Property Name="trimestre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="classeDeSuperficie" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Maison_nbTransactions" Type="int" Nullable="false" />
+          <Property Name="Maison_prixTotal" Type="int" Nullable="false" />
+          <Property Name="Maison_superficieTotal" Type="int" Nullable="false" />
+          <Property Name="Maison_prixMoyen" Type="int" Nullable="false" />
+          <Property Name="Maison_P10Prix" Type="int" Nullable="false" />
+          <Property Name="Maison_Q25Prix" Type="int" Nullable="false" />
+          <Property Name="Maison_Q50Prix" Type="int" Nullable="false" />
+          <Property Name="Maison_Q75Prix" Type="int" Nullable="false" />
+          <Property Name="Maison_P90Prix" Type="int" Nullable="false" />
+          <Property Name="Villa_nbTransactions" Type="int" Nullable="false" />
+          <Property Name="Villa_prixTotal" Type="int" Nullable="false" />
+          <Property Name="Villa_superficieTotale" Type="int" Nullable="false" />
+          <Property Name="Villa_prixMoyen" Type="int" Nullable="false" />
+          <Property Name="Villa_P10Prix" Type="int" Nullable="false" />
+          <Property Name="Villa_Q25Prix" Type="int" Nullable="false" />
+          <Property Name="Villa_Q50Prix" Type="int" Nullable="false" />
+          <Property Name="Villa_Q75Prix" Type="int" Nullable="false" />
+          <Property Name="Villa_P90Prix" Type="int" Nullable="false" />
+          <Property Name="Appart_nbTransactions" Type="int" Nullable="false" />
+          <Property Name="Appart_prixTotal" Type="int" Nullable="false" />
+          <Property Name="Appart_superficieTotale" Type="int" Nullable="false" />
+          <Property Name="Appart_prixMoyen" Type="int" Nullable="false" />
+          <Property Name="Appart_P10Prix" Type="int" Nullable="false" />
+          <Property Name="Appart_Q25Prix" Type="int" Nullable="false" />
+          <Property Name="Appart_Q50Prix" Type="int" Nullable="false" />
+          <Property Name="Appart_Q75Prix" Type="int" Nullable="false" />
+          <Property Name="Appart_P90Prix" Type="int" Nullable="false" />
+          <Property Name="Terrain_nbTransactions" Type="int" Nullable="false" />
+          <Property Name="Terrain_prixTotal" Type="int" Nullable="false" />
+          <Property Name="Terrain_superficieTotale" Type="int" Nullable="false" />
+          <Property Name="Terrain_prixMoyen" Type="int" Nullable="false" />
+          <Property Name="Terrain_P10Prix" Type="int" Nullable="false" />
+          <Property Name="Terrain_Q25Prix" Type="int" Nullable="false" />
+          <Property Name="Terrain_Q50Prix" Type="int" Nullable="false" />
+          <Property Name="Terrain_Q75Prix" Type="int" Nullable="false" />
+          <Property Name="Terrain_P90Prix" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -157,6 +327,17 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           </Key>
           <Property Name="idTypeBien" Type="int" Nullable="false" />
           <Property Name="Libelle" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VAL_PRIX_MOYEN_BIEN">
+          <Key>
+            <PropertyRef Name="idType" />
+            <PropertyRef Name="idClasse" />
+          </Key>
+          <Property Name="idType" Type="int" Nullable="false" />
+          <Property Name="idCouleur" Type="int" />
+          <Property Name="valMin" Type="int" />
+          <Property Name="valMax" Type="int" />
+          <Property Name="idClasse" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_BIEN_OPTION_BIENS">
           <End Role="BIEN" Type="Self.BIEN" Multiplicity="1" />
@@ -274,6 +455,30 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VAL_PRIX_MOYEN_BIEN_RefCouleur">
+          <End Role="RefCouleur" Type="Self.RefCouleur" Multiplicity="0..1" />
+          <End Role="VAL_PRIX_MOYEN_BIEN" Type="Self.VAL_PRIX_MOYEN_BIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RefCouleur">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="VAL_PRIX_MOYEN_BIEN">
+              <PropertyRef Name="idCouleur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN">
+          <End Role="TYPEBIEN" Type="Self.TYPEBIEN" Multiplicity="1" />
+          <End Role="VAL_PRIX_MOYEN_BIEN" Type="Self.VAL_PRIX_MOYEN_BIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TYPEBIEN">
+              <PropertyRef Name="idTypeBien" />
+            </Principal>
+            <Dependent Role="VAL_PRIX_MOYEN_BIEN">
+              <PropertyRef Name="idType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="addNewMembre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
           <Parameter Name="nom" Type="nvarchar" Mode="In" />
@@ -285,8 +490,52 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <Parameter Name="dateDeNaissance" Type="date" Mode="In" />
           <Parameter Name="telephone" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="ajoutIdCouleursDsMapsParams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="CommunesToLower" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GetAveragePrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="annee" Type="int" Mode="In" />
+          <Parameter Name="type" Type="nvarchar" Mode="In" />
+          <Parameter Name="codePostCommune" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetAveragePrice0" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="annee" Type="int" Mode="In" />
+          <Parameter Name="type" Type="nvarchar" Mode="In" />
+          <Parameter Name="codePostCommune" Type="nvarchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="prixMoyen" Type="int" />
+                <Property Name="refCouleur" Type="nvarchar" MaxLength="10" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetAveragePrice00" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="annee" Type="int" Mode="In" />
+          <Parameter Name="type" Type="nvarchar" Mode="In" />
+          <Parameter Name="codePostCommune" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetClassePrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="annee" Type="int" Mode="In" />
+          <Parameter Name="type" Type="nvarchar" Mode="In" />
+          <Parameter Name="codePostCommune" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetClassePrices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="annee" Type="int" Mode="In" />
+          <Parameter Name="type" Type="nvarchar" Mode="In" />
+          <Parameter Name="codePostCommune" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetClassePrices0" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="annee" Type="int" Mode="In" />
+          <Parameter Name="type" Type="nvarchar" Mode="In" />
+          <Parameter Name="codePostCommune" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetClassePrices00" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="annee" Type="int" Mode="In" />
+          <Parameter Name="type" Type="nvarchar" Mode="In" />
+          <Parameter Name="codePostCommune" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="GetIdMmbre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
         </Function>
@@ -299,6 +548,8 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
         <Function Name="GetMyProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="insertCodePostInCsvTemplate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="insertCodePostInStatImmo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -329,6 +580,11 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="test" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="annee" Type="int" Mode="In" />
+          <Parameter Name="type" Type="nvarchar" Mode="In" />
+          <Parameter Name="codePostCommune" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="ImmoWhatModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -341,13 +597,80 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <EntitySet Name="COMMUNE" EntityType="Self.COMMUNE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MEMBRE" EntityType="Self.MEMBRE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OPTIONS" EntityType="Self.OPTIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RefCouleur" EntityType="Self.RefCouleur" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TYPEBIEN" EntityType="Self.TYPEBIEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VAL_PRIX_MOYEN_BIEN" EntityType="Self.VAL_PRIX_MOYEN_BIEN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BIEN_PHOTOS" EntityType="Self.BIEN_PHOTOS" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [BIEN_PHOTOS].[idBien] AS [idBien], 
     [BIEN_PHOTOS].[lien] AS [lien]
     FROM [dbo].[BIEN_PHOTOS] AS [BIEN_PHOTOS]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="MapsParams" EntityType="Self.MapsParams" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MapsParams].[codePostal] AS [codePostal], 
+    [MapsParams].[Description] AS [Description], 
+    [MapsParams].[idCouleur] AS [idCouleur], 
+    [MapsParams].[GMapPartRecord_Id] AS [GMapPartRecord_Id], 
+    [MapsParams].[StartZoom] AS [StartZoom], 
+    [MapsParams].[StopZoom] AS [StopZoom], 
+    [MapsParams].[Commune] AS [Commune], 
+    [MapsParams].[Quarter] AS [Quarter], 
+    [MapsParams].[Price] AS [Price], 
+    [MapsParams].[idCouleurApp] AS [idCouleurApp], 
+    [MapsParams].[idCouleurTer] AS [idCouleurTer], 
+    [MapsParams].[idCouleurVilla] AS [idCouleurVilla], 
+    [MapsParams].[PriceA] AS [PriceA], 
+    [MapsParams].[PriceT] AS [PriceT], 
+    [MapsParams].[PriceV] AS [PriceV]
+    FROM [dbo].[MapsParams] AS [MapsParams]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="StatImmo" EntityType="Self.StatImmo" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [StatImmo].[codePostal] AS [codePostal], 
+    [StatImmo].[refnis] AS [refnis], 
+    [StatImmo].[localite] AS [localite], 
+    [StatImmo].[annee] AS [annee], 
+    [StatImmo].[trimestre] AS [trimestre], 
+    [StatImmo].[classeDeSuperficie] AS [classeDeSuperficie], 
+    [StatImmo].[Maison_nbTransactions] AS [Maison_nbTransactions], 
+    [StatImmo].[Maison_prixTotal] AS [Maison_prixTotal], 
+    [StatImmo].[Maison_superficieTotal] AS [Maison_superficieTotal], 
+    [StatImmo].[Maison_prixMoyen] AS [Maison_prixMoyen], 
+    [StatImmo].[Maison_P10Prix] AS [Maison_P10Prix], 
+    [StatImmo].[Maison_Q25Prix] AS [Maison_Q25Prix], 
+    [StatImmo].[Maison_Q50Prix] AS [Maison_Q50Prix], 
+    [StatImmo].[Maison_Q75Prix] AS [Maison_Q75Prix], 
+    [StatImmo].[Maison_P90Prix] AS [Maison_P90Prix], 
+    [StatImmo].[Villa_nbTransactions] AS [Villa_nbTransactions], 
+    [StatImmo].[Villa_prixTotal] AS [Villa_prixTotal], 
+    [StatImmo].[Villa_superficieTotale] AS [Villa_superficieTotale], 
+    [StatImmo].[Villa_prixMoyen] AS [Villa_prixMoyen], 
+    [StatImmo].[Villa_P10Prix] AS [Villa_P10Prix], 
+    [StatImmo].[Villa_Q25Prix] AS [Villa_Q25Prix], 
+    [StatImmo].[Villa_Q50Prix] AS [Villa_Q50Prix], 
+    [StatImmo].[Villa_Q75Prix] AS [Villa_Q75Prix], 
+    [StatImmo].[Villa_P90Prix] AS [Villa_P90Prix], 
+    [StatImmo].[Appart_nbTransactions] AS [Appart_nbTransactions], 
+    [StatImmo].[Appart_prixTotal] AS [Appart_prixTotal], 
+    [StatImmo].[Appart_superficieTotale] AS [Appart_superficieTotale], 
+    [StatImmo].[Appart_prixMoyen] AS [Appart_prixMoyen], 
+    [StatImmo].[Appart_P10Prix] AS [Appart_P10Prix], 
+    [StatImmo].[Appart_Q25Prix] AS [Appart_Q25Prix], 
+    [StatImmo].[Appart_Q50Prix] AS [Appart_Q50Prix], 
+    [StatImmo].[Appart_Q75Prix] AS [Appart_Q75Prix], 
+    [StatImmo].[Appart_P90Prix] AS [Appart_P90Prix], 
+    [StatImmo].[Terrain_nbTransactions] AS [Terrain_nbTransactions], 
+    [StatImmo].[Terrain_prixTotal] AS [Terrain_prixTotal], 
+    [StatImmo].[Terrain_superficieTotale] AS [Terrain_superficieTotale], 
+    [StatImmo].[Terrain_prixMoyen] AS [Terrain_prixMoyen], 
+    [StatImmo].[Terrain_P10Prix] AS [Terrain_P10Prix], 
+    [StatImmo].[Terrain_Q25Prix] AS [Terrain_Q25Prix], 
+    [StatImmo].[Terrain_Q50Prix] AS [Terrain_Q50Prix], 
+    [StatImmo].[Terrain_Q75Prix] AS [Terrain_Q75Prix], 
+    [StatImmo].[Terrain_P90Prix] AS [Terrain_P90Prix]
+    FROM [dbo].[StatImmo] AS [StatImmo]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_BIEN_OPTION_BIENS" Association="Self.FK_BIEN_OPTION_BIENS">
             <End Role="BIEN" EntitySet="BIEN" />
@@ -384,6 +707,14 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VAL_PRIX_MOYEN_BIEN_RefCouleur" Association="Self.FK_VAL_PRIX_MOYEN_BIEN_RefCouleur">
+            <End Role="RefCouleur" EntitySet="RefCouleur" />
+            <End Role="VAL_PRIX_MOYEN_BIEN" EntitySet="VAL_PRIX_MOYEN_BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN" Association="Self.FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN">
+            <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
+            <End Role="VAL_PRIX_MOYEN_BIEN" EntitySet="VAL_PRIX_MOYEN_BIEN" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -445,6 +776,79 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <FunctionImport Name="GetMyProfile" ReturnType="Collection(ImmoWhatModel.GetMyProfile_Result)">
           <Parameter Name="mail" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetAveragePrice">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAveragePrice2">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAveragePrice3">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAveragePrice5">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ajoutIdCouleursDsMapsParams" />
+          <FunctionImport Name="insertCodePostInCsvTemplate" />
+          <FunctionImport Name="insertCodePostInStatImmo" />
+          <FunctionImport Name="test">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAveragePrices">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAveragePricess">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAveragePrice0" IsComposable="true" ReturnType="Collection(ImmoWhatModel.GetAveragePrice0_Result)">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAveragePrice00" ReturnType="Collection(ImmoWhatModel.GetAveragePrice00_Result)">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAveragePrice1" ReturnType="Collection(ImmoWhatModel.GetAveragePrice1_Result)">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetClassePrice" ReturnType="Collection(Int32)">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetClassePrices" ReturnType="Collection(Int32)">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetClassePrices0" ReturnType="Collection(Int32)">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetClassePrices00" ReturnType="Collection(Int32)">
+            <Parameter Name="annee" Mode="In" Type="Int32" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="codePostCommune" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="C__MigrationHistory" EntityType="ImmoWhatModel.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="ImmoWhatModel.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="ImmoWhatModel.AspNetUserClaims" />
@@ -454,9 +858,13 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <EntitySet Name="COMMUNE" EntityType="ImmoWhatModel.COMMUNE" />
           <EntitySet Name="MEMBRE" EntityType="ImmoWhatModel.MEMBRE" />
           <EntitySet Name="OPTIONS" EntityType="ImmoWhatModel.OPTIONS" />
+          <EntitySet Name="RefCouleur" EntityType="ImmoWhatModel.RefCouleur" />
           <EntitySet Name="sysdiagrams" EntityType="ImmoWhatModel.sysdiagrams" />
           <EntitySet Name="TYPEBIEN" EntityType="ImmoWhatModel.TYPEBIEN" />
+          <EntitySet Name="VAL_PRIX_MOYEN_BIEN" EntityType="ImmoWhatModel.VAL_PRIX_MOYEN_BIEN" />
           <EntitySet Name="BIEN_PHOTOS" EntityType="ImmoWhatModel.BIEN_PHOTOS" />
+          <EntitySet Name="MapsParams" EntityType="ImmoWhatModel.MapsParams" />
+          <EntitySet Name="StatImmo" EntityType="ImmoWhatModel.StatImmo" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="ImmoWhatModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -476,6 +884,14 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <AssociationSet Name="FK_BIENS_TYPEBIEN" Association="ImmoWhatModel.FK_BIENS_TYPEBIEN">
             <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
             <End Role="BIEN" EntitySet="BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VAL_PRIX_MOYEN_BIEN_RefCouleur" Association="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_RefCouleur">
+            <End Role="RefCouleur" EntitySet="RefCouleur" />
+            <End Role="VAL_PRIX_MOYEN_BIEN" EntitySet="VAL_PRIX_MOYEN_BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN" Association="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN">
+            <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
+            <End Role="VAL_PRIX_MOYEN_BIEN" EntitySet="VAL_PRIX_MOYEN_BIEN" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="ImmoWhatModel.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -515,6 +931,18 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <Property Type="DateTime" Name="DateSuppression" Nullable="true" />
           <Property Type="String" Name="Role" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="PhoneNumber" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetAveragePrice0_Result">
+          <Property Type="Int32" Name="prixMoyen" Nullable="true" />
+          <Property Type="String" Name="refCouleur" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="GetAveragePrice00_Result">
+          <Property Type="Int32" Name="prixMoyen" Nullable="true" />
+          <Property Type="String" Name="refCouleur" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="GetAveragePrice1_Result">
+          <Property Type="Int32" Name="prixMoyen" Nullable="true" />
+          <Property Type="String" Name="refCouleur" Nullable="true" MaxLength="10" />
         </ComplexType>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -639,6 +1067,16 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <Property Name="Libelle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BIEN" Relationship="ImmoWhatModel.BIEN_OPTION" FromRole="OPTIONS" ToRole="BIEN" />
         </EntityType>
+        <EntityType Name="RefCouleur">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="refColor" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="valeurMin" Type="Int32" Nullable="false" />
+          <Property Name="valeurMax" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="VAL_PRIX_MOYEN_BIEN" Relationship="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_RefCouleur" FromRole="RefCouleur" ToRole="VAL_PRIX_MOYEN_BIEN" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -656,6 +1094,20 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           <Property Name="idTypeBien" Type="Int32" Nullable="false" />
           <Property Name="Libelle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BIEN" Relationship="ImmoWhatModel.FK_BIENS_TYPEBIEN" FromRole="TYPEBIEN" ToRole="BIEN" />
+          <NavigationProperty Name="VAL_PRIX_MOYEN_BIEN" Relationship="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN" FromRole="TYPEBIEN" ToRole="VAL_PRIX_MOYEN_BIEN" />
+        </EntityType>
+        <EntityType Name="VAL_PRIX_MOYEN_BIEN">
+          <Key>
+            <PropertyRef Name="idType" />
+            <PropertyRef Name="idClasse" />
+          </Key>
+          <Property Name="idType" Type="Int32" Nullable="false" />
+          <Property Name="idCouleur" Type="Int32" />
+          <Property Name="valMin" Type="Int32" />
+          <Property Name="valMax" Type="Int32" />
+          <Property Name="idClasse" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RefCouleur" Relationship="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_RefCouleur" FromRole="VAL_PRIX_MOYEN_BIEN" ToRole="RefCouleur" />
+          <NavigationProperty Name="TYPEBIEN" Relationship="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN" FromRole="VAL_PRIX_MOYEN_BIEN" ToRole="TYPEBIEN" />
         </EntityType>
         <EntityType Name="BIEN_PHOTOS">
           <Key>
@@ -664,6 +1116,114 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
           </Key>
           <Property Name="idBien" Type="Int32" Nullable="false" />
           <Property Name="lien" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MapsParams">
+          <Key>
+            <PropertyRef Name="codePostal" />
+          </Key>
+          <Property Name="codePostal" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idCouleur" Type="Int32" />
+          <Property Name="GMapPartRecord_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StartZoom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StopZoom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Commune" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quarter" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Int64" />
+          <Property Name="idCouleurApp" Type="Int32" />
+          <Property Name="idCouleurTer" Type="Int32" />
+          <Property Name="idCouleurVilla" Type="Int32" />
+          <Property Name="PriceA" Type="Int64" />
+          <Property Name="PriceT" Type="Int64" />
+          <Property Name="PriceV" Type="Int64" />
+        </EntityType>
+        <EntityType Name="StatImmo">
+          <Key>
+            <PropertyRef Name="codePostal" />
+            <PropertyRef Name="refnis" />
+            <PropertyRef Name="localite" />
+            <PropertyRef Name="annee" />
+            <PropertyRef Name="trimestre" />
+            <PropertyRef Name="classeDeSuperficie" />
+            <PropertyRef Name="Maison_nbTransactions" />
+            <PropertyRef Name="Maison_prixTotal" />
+            <PropertyRef Name="Maison_superficieTotal" />
+            <PropertyRef Name="Maison_prixMoyen" />
+            <PropertyRef Name="Maison_P10Prix" />
+            <PropertyRef Name="Maison_Q25Prix" />
+            <PropertyRef Name="Maison_Q50Prix" />
+            <PropertyRef Name="Maison_Q75Prix" />
+            <PropertyRef Name="Maison_P90Prix" />
+            <PropertyRef Name="Villa_nbTransactions" />
+            <PropertyRef Name="Villa_prixTotal" />
+            <PropertyRef Name="Villa_superficieTotale" />
+            <PropertyRef Name="Villa_prixMoyen" />
+            <PropertyRef Name="Villa_P10Prix" />
+            <PropertyRef Name="Villa_Q25Prix" />
+            <PropertyRef Name="Villa_Q50Prix" />
+            <PropertyRef Name="Villa_Q75Prix" />
+            <PropertyRef Name="Villa_P90Prix" />
+            <PropertyRef Name="Appart_nbTransactions" />
+            <PropertyRef Name="Appart_prixTotal" />
+            <PropertyRef Name="Appart_superficieTotale" />
+            <PropertyRef Name="Appart_prixMoyen" />
+            <PropertyRef Name="Appart_P10Prix" />
+            <PropertyRef Name="Appart_Q25Prix" />
+            <PropertyRef Name="Appart_Q50Prix" />
+            <PropertyRef Name="Appart_Q75Prix" />
+            <PropertyRef Name="Appart_P90Prix" />
+            <PropertyRef Name="Terrain_nbTransactions" />
+            <PropertyRef Name="Terrain_prixTotal" />
+            <PropertyRef Name="Terrain_superficieTotale" />
+            <PropertyRef Name="Terrain_prixMoyen" />
+            <PropertyRef Name="Terrain_P10Prix" />
+            <PropertyRef Name="Terrain_Q25Prix" />
+            <PropertyRef Name="Terrain_Q50Prix" />
+            <PropertyRef Name="Terrain_Q75Prix" />
+            <PropertyRef Name="Terrain_P90Prix" />
+          </Key>
+          <Property Name="codePostal" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="refnis" Type="Int32" Nullable="false" />
+          <Property Name="localite" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="annee" Type="Int32" Nullable="false" />
+          <Property Name="trimestre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="classeDeSuperficie" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Maison_nbTransactions" Type="Int32" Nullable="false" />
+          <Property Name="Maison_prixTotal" Type="Int32" Nullable="false" />
+          <Property Name="Maison_superficieTotal" Type="Int32" Nullable="false" />
+          <Property Name="Maison_prixMoyen" Type="Int32" Nullable="false" />
+          <Property Name="Maison_P10Prix" Type="Int32" Nullable="false" />
+          <Property Name="Maison_Q25Prix" Type="Int32" Nullable="false" />
+          <Property Name="Maison_Q50Prix" Type="Int32" Nullable="false" />
+          <Property Name="Maison_Q75Prix" Type="Int32" Nullable="false" />
+          <Property Name="Maison_P90Prix" Type="Int32" Nullable="false" />
+          <Property Name="Villa_nbTransactions" Type="Int32" Nullable="false" />
+          <Property Name="Villa_prixTotal" Type="Int32" Nullable="false" />
+          <Property Name="Villa_superficieTotale" Type="Int32" Nullable="false" />
+          <Property Name="Villa_prixMoyen" Type="Int32" Nullable="false" />
+          <Property Name="Villa_P10Prix" Type="Int32" Nullable="false" />
+          <Property Name="Villa_Q25Prix" Type="Int32" Nullable="false" />
+          <Property Name="Villa_Q50Prix" Type="Int32" Nullable="false" />
+          <Property Name="Villa_Q75Prix" Type="Int32" Nullable="false" />
+          <Property Name="Villa_P90Prix" Type="Int32" Nullable="false" />
+          <Property Name="Appart_nbTransactions" Type="Int32" Nullable="false" />
+          <Property Name="Appart_prixTotal" Type="Int32" Nullable="false" />
+          <Property Name="Appart_superficieTotale" Type="Int32" Nullable="false" />
+          <Property Name="Appart_prixMoyen" Type="Int32" Nullable="false" />
+          <Property Name="Appart_P10Prix" Type="Int32" Nullable="false" />
+          <Property Name="Appart_Q25Prix" Type="Int32" Nullable="false" />
+          <Property Name="Appart_Q50Prix" Type="Int32" Nullable="false" />
+          <Property Name="Appart_Q75Prix" Type="Int32" Nullable="false" />
+          <Property Name="Appart_P90Prix" Type="Int32" Nullable="false" />
+          <Property Name="Terrain_nbTransactions" Type="Int32" Nullable="false" />
+          <Property Name="Terrain_prixTotal" Type="Int32" Nullable="false" />
+          <Property Name="Terrain_superficieTotale" Type="Int32" Nullable="false" />
+          <Property Name="Terrain_prixMoyen" Type="Int32" Nullable="false" />
+          <Property Name="Terrain_P10Prix" Type="Int32" Nullable="false" />
+          <Property Name="Terrain_Q25Prix" Type="Int32" Nullable="false" />
+          <Property Name="Terrain_Q50Prix" Type="Int32" Nullable="false" />
+          <Property Name="Terrain_Q75Prix" Type="Int32" Nullable="false" />
+          <Property Name="Terrain_P90Prix" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="ImmoWhatModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -726,6 +1286,30 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
             </Principal>
             <Dependent Role="BIEN">
               <PropertyRef Name="BIEN_IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VAL_PRIX_MOYEN_BIEN_RefCouleur">
+          <End Type="ImmoWhatModel.RefCouleur" Role="RefCouleur" Multiplicity="0..1" />
+          <End Type="ImmoWhatModel.VAL_PRIX_MOYEN_BIEN" Role="VAL_PRIX_MOYEN_BIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RefCouleur">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="VAL_PRIX_MOYEN_BIEN">
+              <PropertyRef Name="idCouleur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN">
+          <End Type="ImmoWhatModel.TYPEBIEN" Role="TYPEBIEN" Multiplicity="1" />
+          <End Type="ImmoWhatModel.VAL_PRIX_MOYEN_BIEN" Role="VAL_PRIX_MOYEN_BIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TYPEBIEN">
+              <PropertyRef Name="idTypeBien" />
+            </Principal>
+            <Dependent Role="VAL_PRIX_MOYEN_BIEN">
+              <PropertyRef Name="idType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -795,6 +1379,38 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ajoutIdCouleursDsMapsParams" FunctionName="ImmoWhatModel.Store.ajoutIdCouleursDsMapsParams" />
+          <FunctionImportMapping FunctionImportName="insertCodePostInCsvTemplate" FunctionName="ImmoWhatModel.Store.insertCodePostInCsvTemplate" />
+          <FunctionImportMapping FunctionImportName="insertCodePostInStatImmo" FunctionName="ImmoWhatModel.Store.insertCodePostInStatImmo" />
+          <FunctionImportMapping FunctionImportName="test" FunctionName="ImmoWhatModel.Store.test" />
+          <FunctionImportMapping FunctionImportName="GetAveragePrice0" FunctionName="ImmoWhatModel.Store.GetAveragePrice0">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetAveragePrice0_Result">
+                <ScalarProperty Name="prixMoyen" ColumnName="prixMoyen" />
+                <ScalarProperty Name="refCouleur" ColumnName="refCouleur" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAveragePrice00" FunctionName="ImmoWhatModel.Store.GetAveragePrice00">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetAveragePrice00_Result">
+                <ScalarProperty Name="prixMoyen" ColumnName="prixMoyen" />
+                <ScalarProperty Name="refCouleur" ColumnName="refCouleur" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAveragePrice1" FunctionName="ImmoWhatModel.Store.GetAveragePrice">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetAveragePrice1_Result">
+                <ScalarProperty Name="prixMoyen" ColumnName="prixMoyen" />
+                <ScalarProperty Name="refCouleur" ColumnName="refCouleur" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetClassePrice" FunctionName="ImmoWhatModel.Store.GetClassePrice" />
+          <FunctionImportMapping FunctionImportName="GetClassePrices" FunctionName="ImmoWhatModel.Store.GetClassePrices" />
+          <FunctionImportMapping FunctionImportName="GetClassePrices0" FunctionName="ImmoWhatModel.Store.GetClassePrices0" />
+          <FunctionImportMapping FunctionImportName="GetClassePrices00" FunctionName="ImmoWhatModel.Store.GetClassePrices00" />
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="ImmoWhatModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -911,6 +1527,16 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="RefCouleur">
+            <EntityTypeMapping TypeName="ImmoWhatModel.RefCouleur">
+              <MappingFragment StoreEntitySet="RefCouleur">
+                <ScalarProperty Name="valeurMax" ColumnName="valeurMax" />
+                <ScalarProperty Name="valeurMin" ColumnName="valeurMin" />
+                <ScalarProperty Name="refColor" ColumnName="refColor" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="ImmoWhatModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -930,11 +1556,91 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.BIEN_PHOTOS' n'a pas de clé prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="VAL_PRIX_MOYEN_BIEN">
+            <EntityTypeMapping TypeName="ImmoWhatModel.VAL_PRIX_MOYEN_BIEN">
+              <MappingFragment StoreEntitySet="VAL_PRIX_MOYEN_BIEN">
+                <ScalarProperty Name="idClasse" ColumnName="idClasse" />
+                <ScalarProperty Name="valMax" ColumnName="valMax" />
+                <ScalarProperty Name="valMin" ColumnName="valMin" />
+                <ScalarProperty Name="idCouleur" ColumnName="idCouleur" />
+                <ScalarProperty Name="idType" ColumnName="idType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="BIEN_PHOTOS">
             <EntityTypeMapping TypeName="ImmoWhatModel.BIEN_PHOTOS">
               <MappingFragment StoreEntitySet="BIEN_PHOTOS">
                 <ScalarProperty Name="lien" ColumnName="lien" />
                 <ScalarProperty Name="idBien" ColumnName="idBien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MapsParams">
+            <EntityTypeMapping TypeName="ImmoWhatModel.MapsParams">
+              <MappingFragment StoreEntitySet="MapsParams">
+                <ScalarProperty Name="PriceV" ColumnName="PriceV" />
+                <ScalarProperty Name="PriceT" ColumnName="PriceT" />
+                <ScalarProperty Name="PriceA" ColumnName="PriceA" />
+                <ScalarProperty Name="idCouleurVilla" ColumnName="idCouleurVilla" />
+                <ScalarProperty Name="idCouleurTer" ColumnName="idCouleurTer" />
+                <ScalarProperty Name="idCouleurApp" ColumnName="idCouleurApp" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
+                <ScalarProperty Name="Commune" ColumnName="Commune" />
+                <ScalarProperty Name="StopZoom" ColumnName="StopZoom" />
+                <ScalarProperty Name="StartZoom" ColumnName="StartZoom" />
+                <ScalarProperty Name="GMapPartRecord_Id" ColumnName="GMapPartRecord_Id" />
+                <ScalarProperty Name="idCouleur" ColumnName="idCouleur" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatImmo">
+            <EntityTypeMapping TypeName="ImmoWhatModel.StatImmo">
+              <MappingFragment StoreEntitySet="StatImmo">
+                <ScalarProperty Name="Terrain_P90Prix" ColumnName="Terrain_P90Prix" />
+                <ScalarProperty Name="Terrain_Q75Prix" ColumnName="Terrain_Q75Prix" />
+                <ScalarProperty Name="Terrain_Q50Prix" ColumnName="Terrain_Q50Prix" />
+                <ScalarProperty Name="Terrain_Q25Prix" ColumnName="Terrain_Q25Prix" />
+                <ScalarProperty Name="Terrain_P10Prix" ColumnName="Terrain_P10Prix" />
+                <ScalarProperty Name="Terrain_prixMoyen" ColumnName="Terrain_prixMoyen" />
+                <ScalarProperty Name="Terrain_superficieTotale" ColumnName="Terrain_superficieTotale" />
+                <ScalarProperty Name="Terrain_prixTotal" ColumnName="Terrain_prixTotal" />
+                <ScalarProperty Name="Terrain_nbTransactions" ColumnName="Terrain_nbTransactions" />
+                <ScalarProperty Name="Appart_P90Prix" ColumnName="Appart_P90Prix" />
+                <ScalarProperty Name="Appart_Q75Prix" ColumnName="Appart_Q75Prix" />
+                <ScalarProperty Name="Appart_Q50Prix" ColumnName="Appart_Q50Prix" />
+                <ScalarProperty Name="Appart_Q25Prix" ColumnName="Appart_Q25Prix" />
+                <ScalarProperty Name="Appart_P10Prix" ColumnName="Appart_P10Prix" />
+                <ScalarProperty Name="Appart_prixMoyen" ColumnName="Appart_prixMoyen" />
+                <ScalarProperty Name="Appart_superficieTotale" ColumnName="Appart_superficieTotale" />
+                <ScalarProperty Name="Appart_prixTotal" ColumnName="Appart_prixTotal" />
+                <ScalarProperty Name="Appart_nbTransactions" ColumnName="Appart_nbTransactions" />
+                <ScalarProperty Name="Villa_P90Prix" ColumnName="Villa_P90Prix" />
+                <ScalarProperty Name="Villa_Q75Prix" ColumnName="Villa_Q75Prix" />
+                <ScalarProperty Name="Villa_Q50Prix" ColumnName="Villa_Q50Prix" />
+                <ScalarProperty Name="Villa_Q25Prix" ColumnName="Villa_Q25Prix" />
+                <ScalarProperty Name="Villa_P10Prix" ColumnName="Villa_P10Prix" />
+                <ScalarProperty Name="Villa_prixMoyen" ColumnName="Villa_prixMoyen" />
+                <ScalarProperty Name="Villa_superficieTotale" ColumnName="Villa_superficieTotale" />
+                <ScalarProperty Name="Villa_prixTotal" ColumnName="Villa_prixTotal" />
+                <ScalarProperty Name="Villa_nbTransactions" ColumnName="Villa_nbTransactions" />
+                <ScalarProperty Name="Maison_P90Prix" ColumnName="Maison_P90Prix" />
+                <ScalarProperty Name="Maison_Q75Prix" ColumnName="Maison_Q75Prix" />
+                <ScalarProperty Name="Maison_Q50Prix" ColumnName="Maison_Q50Prix" />
+                <ScalarProperty Name="Maison_Q25Prix" ColumnName="Maison_Q25Prix" />
+                <ScalarProperty Name="Maison_P10Prix" ColumnName="Maison_P10Prix" />
+                <ScalarProperty Name="Maison_prixMoyen" ColumnName="Maison_prixMoyen" />
+                <ScalarProperty Name="Maison_superficieTotal" ColumnName="Maison_superficieTotal" />
+                <ScalarProperty Name="Maison_prixTotal" ColumnName="Maison_prixTotal" />
+                <ScalarProperty Name="Maison_nbTransactions" ColumnName="Maison_nbTransactions" />
+                <ScalarProperty Name="classeDeSuperficie" ColumnName="classeDeSuperficie" />
+                <ScalarProperty Name="trimestre" ColumnName="trimestre" />
+                <ScalarProperty Name="annee" ColumnName="annee" />
+                <ScalarProperty Name="localite" ColumnName="localite" />
+                <ScalarProperty Name="refnis" ColumnName="refnis" />
+                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

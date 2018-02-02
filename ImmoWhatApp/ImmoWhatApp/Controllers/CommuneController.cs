@@ -109,5 +109,21 @@ namespace ImmoWhatApp.Controllers
                 return null;
             }
         }
+        
+        [HttpGet]
+        public static int GetAveragePrice (int annee, string typeBien, string codePostale)
+        {
+            int moyenne = BLL.CommuneBLL.GetAveragePrice(annee, typeBien, codePostale);
+
+            return moyenne;
+        }
+
+        [HttpGet]
+        public JsonResult GetAverageClass(int annee, string typeBien, string codePostale)
+        {
+            int classePrix = BLL.CommuneBLL.GetAverageClass(annee, typeBien, codePostale);
+
+            return Json(new { result = "OK", classe = classePrix}, JsonRequestBehavior.AllowGet);
+        }
     }
 }

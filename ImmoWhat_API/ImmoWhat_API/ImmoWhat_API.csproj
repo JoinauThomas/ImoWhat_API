@@ -257,6 +257,15 @@
     <Compile Include="DAL\C__MigrationHistory.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\GetAveragePrice00_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GetAveragePrice0_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GetAveragePrice1_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetMyProfile_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
@@ -275,10 +284,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ImmoWhatDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DAL\MapsParams.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\MEMBRE.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\OPTIONS.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\RefCouleur.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\sp_helpdiagramdefinition_Result.cs">
@@ -287,10 +302,16 @@
     <Compile Include="DAL\sp_helpdiagrams_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\StatImmo.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\sysdiagrams.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\TYPEBIEN.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\VAL_PRIX_MOYEN_BIEN.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
