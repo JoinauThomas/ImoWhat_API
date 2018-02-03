@@ -116,7 +116,7 @@ body {
 #navigation {
     height: 85vh;
     background-color: green;
-    color: white;
+    color: black;
     text-align: center;
 }
 
@@ -163,39 +163,9 @@ body {
     color: white;
 }
 
-#col1 {
-    background-color: #4AB648;
-}
-#col2 {
-    background-color: #76C043;
-}
-#col3 {
-    background-color: #9ccb3b;
-}
-#col4 {
-    background-color: #c9da2a;
-}
-#col5 {
-    background-color: #ebe70d;
-}
-#col6 {
-    background-color: #ffe207;
-}
-
-#col7 {
-    background-color: #fec438;
-}
-
-#col8 {
-    background-color: #faa84a;
-}
-
-#col9 {
-    background-color: #f37132;
-}
-
-#col10 {
-    background-color: #ed1c24;
+.lignePrix {
+    height: 60%;
+    padding-top:2.5%;
 }
 
 .test {
@@ -203,3 +173,4 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+

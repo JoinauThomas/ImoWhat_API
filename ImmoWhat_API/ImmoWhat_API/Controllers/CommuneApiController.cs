@@ -35,20 +35,20 @@ namespace ImmoWhat_API.Controllers
         public int GetAveragePrice(int annee, string typeBien, string codePostale)
         {
             DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
-            List<DAL.GetAveragePrice1_Result> result = dbContext.GetAveragePrice1(2014, "maison", "1410").ToList();
+            List<DAL.GetAveragePrice1_Result> result = dbContext.GetAveragePrice1(annee, typeBien, codePostale).ToList();
 
             return (int)result[0].prixMoyen;
         }
         [HttpGet]
-        [Route("GetAverageClass")]
-        public int GetAverageClass(int annee, string typeBien, string codePostale)
+        [Route("GetInfoMainMenu")]
+        public int GetInfoMainMenu(int annee, string typeBien, string codePostale)
         {
             int classe;
             try
             {
                 using (SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=ImmoWhat;Integrated Security=True"))
                 {
-                    using (SqlCommand cmd = new SqlCommand("GetClassePrice", con))
+                    using (SqlCommand cmd = new SqlCommand("GetInfoMainMenu", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
@@ -73,6 +73,41 @@ namespace ImmoWhat_API.Controllers
             return classe;
         }
 
+        [HttpGet]
+        [Route("GetTableClassPrice")]
+        public List<Models.TablePrice> GetTableClassPrice(string typeBien)
+        {
+            List<Models.TablePrice> tablePrix = new List<Models.TablePrice>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=ImmoWhat;Integrated Security=True"))
+                {
+                    
+                    using (SqlCommand cmd = new SqlCommand("GetTableClassPrice", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        
+                        cmd.Parameters.Add("@type", SqlDbType.NVarChar).Value = typeBien;
+
+                        con.Open();
+                        var x = cmd.ExecuteReader();
+                        while(x.Read())
+                        {
+                            tablePrix.Add(new Models.TablePrice { idClasse = (int)x["idClasse"], valMax = (int)x["valMax"], valMin = (int)x["valMin"], refColor = x["refColor"].ToString() });
+                        }
+
+                        con.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            return tablePrix;
+        }
     }
     
 }

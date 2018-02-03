@@ -84,37 +84,7 @@ namespace ImmoWhatApp.BLL
 
         }
         
-        public static int GetAveragePrice(int annee, string typeBien, string codePostale)
-        {
-            try
-            {
-                int moyennePrix;
-                using (var client = new HttpClient())
-                {
-                    
-                    client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
-                    var responseTask = client.GetAsync("GetAveragePrice?annee="+annee+ "&typeBien="+typeBien+ "&codePostale="+codePostale);
-                    var result = responseTask.Result;
-                    responseTask.Wait();
-
-                    if (result.IsSuccessStatusCode)
-                    {
-                        var readTask = result.Content.ReadAsAsync<int>();
-                        readTask.Wait();
-                        moyennePrix = readTask.Result;
-                    }
-                    else
-                    {
-                        moyennePrix = -1;
-                    }
-                }
-                return moyennePrix;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        
 
         public static int GetAverageClass(int annee, string typeBien, string codePostale)
         {
@@ -141,6 +111,154 @@ namespace ImmoWhatApp.BLL
                     }
                 }
                 return classePrix;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static int GetAverageClass2(int annee, string typeBien, string codePostale)
+        {
+            try
+            {
+                List<Models.TablePrice> tablePrix = new List<TablePrice>();
+                int classePrix;
+                using (var client = new HttpClient())
+                {
+                    // récupération du tableau des prix
+                    client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
+                    var responseTask1 = client.GetAsync("GetTableClassPrice?typeBien=" + typeBien);
+                    var resultTable = responseTask1.Result;
+                    responseTask1.Wait();
+
+                    if (resultTable.IsSuccessStatusCode)
+                    {
+                        var readTask = resultTable.Content.ReadAsAsync<List<Models.TablePrice>>();
+                        readTask.Wait();
+                        tablePrix = readTask.Result.ToList();
+                    }
+                    else
+                    {
+                        classePrix = -1;
+                    }
+
+
+                    client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
+                    var responseTask = client.GetAsync("GetInfoMainMenu?annee=" + annee + "&typeBien=" + typeBien + "&codePostale=" + codePostale);
+                    var result = responseTask.Result;
+                    responseTask.Wait();
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<int>();
+                        readTask.Wait();
+                        classePrix = readTask.Result;
+                    }
+                    else
+                    {
+                        classePrix = -1;
+                    }
+                }
+                return classePrix;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+
+        public static List<Models.TablePrice> GetTablePrice(string typeBien)
+        {
+            try
+            {
+                List<Models.TablePrice> tablePrix = new List<TablePrice>();
+                using (var client = new HttpClient())
+                {
+                    // récupération du tableau des prix
+                    client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
+                    var responseTask1 = client.GetAsync("GetTableClassPrice?typeBien=" + typeBien);
+                    var resultTable = responseTask1.Result;
+                    responseTask1.Wait();
+
+                    if (resultTable.IsSuccessStatusCode)
+                    {
+                        var readTask = resultTable.Content.ReadAsAsync<List<Models.TablePrice>>();
+                        readTask.Wait();
+                        tablePrix = readTask.Result.ToList();
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                return tablePrix;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static int GetIdClassPrix(int annee, string typeBien, string codePostale)
+        {
+            int classePrix;
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
+                    var responseTask = client.GetAsync("GetInfoMainMenu?annee=" + annee + "&typeBien=" + typeBien + "&codePostale=" + codePostale);
+                    var result = responseTask.Result;
+                    responseTask.Wait();
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<int>();
+                        readTask.Wait();
+                        classePrix = readTask.Result;
+                    }
+                    else
+                    {
+                        classePrix = -1;
+                    }
+                }
+                return classePrix;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static int GetAveragePrice(int annee, string typeBien, string codePostale)
+        {
+            try
+            {
+                int moyennePrix;
+                using (var client = new HttpClient())
+                {
+
+                    client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
+                    var responseTask = client.GetAsync("GetAveragePrice?annee=" + annee + "&typeBien=" + typeBien + "&codePostale=" + codePostale);
+                    var result = responseTask.Result;
+                    responseTask.Wait();
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<int>();
+                        readTask.Wait();
+                        moyennePrix = readTask.Result;
+                    }
+                    else
+                    {
+                        moyennePrix = -1;
+                    }
+                }
+                return moyennePrix;
             }
             catch (Exception ex)
             {

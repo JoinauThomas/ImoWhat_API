@@ -125,5 +125,17 @@ namespace ImmoWhatApp.Controllers
 
             return Json(new { result = "OK", classe = classePrix}, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult GetAverageClass2(int annee, string typeBien, string codePostale)
+        {
+            List<Models.TablePrice> listePrix = BLL.CommuneBLL.GetTablePrice(typeBien);
+            int classePrix = BLL.CommuneBLL.GetIdClassPrix(annee, typeBien, codePostale);
+            int prixMoyen = BLL.CommuneBLL.GetAveragePrice(annee, typeBien, codePostale);
+
+            return Json(new { result = "OK", tablePrix = listePrix, classePrix = classePrix, prixMoyen = prixMoyen }, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }

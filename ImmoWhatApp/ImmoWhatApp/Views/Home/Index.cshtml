@@ -25,9 +25,24 @@
 <div id="modal_commune" style="display:none">
     <p id="modalTexte" class="modal-contents"></p>
 </div>
+<button id="test">test</button>
 
 <script>
-
+    $('#test').click(function () {
+        $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetAverageClass2", "Commune")',
+                    success: function (donnee) {
+                        reponse($.map(donnee.commune, function (objet) {
+                            return {
+                                label: objet.Localite + " ( " + objet.CodePostal+" )",
+                                value: objet.Localite,
+                                id: objet.id
+                        }
+                        }));
+                    }
+                })
+    })
 
     var idCommune
 
