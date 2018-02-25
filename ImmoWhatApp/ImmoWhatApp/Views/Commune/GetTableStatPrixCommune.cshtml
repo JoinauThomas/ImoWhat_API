@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ImmoWhatApp.Models.tableStatModels>
+
+@{
+    ViewBag.Title = "GetTableStatPrixCommune";
+}
+
+<h2>GetTableStatPrixCommune</h2>
+<button id="test">test</button>
+<div class="row">
+    <div class="col-lg-6">
+        <table class="table table-hover text-center">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.annee)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.typeBien)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.moyenne)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.nbTransaction)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.annee)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.typeBien)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.moyenne)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nbTransaction)
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+<canvas id="myChart" class="col-lg-6"></canvas>
+
+<script>
+    $('#test').click(function () {
+        alert("oki");
+        var x = @ViewBag.liste;
+        alert(x[0]);
+    });
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: "My First dataset",
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 500],
+            }]
+        },
+
+        // Configuration options go here
+        options: {}
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>

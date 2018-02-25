@@ -147,7 +147,7 @@ namespace ImmoWhat_API.DAL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
-        public virtual int addNewMembre(string mail, string nom, string prenom, string commune, string rue, string numero, string boite, Nullable<System.DateTime> dateDeNaissance, string telephone)
+        public virtual int addNewMembre(string mail, string nom, string prenom, string commune, string rue, string numero, string boite, Nullable<System.DateTime> dateDeNaissance, string telephone, string photo)
         {
             var mailParameter = mail != null ?
                 new ObjectParameter("mail", mail) :
@@ -185,7 +185,11 @@ namespace ImmoWhat_API.DAL
                 new ObjectParameter("telephone", telephone) :
                 new ObjectParameter("telephone", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addNewMembre", mailParameter, nomParameter, prenomParameter, communeParameter, rueParameter, numeroParameter, boiteParameter, dateDeNaissanceParameter, telephoneParameter);
+            var photoParameter = photo != null ?
+                new ObjectParameter("photo", photo) :
+                new ObjectParameter("photo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addNewMembre", mailParameter, nomParameter, prenomParameter, communeParameter, rueParameter, numeroParameter, boiteParameter, dateDeNaissanceParameter, telephoneParameter, photoParameter);
         }
     
         public virtual int CommunesToLower()
@@ -481,6 +485,15 @@ namespace ImmoWhat_API.DAL
                 new ObjectParameter("codePostCommune", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetClassePrices00", anneeParameter, typeParameter, codePostCommuneParameter);
+        }
+    
+        public virtual ObjectResult<GetInfoEvolutionPrices_Result> GetInfoEvolutionPrices(string codePostal)
+        {
+            var codePostalParameter = codePostal != null ?
+                new ObjectParameter("codePostal", codePostal) :
+                new ObjectParameter("codePostal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInfoEvolutionPrices_Result>("GetInfoEvolutionPrices", codePostalParameter);
         }
     }
 }

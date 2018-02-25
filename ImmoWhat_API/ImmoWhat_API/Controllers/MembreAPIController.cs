@@ -20,7 +20,7 @@ namespace ImmoWhat_API.Controllers
             try
             {
                 DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
-                dbContext.addNewMembre(newMembre.mail, newMembre.nom, newMembre.prenom, newMembre.Commune, newMembre.rue, newMembre.numero, newMembre.boite, newMembre.dateDeNaissance, newMembre.telephone);
+                dbContext.addNewMembre(newMembre.mail, newMembre.nom, newMembre.prenom, newMembre.Commune, newMembre.rue, newMembre.numero, newMembre.boite, newMembre.dateDeNaissance, newMembre.telephone, newMembre.photo);
                 return Ok();
             }
             catch (Exception ex)

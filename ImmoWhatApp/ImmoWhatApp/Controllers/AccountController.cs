@@ -25,6 +25,10 @@ namespace ImmoWhatApp.Controllers
             {
                 return View(newMembre);
             }
+            if(monfichier == null)
+            {
+                newMembre.photo = "0";
+            }
             Models.ResultInscription resultInscription = new Models.ResultInscription();
            
             resultInscription = BLL.MembreBLL.CreerCompte(newMembre);

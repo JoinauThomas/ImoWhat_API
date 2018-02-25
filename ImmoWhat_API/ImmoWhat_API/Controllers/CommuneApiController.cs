@@ -39,6 +39,7 @@ namespace ImmoWhat_API.Controllers
 
             return (int)result[0].prixMoyen;
         }
+
         [HttpGet]
         [Route("GetInfoMainMenu")]
         public int GetInfoMainMenu(int annee, string typeBien, string codePostale)
@@ -107,6 +108,29 @@ namespace ImmoWhat_API.Controllers
 
 
             return tablePrix;
+        }
+
+        [HttpGet]
+        [Route("GetInfoEvolutionPrices")]
+        public List<Models.TableStatModels> GetInfoEvolutionPrices (string codePostal)
+        {
+            List<Models.TableStatModels> mesStats = new List<Models.TableStatModels>();
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                List<DAL.GetInfoEvolutionPrices_Result> ListeStatDB = dbContext.GetInfoEvolutionPrices(codePostal).ToList();
+
+                foreach(var x in ListeStatDB)
+                {
+                    mesStats.Add(new Models.TableStatModels { annee = (int)x.annee, moyenne = (int)x.moyenne, nbTransaction = (int)x.nbTransaction, typeBien = x.typeBien });
+                }
+
+                return mesStats;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
     }
     

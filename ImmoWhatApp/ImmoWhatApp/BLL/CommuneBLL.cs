@@ -265,5 +265,37 @@ namespace ImmoWhatApp.BLL
                 throw ex;
             }
         }
+
+        public static List<Models.tableStatModels> GetInfoEvolutionPrices(string codePostale)
+        {
+            List<Models.tableStatModels> tableStatPrixCommune = new List<tableStatModels>();
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
+                    var responseTask = client.GetAsync("GetInfoEvolutionPrices?codePostal=" + codePostale);
+                    var result = responseTask.Result;
+                    responseTask.Wait();
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<List<Models.tableStatModels>>();
+                        readTask.Wait();
+                        tableStatPrixCommune = readTask.Result;
+
+                        return tableStatPrixCommune;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

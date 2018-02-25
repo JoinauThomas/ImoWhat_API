@@ -136,6 +136,17 @@ namespace ImmoWhatApp.Controllers
             return Json(new { result = "OK", tablePrix = listePrix, classePrix = classePrix, prixMoyen = prixMoyen }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult GetTableStatPrixCommune(string codePostal)
+        {
+            List<Models.tableStatModels> mesStats = new List<Models.tableStatModels>();
+            mesStats = BLL.CommuneBLL.GetInfoEvolutionPrices(codePostal);
+
+            ViewBag.liste = mesStats;
+
+            return View(mesStats);
+        }
+
 
     }
 }

@@ -35,8 +35,9 @@ namespace ImmoWhat_API.DAL
         public string idUser { get; set; }
         public System.DateTime DateEnregistrement { get; set; }
         public Nullable<System.DateTime> DateSuppression { get; set; }
-        public string Role { get; set; }
+        public string RoleMembre { get; set; }
     
+        public virtual AspNetRoles AspNetRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BIEN> BIEN { get; set; }
     }

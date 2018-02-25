@@ -51,6 +51,12 @@ namespace ImmoWhatApp.Controllers
             return View(maCommune);
         }
 
+        public ActionResult Graphic ()
+        {
+
+            return View();
+        }
+
 
         
         
