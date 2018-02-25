@@ -1,38 +1,71 @@
-﻿@*@model ImmoWhatApp.Models.Commune*@
+﻿
 
 @{
     ViewBag.Title = "Graphic";
 }
 
 <h2>Graphic</h2>
-
+<input id="codePost" style="display:none" value="@ViewBag.codePostal" />
 <div class="chart-container" style="position: relative; height:40vh; width:80vw">
     <canvas id="myChart"></canvas>
 </div>
 
-
+<img id="chargement" src="~/img/loaders/infini.gif" style="display: none" alt="Chargement en cours..." class="loaderConnection col-md-offset-5 col-md-2 col-md-offset-5" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
+    $(document).ready(function () {
+        $("#chargement").show();
+        var codePost = $('#codePost').val();
+        $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            url: '@Url.Action("GetJsonResultGraph", "Stat")',
+            data: { codePostal: codePost, },
+            success: function (donnee) {
+                
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var chart = new Chart(ctx, {
+                    // The type of chart we want to create
+                    type: 'line',
 
-        // The data for our dataset
-        data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [{
-                label: "My First dataset",
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45],
-            }]
-        },
+                    // The data for our dataset
+                    data: {
+                        labels: [donnee.resultat[0].annee, donnee.resultat[1].annee, donnee.resultat[2].annee, donnee.resultat[3].annee, donnee.resultat[4].annee, donnee.resultat[5].annee],
+                        datasets: [
+                            {
+                            label: "prix moyen villa",
+                            borderColor: '#FF0004',
+                            data: [donnee.resultat[0].moyennePrixVilla, donnee.resultat[1].moyennePrixVilla, donnee.resultat[2].moyennePrixVilla, donnee.resultat[3].moyennePrixVilla, donnee.resultat[4].moyennePrixVilla, donnee.resultat[5].moyennePrixVilla],
+                            },
+                            {
+                                label: "prix moyen maison",
+                                borderColor: '#B75814',
+                                data: [donnee.resultat[0].moyennePrixMaison, donnee.resultat[1].moyennePrixMaison, donnee.resultat[2].moyennePrixMaison, donnee.resultat[3].moyennePrixMaison, donnee.resultat[4].moyennePrixMaison, donnee.resultat[5].moyennePrixMaison],
+                            },
+                            {
+                                label: "prix moyen terrain",
+                                borderColor: '#49FA14',
+                                data: [donnee.resultat[0].moyennePrixTerrain, donnee.resultat[1].moyennePrixTerrain, donnee.resultat[2].moyennePrixTerrain, donnee.resultat[3].moyennePrixTerrain, donnee.resultat[4].moyennePrixTerrain, donnee.resultat[5].moyennePrixTerrain],
+                            },
+                            {
+                                label: "prix moyen appartement",
+                                borderColor: '#4214FA',
+                                data: [donnee.resultat[0].moyennePrixAppartement, donnee.resultat[1].moyennePrixAppartement, donnee.resultat[2].moyennePrixAppartement, donnee.resultat[3].moyennePrixAppartement, donnee.resultat[4].moyennePrixAppartement, donnee.resultat[5].moyennePrixAppartement],
+                            },
 
-        // Configuration options go here
-        options: {}
+                        ]
+                    },
+
+                    // Configuration options go here
+                    options: {}
+                });
+                $("#chargement").hide();
+                
+            }
+        })
     });
 </script>
+
 
 

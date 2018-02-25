@@ -44,7 +44,7 @@
                 <div id="GroupStat" class="row justify-content-lg-center">
 
                     <div id="tablePrix" class="btn btn-danger">@Html.ActionLink("tablePrix", "GetTableStatPrixCommune", "Commune", new { area = "", codePostal=Model.CodePostal }, null)</div>
-                    <div id="graphique" class="btn btn-danger"><a class="nav-link col-lg" href="#">@Html.ActionLink("graph", "Graphic", "Home", new { area = "" }, null)</a></div>
+                    <div id="graphique" class="btn btn-danger"><a class="nav-link col-lg" href="#">@Html.ActionLink("graph", "Graphic", "Home", new { codePostal = Model.CodePostal }, null)</a></div>
                     <div id="POI" class="btn btn-danger">POI</div>
                     <div id="commentaire" class="btn btn-danger">commentaire</div>
                 </div>

@@ -515,6 +515,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         <Function Name="GetMyProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="GetTableGraphique" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="insertCodePostInCsvTemplate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="insertCodePostInStatImmo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -879,6 +882,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           </AssociationSet>
           <FunctionImport Name="GetInfoEvolutionPrices" ReturnType="Collection(ImmoWhatModel.GetInfoEvolutionPrices_Result)">
           <Parameter Name="codePostal" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetTableGraphique" ReturnType="Collection(ImmoWhatModel.GetTableGraphique_Result)">
+            <Parameter Name="codePostal" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -1320,6 +1326,13 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Type="Int32" Name="moyenne" Nullable="true" />
           <Property Type="Int32" Name="nbTransaction" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetTableGraphique_Result">
+          <Property Type="Int32" Name="annee" Nullable="true" />
+          <Property Type="Int32" Name="prixMoyenVilla" Nullable="true" />
+          <Property Type="Int32" Name="prixMoyenTerrain" Nullable="true" />
+          <Property Type="Int32" Name="prixMoyenAppartement" Nullable="true" />
+          <Property Type="Int32" Name="prixMoyenMaison" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1666,6 +1679,17 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
                 <ScalarProperty Name="typeBien" ColumnName="typeBien" />
                 <ScalarProperty Name="moyenne" ColumnName="moyenne" />
                 <ScalarProperty Name="nbTransaction" ColumnName="nbTransaction" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTableGraphique" FunctionName="ImmoWhatModel.Store.GetTableGraphique">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetTableGraphique_Result">
+                <ScalarProperty Name="annee" ColumnName="annee" />
+                <ScalarProperty Name="prixMoyenVilla" ColumnName="prixMoyenVilla" />
+                <ScalarProperty Name="prixMoyenTerrain" ColumnName="prixMoyenTerrain" />
+                <ScalarProperty Name="prixMoyenAppartement" ColumnName="prixMoyenAppartement" />
+                <ScalarProperty Name="prixMoyenMaison" ColumnName="prixMoyenMaison" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

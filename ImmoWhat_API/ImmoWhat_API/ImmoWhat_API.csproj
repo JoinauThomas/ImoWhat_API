@@ -232,6 +232,7 @@
     <Compile Include="Controllers\CommuneApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembreAPIController.cs" />
+    <Compile Include="Controllers\StatApiController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DAL\AspNetRoles.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
@@ -270,6 +271,9 @@
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\GetMyProfile_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GetTableGraphique_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\ImmoWhatDB.Context.cs">
@@ -327,6 +331,7 @@
     <Compile Include="Models\MembreModels.cs" />
     <Compile Include="Models\ResultInscription.cs" />
     <Compile Include="Models\TablePrice.cs" />
+    <Compile Include="Models\TableResultGraphic.cs" />
     <Compile Include="Models\TableStatModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />

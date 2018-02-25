@@ -495,5 +495,14 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetInfoEvolutionPrices_Result>("GetInfoEvolutionPrices", codePostalParameter);
         }
+    
+        public virtual ObjectResult<GetTableGraphique_Result> GetTableGraphique(string codePostal)
+        {
+            var codePostalParameter = codePostal != null ?
+                new ObjectParameter("codePostal", codePostal) :
+                new ObjectParameter("codePostal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTableGraphique_Result>("GetTableGraphique", codePostalParameter);
+        }
     }
 }

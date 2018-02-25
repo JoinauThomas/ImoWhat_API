@@ -51,9 +51,9 @@ namespace ImmoWhatApp.Controllers
             return View(maCommune);
         }
 
-        public ActionResult Graphic ()
+        public ActionResult Graphic (string codePostal)
         {
-
+            ViewBag.codePostal = codePostal;
             return View();
         }
 
