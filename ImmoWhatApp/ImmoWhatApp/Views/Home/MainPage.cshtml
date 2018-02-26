@@ -44,7 +44,7 @@
                 <div id="GroupStat" class="row justify-content-lg-center">
 
                     <div id="tablePrix" class="btn btn-danger">@Html.ActionLink("tablePrix", "GetTableStatPrixCommune", "Commune", new { area = "", codePostal=Model.CodePostal }, null)</div>
-                    <div id="graphique" class="btn btn-danger"><a class="nav-link col-lg" href="#">@Html.ActionLink("graph", "Graphic", "Home", new { codePostal = Model.CodePostal }, null)</a></div>
+                    <div id="graphique" class="btn btn-danger"><a class="nav-link col-lg" href="#">@Html.ActionLink("graph", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province }, null)</a></div>
                     <div id="POI" class="btn btn-danger">POI</div>
                     <div id="commentaire" class="btn btn-danger">commentaire</div>
                 </div>
@@ -81,39 +81,39 @@
     }
 </script>
 <script>
-    function myMap() {
-        var stavanger = new google.maps.LatLng(58.983991, 5.734863);
-        var amsterdam = new google.maps.LatLng(52.395715, 4.888916);
-        var london = new google.maps.LatLng(51.508742, -0.120850);
+    //function myMap() {
+    //    var stavanger = new google.maps.LatLng(58.983991, 5.734863);
+    //    var amsterdam = new google.maps.LatLng(52.395715, 4.888916);
+    //    var london = new google.maps.LatLng(51.508742, -0.120850);
 
-        var waterloo = new google.maps.LatLng(50.7173563, 4.3978047);
-        var braine = new google.maps.LatLng(50.6940942, 4.3548145440335);
-        var uccle = new google.maps.LatLng(50.8018201, 4.3372348);
+    //    var waterloo = new google.maps.LatLng(50.7173563, 4.3978047);
+    //    var braine = new google.maps.LatLng(50.6940942, 4.3548145440335);
+    //    var uccle = new google.maps.LatLng(50.8018201, 4.3372348);
 
 
-        var mapCanvas = document.getElementById("map");
-        var mapOptions = { center: amsterdam, zoom: 4 };
-        var map = new google.maps.Map(mapCanvas, mapOptions);
+    //    var mapCanvas = document.getElementById("map");
+    //    var mapOptions = { center: amsterdam, zoom: 4 };
+    //    var map = new google.maps.Map(mapCanvas, mapOptions);
 
-        var flightPath = new google.maps.Polygon({
-            path: [stavanger, amsterdam, london],
-            strokeColor: "#0000FF",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#0000FF",
-            fillOpacity: 0.4
-        });
-        var flightPath2 = new google.maps.Polygon({
-            path: [waterloo, braine, uccle],
-            strokeColor: "#c9da2a",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#ed1c24",
-            fillOpacity: 0.4
-        });
-        flightPath.setMap(map);
-        flightPath2.setMap(map);
-    }
+    //    var flightPath = new google.maps.Polygon({
+    //        path: [stavanger, amsterdam, london],
+    //        strokeColor: "#0000FF",
+    //        strokeOpacity: 0.8,
+    //        strokeWeight: 2,
+    //        fillColor: "#0000FF",
+    //        fillOpacity: 0.4
+    //    });
+    //    var flightPath2 = new google.maps.Polygon({
+    //        path: [waterloo, braine, uccle],
+    //        strokeColor: "#c9da2a",
+    //        strokeOpacity: 0.8,
+    //        strokeWeight: 2,
+    //        fillColor: "#ed1c24",
+    //        fillOpacity: 0.4
+    //    });
+    //    flightPath.setMap(map);
+    //    flightPath2.setMap(map);
+    //}
 </script>
 <script type="text/javascript">
     google.charts.load('current', {

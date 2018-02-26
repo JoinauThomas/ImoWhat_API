@@ -1,14 +1,32 @@
-﻿
+﻿@model ImmoWhatApp.Models.Commune
 
 @{
     ViewBag.Title = "Graphic";
 }
 
-<h2>Graphic</h2>
-<input id="codePost" style="display:none" value="@ViewBag.codePostal" />
-<div class="chart-container" style="position: relative; height:40vh; width:80vw">
-    <canvas id="myChart"></canvas>
+
+<div class="row">
+    <div class="col-lg-3">
+        <div class="col-12">
+            Homegraphique-prixWaterloo
+        </div>
+        <div class="col-12">
+            <input type="text" placeholder="waterloo" />
+        </div>
+        <div id="carte" class="col-lg-12">
+            <div id="map" style="width:100%; height:100%;"></div>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <h3>Graphic visualization of average price</h3>
+        <div class="chart-container" style="position: relative; height:40vh; width:70vw">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
 </div>
+<input id="codePost" style="display:none" value="@Model.CodePostal" />
+
 
 <img id="chargement" src="~/img/loaders/infini.gif" style="display: none" alt="Chargement en cours..." class="loaderConnection col-md-offset-5 col-md-2 col-md-offset-5" />
 
@@ -23,7 +41,7 @@
             url: '@Url.Action("GetJsonResultGraph", "Stat")',
             data: { codePostal: codePost, },
             success: function (donnee) {
-                
+
                 var ctx = document.getElementById('myChart').getContext('2d');
                 var chart = new Chart(ctx, {
                     // The type of chart we want to create
@@ -58,14 +76,34 @@
                     },
 
                     // Configuration options go here
-                    options: {}
+                    options: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
                 });
                 $("#chargement").hide();
-                
+
+            },
+            error: function()
+            {
+                alert("une erreur s'est produite...")
             }
         })
     });
 </script>
+<script>
+
+    function myMap() {
+        var mapProp = {
+            center: new google.maps.LatLng(@Model.latitude, @Model.longitude),
+            zoom: 13,
+        };
+        var map = new google.maps.Map(document.getElementById("map"), mapProp);
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0&callback=myMap"></script>
+
 
 
 
