@@ -23,5 +23,18 @@ namespace ImmoWhatApp.Controllers
             }
         }
 
+        [HttpGet]
+        public JsonResult GetJsonTablePriceStat(int anneeRecherchee, string codePostal)
+        {
+            List<Models.tablePriceStat> result = BLL.StatBLL.GetPriceTable(anneeRecherchee, codePostal).ToList();
+            if (result != null)
+            {
+                return Json(new { result = "OK", resultat = result }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

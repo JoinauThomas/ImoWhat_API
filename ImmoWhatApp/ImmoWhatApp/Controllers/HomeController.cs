@@ -51,9 +51,11 @@ namespace ImmoWhatApp.Controllers
             return View(maCommune);
         }
 
-        public ActionResult Graphic (string codePostal, string commune, string lat, string lon, int id, string langue, string province)
+        public ActionResult Graphic (string codePostal, string commune, string lat, string lon, int id, string langue, string province, string bouton)
         {
             Models.Commune maCommune = new Models.Commune{ CodePostal = codePostal, latitude = lat, longitude = lon, Localite = commune, id = id, langue = langue, Province = province };
+            ViewBag.bouton = bouton;
+
             return View(maCommune);
         }
 

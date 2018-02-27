@@ -152,6 +152,9 @@ body {
     background-color: grey;
     color: white;
 }
+.carte {
+    height: 85vh;
+}
 
 #biens {
     height: 85vh;

@@ -36,6 +36,32 @@ namespace ImmoWhat_API.Controllers
         }
 
         [HttpGet]
+        [Route("GetPriceTable")]
+        public List<Models.tablePriceStat> GetPriceTable(int anneeRecherchee, string codePostal)
+        {
+            List<Models.tablePriceStat> resultTable = new List<Models.tablePriceStat>();
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                List<DAL.GetPriceTable_Result> ListeStatDB = dbContext.GetPriceTable(anneeRecherchee, codePostal).ToList();
+
+                foreach (var x in ListeStatDB)
+                {
+                    resultTable.Add(new Models.tablePriceStat { type = x.typ, anneeCourante = (int)x.currentyear0, anneePrecedente = (int)x.currentyear1, anneeRecherche = (int)x.anneeRecherchee, evolutionPrice = (int)x.evolutions });
+                }
+
+                return resultTable;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+
+        [HttpGet]
         [Route("GetTableGraphique2")]
         public List<Models.TableResultGraphic> GetTableGraphique2(string codePostal)
         {

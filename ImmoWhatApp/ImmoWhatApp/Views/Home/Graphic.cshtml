@@ -6,90 +6,182 @@
 
 
 <div class="row">
-    <div class="col-lg-3">
+    <div class="col-lg-3 carte">
         <div class="col-12">
             Homegraphique-prixWaterloo
         </div>
         <div class="col-12">
-            <input type="text" placeholder="waterloo" />
+            <input type="text" placeholder="@Model.Localite" />
         </div>
-        <div id="carte" class="col-lg-12">
-            <div id="map" style="width:100%; height:100%;"></div>
-        </div>
+        
+            <div id="map" class="col-lg-12" style="width:100%; height:100%;"></div>
+       
     </div>
+
     <div class="col-lg-9">
-        <h3>Graphic visualization of average price</h3>
-        <div class="chart-container" style="position: relative; height:40vh; width:70vw">
+        <div class="row">
+            <h3>Graphic visualization of average price</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div id="typeBien" class="justify-content-lg-around" style="margin-top:3%; margin-bottom:3%; list-style-type: none;">
+
+                    <div style="width:20%" id="tablePrix" class="btn btn-danger">tableau de prix</div>
+                    <div style="width:20%" id="graphique" class="btn btn-danger">Graphique</div>
+                    <div style="width:20%" id="poi" class="btn btn-danger">POI</div>
+                    <div style="width:20%" id="comment" class="btn btn-danger">Commentaires</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tablePrix" style="display:none">
+            <h2>table des prix</h2>
+        </div>
+        <div id="graph" class="chart-container" style="position: relative; height:40vh; width:70vw; display:none">
             <canvas id="myChart"></canvas>
+        </div>
+        <div style="display:none" id="poi">
+            Point of interest
+        </div>
+        <div style="display:none" id="comment">
+            commentaires
         </div>
     </div>
 
 </div>
 <input id="codePost" style="display:none" value="@Model.CodePostal" />
+<input id="bouton" style="display:none" value="@ViewBag.bouton" />
 
 
 <img id="chargement" src="~/img/loaders/infini.gif" style="display: none" alt="Chargement en cours..." class="loaderConnection col-md-offset-5 col-md-2 col-md-offset-5" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
+    var bouton = $('#bouton').val();
     $(document).ready(function () {
-        $("#chargement").show();
-        var codePost = $('#codePost').val();
-        $.ajax({
-            type: 'GET',
-            datatype: 'json',
-            url: '@Url.Action("GetJsonResultGraph", "Stat")',
-            data: { codePostal: codePost, },
-            success: function (donnee) {
 
-                var ctx = document.getElementById('myChart').getContext('2d');
-                var chart = new Chart(ctx, {
-                    // The type of chart we want to create
-                    type: 'line',
+        if (bouton == "graph") {
+            $('#graphique').css('background-color', 'blue')
+            $('#graph').show();
+            $("#chargement").show();
+            var codePost = $('#codePost').val();
+            $.ajax({
+                type: 'GET',
+                datatype: 'json',
+                url: '@Url.Action("GetJsonResultGraph", "Stat")',
+                data: { codePostal: codePost, },
+                success: function (donnee) {
 
-                    // The data for our dataset
-                    data: {
-                        labels: [donnee.resultat[0].annee, donnee.resultat[1].annee, donnee.resultat[2].annee, donnee.resultat[3].annee, donnee.resultat[4].annee, donnee.resultat[5].annee],
-                        datasets: [
-                            {
-                            label: "prix moyen villa",
-                            borderColor: '#FF0004',
-                            data: [donnee.resultat[0].moyennePrixVilla, donnee.resultat[1].moyennePrixVilla, donnee.resultat[2].moyennePrixVilla, donnee.resultat[3].moyennePrixVilla, donnee.resultat[4].moyennePrixVilla, donnee.resultat[5].moyennePrixVilla],
-                            },
-                            {
-                                label: "prix moyen maison",
-                                borderColor: '#B75814',
-                                data: [donnee.resultat[0].moyennePrixMaison, donnee.resultat[1].moyennePrixMaison, donnee.resultat[2].moyennePrixMaison, donnee.resultat[3].moyennePrixMaison, donnee.resultat[4].moyennePrixMaison, donnee.resultat[5].moyennePrixMaison],
-                            },
-                            {
-                                label: "prix moyen terrain",
-                                borderColor: '#49FA14',
-                                data: [donnee.resultat[0].moyennePrixTerrain, donnee.resultat[1].moyennePrixTerrain, donnee.resultat[2].moyennePrixTerrain, donnee.resultat[3].moyennePrixTerrain, donnee.resultat[4].moyennePrixTerrain, donnee.resultat[5].moyennePrixTerrain],
-                            },
-                            {
-                                label: "prix moyen appartement",
-                                borderColor: '#4214FA',
-                                data: [donnee.resultat[0].moyennePrixAppartement, donnee.resultat[1].moyennePrixAppartement, donnee.resultat[2].moyennePrixAppartement, donnee.resultat[3].moyennePrixAppartement, donnee.resultat[4].moyennePrixAppartement, donnee.resultat[5].moyennePrixAppartement],
-                            },
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        // The type of chart we want to create
+                        type: 'line',
 
-                        ]
-                    },
+                        // The data for our dataset
+                        data: {
+                            labels: [donnee.resultat[0].annee, donnee.resultat[1].annee, donnee.resultat[2].annee, donnee.resultat[3].annee, donnee.resultat[4].annee, donnee.resultat[5].annee],
+                            datasets: [
+                                {
+                                    label: "prix moyen villa",
+                                    borderColor: '#FF0004',
+                                    data: [donnee.resultat[0].moyennePrixVilla, donnee.resultat[1].moyennePrixVilla, donnee.resultat[2].moyennePrixVilla, donnee.resultat[3].moyennePrixVilla, donnee.resultat[4].moyennePrixVilla, donnee.resultat[5].moyennePrixVilla],
+                                },
+                                {
+                                    label: "prix moyen maison",
+                                    borderColor: '#B75814',
+                                    data: [donnee.resultat[0].moyennePrixMaison, donnee.resultat[1].moyennePrixMaison, donnee.resultat[2].moyennePrixMaison, donnee.resultat[3].moyennePrixMaison, donnee.resultat[4].moyennePrixMaison, donnee.resultat[5].moyennePrixMaison],
+                                },
+                                {
+                                    label: "prix moyen terrain",
+                                    borderColor: '#49FA14',
+                                    data: [donnee.resultat[0].moyennePrixTerrain, donnee.resultat[1].moyennePrixTerrain, donnee.resultat[2].moyennePrixTerrain, donnee.resultat[3].moyennePrixTerrain, donnee.resultat[4].moyennePrixTerrain, donnee.resultat[5].moyennePrixTerrain],
+                                },
+                                {
+                                    label: "prix moyen appartement",
+                                    borderColor: '#4214FA',
+                                    data: [donnee.resultat[0].moyennePrixAppartement, donnee.resultat[1].moyennePrixAppartement, donnee.resultat[2].moyennePrixAppartement, donnee.resultat[3].moyennePrixAppartement, donnee.resultat[4].moyennePrixAppartement, donnee.resultat[5].moyennePrixAppartement],
+                                },
 
-                    // Configuration options go here
-                    options: {
-                        legend: {
-                            position: 'bottom'
+                            ]
+                        },
+
+                        // Configuration options go here
+                        options: {
+                            legend: {
+                                position: 'bottom'
+                            }
                         }
-                    }
-                });
-                $("#chargement").hide();
+                    });
+                    $("#chargement").hide();
 
-            },
-            error: function()
-            {
-                alert("une erreur s'est produite...")
-            }
-        })
+                },
+                error: function () {
+                    alert("une erreur s'est produite...")
+                }
+            })
+        }
+        else if (bouton == "tablePrix") {
+            $('#tablePrix').css('background-color', 'blue');
+            $('#tablePrix').show();
+            $("#chargement").show();
+            var codePost = $('#codePost').val();
+            var anneeRecherche = 2010;
+            $.ajax({
+                type: 'GET',
+                datatype: 'json',
+                url: '@Url.Action("GetJsonTablePriceStat", "Stat")',
+                data: { anneeRecherchee: anneeRecherche, codePostal: codePost, },
+                success: function (donnee) {
+
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        // The type of chart we want to create
+                        type: 'line',
+
+                        // The data for our dataset
+                        data: {
+                            labels: [donnee.resultat[0].annee, donnee.resultat[1].annee, donnee.resultat[2].annee, donnee.resultat[3].annee, donnee.resultat[4].annee, donnee.resultat[5].annee],
+                            datasets: [
+                                {
+                                    label: "prix moyen villa",
+                                    borderColor: '#FF0004',
+                                    data: [donnee.resultat[0].moyennePrixVilla, donnee.resultat[1].moyennePrixVilla, donnee.resultat[2].moyennePrixVilla, donnee.resultat[3].moyennePrixVilla, donnee.resultat[4].moyennePrixVilla, donnee.resultat[5].moyennePrixVilla],
+                                },
+                                {
+                                    label: "prix moyen maison",
+                                    borderColor: '#B75814',
+                                    data: [donnee.resultat[0].moyennePrixMaison, donnee.resultat[1].moyennePrixMaison, donnee.resultat[2].moyennePrixMaison, donnee.resultat[3].moyennePrixMaison, donnee.resultat[4].moyennePrixMaison, donnee.resultat[5].moyennePrixMaison],
+                                },
+                                {
+                                    label: "prix moyen terrain",
+                                    borderColor: '#49FA14',
+                                    data: [donnee.resultat[0].moyennePrixTerrain, donnee.resultat[1].moyennePrixTerrain, donnee.resultat[2].moyennePrixTerrain, donnee.resultat[3].moyennePrixTerrain, donnee.resultat[4].moyennePrixTerrain, donnee.resultat[5].moyennePrixTerrain],
+                                },
+                                {
+                                    label: "prix moyen appartement",
+                                    borderColor: '#4214FA',
+                                    data: [donnee.resultat[0].moyennePrixAppartement, donnee.resultat[1].moyennePrixAppartement, donnee.resultat[2].moyennePrixAppartement, donnee.resultat[3].moyennePrixAppartement, donnee.resultat[4].moyennePrixAppartement, donnee.resultat[5].moyennePrixAppartement],
+                                },
+
+                            ]
+                        },
+
+                        // Configuration options go here
+                        options: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    });
+                    $("#chargement").hide();
+
+                },
+                error: function () {
+                    alert("une erreur s'est produite...")
+                }
+            })
+
+        }
     });
 </script>
 <script>

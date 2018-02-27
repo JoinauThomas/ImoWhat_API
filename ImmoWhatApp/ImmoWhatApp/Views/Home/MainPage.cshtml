@@ -43,8 +43,8 @@
             <div class="row" style="margin-top:3%; margin-bottom:3%; list-style-type: none;">
                 <div id="GroupStat" class="row justify-content-lg-center">
 
-                    <div id="tablePrix" class="btn btn-danger">@Html.ActionLink("tablePrix", "GetTableStatPrixCommune", "Commune", new { area = "", codePostal=Model.CodePostal }, null)</div>
-                    <div id="graphique" class="btn btn-danger"><a class="nav-link col-lg" href="#">@Html.ActionLink("graph", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province }, null)</a></div>
+                    <div id="tablePrix" class="btn btn-danger">@Html.ActionLink("tablePrix", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "tablePrix" }, null)</div>
+                    <div id="graphique" class="btn btn-danger">@Html.ActionLink("graph", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "graph" }, null)</div>
                     <div id="POI" class="btn btn-danger">POI</div>
                     <div id="commentaire" class="btn btn-danger">commentaire</div>
                 </div>
@@ -115,7 +115,7 @@
     //    flightPath2.setMap(map);
     //}
 </script>
-<script type="text/javascript">
+@*<script type="text/javascript">
     google.charts.load('current', {
         'packages': ['geochart'],
         // Note: you will need to get a mapsApiKey for your project.
@@ -141,7 +141,7 @@
 
         chart.draw(data, options);
     }
-</script>
+</script>*@
 <script>
     var classCommune;
     $(document).ready(function () {

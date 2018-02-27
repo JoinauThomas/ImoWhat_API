@@ -39,5 +39,37 @@ namespace ImmoWhatApp.BLL
                 throw ex;
             }
         }
+
+        public static List<Models.tablePriceStat> GetPriceTable(int anneeRecherchee, string codePostal)
+        {
+            List<Models.tablePriceStat> resultTable = new List<Models.tablePriceStat>();
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:49383/api/StatApi/");
+                    var responseTask = client.GetAsync("GetPriceTable?anneeRecherchee=" + anneeRecherchee+ "&codePostal=" + codePostal);
+                    var result = responseTask.Result;
+                    responseTask.Wait();
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<List<Models.tablePriceStat>>();
+                        readTask.Wait();
+                        resultTable = readTask.Result;
+
+                        return resultTable;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

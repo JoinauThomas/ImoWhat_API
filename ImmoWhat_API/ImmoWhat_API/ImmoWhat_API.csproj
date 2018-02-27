@@ -273,6 +273,9 @@
     <Compile Include="DAL\GetMyProfile_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\GetPriceTable_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetTableGraphique2_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
@@ -334,6 +337,7 @@
     <Compile Include="Models\MembreModels.cs" />
     <Compile Include="Models\ResultInscription.cs" />
     <Compile Include="Models\TablePrice.cs" />
+    <Compile Include="Models\tablePriceStat.cs" />
     <Compile Include="Models\TableResultGraphic.cs" />
     <Compile Include="Models\TableStatModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
