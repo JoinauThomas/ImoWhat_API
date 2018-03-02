@@ -45,8 +45,8 @@
 
                     <div id="tablePrix" class="btn btn-danger">@Html.ActionLink("tablePrix", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "tablePrix" }, null)</div>
                     <div id="graphique" class="btn btn-danger">@Html.ActionLink("graph", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "graph" }, null)</div>
-                    <div id="POI" class="btn btn-danger">POI</div>
-                    <div id="commentaire" class="btn btn-danger">commentaire</div>
+                    <div id="POI" class="btn btn-danger">@Html.ActionLink("POI", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "poi" }, null)</div>
+                    <div id="commentaire" class="btn btn-danger">@Html.ActionLink("commentaire", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "comment" }, null)</div>
                 </div>
             </div>
             

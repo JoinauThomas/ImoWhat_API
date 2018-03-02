@@ -18,68 +18,62 @@
 
     </div>
 
-    <div class="col-lg-9">
-        <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="tablePrix" data-toggle="tab" href="#nav-tablePrix" role="tab" aria-controls="nav-home" aria-selected="true">tableau de prix</a>
-                <a class="nav-item nav-link" id="graphique" data-toggle="tab" href="#nav-graphique" role="tab" aria-controls="nav-profile" aria-selected="false">Graphique</a>
-                <a class="nav-item nav-link" id="poi" data-toggle="tab" href="#nav-poi" role="tab" aria-controls="nav-contact" aria-selected="false">POI</a>
-                <a class="nav-item nav-link" id="comment" data-toggle="tab" href="#nav-comment" role="tab" aria-controls="nav-comment" aria-selected="false">Commentaires</a>
-                <input />
-            </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-tablePrix" role="tabpanel" aria-labelledby="tablePrix">
-                <h2>table des prix</h2>
-                <div id="tablePrixView">
-
-
+    <div class="col-lg-9"  >
+        <div class="row" style="padding-left:3%; padding-top:5%;">
+            <ul class="nav nav-tabs col-lg-12" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="tablePrix-tab" data-toggle="tab" href="#tablePrix" role="tab" aria-controls="tablePrix" aria-selected="true">tablePrix</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="graphique-tab" data-toggle="tab" href="#graphique" role="tab" aria-controls="graphique" aria-selected="false">graphique</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="poi-tab" data-toggle="tab" href="#poi" role="tab" aria-controls="poi" aria-selected="false">poi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="comment-tab" data-toggle="tab" href="#comment" role="tab" aria-controls="comment" aria-selected="false">comment</a>
+                </li>
+            </ul>
+            <div class="tab-content row" id="myTabContent" style="height:75vh; padding-top:5vh" >
+                <div class="col-lg-12 tab-pane fade show active" id="tablePrix" role="tabpanel" aria-labelledby="tablePrix-tab" style="position: relative; height:40vh; width:60vw">
+                    <h2 class="titreSecPage">table de prix</h2>
+                    <div id="tablePrixView" class="col-lg-12">
+                        @*ici, la table des prix*@
+                    </div>
+                    <input class="col-lg-3" />
+                </div>
+                <div class="tab-pane fade" id="graphique" role="tabpanel" aria-labelledby="graphique-tab">
+                    <div id="graph" class="chart-container" style="position: relative; height:40vh; width:60vw">
+                        <h2 class="titreSecPage">graphique</h2>
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="poi" role="tabpanel" aria-labelledby="poi-tab">
+                    poia
+                </div>
+                <div class="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="comment-tab">
+                    commentaire
                 </div>
             </div>
-            <div class="tab-pane fade" id="nav-graphique" role="tabpanel" aria-labelledby="graphique">
-                <div id="graph" class="chart-container" style="position: relative; height:40vh; width:70vw">
-                    <h2>graphique</h2>
-                    <canvas id="myChart"></canvas>
-                </div>
+            <div class="row">
+
             </div>
-            <div class="tab-pane fade" id="nav-poi" role="tabpanel" aria-labelledby="poi">mes POI</div>
-            <div class="tab-pane fade" id="nav-comment" role="tabpanel" aria-labelledby="comment">mes commentaires</div>
-        </div>
-        <div class="row">
 
-
-            @*<div class="col-lg-8">
-                <div id="typeBien" class="justify-content-lg-around" style="margin-top:3%; margin-bottom:3%; list-style-type: none;">
-
-                    <div style="width:20%" id="tablePrix" class="btn btn-danger">tableau de prix</div>
-                    <div style="width:20%" id="graphique" class="btn btn-danger">Graphique</div>
-                    <div style="width:20%" id="poi" class="btn btn-danger">POI</div>
-                    <div style="width:20%" id="comment" class="btn btn-danger">Commentaires</div>
-                </div>
-            </div>*@
-            @*<div class="col-lg-3 offset-lg-1">
-                <div class="justify-content-lg-around" style="margin-top:3%; margin-bottom:3%; list-style-type: none;">
-                    <input type="text" />
-                </div>
-            </div>*@
-        </div>
-
-        
-       
-        <div style="display:none" id="poiView">
-            Point of interest
-        </div>
-        <div style="display:none" id="commentView">
-            commentaires
+            <div style="display:none" id="poiView">
+                Point of interest
+            </div>
+            <div style="display:none" id="commentView">
+                commentaires
+            </div>
         </div>
     </div>
-
 </div>
 <input id="codePost" style="display:none" value="@Model.CodePostal" />
 <input id="bouton" style="display:none" value="@ViewBag.bouton" />
 
 
 <img id="chargement" src="~/img/loaders/infini.gif" style="display: none" alt="Chargement en cours..." class="loaderConnection col-md-offset-5 col-md-2 col-md-offset-5" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
@@ -95,27 +89,63 @@
 </script>
 
 <script>
-    var bouton = $('#bouton').val();
-    if (bouton == "graph") {
-        $(document).ready(GetGraphique);
-    }
-    else if (bouton == "tablePrix") {
-        $(document).ready(GetStat);
-    }
+    //$(".nav").find(".active").removeClass("active");
+    //$('#graphique').addClass("active");
+    $(document).ready(function () {
+        var bouton = $('#bouton').val();
 
-    $('#graphique').click(GetGraphique);
-    $('#tablePrix').click(GetStat);
+        if (bouton == "graph") {
+
+            $(document).ready(GetGraphique);
+        }
+        else if (bouton == "tablePrix") {
+            $('#poi').hide();
+
+            $(document).ready(GetStat);
+        }
+        else if (bouton == "poi") {
+            $(".nav").find(".active").removeClass("active");
+            $('#poi-tab').addClass("active");
+            
+            $('#poi').addClass("show");
+            $('#poi').show()
+        }
+        else {
+            $(".nav").find(".active").removeClass("active");
+            $('#comment-tab').addClass("active");
+            
+            $('#comment').addClass("show");
+            $('#comment').show()
+        }
+    })
+    
+    
+
+    $('#graphique-tab').click(GetGraphique);
+    $('#tablePrix-tab').click(GetStat);
+    $('#poi-tab').click(function () {
+        $('#graphique').hide();
+        $('#comment').hide();
+        $('#tablePrix').hide();
+        $('#poi').addClass("show");
+        $('#poi').show();
+    })
+    $('#comment-tab').click(function () {
+        $('#graphique').hide();
+        $('#poi').hide();
+        $('#tablePrix').hide();
+        $('#comment').addClass("show");
+        $('#comment').show()
+    })
 
     function GetGraphique() {
-        //$('#tablePrix').attr('class', 'btn btn-danger');
-        //    $('#graphique').attr('class', 'btn btn-success');
-        //    $('#poi').attr('class', 'btn btn-danger');
-        //    $('#comment').attr('class', 'btn btn-danger');
-
-            //$('#tablePrixView').hide();
-            //$('#poiView').hide();
-            //$('#commentView').hide();
-
+        $(".nav").find(".active").removeClass("active");
+        $('#graphique-tab').addClass("active");
+        $('#poi').hide();
+        $('#comment').hide();
+        $('#tablePrix').hide();
+        $('#graphique').addClass("show");
+        $('#graphique').show()
             
             $("#chargement").show();
             var codePost = $('#codePost').val();
@@ -127,10 +157,11 @@
                 success: function (donnee) {
 
                     var ctx = document.getElementById('myChart').getContext('2d');
+                    
                     var chart = new Chart(ctx, {
                         // The type of chart we want to create
                         type: 'line',
-
+                        
                         // The data for our dataset
                         data: {
                             labels: [donnee.resultat[0].annee, donnee.resultat[1].annee, donnee.resultat[2].annee, donnee.resultat[3].annee, donnee.resultat[4].annee, donnee.resultat[5].annee],
@@ -161,8 +192,14 @@
 
                         // Configuration options go here
                         options: {
+                            
                             legend: {
-                                position: 'bottom'
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 60,
+                                    fontSize: 20,
+                                    padding: 30
+                                }
                             }
                         }
                     });
@@ -184,6 +221,15 @@
             //$('#poiView').hide();
             //$('#commentView').hide();
 
+        $(".nav").find(".active").removeClass("active");
+        $('#tablePrix-tab').addClass("active");
+
+        $('#poi').hide();
+        $('#comment').hide();
+        $('#graphique').hide();
+
+        $('#tablePrix').addClass("show");
+        $('#tablePrix').show()
             $("#chargement").show();
 
             var codePost = $('#codePost').val();
