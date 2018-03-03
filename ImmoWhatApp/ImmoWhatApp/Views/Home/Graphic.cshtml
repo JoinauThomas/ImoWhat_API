@@ -45,7 +45,8 @@
                 <div class="tab-pane fade" id="graphique" role="tabpanel" aria-labelledby="graphique-tab">
                     <div id="graph" class="chart-container" style="position: relative; height:40vh; width:60vw">
                         <h2 class="titreSecPage">graphique</h2>
-                        <canvas id="myChart"></canvas>
+                        @*<canvas id="myChart"></canvas>*@
+                        <div id="myChart" style="width: 900px; height: 80%"></div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="poi" role="tabpanel" aria-labelledby="poi-tab">
@@ -68,12 +69,12 @@
         </div>
     </div>
 </div>
+<div id="chart_div"></div>
 <input id="codePost" style="display:none" value="@Model.CodePostal" />
 <input id="bouton" style="display:none" value="@ViewBag.bouton" />
 
 
 <img id="chargement" src="~/img/loaders/infini.gif" style="display: none" alt="Chargement en cours..." class="loaderConnection col-md-offset-5 col-md-2 col-md-offset-5" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
@@ -88,7 +89,9 @@
     }
 </script>
 
-<script>
+<script type="text/javascript">
+    
+
     //$(".nav").find(".active").removeClass("active");
     //$('#graphique').addClass("active");
     $(document).ready(function () {
@@ -138,6 +141,8 @@
         $('#comment').show()
     })
 
+
+
     function GetGraphique() {
         $(".nav").find(".active").removeClass("active");
         $('#graphique-tab').addClass("active");
@@ -155,54 +160,84 @@
                 url: '@Url.Action("GetJsonResultGraph", "Stat")',
                 data: { codePostal: codePost, },
                 success: function (donnee) {
+                    // Load the Visualization API and the corechart package.
+                    google.charts.load('current', { 'packages': ['corechart'] });
 
-                    var ctx = document.getElementById('myChart').getContext('2d');
-                    
-                    var chart = new Chart(ctx, {
-                        // The type of chart we want to create
-                        type: 'line',
-                        
-                        // The data for our dataset
-                        data: {
-                            labels: [donnee.resultat[0].annee, donnee.resultat[1].annee, donnee.resultat[2].annee, donnee.resultat[3].annee, donnee.resultat[4].annee, donnee.resultat[5].annee],
-                            datasets: [
-                                {
-                                    label: "prix moyen villa",
-                                    borderColor: '#FF0004',
-                                    data: [donnee.resultat[0].moyennePrixVilla, donnee.resultat[1].moyennePrixVilla, donnee.resultat[2].moyennePrixVilla, donnee.resultat[3].moyennePrixVilla, donnee.resultat[4].moyennePrixVilla, donnee.resultat[5].moyennePrixVilla],
-                                },
-                                {
-                                    label: "prix moyen maison",
-                                    borderColor: '#B75814',
-                                    data: [donnee.resultat[0].moyennePrixMaison, donnee.resultat[1].moyennePrixMaison, donnee.resultat[2].moyennePrixMaison, donnee.resultat[3].moyennePrixMaison, donnee.resultat[4].moyennePrixMaison, donnee.resultat[5].moyennePrixMaison],
-                                },
-                                {
-                                    label: "prix moyen terrain",
-                                    borderColor: '#49FA14',
-                                    data: [donnee.resultat[0].moyennePrixTerrain, donnee.resultat[1].moyennePrixTerrain, donnee.resultat[2].moyennePrixTerrain, donnee.resultat[3].moyennePrixTerrain, donnee.resultat[4].moyennePrixTerrain, donnee.resultat[5].moyennePrixTerrain],
-                                },
-                                {
-                                    label: "prix moyen appartement",
-                                    borderColor: '#4214FA',
-                                    data: [donnee.resultat[0].moyennePrixAppartement, donnee.resultat[1].moyennePrixAppartement, donnee.resultat[2].moyennePrixAppartement, donnee.resultat[3].moyennePrixAppartement, donnee.resultat[4].moyennePrixAppartement, donnee.resultat[5].moyennePrixAppartement],
-                                },
+                    // Set a callback to run when the Google Visualization API is loaded.
+                    google.charts.setOnLoadCallback(drawChart);
 
-                            ]
-                        },
-
-                        // Configuration options go here
-                        options: {
+                    // Callback that creates and populates a data table,
+                    // instantiates the pie chart, passes in the data and
+                    // draws it.
+                    function drawChart() {
+                        var data = google.visualization.arrayToDataTable([
+                            ['année', 'prix moyen villa', 'prix moyen maison', 'prix moyen terrain', 'prix moyen appartement'],
+                            [donnee.resultat[0].annee.toString(), donnee.resultat[0].moyennePrixVilla, donnee.resultat[0].moyennePrixMaison, donnee.resultat[0].moyennePrixTerrain, donnee.resultat[0].moyennePrixAppartement],
+                            [donnee.resultat[1].annee.toString(), donnee.resultat[1].moyennePrixVilla, donnee.resultat[1].moyennePrixMaison, donnee.resultat[1].moyennePrixTerrain, donnee.resultat[1].moyennePrixAppartement],
+                            [donnee.resultat[2].annee.toString(), donnee.resultat[2].moyennePrixVilla, donnee.resultat[2].moyennePrixMaison, donnee.resultat[2].moyennePrixTerrain, donnee.resultat[2].moyennePrixAppartement],
+                            [donnee.resultat[3].annee.toString(), donnee.resultat[3].moyennePrixVilla, donnee.resultat[3].moyennePrixMaison, donnee.resultat[3].moyennePrixTerrain, donnee.resultat[3].moyennePrixAppartement],
+                            [donnee.resultat[4].annee.toString(), donnee.resultat[4].moyennePrixVilla, donnee.resultat[4].moyennePrixMaison, donnee.resultat[4].moyennePrixTerrain, donnee.resultat[4].moyennePrixAppartement],
+                            [donnee.resultat[5].annee.toString(), donnee.resultat[5].moyennePrixVilla, donnee.resultat[5].moyennePrixMaison, donnee.resultat[5].moyennePrixTerrain, donnee.resultat[5].moyennePrixAppartement]
                             
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    boxWidth: 60,
-                                    fontSize: 20,
-                                    padding: 30
-                                }
-                            }
-                        }
-                    });
+                        ]);
+                        var options = {
+                            title: 'Company Performance',
+                            curveType: 'function',
+                            legend: { position: 'bottom' }
+                        };
+
+                        // Instantiate and draw our chart, passing in some options.
+                        var chart = new google.visualization.LineChart(document.getElementById('myChart'));
+                        chart.draw(data, options);
+                    }
+
+                    //var ctx = document.getElementById('myChart').getContext('2d');
+                    
+                    //var chart = new Chart(ctx, {
+                    //    // The type of chart we want to create
+                    //    type: 'line',
+                        
+                    //    // The data for our dataset
+                    //    data: {
+                    //        labels: [donnee.resultat[0].annee, donnee.resultat[1].annee, donnee.resultat[2].annee, donnee.resultat[3].annee, donnee.resultat[4].annee, donnee.resultat[5].annee],
+                    //        datasets: [
+                    //            {
+                    //                label: "prix moyen villa",
+                    //                borderColor: '#FF0004',
+                    //                data: [donnee.resultat[0].moyennePrixVilla, donnee.resultat[1].moyennePrixVilla, donnee.resultat[2].moyennePrixVilla, donnee.resultat[3].moyennePrixVilla, donnee.resultat[4].moyennePrixVilla, donnee.resultat[5].moyennePrixVilla],
+                    //            },
+                    //            {
+                    //                label: "prix moyen maison",
+                    //                borderColor: '#B75814',
+                    //                data: [donnee.resultat[0].moyennePrixMaison, donnee.resultat[1].moyennePrixMaison, donnee.resultat[2].moyennePrixMaison, donnee.resultat[3].moyennePrixMaison, donnee.resultat[4].moyennePrixMaison, donnee.resultat[5].moyennePrixMaison],
+                    //            },
+                    //            {
+                    //                label: "prix moyen terrain",
+                    //                borderColor: '#49FA14',
+                    //                data: [donnee.resultat[0].moyennePrixTerrain, donnee.resultat[1].moyennePrixTerrain, donnee.resultat[2].moyennePrixTerrain, donnee.resultat[3].moyennePrixTerrain, donnee.resultat[4].moyennePrixTerrain, donnee.resultat[5].moyennePrixTerrain],
+                    //            },
+                    //            {
+                    //                label: "prix moyen appartement",
+                    //                borderColor: '#4214FA',
+                    //                data: [donnee.resultat[0].moyennePrixAppartement, donnee.resultat[1].moyennePrixAppartement, donnee.resultat[2].moyennePrixAppartement, donnee.resultat[3].moyennePrixAppartement, donnee.resultat[4].moyennePrixAppartement, donnee.resultat[5].moyennePrixAppartement],
+                    //            },
+
+                    //        ]
+                    //    },
+
+                    //    // Configuration options go here
+                    //    options: {
+                            
+                    //        legend: {
+                    //            position: 'bottom',
+                    //            labels: {
+                    //                boxWidth: 60,
+                    //                fontSize: 20,
+                    //                padding: 30
+                    //            }
+                    //        }
+                    //    }
+                    //});
                     $("#chargement").hide();
                     //$('#graph').show();
                 },
