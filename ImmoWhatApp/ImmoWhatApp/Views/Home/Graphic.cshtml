@@ -46,7 +46,7 @@
                     <div id="graph" class="chart-container" style="position: relative; height:40vh; width:60vw">
                         <h2 class="titreSecPage">graphique</h2>
                         @*<canvas id="myChart"></canvas>*@
-                        <div id="myChart" style="width: 900px; height: 80%"></div>
+                        <div id="myChart" style="width: 1000px; height: 100%"></div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="poi" role="tabpanel" aria-labelledby="poi-tab">
@@ -181,9 +181,53 @@
                             
                         ]);
                         var options = {
-                            title: 'Company Performance',
+                            pointsVisible: true,
                             curveType: 'function',
-                            legend: { position: 'bottom' }
+                            legend: {
+                                position: 'bottom',
+                                textStyle: {
+                                    color: '#01579b',
+                                    fontSize: 15,
+                                    fontName: 'Arial',
+                                    bold: true,
+                                    italic: true
+                                }
+                            },
+                            hAxis: {
+                                title: 'année',
+                                textStyle: {
+                                    color: '#01579b',
+                                    fontSize: 15,
+                                    fontName: 'Arial',
+                                    bold: true,
+                                    italic: true
+                                },
+                                titleTextStyle: {
+                                    color: '#01579b',
+                                    fontSize: 20,
+                                    fontName: 'Arial',
+                                    bold: true,
+                                    italic: true
+                                }
+                            },
+                            vAxis: {
+                                title: 'prix ( € )',
+                                textStyle: {
+                                    color: '#01579b',
+                                    fontSize: 15,
+                                    fontName: 'Arial',
+                                    bold: true,
+                                    italic: true
+                                },
+                                titleTextStyle: {
+                                    color: '#01579b',
+                                    fontSize: 20,
+                                    fontName: 'Arial',
+                                    bold: true,
+                                    italic: true
+                                }
+                            },
+                            
                         };
 
                         // Instantiate and draw our chart, passing in some options.
