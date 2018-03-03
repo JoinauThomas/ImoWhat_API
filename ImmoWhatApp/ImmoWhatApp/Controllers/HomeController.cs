@@ -12,6 +12,7 @@ namespace ImmoWhatApp.Controllers
 {
     public class HomeController : BaseController
     {
+        
         public ActionResult SetCulture(string culture)
         {
             // Validate input
@@ -32,9 +33,15 @@ namespace ImmoWhatApp.Controllers
             Response.Cookies.Add(cookie);
             return Redirect(Request.UrlReferrer.AbsoluteUri);
         }
+        public int GetHighestYear()
+        {
+            int annee = BLL.HomeBLL.GetHighestYear();
+            return annee;
+        }
         // GET: Home
         public ActionResult Index()
         {
+            Session["HighestYear"] = GetHighestYear();
             var langue = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
             List<Models.Commune> listeCommunes = new List<Models.Commune>();
             listeCommunes = BLL.CommuneBLL.GetAllCommunesCompleteWithLanguageBLL(langue);
@@ -46,6 +53,7 @@ namespace ImmoWhatApp.Controllers
 
         public ActionResult MainPage(string nomCommune)
         {
+            
             Models.Commune maCommune = BLL.CommuneBLL.checkIfCommuneExistsBLL(nomCommune);
             ViewBag.aaa = "test";
             return View(maCommune);

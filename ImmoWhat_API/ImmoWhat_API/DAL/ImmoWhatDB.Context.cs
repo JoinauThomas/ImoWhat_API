@@ -526,5 +526,10 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPriceTable_Result>("GetPriceTable", compareYearParameter, codePostalParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> GetHighestYear()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetHighestYear");
+        }
     }
 }

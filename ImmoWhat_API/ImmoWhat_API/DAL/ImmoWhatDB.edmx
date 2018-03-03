@@ -500,6 +500,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="type" Type="nvarchar" Mode="In" />
           <Parameter Name="codePostCommune" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="GetHighestYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetIdMmbre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
         </Function>
@@ -900,6 +901,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <Parameter Name="compareYear" Mode="In" Type="Int32" />
             <Parameter Name="codePostal" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetHighestYear" ReturnType="Collection(Int32)" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1743,6 +1745,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetHighestYear" FunctionName="ImmoWhatModel.Store.GetHighestYear" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

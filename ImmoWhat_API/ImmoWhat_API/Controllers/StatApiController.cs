@@ -13,6 +13,31 @@ namespace ImmoWhat_API.Controllers
     public class StatApiController : ApiController
     {
         [HttpGet]
+        [Route("GetHighestYear")]
+        public int GetHighestYear()
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=ImmoWhat;Integrated Security=True"))
+                {
+                    using (SqlCommand cmd = new SqlCommand("GetHighestYear", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        con.Open();
+                        var x = cmd.ExecuteScalar();
+                        con.Close();
+
+                        return (int)x;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [HttpGet]
         [Route("GetTableGraphique")]
         public List<Models.TableResultGraphic> GetTableGraphique(string codePostal)
         {

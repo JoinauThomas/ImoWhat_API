@@ -230,6 +230,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommuneApiController.cs" />
+    <Compile Include="Controllers\HomeApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembreAPIController.cs" />
     <Compile Include="Controllers\StatApiController.cs" />

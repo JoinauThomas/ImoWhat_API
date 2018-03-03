@@ -66,6 +66,7 @@ namespace ImmoWhatApp.Controllers
             {
                 Models.MembreModels monProfile = BLL.MembreBLL.GetMyProfile(moi.login);
                 Session["moi"] = monProfile;
+                
 
 
                 return Json(new { result = "OK", nom = monProfile.nom, prenom = monProfile.prenom });
