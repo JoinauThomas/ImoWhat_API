@@ -61,9 +61,22 @@
                 </div>
                 <div class="tab-pane fade" id="graphique" role="tabpanel" aria-labelledby="graphique-tab">
                     <div id="graph" class="chart-container" style="position: relative; height:40vh; width:60vw">
-                        <h2 class="titreSecPage">graphique</h2>
-                        @*<canvas id="myChart"></canvas>*@
-                        <div id="myChart" style="width: 1000px; height: 100%"></div>
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <h3 class="col-lg-9 float-lg-left" style="text-align:center">graphique de stat</h3>
+
+                                <div class="btn-group float-lg-left col-lg-2" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-secondary">Prix moyen</button>
+                                    <button type="button" class="btn btn-secondary">transaction</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="myChart" class="col-lg-12"></div>
+
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="tab-pane fade" id="poi" role="tabpanel" aria-labelledby="poi-tab">
@@ -178,51 +191,38 @@
                 data: { codePostal: codePost, },
                 success: function (donnee) {
                     // Load the Visualization API and the corechart package.
-                    google.charts.load('current', { 'packages': ['corechart'] });
+                    google.charts.load('current', { packages: ['corechart', 'line'] });
 
                     // Set a callback to run when the Google Visualization API is loaded.
-                    google.charts.setOnLoadCallback(drawChart);
+                    google.charts.setOnLoadCallback(drawLineColors);
 
                     // Callback that creates and populates a data table,
                     // instantiates the pie chart, passes in the data and
                     // draws it.
-                    function drawChart() {
-                        var data = google.visualization.arrayToDataTable([
-                            ['année', 'prix moyen villa', 'prix moyen maison', 'prix moyen terrain', 'prix moyen appartement'],
-                            [donnee.resultat[0].annee.toString(), donnee.resultat[0].moyennePrixVilla, donnee.resultat[0].moyennePrixMaison, donnee.resultat[0].moyennePrixTerrain, donnee.resultat[0].moyennePrixAppartement],
-                            [donnee.resultat[1].annee.toString(), donnee.resultat[1].moyennePrixVilla, donnee.resultat[1].moyennePrixMaison, donnee.resultat[1].moyennePrixTerrain, donnee.resultat[1].moyennePrixAppartement],
-                            [donnee.resultat[2].annee.toString(), donnee.resultat[2].moyennePrixVilla, donnee.resultat[2].moyennePrixMaison, donnee.resultat[2].moyennePrixTerrain, donnee.resultat[2].moyennePrixAppartement],
-                            [donnee.resultat[3].annee.toString(), donnee.resultat[3].moyennePrixVilla, donnee.resultat[3].moyennePrixMaison, donnee.resultat[3].moyennePrixTerrain, donnee.resultat[3].moyennePrixAppartement],
-                            [donnee.resultat[4].annee.toString(), donnee.resultat[4].moyennePrixVilla, donnee.resultat[4].moyennePrixMaison, donnee.resultat[4].moyennePrixTerrain, donnee.resultat[4].moyennePrixAppartement],
-                            [donnee.resultat[5].annee.toString(), donnee.resultat[5].moyennePrixVilla, donnee.resultat[5].moyennePrixMaison, donnee.resultat[5].moyennePrixTerrain, donnee.resultat[5].moyennePrixAppartement]
+                    function drawLineColors() {
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('number', 'X');
+                        data.addColumn('number', 'prix moyenne villas');
+                        data.addColumn('number', 'prix moyenne maison');
+                        data.addColumn('number', 'prix moyenne appartement');
+                        data.addColumn('number', 'prix moyenne terrain');
 
+                        data.addRows([
+                            [donnee.resultat[0].annee, donnee.resultat[0].moyennePrixVilla, donnee.resultat[0].moyennePrixMaison, donnee.resultat[0].moyennePrixAppartement, donnee.resultat[0].moyennePrixTerrain],
+                            [donnee.resultat[1].annee, donnee.resultat[1].moyennePrixVilla, donnee.resultat[1].moyennePrixMaison, donnee.resultat[1].moyennePrixAppartement, donnee.resultat[1].moyennePrixTerrain],
+                            [donnee.resultat[2].annee, donnee.resultat[2].moyennePrixVilla, donnee.resultat[2].moyennePrixMaison, donnee.resultat[2].moyennePrixAppartement, donnee.resultat[2].moyennePrixTerrain],
+                            [donnee.resultat[3].annee, donnee.resultat[3].moyennePrixVilla, donnee.resultat[3].moyennePrixMaison, donnee.resultat[3].moyennePrixAppartement, donnee.resultat[3].moyennePrixTerrain],
+                            [donnee.resultat[4].annee, donnee.resultat[4].moyennePrixVilla, donnee.resultat[4].moyennePrixMaison, donnee.resultat[4].moyennePrixAppartement, donnee.resultat[4].moyennePrixTerrain],
+                            [donnee.resultat[5].annee, donnee.resultat[5].moyennePrixVilla, donnee.resultat[5].moyennePrixMaison, donnee.resultat[5].moyennePrixAppartement, donnee.resultat[5].moyennePrixTerrain]
                         ]);
+                       
                         var options = {
-                            chartArea: {
-                                left: 0,
-                                top: 10,
-                                width: 195,
-                                height: 56
-                            },
-                            'width': 850,
-                            'height': 400,
-                            pointsVisible: true,
+                            height: 400,
                             curveType: 'function',
-                            legend: {
-                                position: 'right',
-                                textStyle: {
-                                    color: '#01579b',
-                                    fontSize: 11,
-                                    fontName: 'Arial',
-                                    bold: true,
-                                    italic: true
-                                }
-                            },
+                            pointsVisible: true,
                             hAxis: {
-                                viewWindow: {
-                                    min: 0
-                                },
-                                minValue: 2009,
+                                format: '',
+
                                 title: 'année',
                                 textStyle: {
                                     color: '#01579b',
@@ -240,14 +240,6 @@
                                 }
                             },
                             vAxis: {
-                                viewWindowMode: 'explicit',
-                                viewWindow: {
-                                    //max: 8000,
-                                    min: 2015,
-                                },
-                                gridlines: {
-                                    count: 18,  //set kind of step (max-min)/count
-                                },
                                 title: 'prix ( € )',
                                 textStyle: {
                                     color: '#01579b',
@@ -263,11 +255,8 @@
                                     bold: true,
                                     italic: true
                                 }
-                            },
-
+                            }
                         };
-
-                        // Instantiate and draw our chart, passing in some options.
                         var chart = new google.visualization.LineChart(document.getElementById('myChart'));
                         chart.draw(data, options);
                     }
