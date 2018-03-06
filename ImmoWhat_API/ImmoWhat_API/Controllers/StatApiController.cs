@@ -83,7 +83,28 @@ namespace ImmoWhat_API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetAverageAndTransactionsTable")]
+        public List<Models.tablePriceStat> GetAverageAndTransactionsTable(int anneeRecherchee, string codePostal)
+        {
+            List<Models.tablePriceStat> resultTable = new List<Models.tablePriceStat>();
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                List<DAL.GetAverageAndTransactionsTable_Result> ListeStatDB = dbContext.GetAverageAndTransactionsTable(anneeRecherchee, codePostal).ToList();
 
+                foreach (var x in ListeStatDB)
+                {
+                    resultTable.Add(new Models.tablePriceStat { type = x.typ, anneeCourante = (int)x.currentyear0, anneePrecedente = (int)x.currentyear1, anneeRecherche = (int)x.anneeRecherchee, evolutionPrice = (int)x.evolutions });
+                }
+
+                return resultTable;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
         [HttpGet]

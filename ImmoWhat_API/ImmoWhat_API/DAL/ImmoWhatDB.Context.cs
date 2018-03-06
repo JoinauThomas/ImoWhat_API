@@ -531,5 +531,18 @@ namespace ImmoWhat_API.DAL
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetHighestYear");
         }
+    
+        public virtual ObjectResult<GetAverageAndTransactionsTable_Result> GetAverageAndTransactionsTable(Nullable<int> compareYear, string codePostal)
+        {
+            var compareYearParameter = compareYear.HasValue ?
+                new ObjectParameter("compareYear", compareYear) :
+                new ObjectParameter("compareYear", typeof(int));
+    
+            var codePostalParameter = codePostal != null ?
+                new ObjectParameter("codePostal", codePostal) :
+                new ObjectParameter("codePostal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAverageAndTransactionsTable_Result>("GetAverageAndTransactionsTable", compareYearParameter, codePostalParameter);
+        }
     }
 }

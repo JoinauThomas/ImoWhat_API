@@ -36,5 +36,39 @@ namespace ImmoWhatApp.Controllers
                 return null;
             }
         }
+
+        [HttpGet]
+        public JsonResult GetAverageAndTransactionsTableInJson(int anneeRecherchee, string codePostal)
+        {
+            try
+            {
+                List<Models.tablePriceStat> resultTable = BLL.StatBLL.GetAverageAndTransactionsTable(anneeRecherchee, codePostal).ToList();
+                if (resultTable != null)
+                {
+                    return Json(new { result = "OK", resultat = resultTable }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [HttpGet]
+        public ActionResult GetAverageAndTransactionsTable(int anneeRecherchee, string codePostal)
+        {
+            try
+            {
+                List<Models.tablePriceStat> result = BLL.StatBLL.GetPriceTable(anneeRecherchee, codePostal).ToList();
+                return PartialView("_tableView",result);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

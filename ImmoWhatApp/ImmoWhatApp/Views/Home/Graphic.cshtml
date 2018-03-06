@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-lg-3 carte">
         <div class="col-12">
-            Homegraphique-prixWaterloo
+            Home / graphique-prix / @Model.Localite
         </div>
         <div class="col-12">
             <input type="text" placeholder="@Model.Localite" />
@@ -18,7 +18,7 @@
 
     </div>
 
-    <div class="col-lg-9"  >
+    <div class="col-lg-9">
         <div class="row" style="padding-left:3%; padding-top:5%;">
             <ul class="nav nav-tabs col-lg-12" id="myTab" role="tablist">
                 <li class="nav-item">
@@ -34,13 +34,30 @@
                     <a class="nav-link" id="comment-tab" data-toggle="tab" href="#comment" role="tab" aria-controls="comment" aria-selected="false">comment</a>
                 </li>
             </ul>
-            <div class="tab-content row" id="myTabContent" style="height:75vh; padding-top:5vh" >
+            <div class="tab-content row" id="myTabContent" style="height:75vh; padding-top:5vh">
                 <div class="col-lg-12 tab-pane fade show active" id="tablePrix" role="tabpanel" aria-labelledby="tablePrix-tab" style="position: relative; height:40vh; width:60vw">
-                    <h2 class="titreSecPage">table de prix</h2>
-                    <div id="tablePrixView" class="col-lg-12">
-                        @*ici, la table des prix*@
+
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <h3 class="col-lg-9 float-lg-left">Average & Transactions - @Model.Localite</h3>
+
+                                <div class="input-group mb-3 col-lg-3 float-lg-right">
+                                    <input type="text" class="form-control" placeholder="2010" aria-label="Recipient's username" aria-describedby="basic-addon2" style="text-align:center">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button">search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12" id="tablePrixView">
+                                @*ici, la table des prix*@
+                            </div>
+                        </div>
                     </div>
-                    <input class="col-lg-3" />
+
                 </div>
                 <div class="tab-pane fade" id="graphique" role="tabpanel" aria-labelledby="graphique-tab">
                     <div id="graph" class="chart-container" style="position: relative; height:40vh; width:60vw">
@@ -90,7 +107,7 @@
 </script>
 
 <script type="text/javascript">
-    
+
 
     //$(".nav").find(".active").removeClass("active");
     //$('#graphique').addClass("active");
@@ -109,20 +126,20 @@
         else if (bouton == "poi") {
             $(".nav").find(".active").removeClass("active");
             $('#poi-tab').addClass("active");
-            
+
             $('#poi').addClass("show");
             $('#poi').show()
         }
         else {
             $(".nav").find(".active").removeClass("active");
             $('#comment-tab').addClass("active");
-            
+
             $('#comment').addClass("show");
             $('#comment').show()
         }
     })
-    
-    
+
+
 
     $('#graphique-tab').click(GetGraphique);
     $('#tablePrix-tab').click(GetStat);
@@ -151,7 +168,7 @@
         $('#tablePrix').hide();
         $('#graphique').addClass("show");
         $('#graphique').show()
-            
+
             $("#chargement").show();
             var codePost = $('#codePost').val();
             $.ajax({
@@ -178,22 +195,34 @@
                             [donnee.resultat[3].annee.toString(), donnee.resultat[3].moyennePrixVilla, donnee.resultat[3].moyennePrixMaison, donnee.resultat[3].moyennePrixTerrain, donnee.resultat[3].moyennePrixAppartement],
                             [donnee.resultat[4].annee.toString(), donnee.resultat[4].moyennePrixVilla, donnee.resultat[4].moyennePrixMaison, donnee.resultat[4].moyennePrixTerrain, donnee.resultat[4].moyennePrixAppartement],
                             [donnee.resultat[5].annee.toString(), donnee.resultat[5].moyennePrixVilla, donnee.resultat[5].moyennePrixMaison, donnee.resultat[5].moyennePrixTerrain, donnee.resultat[5].moyennePrixAppartement]
-                            
+
                         ]);
                         var options = {
+                            chartArea: {
+                                left: 0,
+                                top: 10,
+                                width: 195,
+                                height: 56
+                            },
+                            'width': 850,
+                            'height': 400,
                             pointsVisible: true,
                             curveType: 'function',
                             legend: {
-                                position: 'bottom',
+                                position: 'right',
                                 textStyle: {
                                     color: '#01579b',
-                                    fontSize: 15,
+                                    fontSize: 11,
                                     fontName: 'Arial',
                                     bold: true,
                                     italic: true
                                 }
                             },
                             hAxis: {
+                                viewWindow: {
+                                    min: 0
+                                },
+                                minValue: 2009,
                                 title: 'année',
                                 textStyle: {
                                     color: '#01579b',
@@ -211,6 +240,14 @@
                                 }
                             },
                             vAxis: {
+                                viewWindowMode: 'explicit',
+                                viewWindow: {
+                                    //max: 8000,
+                                    min: 2015,
+                                },
+                                gridlines: {
+                                    count: 18,  //set kind of step (max-min)/count
+                                },
                                 title: 'prix ( € )',
                                 textStyle: {
                                     color: '#01579b',
@@ -227,7 +264,7 @@
                                     italic: true
                                 }
                             },
-                            
+
                         };
 
                         // Instantiate and draw our chart, passing in some options.
@@ -236,11 +273,11 @@
                     }
 
                     //var ctx = document.getElementById('myChart').getContext('2d');
-                    
+
                     //var chart = new Chart(ctx, {
                     //    // The type of chart we want to create
                     //    type: 'line',
-                        
+
                     //    // The data for our dataset
                     //    data: {
                     //        labels: [donnee.resultat[0].annee, donnee.resultat[1].annee, donnee.resultat[2].annee, donnee.resultat[3].annee, donnee.resultat[4].annee, donnee.resultat[5].annee],
@@ -271,7 +308,7 @@
 
                     //    // Configuration options go here
                     //    options: {
-                            
+
                     //        legend: {
                     //            position: 'bottom',
                     //            labels: {
@@ -316,22 +353,29 @@
             $.ajax({
                 type: 'GET',
                 datatype: 'json',
-                url: '@Url.Action("GetJsonTablePriceStat", "Stat")',
+                url: '@Url.Action("GetAverageAndTransactionsTableInJson", "Stat")',
                 data: { anneeRecherchee: anneeRecherche, codePostal: codePost, },
                 success: function (donnee) {
-                    var table = '<table class="table" id="tableStat"> <thead> <tr> <th>type</th><th>2000</th><th>2014</th><th>2015</th> </tr> </thead> <tbody>';
+                    var currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
+                    var previousYear = currentYear-1;
+                    var table = '<table class="table table-striped" id="tableStat"> <thead> <tr><th scope="col">average price</th> <th>type</th><th>' + anneeRecherche + '</th><th>' + previousYear + '</th><th>' + currentYear+'</th><th>evolution</th> </tr> </thead> <tbody>';
                     var x = 0;
                     while (x < 4) {
-                        table = table + '<tr> <td>' + donnee.resultat[x].type + '</td><td>' + donnee.resultat[x].anneeRecherche + '</td><td>' + donnee.resultat[x].anneePrecedente + '</td><td>' + donnee.resultat[x].anneeCourante + '</td> </tr>'
+                        table = table + '<tr><td scope="row"></td> <td>' + donnee.resultat[x].type + '</td><td>' + donnee.resultat[x].anneeRecherche + '</td><td>' + donnee.resultat[x].anneePrecedente + '</td><td>' + donnee.resultat[x].anneeCourante + '</td><td>' + donnee.resultat[x].evolutionPrice + '%</td> </tr>'
+                        x += 1;
+                    }
+                    table = table + '<tr><th scope="row">nb of transaction</th><td></td><td></td><td></td><td></td><td></td> </tr>'
+                    while (x < 8) {
+                        table = table + '<tr><td scope="row"></td> <td>' + donnee.resultat[x].type + '</td><td>' + donnee.resultat[x].anneeRecherche + '</td><td>' + donnee.resultat[x].anneePrecedente + '</td><td>' + donnee.resultat[x].anneeCourante + '</td><td>' + donnee.resultat[x].evolutionPrice + '%</td> </tr>'
                         x += 1;
                     }
                     table += ' </tbody> </table>';
 
                     $("#chargement").hide();
-                    
+
                     //$('#tablePrixView').show();
                     $('#tablePrixView').html(table);
-                    
+
 
                 },
                 error: function () {
@@ -340,7 +384,7 @@
             })
     }
 
-   
+
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0&callback=myMap"></script>
 

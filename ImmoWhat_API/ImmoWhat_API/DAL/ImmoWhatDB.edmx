@@ -457,6 +457,10 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         <Function Name="ajoutIdCouleursDsMapsParams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="CommunesToLower" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GetAverageAndTransactionsTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="compareYear" Type="int" Mode="In" />
+          <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="GetAveragePrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="annee" Type="int" Mode="In" />
           <Parameter Name="type" Type="nvarchar" Mode="In" />
@@ -902,6 +906,10 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <Parameter Name="codePostal" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetHighestYear" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="GetAverageAndTransactionsTable" ReturnType="Collection(ImmoWhatModel.GetAverageAndTransactionsTable_Result)">
+            <Parameter Name="compareYear" Mode="In" Type="Int32" />
+            <Parameter Name="codePostal" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1363,6 +1371,13 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Type="Int32" Name="currentyear0" Nullable="true" />
           <Property Type="Double" Name="evolutions" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetAverageAndTransactionsTable_Result">
+          <Property Type="String" Name="typ" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="anneeRecherchee" Nullable="true" />
+          <Property Type="Int32" Name="currentyear1" Nullable="true" />
+          <Property Type="Int32" Name="currentyear0" Nullable="true" />
+          <Property Type="Double" Name="evolutions" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1746,6 +1761,17 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetHighestYear" FunctionName="ImmoWhatModel.Store.GetHighestYear" />
+          <FunctionImportMapping FunctionImportName="GetAverageAndTransactionsTable" FunctionName="ImmoWhatModel.Store.GetAverageAndTransactionsTable">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetAverageAndTransactionsTable_Result">
+                <ScalarProperty Name="typ" ColumnName="typ" />
+                <ScalarProperty Name="anneeRecherchee" ColumnName="anneeRecherchee" />
+                <ScalarProperty Name="currentyear1" ColumnName="currentyear1" />
+                <ScalarProperty Name="currentyear0" ColumnName="currentyear0" />
+                <ScalarProperty Name="evolutions" ColumnName="evolutions" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
