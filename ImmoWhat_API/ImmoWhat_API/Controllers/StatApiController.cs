@@ -106,6 +106,29 @@ namespace ImmoWhat_API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetTableTransactions")]
+        public List<Models.tablePriceStat> GetTableTransactions(int anneeRecherchee, string codePostal)
+        {
+            List<Models.tablePriceStat> resultTable = new List<Models.tablePriceStat>();
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                List<DAL.GetTableTransactions_Result> ListeStatDB = dbContext.GetTableTransactions(anneeRecherchee, codePostal).ToList();
+
+                foreach (var x in ListeStatDB)
+                {
+                    resultTable.Add(new Models.tablePriceStat { type = x.typ, anneeCourante = (int)x.currentyear0, anneePrecedente = (int)x.currentyear1, anneeRecherche = (int)x.anneeRecherchee, evolutionPrice = (int)x.evolutions });
+                }
+
+                return resultTable;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         [HttpGet]
         [Route("GetTableGraphique2")]
@@ -135,6 +158,31 @@ namespace ImmoWhat_API.Controllers
                 throw ex;
             }
 
+
+            return liste;
+        }
+
+        [HttpGet]
+        [Route("GetTableGraphiqueTransactions")]
+        public List<Models.TableGraphTransactions> GetTableGraphiqueTransaction(string codePostal)
+        {
+            List<Models.TableGraphTransactions> liste = new List<Models.TableGraphTransactions>();
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                List<DAL.GetTableGraphiqueTransaction_Result> ListeStatDB = dbContext.GetTableGraphiqueTransaction(codePostal).ToList();
+
+                foreach (var x in ListeStatDB)
+                {
+                    liste.Add(new Models.TableGraphTransactions { annee = (int)x.annee, nbTransactionsAppartement = (int)x.nbTransactionsAppartement, nbTransactionsMaison = (int)x.nbTransactionsMaison, nbTransactionsTerrain = (int)x.nbTransactionsTerrain, nbTransactionsVilla = (int)x.nbTransactionsVilla });
+                }
+
+                return liste;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
             return liste;
         }

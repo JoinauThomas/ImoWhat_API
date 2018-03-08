@@ -511,6 +511,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         <Function Name="GetInfoEvolutionPrices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="GetMinYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="GetMyId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
         </Function>
@@ -528,6 +531,16 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="GetTableGraphique2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetTableGraphiqueTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetTableGraphiqueTransactions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetTableTransactions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="compareYear" Type="int" Mode="In" />
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="insertCodePostInCsvTemplate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -908,6 +921,19 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <FunctionImport Name="GetHighestYear" ReturnType="Collection(Int32)" />
           <FunctionImport Name="GetAverageAndTransactionsTable" ReturnType="Collection(ImmoWhatModel.GetAverageAndTransactionsTable_Result)">
             <Parameter Name="compareYear" Mode="In" Type="Int32" />
+            <Parameter Name="codePostal" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetTableTransactions" ReturnType="Collection(ImmoWhatModel.GetTableTransactions_Result)">
+            <Parameter Name="compareYear" Mode="In" Type="Int32" />
+            <Parameter Name="codePostal" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetTableGraphiqueTransactions" ReturnType="Collection(ImmoWhatModel.GetTableGraphiqueTransactions_Result)">
+          <Parameter Name="codePostal" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetTableGraphiqueTransaction" ReturnType="Collection(ImmoWhatModel.GetTableGraphiqueTransaction_Result)">
+          <Parameter Name="codePostal" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetMinYear" ReturnType="Collection(Int32)">
             <Parameter Name="codePostal" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
@@ -1378,6 +1404,27 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Type="Int32" Name="currentyear0" Nullable="true" />
           <Property Type="Double" Name="evolutions" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetTableTransactions_Result">
+          <Property Type="String" Name="typ" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="anneeRecherchee" Nullable="true" />
+          <Property Type="Int32" Name="currentyear1" Nullable="true" />
+          <Property Type="Int32" Name="currentyear0" Nullable="true" />
+          <Property Type="Double" Name="evolutions" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetTableGraphiqueTransactions_Result">
+          <Property Type="Int32" Name="annee" Nullable="true" />
+          <Property Type="Int32" Name="prixMoyenVilla" Nullable="true" />
+          <Property Type="Int32" Name="prixMoyenTerrain" Nullable="true" />
+          <Property Type="Int32" Name="prixMoyenAppartement" Nullable="true" />
+          <Property Type="Int32" Name="prixMoyenMaison" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetTableGraphiqueTransaction_Result">
+          <Property Type="Int32" Name="annee" Nullable="true" />
+          <Property Type="Int32" Name="nbTransactionsVilla" Nullable="true" />
+          <Property Type="Int32" Name="nbTransactionsTerrain" Nullable="true" />
+          <Property Type="Int32" Name="nbTransactionsAppartement" Nullable="true" />
+          <Property Type="Int32" Name="nbTransactionsMaison" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1772,6 +1819,40 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTableTransactions" FunctionName="ImmoWhatModel.Store.GetTableTransactions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetTableTransactions_Result">
+                <ScalarProperty Name="typ" ColumnName="typ" />
+                <ScalarProperty Name="anneeRecherchee" ColumnName="anneeRecherchee" />
+                <ScalarProperty Name="currentyear1" ColumnName="currentyear1" />
+                <ScalarProperty Name="currentyear0" ColumnName="currentyear0" />
+                <ScalarProperty Name="evolutions" ColumnName="evolutions" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTableGraphiqueTransactions" FunctionName="ImmoWhatModel.Store.GetTableGraphiqueTransactions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetTableGraphiqueTransactions_Result">
+                <ScalarProperty Name="annee" ColumnName="annee" />
+                <ScalarProperty Name="prixMoyenVilla" ColumnName="prixMoyenVilla" />
+                <ScalarProperty Name="prixMoyenTerrain" ColumnName="prixMoyenTerrain" />
+                <ScalarProperty Name="prixMoyenAppartement" ColumnName="prixMoyenAppartement" />
+                <ScalarProperty Name="prixMoyenMaison" ColumnName="prixMoyenMaison" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTableGraphiqueTransaction" FunctionName="ImmoWhatModel.Store.GetTableGraphiqueTransaction">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetTableGraphiqueTransaction_Result">
+                <ScalarProperty Name="annee" ColumnName="annee" />
+                <ScalarProperty Name="nbTransactionsVilla" ColumnName="nbTransactionsVilla" />
+                <ScalarProperty Name="nbTransactionsTerrain" ColumnName="nbTransactionsTerrain" />
+                <ScalarProperty Name="nbTransactionsAppartement" ColumnName="nbTransactionsAppartement" />
+                <ScalarProperty Name="nbTransactionsMaison" ColumnName="nbTransactionsMaison" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetMinYear" FunctionName="ImmoWhatModel.Store.GetMinYear" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

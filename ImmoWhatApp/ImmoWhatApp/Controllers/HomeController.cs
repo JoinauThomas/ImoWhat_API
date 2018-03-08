@@ -38,6 +38,12 @@ namespace ImmoWhatApp.Controllers
             int annee = BLL.HomeBLL.GetHighestYear();
             return annee;
         }
+        public void GetMinYear(string codePostal)
+        {
+            int annee = BLL.HomeBLL.GetMinYear(codePostal);
+            Session["anneeMin"] = annee;
+        }
+        
         // GET: Home
         public ActionResult Index()
         {
@@ -55,12 +61,12 @@ namespace ImmoWhatApp.Controllers
         {
             
             Models.Commune maCommune = BLL.CommuneBLL.checkIfCommuneExistsBLL(nomCommune);
-            ViewBag.aaa = "test";
             return View(maCommune);
         }
 
         public ActionResult Graphic (string codePostal, string commune, string lat, string lon, int id, string langue, string province, string bouton)
         {
+            GetMinYear(codePostal);
             Models.Commune maCommune = new Models.Commune{ CodePostal = codePostal, latitude = lat, longitude = lon, Localite = commune, id = id, langue = langue, Province = province };
             ViewBag.bouton = bouton;
 

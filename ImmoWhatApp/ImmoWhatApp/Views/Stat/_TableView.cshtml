@@ -1,0 +1,111 @@
+﻿@model ImmoWhatApp.Models.tablePriceStat
+
+<div class="row">
+    <div class="offset-lg-1 col-lg-11">
+
+        <h3 class="col-lg-10 float-lg-left">Average & Transactions - Waterloo</h3>
+
+        <div class="input-group mb-3 col-lg-2 float-lg-right">
+            <input type="text" class="form-control" placeholder="2010" aria-label="Recipient's username" aria-describedby="basic-addon2" style="text-align:center">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button">search</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="offset-lg-1 col-lg-10">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">average price</th>
+                    <th scope="col">type</th>
+                    <th scope="col">2011</th>
+                    @*<th scope="col">@ViewBag("anneeRecherchee")</th>*@
+                    <th scope="col">@Session["HighestYear"]-1</th>
+                    <th scope="col">@Session["HighestYear"]</th>
+                    <th scope="col">evolution</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <th scope="row"></th>
+                        <td>item.type</td>
+                        <td>iteml.anneeRecherche</td>
+                        <td>item.anneePrecedente</td>
+                        <td>item.anneeCourante</td>
+                        <td>item.evolutionPrice %</td>
+                    </tr>
+                
+
+
+                <tr>
+                    <th scope="row">TRANSACTION</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td>maison</td>
+                    <td>15622</td>
+                    <td>14789</td>
+                    <td>17899</td>
+                    <td>1%</td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td>appartement</td>
+                    <td>15741</td>
+                    <td>14147</td>
+                    <td>18987</td>
+                    <td>80%</td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td>villa</td>
+                    <td>16987</td>
+                    <td>12147</td>
+                    <td>18000</td>
+                    <td>14%</td>
+                </tr>
+                <tr>
+                    <th scope="row"></th>
+                    <td>terrain</td>
+                    <td>15147</td>
+                    <td>14222</td>
+                    <td>17985</td>
+                    <td>5%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="offset-lg-1 col-lg-10">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">AVERAGE (€/m²)</th>
+                    <th scope="col">year</th>
+                    <th scope="col">maison</th>
+                    <th scope="col">appartement</th>
+                    <th scope="col">villa</th>
+                    <th scope="col">terrain</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row"></th>
+                    <td>2017</td>
+                    <td>15622</td>
+                    <td>14789</td>
+                    <td>17899</td>
+                    <td>17455</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

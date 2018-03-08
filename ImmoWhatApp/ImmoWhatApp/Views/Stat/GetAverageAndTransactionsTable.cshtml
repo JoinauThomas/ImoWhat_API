@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ImmoWhatApp.Models.tablePriceStat>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.anneeRecherche)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.anneePrecedente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.anneeCourante)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.evolutionPrice)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.anneeRecherche)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.anneePrecedente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.anneeCourante)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.evolutionPrice)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

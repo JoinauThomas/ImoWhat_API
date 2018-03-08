@@ -544,5 +544,45 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAverageAndTransactionsTable_Result>("GetAverageAndTransactionsTable", compareYearParameter, codePostalParameter);
         }
+    
+        public virtual ObjectResult<GetTableTransactions_Result> GetTableTransactions(Nullable<int> compareYear, string codePostal)
+        {
+            var compareYearParameter = compareYear.HasValue ?
+                new ObjectParameter("compareYear", compareYear) :
+                new ObjectParameter("compareYear", typeof(int));
+    
+            var codePostalParameter = codePostal != null ?
+                new ObjectParameter("codePostal", codePostal) :
+                new ObjectParameter("codePostal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTableTransactions_Result>("GetTableTransactions", compareYearParameter, codePostalParameter);
+        }
+    
+        public virtual ObjectResult<GetTableGraphiqueTransactions_Result> GetTableGraphiqueTransactions(string codePostal)
+        {
+            var codePostalParameter = codePostal != null ?
+                new ObjectParameter("codePostal", codePostal) :
+                new ObjectParameter("codePostal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTableGraphiqueTransactions_Result>("GetTableGraphiqueTransactions", codePostalParameter);
+        }
+    
+        public virtual ObjectResult<GetTableGraphiqueTransaction_Result> GetTableGraphiqueTransaction(string codePostal)
+        {
+            var codePostalParameter = codePostal != null ?
+                new ObjectParameter("codePostal", codePostal) :
+                new ObjectParameter("codePostal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTableGraphiqueTransaction_Result>("GetTableGraphiqueTransaction", codePostalParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetMinYear(string codePostal)
+        {
+            var codePostalParameter = codePostal != null ?
+                new ObjectParameter("codePostal", codePostal) :
+                new ObjectParameter("codePostal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetMinYear", codePostalParameter);
+        }
     }
 }

@@ -37,5 +37,33 @@ namespace ImmoWhat_API.Controllers
                 throw ex;
             }
         }
+        
+            [HttpGet]
+        [Route("GetMinYear")]
+        public int GetMinYear(string codePostal)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=ImmoWhat;Integrated Security=True"))
+                {
+                    using (SqlCommand cmd = new SqlCommand("GetMinYear", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@codePostal", SqlDbType.VarChar).Value = codePostal;
+
+                        con.Open();
+                        var anneeMin = cmd.ExecuteScalar();
+                        con.Close();
+
+                        return (int)anneeMin;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
     }
 }

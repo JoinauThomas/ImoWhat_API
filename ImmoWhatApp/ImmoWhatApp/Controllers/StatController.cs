@@ -8,11 +8,25 @@ namespace ImmoWhatApp.Controllers
 {
     public class StatController : Controller
     {
-
+        
         [HttpGet]
         public JsonResult GetJsonResultGraph(string codePostal)
         {
             List<Models.TableResultGraphic> result = BLL.StatBLL.GetTableGraphique(codePostal).ToList();
+            if (result != null)
+            {
+                return Json(new { result = "OK", resultat = result }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetTableGraphiqueTransactionInJson(string codePostal)
+        {
+            List<Models.TableGraphTransactionsModels> result = BLL.StatBLL.GetTableGraphiqueTransaction(codePostal).ToList();
             if (result != null)
             {
                 return Json(new { result = "OK", resultat = result }, JsonRequestBehavior.AllowGet);
@@ -36,12 +50,15 @@ namespace ImmoWhatApp.Controllers
                 return null;
             }
         }
-
+        
         [HttpGet]
         public JsonResult GetAverageAndTransactionsTableInJson(int anneeRecherchee, string codePostal)
         {
             try
             {
+                int anneeMin = BLL.HomeBLL.GetMinYear(codePostal);
+                Session["anneeMin"] = anneeMin;
+
                 List<Models.tablePriceStat> resultTable = BLL.StatBLL.GetAverageAndTransactionsTable(anneeRecherchee, codePostal).ToList();
                 if (resultTable != null)
                 {
@@ -57,15 +74,23 @@ namespace ImmoWhatApp.Controllers
                 throw ex;
             }
         }
+
         [HttpGet]
-        public ActionResult GetAverageAndTransactionsTable(int anneeRecherchee, string codePostal)
+        public JsonResult GetTableTransactionsInJson(int anneeRecherchee, string codePostal)
         {
             try
             {
-                List<Models.tablePriceStat> result = BLL.StatBLL.GetPriceTable(anneeRecherchee, codePostal).ToList();
-                return PartialView("_tableView",result);
+                List<Models.tablePriceStat> resultTable = BLL.StatBLL.GetTableTransactions(anneeRecherchee, codePostal).ToList();
+                if (resultTable != null)
+                {
+                    return Json(new { result = "OK", resultat = resultTable }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return null;
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }

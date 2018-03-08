@@ -283,7 +283,16 @@
     <Compile Include="DAL\GetTableGraphique2_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\GetTableGraphiqueTransactions_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GetTableGraphiqueTransaction_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetTableGraphique_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GetTableTransactions_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\ImmoWhatDB.Context.cs">
@@ -340,6 +349,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MembreModels.cs" />
     <Compile Include="Models\ResultInscription.cs" />
+    <Compile Include="Models\TableGraphTransactions.cs" />
     <Compile Include="Models\TablePrice.cs" />
     <Compile Include="Models\tablePriceStat.cs" />
     <Compile Include="Models\TableResultGraphic.cs" />

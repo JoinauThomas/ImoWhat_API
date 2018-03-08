@@ -5,6 +5,7 @@
 }
 
 
+</div>
 <div class="row">
     <div class="col-lg-3 carte">
         <div class="col-12">
@@ -35,6 +36,8 @@
                 </li>
             </ul>
             <div class="tab-content row" id="myTabContent" style="height:75vh; padding-top:5vh">
+
+                @*SECTION "TABLE DE PRIX"*@
                 <div class="col-lg-12 tab-pane fade show active" id="tablePrix" role="tabpanel" aria-labelledby="tablePrix-tab" style="position: relative; height:40vh; width:60vw">
 
                     <div class="col-lg-12">
@@ -44,9 +47,9 @@
                                 <h3 class="col-lg-9 float-lg-left">Average & Transactions - @Model.Localite</h3>
 
                                 <div class="input-group mb-3 col-lg-3 float-lg-right">
-                                    <input type="text" class="form-control" placeholder="2010" aria-label="Recipient's username" aria-describedby="basic-addon2" style="text-align:center">
+                                    <input id="inputYear" type="text" class="form-control" placeholder="2010" aria-label="Recipient's username" aria-describedby="basic-addon2" style="text-align:center">
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button">search</button>
+                                        <button id="btnSearchComparaisonYear" class="btn btn-outline-secondary" type="button">search</button>
                                     </div>
                                 </div>
                             </div>
@@ -59,6 +62,8 @@
                     </div>
 
                 </div>
+
+                @*SECTION "GRAPHIQUE"*@
                 <div class="tab-pane fade" id="graphique" role="tabpanel" aria-labelledby="graphique-tab">
                     <div id="graph" class="chart-container" style="position: relative; height:40vh; width:60vw">
                         <div class="row">
@@ -67,8 +72,8 @@
                                 <h3 class="col-lg-9 float-lg-left" style="text-align:center">graphique de stat</h3>
 
                                 <div class="btn-group float-lg-left col-lg-2" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-secondary">Prix moyen</button>
-                                    <button type="button" class="btn btn-secondary">transaction</button>
+                                    <button id="btnPrixMoyen" type="button" class="btn btn-secondary">Prix moyen</button>
+                                    <button id="btnTransactions" type="button" class="btn btn-secondary">transactions</button>
                                 </div>
                             </div>
                         </div>
@@ -76,12 +81,16 @@
                             <div id="myChart" class="col-lg-12"></div>
 
                         </div>
-                        
+
                     </div>
                 </div>
+
+                @*SECTION "POI"*@
                 <div class="tab-pane fade" id="poi" role="tabpanel" aria-labelledby="poi-tab">
                     poia
                 </div>
+
+                @*SECTION "COMMENTAIRE"*@
                 <div class="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="comment-tab">
                     commentaire
                 </div>
@@ -95,6 +104,7 @@
             </div>
             <div style="display:none" id="commentView">
                 commentaires
+
             </div>
         </div>
     </div>
@@ -102,6 +112,12 @@
 <div id="chart_div"></div>
 <input id="codePost" style="display:none" value="@Model.CodePostal" />
 <input id="bouton" style="display:none" value="@ViewBag.bouton" />
+
+
+<!-- Modal -->
+<div id="myModal" style="display:none">
+    <p id="modalTexte" class="modal-contents">voila mon modal</p>
+</div>
 
 
 <img id="chargement" src="~/img/loaders/infini.gif" style="display: none" alt="Chargement en cours..." class="loaderConnection col-md-offset-5 col-md-2 col-md-offset-5" />
@@ -120,21 +136,19 @@
 </script>
 
 <script type="text/javascript">
-
-
-    //$(".nav").find(".active").removeClass("active");
-    //$('#graphique').addClass("active");
+    var anneeMin;
+    var currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
     $(document).ready(function () {
         var bouton = $('#bouton').val();
-
+        anneeMin = '@Request.RequestContext.HttpContext.Session["anneeMin"]';
         if (bouton == "graph") {
-
-            $(document).ready(GetGraphique);
+            $(document).ready(GetGraphiquePrixMoyen);
         }
         else if (bouton == "tablePrix") {
-            $('#poi').hide();
+            currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
+            var anneeRecherche = currentYear - 3;
 
-            $(document).ready(GetStat);
+            $(document).ready(GetStat(anneeRecherche));
         }
         else if (bouton == "poi") {
             $(".nav").find(".active").removeClass("active");
@@ -153,27 +167,155 @@
     })
 
 
-
-    $('#graphique-tab').click(GetGraphique);
-    $('#tablePrix-tab').click(GetStat);
+    $('#btnTransactions').click(function () {
+        GetGraphiqueTransactions();
+    });
+    $('#btnPrixMoyen').click(function () {
+        GetGraphiquePrixMoyen();
+    });
+    $('#graphique-tab').click(GetGraphiquePrixMoyen);
+    $('#tablePrix-tab').click(function () {
+        var anneeRecherche = $('#inputYear').val();
+        if (anneeRecherche == '') {
+            currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
+            anneeRecherche = currentYear - 3;
+        }
+        GetStat(anneeRecherche);
+    });
     $('#poi-tab').click(function () {
         $('#graphique').hide();
         $('#comment').hide();
         $('#tablePrix').hide();
         $('#poi').addClass("show");
         $('#poi').show();
-    })
+    });
     $('#comment-tab').click(function () {
         $('#graphique').hide();
         $('#poi').hide();
         $('#tablePrix').hide();
         $('#comment').addClass("show");
         $('#comment').show()
-    })
+    });
 
+    $('#btnSearchComparaisonYear').click(function () {
+        var anneeRecherche = $('#inputYear').val();
+        if (anneeRecherche == '') {
+            var currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
+            anneeRecherche = currentYear - 3;
+        }
+        if (anneeRecherche < anneeMin) {
+            var currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
+            $('#modalTexte').html("nous n'avons pas de données pour cette année la.\nVeuillez chercher entre " + anneeMin + " et " + currentYear+" !");
+            $('#myModal').dialog({
+                open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
+                resizable: false,
+                height: "auto",
+                width: "400",
+                modal: true,
+                title: '@Resource.desole',
+                buttons: {
+                    "ok": function () { $(this).dialog("close") }
+                }
+            });
 
+        }
+        else {
+            GetStat(anneeRecherche);
+        }
 
-    function GetGraphique() {
+    });
+
+    function GetGraphiqueTransactions() {
+        $("#chargement").show();
+            var codePost = $('#codePost').val();
+            $.ajax({
+                type: 'GET',
+                datatype: 'json',
+                url: '@Url.Action("GetTableGraphiqueTransactionInJson", "Stat")',
+                data: { codePostal: codePost, },
+                success: function (donnee) {
+                    // Load the Visualization API and the corechart package.
+                    google.charts.load('current', { packages: ['corechart', 'line'] });
+
+                    // Set a callback to run when the Google Visualization API is loaded.
+                    google.charts.setOnLoadCallback(drawLineColors);
+
+                    // Callback that creates and populates a data table,
+                    // instantiates the pie chart, passes in the data and
+                    // draws it.
+                    function drawLineColors() {
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('number', 'X');
+                        data.addColumn('number', 'nb de transaction villas');
+                        data.addColumn('number', 'nb de transaction maison');
+                        data.addColumn('number', 'nb de transaction appartement');
+                        data.addColumn('number', 'nb de transaction terrain');
+
+                        data.addRows([
+                            [donnee.resultat[0].annee, donnee.resultat[0].nbTransactionsVilla, donnee.resultat[0].nbTransactionsMaison, donnee.resultat[0].nbTransactionsAppartement, donnee.resultat[0].nbTransactionsTerrain],
+                            [donnee.resultat[1].annee, donnee.resultat[1].nbTransactionsVilla, donnee.resultat[1].nbTransactionsMaison, donnee.resultat[1].nbTransactionsAppartement, donnee.resultat[1].nbTransactionsTerrain],
+                            [donnee.resultat[2].annee, donnee.resultat[2].nbTransactionsVilla, donnee.resultat[2].nbTransactionsMaison, donnee.resultat[2].nbTransactionsAppartement, donnee.resultat[2].nbTransactionsTerrain],
+                            [donnee.resultat[3].annee, donnee.resultat[3].nbTransactionsVilla, donnee.resultat[3].nbTransactionsMaison, donnee.resultat[3].nbTransactionsAppartement, donnee.resultat[3].nbTransactionsTerrain],
+                            [donnee.resultat[4].annee, donnee.resultat[4].nbTransactionsVilla, donnee.resultat[4].nbTransactionsMaison, donnee.resultat[4].nbTransactionsAppartement, donnee.resultat[4].nbTransactionsTerrain],
+                            [donnee.resultat[5].annee, donnee.resultat[5].nbTransactionsVilla, donnee.resultat[5].nbTransactionsMaison, donnee.resultat[5].nbTransactionsAppartement, donnee.resultat[5].nbTransactionsTerrain]
+                        ]);
+
+                        var options = {
+                            height: 400,
+                            curveType: 'function',
+                            pointsVisible: true,
+                            hAxis: {
+                                format: '',
+
+                                title: 'année',
+                                textStyle: {
+                                    color: '#01579b',
+                                    fontSize: 15,
+                                    fontName: 'Arial',
+                                    bold: true,
+                                    italic: true
+                                },
+                                titleTextStyle: {
+                                    color: '#01579b',
+                                    fontSize: 20,
+                                    fontName: 'Arial',
+                                    bold: true,
+                                    italic: true
+                                }
+                            },
+                            vAxis: {
+                                viewWindowMode: "explicit",
+                                viewWindow: { min: 0 },
+                                title: 'nb de transactions',
+                                textStyle: {
+                                    color: '#01579b',
+                                    fontSize: 15,
+                                    fontName: 'Arial',
+                                    bold: true,
+                                    italic: true
+                                },
+                                titleTextStyle: {
+                                    color: '#01579b',
+                                    fontSize: 20,
+                                    fontName: 'Arial',
+                                    bold: true,
+                                    italic: true
+                                }
+                            }
+                        };
+                        var chart = new google.visualization.LineChart(document.getElementById('myChart'));
+                        chart.draw(data, options);
+                    }
+                    $("#chargement").hide();
+                    //$('#graph').show();
+                },
+                error: function () {
+                    alert("une erreur s'est produite...")
+                }
+            });
+    }
+
+    function GetGraphiquePrixMoyen() {
         $(".nav").find(".active").removeClass("active");
         $('#graphique-tab').addClass("active");
         $('#poi').hide();
@@ -215,7 +357,7 @@
                             [donnee.resultat[4].annee, donnee.resultat[4].moyennePrixVilla, donnee.resultat[4].moyennePrixMaison, donnee.resultat[4].moyennePrixAppartement, donnee.resultat[4].moyennePrixTerrain],
                             [donnee.resultat[5].annee, donnee.resultat[5].moyennePrixVilla, donnee.resultat[5].moyennePrixMaison, donnee.resultat[5].moyennePrixAppartement, donnee.resultat[5].moyennePrixTerrain]
                         ]);
-                       
+
                         var options = {
                             height: 400,
                             curveType: 'function',
@@ -240,6 +382,8 @@
                                 }
                             },
                             vAxis: {
+                                viewWindowMode: "explicit",
+                                viewWindow: { min: 0 },
                                 title: 'prix ( € )',
                                 textStyle: {
                                     color: '#01579b',
@@ -260,54 +404,6 @@
                         var chart = new google.visualization.LineChart(document.getElementById('myChart'));
                         chart.draw(data, options);
                     }
-
-                    //var ctx = document.getElementById('myChart').getContext('2d');
-
-                    //var chart = new Chart(ctx, {
-                    //    // The type of chart we want to create
-                    //    type: 'line',
-
-                    //    // The data for our dataset
-                    //    data: {
-                    //        labels: [donnee.resultat[0].annee, donnee.resultat[1].annee, donnee.resultat[2].annee, donnee.resultat[3].annee, donnee.resultat[4].annee, donnee.resultat[5].annee],
-                    //        datasets: [
-                    //            {
-                    //                label: "prix moyen villa",
-                    //                borderColor: '#FF0004',
-                    //                data: [donnee.resultat[0].moyennePrixVilla, donnee.resultat[1].moyennePrixVilla, donnee.resultat[2].moyennePrixVilla, donnee.resultat[3].moyennePrixVilla, donnee.resultat[4].moyennePrixVilla, donnee.resultat[5].moyennePrixVilla],
-                    //            },
-                    //            {
-                    //                label: "prix moyen maison",
-                    //                borderColor: '#B75814',
-                    //                data: [donnee.resultat[0].moyennePrixMaison, donnee.resultat[1].moyennePrixMaison, donnee.resultat[2].moyennePrixMaison, donnee.resultat[3].moyennePrixMaison, donnee.resultat[4].moyennePrixMaison, donnee.resultat[5].moyennePrixMaison],
-                    //            },
-                    //            {
-                    //                label: "prix moyen terrain",
-                    //                borderColor: '#49FA14',
-                    //                data: [donnee.resultat[0].moyennePrixTerrain, donnee.resultat[1].moyennePrixTerrain, donnee.resultat[2].moyennePrixTerrain, donnee.resultat[3].moyennePrixTerrain, donnee.resultat[4].moyennePrixTerrain, donnee.resultat[5].moyennePrixTerrain],
-                    //            },
-                    //            {
-                    //                label: "prix moyen appartement",
-                    //                borderColor: '#4214FA',
-                    //                data: [donnee.resultat[0].moyennePrixAppartement, donnee.resultat[1].moyennePrixAppartement, donnee.resultat[2].moyennePrixAppartement, donnee.resultat[3].moyennePrixAppartement, donnee.resultat[4].moyennePrixAppartement, donnee.resultat[5].moyennePrixAppartement],
-                    //            },
-
-                    //        ]
-                    //    },
-
-                    //    // Configuration options go here
-                    //    options: {
-
-                    //        legend: {
-                    //            position: 'bottom',
-                    //            labels: {
-                    //                boxWidth: 60,
-                    //                fontSize: 20,
-                    //                padding: 30
-                    //            }
-                    //        }
-                    //    }
-                    //});
                     $("#chargement").hide();
                     //$('#graph').show();
                 },
@@ -316,7 +412,7 @@
                 }
             });
     };
-    function GetStat() {
+    function GetStat(anneeRecherche) {
         //$('#tablePrix').attr('class', 'btn btn-success');
         //    $('#graphique').attr('class', 'btn btn-danger');
         //    $('#poi').attr('class', 'btn btn-danger');
@@ -325,7 +421,6 @@
             //$('#graph').hide();
             //$('#poiView').hide();
             //$('#commentView').hide();
-
         $(".nav").find(".active").removeClass("active");
         $('#tablePrix-tab').addClass("active");
 
@@ -335,18 +430,22 @@
 
         $('#tablePrix').addClass("show");
         $('#tablePrix').show()
-            $("#chargement").show();
+        $("#chargement").show();
 
-            var codePost = $('#codePost').val();
-            var anneeRecherche = 2010;
+         var codePost = $('#codePost').val();
+         var currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
+         var previousYear = currentYear - 1;
+
+        if (anneeRecherche == '') {
+            anneeRecherche = currentYear - 3;
+        }
             $.ajax({
                 type: 'GET',
                 datatype: 'json',
                 url: '@Url.Action("GetAverageAndTransactionsTableInJson", "Stat")',
                 data: { anneeRecherchee: anneeRecherche, codePostal: codePost, },
                 success: function (donnee) {
-                    var currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
-                    var previousYear = currentYear-1;
+
                     var table = '<table class="table table-striped" id="tableStat"> <thead> <tr><th scope="col">average price</th> <th>type</th><th>' + anneeRecherche + '</th><th>' + previousYear + '</th><th>' + currentYear+'</th><th>evolution</th> </tr> </thead> <tbody>';
                     var x = 0;
                     while (x < 4) {
@@ -359,7 +458,6 @@
                         x += 1;
                     }
                     table += ' </tbody> </table>';
-
                     $("#chargement").hide();
 
                     //$('#tablePrixView').show();

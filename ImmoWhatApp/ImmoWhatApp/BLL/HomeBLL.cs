@@ -42,6 +42,38 @@ namespace ImmoWhatApp.BLL
 
         }
 
+        public static int GetMinYear(string codePostal)
+        {
+            int annee;
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:49383/api/HomeApi/");
+                    var responseTask = client.GetAsync("GetMinYear?codePostal="+codePostal);
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<int>();
+                        readTask.Wait();
+                        annee = readTask.Result;
+                    }
+                    else
+                    {
+                        annee = -1;
+                    }
+                }
+                return annee;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
 
     }
 }

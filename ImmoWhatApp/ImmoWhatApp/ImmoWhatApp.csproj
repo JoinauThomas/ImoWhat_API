@@ -3210,6 +3210,7 @@
     <Compile Include="Models\Identification.cs" />
     <Compile Include="Models\MembreModels.cs" />
     <Compile Include="Models\ResultInscription.cs" />
+    <Compile Include="Models\TableGraphTransactionsModels.cs" />
     <Compile Include="Models\TablePrice.cs" />
     <Compile Include="Models\tablePriceStat.cs" />
     <Compile Include="Models\TableResultGraphic.cs" />
@@ -3258,6 +3259,8 @@
     <Content Include="Views\Commune\GetTableStatPrixCommune.cshtml" />
     <Content Include="Views\Home\Graphic.cshtml" />
     <Content Include="Views\Home\_tableView.cshtml" />
+    <Content Include="Views\Stat\_TableView.cshtml" />
+    <Content Include="Views\Stat\GetAverageAndTransactionsTable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3269,7 +3272,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Login\" />
-    <Folder Include="Views\Stat\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
