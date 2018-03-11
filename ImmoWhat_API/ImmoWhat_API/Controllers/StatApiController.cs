@@ -91,7 +91,7 @@ namespace ImmoWhat_API.Controllers
             try
             {
                 DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
-                List<DAL.GetAverageAndTransactionsTable_Result> ListeStatDB = dbContext.GetAverageAndTransactionsTable(anneeRecherchee, codePostal).ToList();
+                List<DAL.GetAverageAndTransactionTable_Result> ListeStatDB = dbContext.GetAverageAndTransactionTable(anneeRecherchee, codePostal).ToList();
 
                 foreach (var x in ListeStatDB)
                 {
@@ -183,8 +183,7 @@ namespace ImmoWhat_API.Controllers
             {
                 throw ex;
             }
-
-            return liste;
+            
         }
     }
 

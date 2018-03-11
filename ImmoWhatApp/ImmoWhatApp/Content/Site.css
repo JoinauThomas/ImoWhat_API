@@ -152,6 +152,12 @@ body {
     background-color: grey;
     color: white;
 }
+#cartePOI {
+    height: 50%;
+    width : 100%;
+    background-color: grey;
+    color: white;
+}
 .carte {
     height: 85vh;
 }
