@@ -1627,6 +1627,12 @@
     <Content Include="assets\svg\magnifying-glass.svg" />
     <Content Include="assets\svg\map-marker.svg" />
     <Content Include="assets\svg\map.svg" />
+    <Content Include="assets\svg\maps\bar.png" />
+    <Content Include="assets\svg\maps\home.png" />
+    <Content Include="assets\svg\maps\hopital.png" />
+    <Content Include="assets\svg\maps\restaurant.png" />
+    <Content Include="assets\svg\maps\school.png" />
+    <Content Include="assets\svg\maps\station.png" />
     <Content Include="assets\svg\media-pause.svg" />
     <Content Include="assets\svg\media-play.svg" />
     <Content Include="assets\svg\media-record.svg" />

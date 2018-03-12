@@ -162,17 +162,143 @@
 
 <script type="text/javascript">
 
-    var mapPOI = null;
+    var mapPOI;
+    var infowindow;
+    var service;
+    var markers = [];
+    var markersHopital = [];
+    var markersSchool = [];
+    var markersBar = [];
+    var marker;
+    var imageIcon;
+    var home = { lat: @Model.latitude, lng: @Model.longitude };
+    var typePlace = "";
+
+    function initMapPOI() {
+
+        mapPOI = new google.maps.Map(document.getElementById('mapPOI'), {
+            center: home,
+            zoom: 15
+        });
+        var markerHome = new google.maps.Marker({
+            map: mapPOI,
+            position: home,
+            icon: {
+                url: '/assets/svg/maps/home.png',
+                scaledSize: new google.maps.Size(25, 25)
+            }
+            
+        });
+        
+        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        var marker = new google.maps.Marker({
+            position: home,
+            icon: image
+        });
+        infowindow = new google.maps.InfoWindow();
+        service = new google.maps.places.PlacesService(mapPOI);
+
+    }
+
+    function callback(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+                createMarker(results[i]);
+            }
+        }
+    }
+    function createMarker(place) {
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+            map: mapPOI,
+            type: typePlace,
+            position: place.geometry.location,
+            icon: {
+                url: imageIcon,
+                scaledSize: new google.maps.Size(25, 25)
+            }
+        });
+        markers.push(marker);
+
+        google.maps.event.addListener(marker, 'click', function () {
+            service.getDetails(place, function (result, status) {
+                var contentstring = '<span style="color:red">' + result.name + '</span>'
+                infowindow.setContent(contentstring);
+            });
+            infowindow.open(mapPOI, this);
+        });
+    }
+    function setMapOnAll(mapPOI) {
+        alert(markers.length);
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(mapPOI);
+        }
+    }
+    function clearMarkers() {
+        setMapOnAll(null);
+        markers = [];
+    }
+    function recherche(typ, dist) {
+        typePlace = typ;
+        service.radarSearch({
+            location: home,
+            radius: dist,
+            type: [typ]
+        }, callback);
+    }
+
+    function aaa(typ) {
+        var i = markers.length;
+        var x = 0;
+        var table = [];
+        while (x < i) {
+            if (markers[x].type == typ) {
+                table.push(markers[x]);
+                markers[x].setMap(null);
+            }
+            x++;
+        }
+    }
+    //function deletes()
+    //{
+    //    var tableDelete = [];
+    //    for (var x in markers) {
+    //        if (x.type == "bar") {
+    //            alert(x.name);
+    //        }
+    //    }
+    //}
+
 
     $('#checkboxBar').click(function () {
         if (document.getElementById("checkboxBar").checked == true) {
-            alert("check = ok");
-            addmarker()
+            imageIcon = '/assets/svg/maps/bar.png';
+            recherche("bar", 2500);
         }
         else {
-            alert("check = not ok");
+            aaa("bar");
+            //alert(markers[0].type);
         }
     });
+    $('#checkboxEcoles').click(function () {
+        if (document.getElementById("checkboxEcoles").checked == true) {
+            imageIcon = '/assets/svg/maps/school.png';
+            recherche("school", 2500);
+        }
+        else {
+            aaa("school");
+        }
+    });
+    $('#checkboxHopital').click(function () {
+        if (document.getElementById("checkboxHopital").checked == true) {
+            imageIcon = '/assets/svg/maps/hopital.png';
+            recherche("hospital", 2500);
+        }
+        else {
+            aaa("hospital");
+        }
+    });
+    
 
 
 
@@ -229,7 +355,7 @@
         $('#tablePrix').hide();
         $('#poi').addClass("show");
         $('#poi').show();
-        myMap2();
+        initMapPOI();
     });
     $('#comment-tab').click(function () {
         $('#graphique').hide();
@@ -519,8 +645,7 @@
 <script type="text/javascript">
 
 
-    var lat = 50.8467316;
-    var lon = 4.352413800000022;
+    
 
 
 
@@ -528,6 +653,8 @@
 
 
     $('#btnAdr').click(function () {
+        var lat;
+        var lon;
         var geocoder = new google.maps.Geocoder();
         var address = document.getElementById("searchTextField").value;
 
@@ -537,8 +664,8 @@
                 //
                 lat = results[0].geometry.location.lat();
                 lon = results[0].geometry.location.lng();
-
-                myMap2();
+                home = { lat: lat, lng: lon };
+                initMapPOI();
             }
         });
 
@@ -546,41 +673,41 @@
     });
 
 
-    function myMap2() {
+    //function myMap2() {
 
-        var positions = new google.maps.LatLng(lat, lon);
-        var mapProp = {
-            center: positions,
-            zoom: 16
-        };
-        mapPOI = new google.maps.Map(document.getElementById("mapPOI"), mapProp);
-        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-        var marker = new google.maps.Marker({
-            position: positions,
-            icon: image
-        });
-        marker.setMap(mapPOI);
-    }
+    //    var positions = new google.maps.LatLng(lat, lon);
+    //    var mapProp = {
+    //        center: positions,
+    //        zoom: 16
+    //    };
+    //    mapPOI = new google.maps.Map(document.getElementById("mapPOI"), mapProp);
+    //    var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+    //    var marker = new google.maps.Marker({
+    //        position: positions,
+    //        icon: image
+    //    });
+    //    marker.setMap(mapPOI);
+    //}
 
-    
 
-    function addmarker() {
-       
-        var latit = -25.363882;
-        var longit = 131.044922;
 
-        var myLatlng = new google.maps.LatLng(latit, longit);
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            map: mapPOI,
-            title: "Former About.com Headquarters"
-        });
-        
+    //function addmarker() {
 
-        // To add the marker to the map, call setMap();
-        //marker.setMap(map);
-        alert("oki");
-    }
+    //    var latit = -25.363882;
+    //    var longit = 131.044922;
+
+    //    var myLatlng = new google.maps.LatLng(latit, longit);
+    //    var marker = new google.maps.Marker({
+    //        position: myLatlng,
+    //        map: mapPOI,
+    //        title: "Former About.com Headquarters"
+    //    });
+
+
+    //    // To add the marker to the map, call setMap();
+    //    //marker.setMap(map);
+    //    alert("oki");
+    //}
 
 </script>
 <script type="text/javascript">
