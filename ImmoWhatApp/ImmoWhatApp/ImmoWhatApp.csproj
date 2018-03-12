@@ -1628,8 +1628,10 @@
     <Content Include="assets\svg\map-marker.svg" />
     <Content Include="assets\svg\map.svg" />
     <Content Include="assets\svg\maps\bar.png" />
+    <Content Include="assets\svg\maps\bus.png" />
     <Content Include="assets\svg\maps\home.png" />
     <Content Include="assets\svg\maps\hopital.png" />
+    <Content Include="assets\svg\maps\park.png" />
     <Content Include="assets\svg\maps\restaurant.png" />
     <Content Include="assets\svg\maps\school.png" />
     <Content Include="assets\svg\maps\station.png" />

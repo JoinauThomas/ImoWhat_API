@@ -91,7 +91,7 @@
                         <input id="searchTextField" type="text" size="50" placeholder="Enter a location" autocomplete="on">
                         <button id="btnAdr">bouton</button>
                     </div>
-                    
+
 
 
                     <div id="cartePOI">
@@ -113,12 +113,20 @@
                             <label class="form-check-label" for="checkboxHopital">hopitaux</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="checkboxTest" value="hopitaux">
-                            <label class="form-check-label" for="checkboxTest">test</label>
+                            <input class="form-check-input" type="checkbox" id="checkboxRestaurent" value="restaurent">
+                            <label class="form-check-label" for="checkboxRestaurent">restaurent</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="checkboxStation" value="bus">
+                            <label class="form-check-label" for="checkboxStation">bus</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="checkboxPark" value="park">
+                            <label class="form-check-label" for="checkboxPark">park</label>
                         </div>
                     </div>
                 </div>
-
+                
                 @*SECTION "COMMENTAIRE"*@
                 <div class="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="comment-tab">
                     commentaire
@@ -177,9 +185,8 @@
     var imageIcon;
     var home = { lat: @Model.latitude, lng: @Model.longitude };
     var typePlace = "";
-
     function initMapPOI() {
-
+        
         mapPOI = new google.maps.Map(document.getElementById('mapPOI'), {
             center: home,
             zoom: 15
@@ -251,7 +258,7 @@
         }, callback);
     }
 
-    function aaa(typ) {
+    function deletePOI(typ) {
         var i = markers.length-1;
         while (i >= 0) {
             if (markers[i].type == typ) {
@@ -261,30 +268,16 @@
             i--;
         }
     }
-    //function deletes()
-    //{
-    //    var tableDelete = [];
-    //    for (var x in markers) {
-    //        if (x.type == "bar") {
-    //            alert(x.name);
-    //        }
-    //    }
-    //}
     
-    $('#checkboxTest').click(function () {
-        if (document.getElementById("checkboxTest").checked == true) {
-            alert(markers.length);
-        }
-        else {
-        }
-    });
+    
+    
     $('#checkboxBar').click(function () {
         if (document.getElementById("checkboxBar").checked == true) {
             imageIcon = '/assets/svg/maps/bar.png';
             recherche("bar", 2500);
         }
         else {
-            aaa("bar");
+            deletePOI("bar");
             //alert(markers[0].type);
         }
     });
@@ -294,7 +287,7 @@
             recherche("school", 2500);
         }
         else {
-            aaa("school");
+            deletePOI("school");
         }
     });
     $('#checkboxHopital').click(function () {
@@ -303,7 +296,34 @@
             recherche("hospital", 2500);
         }
         else {
-            aaa("hospital");
+            deletePOI("hospital");
+        }
+    });
+    $('#checkboxRestaurent').click(function () {
+        if (document.getElementById("checkboxRestaurent").checked == true) {
+            imageIcon = '/assets/svg/maps/restaurant.png';
+            recherche("restaurant", 2500);
+        }
+        else {
+            deletePOI("restaurant");
+        }
+    });
+    $('#checkboxStation').click(function () {
+        if (document.getElementById("checkboxStation").checked == true) {
+            imageIcon = '/assets/svg/maps/bus.png';
+            recherche("bus_station", 2500);
+        }
+        else {
+            deletePOI("bus_station");
+        }
+    });
+    $('#checkboxPark').click(function () {
+        if (document.getElementById("checkboxPark").checked == true) {
+            imageIcon = '/assets/svg/maps/park.png';
+            recherche("park", 2500);
+        }
+        else {
+            deletePOI("park");
         }
     });
     
