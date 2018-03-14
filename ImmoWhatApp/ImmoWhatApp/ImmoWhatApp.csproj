@@ -3269,6 +3269,8 @@
     <Content Include="Views\Home\_tableView.cshtml" />
     <Content Include="Views\Stat\_TableView.cshtml" />
     <Content Include="Views\Stat\GetAverageAndTransactionsTable.cshtml" />
+    <Content Include="Views\Home\test.cshtml" />
+    <Content Include="Views\Stat\PartialTableStat.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

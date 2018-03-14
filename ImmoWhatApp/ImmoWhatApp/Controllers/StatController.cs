@@ -75,6 +75,42 @@ namespace ImmoWhatApp.Controllers
             }
         }
 
+        
+        [HttpGet]
+        public ActionResult PartialTableStat(int anneeRecherchee, string codePostal)
+        {
+            try
+            {
+                int anneeMin = BLL.HomeBLL.GetMinYear(codePostal);
+                Session["anneeMin"] = anneeMin;
+                
+
+                int anneeCourante = (int)Session["HighestYear"];
+                int anneePrec = anneeCourante - 1;
+                int anneeRecherch = anneeRecherchee;
+                
+                ViewBag.anneeCour = anneeCourante;
+                ViewBag.anneePrec = anneePrec;
+                ViewBag.anneeRech = anneeRecherch;
+
+                List <Models.tablePriceStat> resultTable = BLL.StatBLL.GetAverageAndTransactionsTable(anneeRecherchee, codePostal).ToList();
+                if (resultTable != null)
+                {
+                    return PartialView(resultTable);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
         [HttpGet]
         public JsonResult GetTableTransactionsInJson(int anneeRecherchee, string codePostal)
         {

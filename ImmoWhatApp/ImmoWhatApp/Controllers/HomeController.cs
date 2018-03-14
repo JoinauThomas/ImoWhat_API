@@ -12,7 +12,6 @@ namespace ImmoWhatApp.Controllers
 {
     public class HomeController : BaseController
     {
-        
         public ActionResult SetCulture(string culture)
         {
             // Validate input

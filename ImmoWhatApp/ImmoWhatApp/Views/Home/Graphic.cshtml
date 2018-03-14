@@ -18,7 +18,9 @@
         <div id="map" class="col-lg-12" style="width:100%; height:100%;"></div>
 
     </div>
+    <div id="azerty">
 
+    </div>
     <div class="col-lg-9">
         <div class="row" style="padding-left:3%; padding-top:5%;">
             <ul class="nav nav-tabs col-lg-12" id="myTab" role="tablist">
@@ -125,6 +127,7 @@
                             <label class="form-check-label" for="checkboxPark">park</label>
                         </div>
                     </div>
+                    <button id="tes">btn test</button>
                 </div>
                 
                 @*SECTION "COMMENTAIRE"*@
@@ -173,6 +176,20 @@
 </script>
 
 <script type="text/javascript">
+    $('#btnTest').click(function () {
+        $.ajax({
+                type: 'GET',
+                datatype: 'html',
+                url: '@Url.Action("test", "Home")',
+                success: function (donnee) {
+                    $('#azerty').replaceWith(donnee);
+                },
+                error: function () {
+                    alert("une erreur s'est produite...")
+                }
+            });
+    })
+
 
     var mapPOI;
     var infowindow;
@@ -186,7 +203,7 @@
     var home = { lat: @Model.latitude, lng: @Model.longitude };
     var typePlace = "";
     function initMapPOI() {
-        
+
         mapPOI = new google.maps.Map(document.getElementById('mapPOI'), {
             center: home,
             zoom: 15
@@ -198,9 +215,9 @@
                 url: '/assets/svg/maps/home.png',
                 scaledSize: new google.maps.Size(25, 25)
             }
-            
+
         });
-        
+
         var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
         var marker = new google.maps.Marker({
             position: home,
@@ -268,9 +285,25 @@
             i--;
         }
     }
-    
-    
-    
+
+
+    $('#tes').click(function () {
+        //https://maps.googleapis.com/maps/api/place/radarsearch/json?location=48.859294,2.347589&radius=5000&type=cafe&keyword=vegetarian&key=AIzaSyBokWXLMouoG6vGD1RibtVMrrXwmWlYv1k
+        var address = "Avenue Henri Strauven 66, Auderghem, Belgique";
+        $.ajax({
+           type: "GET",
+           dataType: "json",
+           url: "http://maps.googleapis.com/maps/api/geocode/json",
+           data: { 'address': address, 'sensor': false },
+           success: function (donnee) {
+                alert(donnee.result);
+            },
+            error: function () {
+                alert("une erreur s'est produite...")
+            }
+        });
+    });
+
     $('#checkboxBar').click(function () {
         if (document.getElementById("checkboxBar").checked == true) {
             imageIcon = '/assets/svg/maps/bar.png';
@@ -326,7 +359,7 @@
             deletePOI("park");
         }
     });
-    
+
 
 
 
@@ -637,27 +670,16 @@
         }
             $.ajax({
                 type: 'GET',
-                datatype: 'json',
-                url: '@Url.Action("GetAverageAndTransactionsTableInJson", "Stat")',
+                datatype: 'html',
+                url: '@Url.Action("PartialTableStat", "Stat")',
                 data: { anneeRecherchee: anneeRecherche, codePostal: codePost, },
                 success: function (donnee) {
 
-                    var table = '<table class="table table-striped" id="tableStat"> <thead> <tr><th scope="col">average price</th> <th>type</th><th>' + anneeRecherche + '</th><th>' + previousYear + '</th><th>' + currentYear+'</th><th>evolution</th> </tr> </thead> <tbody>';
-                    var x = 0;
-                    while (x < 4) {
-                        table = table + '<tr><td scope="row"></td> <td>' + donnee.resultat[x].type + '</td><td>' + donnee.resultat[x].anneeRecherche + '</td><td>' + donnee.resultat[x].anneePrecedente + '</td><td>' + donnee.resultat[x].anneeCourante + '</td><td>' + donnee.resultat[x].evolutionPrice + '%</td> </tr>'
-                        x += 1;
-                    }
-                    table = table + '<tr><th scope="row">nb of transaction</th><td></td><td></td><td></td><td></td><td></td> </tr>'
-                    while (x < 8) {
-                        table = table + '<tr><td scope="row"></td> <td>' + donnee.resultat[x].type + '</td><td>' + donnee.resultat[x].anneeRecherche + '</td><td>' + donnee.resultat[x].anneePrecedente + '</td><td>' + donnee.resultat[x].anneeCourante + '</td><td>' + donnee.resultat[x].evolutionPrice + '%</td> </tr>'
-                        x += 1;
-                    }
-                    table += ' </tbody> </table>';
+                   
                     $("#chargement").hide();
 
                     //$('#tablePrixView').show();
-                    $('#tablePrixView').html(table);
+                    $('#tablePrixView').html(donnee);
 
 
                 },

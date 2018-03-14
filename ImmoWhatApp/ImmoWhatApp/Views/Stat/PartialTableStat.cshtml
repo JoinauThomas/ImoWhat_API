@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ImmoWhatApp.Models.tablePriceStat>
+
+<table class="table table-striped" id="tableStat">
+    <thead>
+        <tr>
+            <th scope="col" style="color:orange">
+                average price
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.type)
+            </th>
+            <th>
+                @ViewBag.anneeRech
+            </th>
+            <th>
+                @ViewBag.anneePrec
+            </th>
+            <th>
+                @ViewBag.anneeCour
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.evolutionPrice)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int x = 0;
+            foreach (var item in Model)
+            {
+
+                x = x + 1;
+                <tr>
+                    <td scope="row"></td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.anneeRecherche)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.anneePrecedente)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.anneeCourante)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.evolutionPrice)
+                    </td>
+                </tr>
+                if (x==4)
+                {
+                    <tr>
+                        <th scope="row" style="color:orange">nb of transaction</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+
+            }
+        }
+    </tbody>
+</table>
