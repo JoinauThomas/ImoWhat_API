@@ -24,7 +24,7 @@
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light col-lg-12" style="background-color: green">
+    <nav class="navbar navbar-expand-lg navbar-light col-lg-12" style="background-color: green; position:fixed; z-index:99; height:10%">
         <a class="navbar-brand col-lg-2" href="#">IMMOWHAT</a>
         <span class="col-lg-6" style="background-color: grey">The true value of your property <span class="sr-only">(current)</span></span>
 
@@ -91,7 +91,7 @@
         </ul>
     </nav>
 
-    <div class="body-content">
+    <div class="body-content" style="padding-top:5%">
         @RenderBody()
         <hr />
         <footer>

@@ -112,6 +112,7 @@ namespace ImmoWhatApp.Controllers
 
 
 
+
         [HttpGet]
         public JsonResult GetTableTransactionsInJson(int anneeRecherchee, string codePostal)
         {
@@ -142,6 +143,16 @@ namespace ImmoWhatApp.Controllers
             ViewBag.longitude = longitude;
             return PartialView();
                
+        }
+
+        [HttpGet]
+        public ActionResult PartialViewPoiAdresse(string latitude, string longitude)
+        {
+
+            ViewBag.latitude = latitude;
+            ViewBag.longitude = longitude;
+            return PartialView();
+
         }
     }
 }

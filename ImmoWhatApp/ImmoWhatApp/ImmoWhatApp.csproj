@@ -3272,6 +3272,7 @@
     <Content Include="Views\Home\test.cshtml" />
     <Content Include="Views\Stat\PartialTableStat.cshtml" />
     <Content Include="Views\Stat\PartialViewPoiCommune.cshtml" />
+    <Content Include="Views\Stat\PartialViewPoiAdresse.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

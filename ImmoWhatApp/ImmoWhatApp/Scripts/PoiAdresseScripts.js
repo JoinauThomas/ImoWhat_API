@@ -8,6 +8,7 @@ var longit = $('#longitude').val();
 var home = { lat: Number(latit), lng: Number(longit) };
 var mapPoiCommune;
 var infowindow;
+var radius = 500;
 var hopitalTab = [];
 var parkTab = [];
 var ecoleTab = [];
@@ -26,11 +27,20 @@ var iconHospital = 'https://maps.gstatic.com/mapfiles/place_api/icons/doctor-71.
 //CREATION DE LA CARTE
 
 function initMap() {
-    
+
 
     mapPoiCommune = new google.maps.Map(document.getElementById('mapPoiCommune'), {
         center: home,
         zoom: 14
+    });
+    var markerHome = new google.maps.Marker({
+        map: mapPOI,
+        position: home,
+        icon: {
+            url: '/assets/svg/maps/home.png',
+            scaledSize: new google.maps.Size(25, 25)
+        }
+
     });
 
     infowindow = new google.maps.InfoWindow();
@@ -38,33 +48,33 @@ function initMap() {
 
     service.nearbySearch({
         location: home,
-        radius: 2000,
+        radius: radius,
         type: ['bar']
     }, callbackBar);
 
     service.nearbySearch({
         location: home,
-        radius: 2000,
+        radius: radius,
         type: ['school']
     }, callbackSchool);
     service.nearbySearch({
         location: home,
-        radius: 2000,
+        radius: radius,
         type: ['park']
     }, callbackPark);
     service.nearbySearch({
         location: home,
-        radius: 2000,
+        radius: radius,
         type: ['hospital']
     }, callbackHospital);
     service.nearbySearch({
         location: home,
-        radius: 2000,
+        radius: radius,
         type: ['restaurant']
     }, callbackResto);
     service.nearbySearch({
         location: home,
-        radius: 2000,
+        radius: radius,
         type: ['bus_station']
     }, callbackStation);
 }
