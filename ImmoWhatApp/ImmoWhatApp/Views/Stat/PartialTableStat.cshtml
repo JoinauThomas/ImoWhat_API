@@ -45,11 +45,32 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.anneeCourante)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.evolutionPrice)
-                    </td>
+                    @if (item.evolutionPrice == 999)
+                    {
+                        <td>
+                            NA
+                        </td>
+                    }
+                    else if (item.evolutionPrice > 0)
+                    {
+                        <td style="color:green">
+                            @Html.DisplayFor(modelItem => item.evolutionPrice)%
+                        </td>
+                    }
+                    else if (item.evolutionPrice == 0)
+                    {
+                        <td style="color:blue">
+                            @Html.DisplayFor(modelItem => item.evolutionPrice)%
+                        </td>
+                    }
+                    else
+                    {
+                        <td style="color:red">
+                            @Html.DisplayFor(modelItem => item.evolutionPrice)%
+                        </td>
+                    }
                 </tr>
-                if (x==4)
+                if (x == 4)
                 {
                     <tr>
                         <th scope="row" style="color:orange">nb of transaction</th>

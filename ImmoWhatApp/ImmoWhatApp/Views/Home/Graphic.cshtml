@@ -18,10 +18,9 @@
         <div id="map" class="col-lg-12" style="width:100%; height:100%;"></div>
 
     </div>
-    <div id="azerty">
 
-    </div>
     <div class="col-lg-9">
+        <button id="btnTest">testtttt</button>
         <div class="row" style="padding-left:3%; padding-top:5%;">
             <ul class="nav nav-tabs col-lg-12" id="myTab" role="tablist">
                 <li class="nav-item">
@@ -89,7 +88,7 @@
 
                 @*SECTION "POI"*@
                 <div class="tab-pane fade col-lg-12" id="poi" role="tabpanel" aria-labelledby="poi-tab">
-                    <div>
+                    @*<div>
                         <input id="searchTextField" type="text" size="50" placeholder="Enter a location" autocomplete="on">
                         <button id="btnAdr">bouton</button>
                     </div>
@@ -127,9 +126,9 @@
                             <label class="form-check-label" for="checkboxPark">park</label>
                         </div>
                     </div>
-                    <button id="tes">btn test</button>
+                    <button id="tes">btn test</button>*@
                 </div>
-                
+
                 @*SECTION "COMMENTAIRE"*@
                 <div class="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="comment-tab">
                     commentaire
@@ -148,6 +147,7 @@
             </div>
         </div>
     </div>
+    <div id="azerty"></div>
 </div>
 <div id="chart_div"></div>
 <input id="codePost" style="display:none" value="@Model.CodePostal" />
@@ -176,19 +176,9 @@
 </script>
 
 <script type="text/javascript">
-    $('#btnTest').click(function () {
-        $.ajax({
-                type: 'GET',
-                datatype: 'html',
-                url: '@Url.Action("test", "Home")',
-                success: function (donnee) {
-                    $('#azerty').replaceWith(donnee);
-                },
-                error: function () {
-                    alert("une erreur s'est produite...")
-                }
-            });
-    })
+
+
+
 
 
     var mapPOI;
@@ -202,6 +192,30 @@
     var imageIcon;
     var home = { lat: @Model.latitude, lng: @Model.longitude };
     var typePlace = "";
+
+    function afficheCartePOICommune(home) {
+        $.ajax({
+            type: 'GET',
+            datatype: 'html',
+            url: '@Url.Action("PartialViewPoiCommune", "Stat")',
+            data: { latitude: @Model.latitude, longitude: @Model.longitude },
+            success: function (donnee) {
+
+
+                $("#chargement").hide();
+
+                //$('#tablePrixView').show();
+                $('#comment').html(donnee);
+
+
+            },
+            error: function () {
+                alert("une erreur s'est produite...")
+            }
+        });
+    }
+
+
     function initMapPOI() {
 
         mapPOI = new google.maps.Map(document.getElementById('mapPOI'), {
@@ -288,7 +302,7 @@
 
 
     $('#tes').click(function () {
-        //https://maps.googleapis.com/maps/api/place/radarsearch/json?location=48.859294,2.347589&radius=5000&type=cafe&keyword=vegetarian&key=AIzaSyBokWXLMouoG6vGD1RibtVMrrXwmWlYv1k
+        //https://maps.googleapis.com/maps/api/radarsearch/json?location=48.859294,2.347589&radius=5000&type=cafe&keyword=vegetarian&key=AIzaSyBokWXLMouoG6vGD1RibtVMrrXwmWlYv1k
         var address = "Avenue Henri Strauven 66, Auderghem, Belgique";
         $.ajax({
            type: "GET",
@@ -365,27 +379,32 @@
 
     var anneeMin;
     var currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
+
+
+
     $(document).ready(function () {
         var bouton = $('#bouton').val();
         anneeMin = '@Request.RequestContext.HttpContext.Session["anneeMin"]';
         if (bouton == "graph") {
-            $(document).ready(GetGraphiquePrixMoyen);
+            GetGraphiquePrixMoyen;
         }
         else if (bouton == "tablePrix") {
             currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
             var anneeRecherche = currentYear - 3;
 
-            $(document).ready(GetStat(anneeRecherche));
+            GetStat(anneeRecherche);
         }
         else if (bouton == "poi") {
-            myMap2();
+
             $(".nav").find(".active").removeClass("active");
             $('#poi-tab').addClass("active");
 
             $('#poi').addClass("show");
+            initMapPOI();
             $('#poi').show()
         }
         else {
+            afficheCartePOICommune(home);
             $(".nav").find(".active").removeClass("active");
             $('#comment-tab').addClass("active");
 
@@ -419,6 +438,7 @@
         initMapPOI();
     });
     $('#comment-tab').click(function () {
+        afficheCartePOICommune(home);
         $('#graphique').hide();
         $('#poi').hide();
         $('#tablePrix').hide();
@@ -642,14 +662,6 @@
             });
     };
     function GetStat(anneeRecherche) {
-        //$('#tablePrix').attr('class', 'btn btn-success');
-        //    $('#graphique').attr('class', 'btn btn-danger');
-        //    $('#poi').attr('class', 'btn btn-danger');
-        //    $('#comment').attr('class', 'btn btn-danger');
-
-            //$('#graph').hide();
-            //$('#poiView').hide();
-            //$('#commentView').hide();
         $(".nav").find(".active").removeClass("active");
         $('#tablePrix-tab').addClass("active");
 
@@ -668,39 +680,31 @@
         if (anneeRecherche == '') {
             anneeRecherche = currentYear - 3;
         }
-            $.ajax({
-                type: 'GET',
-                datatype: 'html',
-                url: '@Url.Action("PartialTableStat", "Stat")',
-                data: { anneeRecherchee: anneeRecherche, codePostal: codePost, },
-                success: function (donnee) {
-
-                   
-                    $("#chargement").hide();
-
-                    //$('#tablePrixView').show();
-                    $('#tablePrixView').html(donnee);
+        $.ajax({
+            type: 'GET',
+            datatype: 'html',
+            url: '@Url.Action("PartialTableStat", "Stat")',
+            data: { anneeRecherchee: anneeRecherche, codePostal: codePost, },
+            success: function (donnee) {
 
 
-                },
-                error: function () {
-                    alert("une erreur s'est produite...")
-                }
-            })
+                $("#chargement").hide();
+
+                //$('#tablePrixView').show();
+                $('#tablePrixView').html(donnee);
+
+
+            },
+            error: function () {
+                alert("une erreur s'est produite...")
+            }
+        });
     }
 
 
 </script>
 
 <script type="text/javascript">
-
-
-    
-
-
-
-
-
 
     $('#btnAdr').click(function () {
         var lat;
@@ -722,43 +726,6 @@
 
     });
 
-
-    //function myMap2() {
-
-    //    var positions = new google.maps.LatLng(lat, lon);
-    //    var mapProp = {
-    //        center: positions,
-    //        zoom: 16
-    //    };
-    //    mapPOI = new google.maps.Map(document.getElementById("mapPOI"), mapProp);
-    //    var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-    //    var marker = new google.maps.Marker({
-    //        position: positions,
-    //        icon: image
-    //    });
-    //    marker.setMap(mapPOI);
-    //}
-
-
-
-    //function addmarker() {
-
-    //    var latit = -25.363882;
-    //    var longit = 131.044922;
-
-    //    var myLatlng = new google.maps.LatLng(latit, longit);
-    //    var marker = new google.maps.Marker({
-    //        position: myLatlng,
-    //        map: mapPOI,
-    //        title: "Former About.com Headquarters"
-    //    });
-
-
-    //    // To add the marker to the map, call setMap();
-    //    //marker.setMap(map);
-    //    alert("oki");
-    //}
-
 </script>
 <script type="text/javascript">
 
@@ -772,6 +739,7 @@
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0&callback=myMap"></script>
 
 

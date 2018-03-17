@@ -23,6 +23,7 @@ namespace ImmoWhatApp.Controllers
             }
         }
 
+
         [HttpGet]
         public JsonResult GetTableGraphiqueTransactionInJson(string codePostal)
         {
@@ -130,6 +131,17 @@ namespace ImmoWhatApp.Controllers
             {
                 throw ex;
             }
+        }
+
+
+        [HttpGet]
+        public ActionResult PartialViewPoiCommune(string latitude, string longitude)
+        {
+
+            ViewBag.latitude = latitude;
+            ViewBag.longitude = longitude;
+            return PartialView();
+               
         }
     }
 }
