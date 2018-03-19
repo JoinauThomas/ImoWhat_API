@@ -1,4 +1,4 @@
-
+﻿
 
 // LES VARIABLES
 
@@ -26,7 +26,7 @@ var iconHospital = 'https://maps.gstatic.com/mapfiles/place_api/icons/doctor-71.
 //CREATION DE LA CARTE
 
 function initMap() {
-    
+
 
     mapPoiCommune = new google.maps.Map(document.getElementById('mapPoiCommune'), {
         center: home,

@@ -89,7 +89,7 @@
                 @*SECTION "POI"*@
                 <div class="tab-pane fade col-lg-12" id="poi" role="tabpanel" aria-labelledby="poi-tab">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="adresse" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <input id="searchTextField" type="text" class="form-control" placeholder="adresse" aria-label="Recipient's username" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button id="btnAdr" class="btn btn-outline-secondary" type="button">search</button>
                         </div>
@@ -99,45 +99,7 @@
                     <div id="PoiContent">
 
                     </div>
-                    @*<div>
-            <input id="searchTextField" type="text" size="50" placeholder="Enter a location" autocomplete="on">
-            <button id="btnAdr">bouton</button>
-        </div>
-
-
-
-        <div id="cartePOI">
-            <div id="mapPOI" style="width:100%; height:100%;"></div>
-        </div>
-        <div id="checkZonePOI">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxBar" value="bars">
-                <label class="form-check-label" for="checkboxBar">bars</label>
-            </div>
-            <br />
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxEcoles" value="écoles">
-                <label class="form-check-label" for="checkboxEcoles">écoles</label>
-            </div>
-            <br />
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxHopital" value="hopitaux">
-                <label class="form-check-label" for="checkboxHopital">hopitaux</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxRestaurent" value="restaurent">
-                <label class="form-check-label" for="checkboxRestaurent">restaurent</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxStation" value="bus">
-                <label class="form-check-label" for="checkboxStation">bus</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxPark" value="park">
-                <label class="form-check-label" for="checkboxPark">park</label>
-            </div>
-        </div>
-        <button id="tes">btn test</button>*@
+                   
                 </div>
 
                 @*SECTION "COMMENTAIRE"*@
@@ -203,6 +165,41 @@
     var imageIcon;
     var home = { lat: @Model.latitude, lng: @Model.longitude };
     var typePlace = "";
+    
+
+    $('#btnAdr').click(function () {
+        var address = document.getElementById("searchTextField").value;
+        var lat;
+        var lon;
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                // do something with the geocoded result
+                //
+                lat = results[0].geometry.location.lat().toString();
+                lon = results[0].geometry.location.lng().toString();
+                $.ajax({
+            type: 'GET',
+            datatype: 'html',
+            url: '@Url.Action("PartialViewPoiAdresse", "Stat")',
+            data: { latitude: lat, longitude: lon },
+            success: function (donnee) {
+
+                $("#chargement").hide();
+                $('#PoiContent').html(donnee);
+
+
+            },
+            error: function () {
+                alert("une erreur s'est produite...")
+            }
+        });
+            }
+        });
+
+
+    })
+
 
     function afficheCartePOICommune(home) {
         $.ajax({

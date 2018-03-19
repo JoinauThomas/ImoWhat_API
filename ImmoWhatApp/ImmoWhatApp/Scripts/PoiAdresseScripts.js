@@ -1,4 +1,4 @@
-
+﻿
 
 // LES VARIABLES
 
@@ -9,6 +9,7 @@ var home = { lat: Number(latit), lng: Number(longit) };
 var mapPoiCommune;
 var infowindow;
 var radius = 500;
+var radiusHopital = 2000;
 var hopitalTab = [];
 var parkTab = [];
 var ecoleTab = [];
@@ -31,10 +32,10 @@ function initMap() {
 
     mapPoiCommune = new google.maps.Map(document.getElementById('mapPoiCommune'), {
         center: home,
-        zoom: 14
+        zoom: 16
     });
     var markerHome = new google.maps.Marker({
-        map: mapPOI,
+        map: mapPoiCommune,
         position: home,
         icon: {
             url: '/assets/svg/maps/home.png',
@@ -64,7 +65,7 @@ function initMap() {
     }, callbackPark);
     service.nearbySearch({
         location: home,
-        radius: radius,
+        radius: radiusHopital,
         type: ['hospital']
     }, callbackHospital);
     service.nearbySearch({
@@ -190,6 +191,10 @@ function callbackBar(results, status) {
             createMarkerBar(results[i]);
         }
     }
+    else if (status == "ZERO_RESULTS") {
+        $('#barListPOI').hide();
+        document.getElementById("checkboxBar").disabled = true;
+    }
 }
 
 function createMarkerBar(place) {
@@ -207,8 +212,27 @@ function createMarkerBar(place) {
     });
     barTab.push(marker);
 
-    placesList.innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center">' + place.name + ' <span class="badge badge-primary badge-pill"><img src="' + place.icon + '" style="width:20px"></span></li>';
+    var end = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
 
+    var service = new google.maps.DistanceMatrixService();
+
+    service.getDistanceMatrix({
+        origins: [home],
+        destinations: [end],
+        travelMode: 'DRIVING',
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false
+    }, callBackDistance);
+
+    function callBackDistance(response, status) {
+        if (status !== 'OK') {
+            alert('Error was: ' + status);
+        } else {
+            var distance = response.rows[0].elements[0].distance.text;
+            placesList.innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center"><span class="badge"><img src="' + iconBar + '" style="width:20px"></span>' + place.name + ' <span class="badge badge-primary badge-pill">' + distance + '</span></li>';
+        }
+    }
 
     google.maps.event.addListener(marker, 'click', function () {
         infowindow.setContent(place.name);
@@ -216,12 +240,17 @@ function createMarkerBar(place) {
     });
 }
 
+
 // pour les parcs
 function callbackPark(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarkerPark(results[i]);
         }
+    }
+    else if (status == "ZERO_RESULTS") {
+        $('#ParkListPOI').hide();
+        document.getElementById("checkboxPark").disabled = true;
     }
 }
 
@@ -240,8 +269,27 @@ function createMarkerPark(place) {
     });
     parkTab.push(marker);
 
-    placesList.innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center">' + place.name + ' <span class="badge badge-primary badge-pill"><img src="' + iconPark + '" style="width:20px"></span></li>';
+    var end = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
 
+    var service = new google.maps.DistanceMatrixService();
+
+    service.getDistanceMatrix({
+        origins: [home],
+        destinations: [end],
+        travelMode: 'DRIVING',
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false
+    }, callBackDistance);
+
+    function callBackDistance(response, status) {
+        if (status !== 'OK') {
+            alert('Error was: ' + status);
+        } else {
+            var distance = response.rows[0].elements[0].distance.text;
+            placesList.innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center"><span class="badge"><img src="' + iconPark + '" style="width:20px"></span>' + place.name + ' <span class="badge badge-primary badge-pill">' + distance + '</span></li>';
+        }
+    }
 
     google.maps.event.addListener(marker, 'click', function () {
         infowindow.setContent(place.name);
@@ -249,12 +297,17 @@ function createMarkerPark(place) {
     });
 }
 
+
 // pour les ecoles
 function callbackSchool(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarkerSchool(results[i]);
         }
+    }
+    else if (status == "ZERO_RESULTS") {
+        $('#SchoolListPOI').hide();
+        document.getElementById("checkboxSchool").disabled = true;
     }
 }
 
@@ -273,8 +326,27 @@ function createMarkerSchool(place) {
     });
     ecoleTab.push(marker);
 
-    placesList.innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center">' + place.name + ' <span class="badge badge-primary badge-pill"><img src="' + iconSchool + '" style="width:20px"></span></li>';
+    var end = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
 
+    var service = new google.maps.DistanceMatrixService();
+
+    service.getDistanceMatrix({
+        origins: [home],
+        destinations: [end],
+        travelMode: 'DRIVING',
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false
+    }, callBackDistance);
+
+    function callBackDistance(response, status) {
+        if (status !== 'OK') {
+            alert('Error was: ' + status);
+        } else {
+            var distance = response.rows[0].elements[0].distance.text;
+            placesList.innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center"><span class="badge"><img src="' + iconSchool + '" style="width:20px"></span>' + place.name + ' <span class="badge badge-primary badge-pill">' + distance + '</span></li>';
+        }
+    }
 
     google.maps.event.addListener(marker, 'click', function () {
         infowindow.setContent(place.name);
@@ -282,12 +354,17 @@ function createMarkerSchool(place) {
     });
 }
 
+
 // pour les restaurants
 function callbackResto(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarkerResto(results[i]);
         }
+    }
+    else if (status == "ZERO_RESULTS") {
+        $('#RestaurantListPOI').hide();
+        document.getElementById("checkboxRestaurent").disabled = true;
     }
 }
 
@@ -306,8 +383,27 @@ function createMarkerResto(place) {
     });
     restoTab.push(marker);
 
-    placesList.innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center">' + place.name + ' <span class="badge badge-primary badge-pill"><img src="' + iconRestaurant + '" style="width:20px"></span></li>';
+    var end = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
 
+    var service = new google.maps.DistanceMatrixService();
+
+    service.getDistanceMatrix({
+        origins: [home],
+        destinations: [end],
+        travelMode: 'DRIVING',
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false
+    }, callBackDistance);
+
+    function callBackDistance(response, status) {
+        if (status !== 'OK') {
+            alert('Error was: ' + status);
+        } else {
+            var distance = response.rows[0].elements[0].distance.text;
+            placesList.innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center"><span class="badge"><img src="' + iconRestaurant + '" style="width:20px"></span>' + place.name + ' <span class="badge badge-primary badge-pill">' + distance + '</span></li>';
+        }
+    }
 
     google.maps.event.addListener(marker, 'click', function () {
         infowindow.setContent(place.name);
@@ -315,12 +411,17 @@ function createMarkerResto(place) {
     });
 }
 
+
 // pour les hopitaux
 function callbackHospital(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarkerHospital(results[i]);
         }
+    }
+    else if (status == "ZERO_RESULTS") {
+        $('#HospitalListPOI').hide();
+        document.getElementById("checkboxHopital").disabled = true;
     }
 }
 
@@ -339,8 +440,27 @@ function createMarkerHospital(place) {
     });
     hopitalTab.push(marker);
 
-    placesList.innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center">' + place.name + ' <span class="badge badge-primary badge-pill"><img src="' + iconHospital + '" style="width:20px"></span></li>';
+    var end = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
 
+    var service = new google.maps.DistanceMatrixService();
+
+    service.getDistanceMatrix({
+        origins: [home],
+        destinations: [end],
+        travelMode: 'DRIVING',
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false
+    }, callBackDistance);
+
+    function callBackDistance(response, status) {
+        if (status !== 'OK') {
+            alert('Error was: ' + status);
+        } else {
+            var distance = response.rows[0].elements[0].distance.text;
+            placesList.innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center"><span class="badge"><img src="' + iconHospital + '" style="width:20px"></span>' + place.name + ' <span class="badge badge-primary badge-pill">' + distance + '</span></li>';
+        }
+    }
 
     google.maps.event.addListener(marker, 'click', function () {
         infowindow.setContent(place.name);
@@ -348,12 +468,17 @@ function createMarkerHospital(place) {
     });
 }
 
+
 // pour les stations de bus
 function callbackStation(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarkerStation(results[i]);
         }
+    }
+    else if (status == "ZERO_RESULTS") {
+        $('#StationListPOI').hide();
+        document.getElementById("checkboxStation").disabled = true;
     }
 }
 
@@ -372,11 +497,56 @@ function createMarkerStation(place) {
     });
     stationTab.push(marker);
 
-    placesList.innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center">' + place.name + ' <span class="badge badge-primary badge-pill"><img src="' + iconStation + '" style="width:20px"></span></li>';
+    var end = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
+
+    var service = new google.maps.DistanceMatrixService();
+
+    service.getDistanceMatrix({
+        origins: [home],
+        destinations: [end],
+        travelMode: 'DRIVING',
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false
+    }, callBackDistance);
+
+    function callBackDistance(response, status) {
+        if (status !== 'OK') {
+            alert('Error was: ' + status);
+        } else {
+            var distance = response.rows[0].elements[0].distance.text;
+            placesList.innerHTML += '<li class="list-group-item d-flex justify-content-between align-items-center"><span class="badge"><img src="' + iconStation + '" style="width:20px"></span>' + place.name + ' <span class="badge badge-primary badge-pill">' + distance + '</span></li>';
+        }
+    }
+
+
 
 
     google.maps.event.addListener(marker, 'click', function () {
         infowindow.setContent(place.name);
         infowindow.open(mapPoiCommune, this);
     });
+
+    function getDistanceBetweenTwoPoints(start, end) {
+
+
+        var service = new google.maps.DistanceMatrixService();
+
+        service.getDistanceMatrix({
+            origins: [start],
+            destinations: [end],
+            travelMode: 'DRIVING',
+            unitSystem: google.maps.UnitSystem.METRIC,
+            avoidHighways: false,
+            avoidTolls: false
+        }, callBackDistance);
+
+        function callBackDistance(response, status) {
+            if (status !== 'OK') {
+                alert('Error was: ' + status);
+            } else {
+                var distance = response.rows[0].elements[0].distance.text;
+            }
+        }
+    }
 }
