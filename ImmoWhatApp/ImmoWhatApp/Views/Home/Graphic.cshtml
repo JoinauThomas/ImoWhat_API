@@ -13,7 +13,13 @@
         </div>
         <br />
         <div class="col-12">
-            <input type="text" placeholder="@Model.Localite" />
+            <div class="input-group mb-3">
+                        <input id="inputComm" type="text" class="form-control" placeholder="@Model.Localite" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button id="btnRechercheCommune" class="btn btn-outline-secondary" type="button">search</button>
+                        </div>
+
+                    </div>
         </div>
         <br />
         <div id="map" class="col-lg-12" style="width:100%; height:90%;"></div>
@@ -127,6 +133,7 @@
 <input id="bouton" style="display:none" value="@ViewBag.bouton" />
 
 
+
 <!-- Modal -->
 <div id="myModal" style="display:none">
     <p id="modalTexte" class="modal-contents">voila mon modal</p>
@@ -148,11 +155,68 @@
     }
 </script>
 
+<script>
+    $("#inputComm").autocomplete({
+        autoFocus: true,
+        source: function (requete, reponse) {
+            var name = $('#inputComm').val();
+            //alert(name);
+            $.ajax({
+                type: 'GET',
+                datatype: 'json',
+                data: { nom: name.toLowerCase() },
+                url: '@Url.Action("GetCommunesByNameInJson", "Commune")',
+                success: function (donnee) {
+                    reponse($.map(donnee.commune, function (objet) {
+                        return {
+                            label: objet.Localite + " ( " + objet.CodePostal + " )",
+                            value: objet.Localite,
+                            id: objet.id
+                        }
+                    }));
+                }
+            })
+        },
+        minLength: 3,
+
+        select: function (event, ui) { // lors de la sélection d'une proposition
+            idCommune = ui.item.id
+        }
+
+    });
+
+    $('#btnRechercheCommune').click(function () {
+        var nomCommune = $('#inputComm').val();
+        $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            data: { nomCommune: nomCommune },
+            url: '@Url.Action("checkIfCommuneExists", "Commune")',
+            success: function (donnee) {
+                if (donnee.result == "OK") {
+                    var nom = donnee.nom;
+                    var url = "/Home/MainPage?nomCommune=" + nom;
+                    window.location.href = url;
+                }
+                else {
+                    $('#modalTexte').html("commune inexistante");
+                    $('#myModal').dialog({
+                        open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
+                        resizable: false,
+                        height: "auto",
+                        width: "400",
+                        modal: true,
+                        title: 'commune inexistante',
+                        buttons: {
+                            "ok": function () { $(this).dialog("close") }
+                        }
+                    })
+                }
+            }
+        })
+    });
+</script>
 <script type="text/javascript">
-
-
-
-
 
     var mapPOI;
     var infowindow;
@@ -165,7 +229,8 @@
     var imageIcon;
     var home = { lat: @Model.latitude, lng: @Model.longitude };
     var typePlace = "";
-    
+
+    // bouton pour rechercher par une adresse
 
     $('#btnAdr').click(function () {
         var address = document.getElementById("searchTextField").value;
@@ -179,27 +244,25 @@
                 lat = results[0].geometry.location.lat().toString();
                 lon = results[0].geometry.location.lng().toString();
                 $.ajax({
-            type: 'GET',
-            datatype: 'html',
-            url: '@Url.Action("PartialViewPoiAdresse", "Stat")',
-            data: { latitude: lat, longitude: lon },
-            success: function (donnee) {
-
-                $("#chargement").hide();
-                $('#PoiContent').html(donnee);
-
-
-            },
-            error: function () {
-                alert("une erreur s'est produite...")
-            }
-        });
+                    type: 'GET',
+                    datatype: 'html',
+                    url: '@Url.Action("PartialViewPoiAdresse", "Stat")',
+                    data: { latitude: lat, longitude: lon },
+                    success: function (donnee) {
+                        $("#chargement").hide();
+                        $('#PoiContent').html(donnee);
+                    },
+                    error: function () {
+                        alert("une erreur s'est produite...")
+                    }
+                });
             }
         });
 
 
-    })
+    });
 
+    // affichage carte POI de la commune
 
     function afficheCartePOICommune(home) {
         $.ajax({
@@ -220,165 +283,8 @@
             }
         });
     }
-
-
-    function initMapPOI() {
-
-        mapPOI = new google.maps.Map(document.getElementById('mapPOI'), {
-            center: home,
-            zoom: 15
-        });
-        var markerHome = new google.maps.Marker({
-            map: mapPOI,
-            position: home,
-            icon: {
-                url: '/assets/svg/maps/home.png',
-                scaledSize: new google.maps.Size(25, 25)
-            }
-
-        });
-
-        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-        var marker = new google.maps.Marker({
-            position: home,
-            icon: image
-        });
-        infowindow = new google.maps.InfoWindow();
-        service = new google.maps.places.PlacesService(mapPOI);
-
-    }
-
-    function callback(results, status) {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < results.length; i++) {
-                createMarker(results[i]);
-            }
-        }
-    }
-    function createMarker(place) {
-        var placeLoc = place.geometry.location;
-        var marker = new google.maps.Marker({
-            map: mapPOI,
-            type: typePlace,
-            position: place.geometry.location,
-            icon: {
-                url: imageIcon,
-                scaledSize: new google.maps.Size(25, 25)
-            }
-        });
-        markers.push(marker);
-
-        google.maps.event.addListener(marker, 'click', function () {
-            service.getDetails(place, function (result, status) {
-                var contentstring = '<span style="color:red">' + result.name + '</span>'
-                infowindow.setContent(contentstring);
-            });
-            infowindow.open(mapPOI, this);
-        });
-    }
-    function setMapOnAll(mapPOI) {
-        alert(markers.length);
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(mapPOI);
-        }
-    }
-    function clearMarkers() {
-        setMapOnAll(null);
-        markers = [];
-    }
-    function recherche(typ, dist) {
-        typePlace = typ;
-        service.radarSearch({
-            location: home,
-            radius: dist,
-            type: [typ]
-        }, callback);
-    }
-
-    function deletePOI(typ) {
-        var i = markers.length-1;
-        while (i >= 0) {
-            if (markers[i].type == typ) {
-                markers[i].setMap(null);
-                markers.splice(i, 1);
-            }
-            i--;
-        }
-    }
-
-
-    $('#tes').click(function () {
-        //https://maps.googleapis.com/maps/api/radarsearch/json?location=48.859294,2.347589&radius=5000&type=cafe&keyword=vegetarian&key=AIzaSyBokWXLMouoG6vGD1RibtVMrrXwmWlYv1k
-        var address = "Avenue Henri Strauven 66, Auderghem, Belgique";
-        $.ajax({
-           type: "GET",
-           dataType: "json",
-           url: "http://maps.googleapis.com/maps/api/geocode/json",
-           data: { 'address': address, 'sensor': false },
-           success: function (donnee) {
-                alert(donnee.result);
-            },
-            error: function () {
-                alert("une erreur s'est produite...")
-            }
-        });
-    });
-
-    $('#checkboxBar').click(function () {
-        if (document.getElementById("checkboxBar").checked == true) {
-            imageIcon = '/assets/svg/maps/bar.png';
-            recherche("bar", 2500);
-        }
-        else {
-            deletePOI("bar");
-            //alert(markers[0].type);
-        }
-    });
-    $('#checkboxEcoles').click(function () {
-        if (document.getElementById("checkboxEcoles").checked == true) {
-            imageIcon = '/assets/svg/maps/school.png';
-            recherche("school", 2500);
-        }
-        else {
-            deletePOI("school");
-        }
-    });
-    $('#checkboxHopital').click(function () {
-        if (document.getElementById("checkboxHopital").checked == true) {
-            imageIcon = '/assets/svg/maps/hopital.png';
-            recherche("hospital", 2500);
-        }
-        else {
-            deletePOI("hospital");
-        }
-    });
-    $('#checkboxRestaurent').click(function () {
-        if (document.getElementById("checkboxRestaurent").checked == true) {
-            imageIcon = '/assets/svg/maps/restaurant.png';
-            recherche("restaurant", 2500);
-        }
-        else {
-            deletePOI("restaurant");
-        }
-    });
-    $('#checkboxStation').click(function () {
-        if (document.getElementById("checkboxStation").checked == true) {
-            imageIcon = '/assets/svg/maps/bus.png';
-            recherche("bus_station", 2500);
-        }
-        else {
-            deletePOI("bus_station");
-        }
-    });
-    $('#checkboxPark').click(function () {
-        if (document.getElementById("checkboxPark").checked == true) {
-            imageIcon = '/assets/svg/maps/park.png';
-            recherche("park", 2500);
-        }
-        else {
-            deletePOI("park");
-        }
-    });
+    
+    
 
 
 

@@ -33,41 +33,53 @@
     </div>
     <br />
     <div class="row" style="font-size:small">
-        <div class="col-lg-4">
-            <div id="HospitalListPOI">
-                <h3 style="text-align:center">Hopitaux</h3>
+        <div class="col-lg-4" id="HospitalListPOI">
+            <h3 style="text-align:center" data-toggle="collapse" href="#CollapseHospital" role="button" aria-expanded="false" aria-controls="CollapseHospital">Hopitaux   <span id="nbHospitals" class="badge badge-primary badge-pill"></span></h3>
+            <div class="collapse" id="CollapseHospital">
                 <ul id="hopital" class="listPOI list-group"></ul>
             </div>
+
+
             <br />
             <div id="barListPOI">
-                <h3 style="text-align:center">bars</h3>
-                <ul id="bar" class="listPOI list-group"></ul>
+                <h3 style="text-align:center" data-toggle="collapse" href="#CollapseBar" role="button" aria-expanded="false" aria-controls="CollapseBar">bars   <span id="nbBars" class="badge badge-primary badge-pill"></span></h3>
+                <div class="collapse" id="CollapseBar">
+                    <ul id="bar" class="listPOI list-group"></ul>
+                </div>
             </div>
         </div>
         <div class="col-lg-4">
             <div id="ParkListPOI">
-                <h3 style="text-align:center">parcs</h3>
-                <ul id="park" class="listPOI list-group"></ul>
+                <h3 style="text-align:center" data-toggle="collapse" href="#CollapsePark" role="button" aria-expanded="false" aria-controls="CollapsePark">parcs   <span id="nbParks" class="badge badge-primary badge-pill"></span></h3>
+                <div class="collapse" id="CollapsePark">
+                    <ul id="park" class="listPOI list-group"></ul>
+                </div>
             </div>
             <br />
             <div id="RestaurantListPOI">
-                <h3 style="text-align:center">resto</h3>
-                <ul id="resto" class="listPOI list-group"></ul>
+                <h3 style="text-align:center" data-toggle="collapse" href="#CollapseResto" role="button" aria-expanded="false" aria-controls="CollapseResto">resto   <span id="nbRestos" class="badge badge-primary badge-pill"></span></h3>
+                <div class="collapse" id="CollapseResto">
+                    <ul id="resto" class="listPOI list-group"></ul>
                 </div>
             </div>
+        </div>
         <div class="col-lg-4">
             <div id="SchoolListPOI">
-                <h3 style="text-align:center">écoles</h3>
-                <ul id="ecole" class="listPOI list-group"></ul>
+                <h3 style="text-align:center" data-toggle="collapse" href="#CollapseSchool" role="button" aria-expanded="false" aria-controls="CollapseSchool">écoles   <span id="nbSchools" class="badge badge-primary badge-pill"></span></h3>
+                <div class="collapse" id="CollapseSchool">
+                    <ul id="ecole" class="listPOI list-group"></ul>
+                </div>
             </div>
             <br />
             <div id="StationListPOI">
-                <h3 style="text-align:center">Station</h3>
-                <ul id="station" class="listPOI list-group"></ul>
+                <h3 style="text-align:center" data-toggle="collapse" href="#CollapseStation" role="button" aria-expanded="false" aria-controls="CollapseStation">station   <span id="nbStations" class="badge badge-primary badge-pill"></span></h3>
+                <div class="collapse" id="CollapseStation">
+                    <ul id="station" class="listPOI list-group"></ul>
                 </div>
             </div>
-
         </div>
+
+    </div>
 </div>
 <input id="latitude" value="@ViewBag.latitude" style="display:none" />
 <input id="longitude" value="@ViewBag.longitude" style="display:none" />

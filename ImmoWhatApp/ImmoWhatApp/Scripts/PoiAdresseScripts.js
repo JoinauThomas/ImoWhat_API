@@ -78,6 +78,7 @@ function initMap() {
         radius: radius,
         type: ['bus_station']
     }, callbackStation);
+    
 }
 
 
@@ -190,6 +191,7 @@ function callbackBar(results, status) {
         for (var i = 0; i < results.length; i++) {
             createMarkerBar(results[i]);
         }
+        $('#nbBars').html(barTab.length);
     }
     else if (status == "ZERO_RESULTS") {
         $('#barListPOI').hide();
@@ -247,6 +249,7 @@ function callbackPark(results, status) {
         for (var i = 0; i < results.length; i++) {
             createMarkerPark(results[i]);
         }
+        $('#nbParks').html(parkTab.length);
     }
     else if (status == "ZERO_RESULTS") {
         $('#ParkListPOI').hide();
@@ -304,6 +307,7 @@ function callbackSchool(results, status) {
         for (var i = 0; i < results.length; i++) {
             createMarkerSchool(results[i]);
         }
+        $('#nbSchools').html(ecoleTab.length);
     }
     else if (status == "ZERO_RESULTS") {
         $('#SchoolListPOI').hide();
@@ -361,6 +365,7 @@ function callbackResto(results, status) {
         for (var i = 0; i < results.length; i++) {
             createMarkerResto(results[i]);
         }
+        $('#nbRestos').html(restoTab.length);
     }
     else if (status == "ZERO_RESULTS") {
         $('#RestaurantListPOI').hide();
@@ -418,6 +423,7 @@ function callbackHospital(results, status) {
         for (var i = 0; i < results.length; i++) {
             createMarkerHospital(results[i]);
         }
+        $('#nbHospitals').html(hopitalTab.length);
     }
     else if (status == "ZERO_RESULTS") {
         $('#HospitalListPOI').hide();
@@ -475,6 +481,7 @@ function callbackStation(results, status) {
         for (var i = 0; i < results.length; i++) {
             createMarkerStation(results[i]);
         }
+        $('#nbStations').html(stationTab.length);
     }
     else if (status == "ZERO_RESULTS") {
         $('#StationListPOI').hide();

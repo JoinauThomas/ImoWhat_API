@@ -92,41 +92,6 @@
         var map = new google.maps.Map(document.getElementById("map"), mapProp);
     }
 </script>
-<script>
-    //function myMap() {
-    //    var stavanger = new google.maps.LatLng(58.983991, 5.734863);
-    //    var amsterdam = new google.maps.LatLng(52.395715, 4.888916);
-    //    var london = new google.maps.LatLng(51.508742, -0.120850);
-
-    //    var waterloo = new google.maps.LatLng(50.7173563, 4.3978047);
-    //    var braine = new google.maps.LatLng(50.6940942, 4.3548145440335);
-    //    var uccle = new google.maps.LatLng(50.8018201, 4.3372348);
-
-
-    //    var mapCanvas = document.getElementById("map");
-    //    var mapOptions = { center: amsterdam, zoom: 4 };
-    //    var map = new google.maps.Map(mapCanvas, mapOptions);
-
-    //    var flightPath = new google.maps.Polygon({
-    //        path: [stavanger, amsterdam, london],
-    //        strokeColor: "#0000FF",
-    //        strokeOpacity: 0.8,
-    //        strokeWeight: 2,
-    //        fillColor: "#0000FF",
-    //        fillOpacity: 0.4
-    //    });
-    //    var flightPath2 = new google.maps.Polygon({
-    //        path: [waterloo, braine, uccle],
-    //        strokeColor: "#c9da2a",
-    //        strokeOpacity: 0.8,
-    //        strokeWeight: 2,
-    //        fillColor: "#ed1c24",
-    //        fillOpacity: 0.4
-    //    });
-    //    flightPath.setMap(map);
-    //    flightPath2.setMap(map);
-    //}
-</script>
 @*<script type="text/javascript">
     google.charts.load('current', {
         'packages': ['geochart'],
@@ -252,36 +217,36 @@
 
     });
 
-     $('#btnValidCommune').click(function () {
+    $('#btnValidCommune').click(function () {
         var nomCommune = $('#inputComm').val();
-         $.ajax({
-                    type: 'GET',
-                    datatype: 'json',
-                    data: { nomCommune: nomCommune },
-                    url: '@Url.Action("checkIfCommuneExists", "Commune")',
-                    success: function (donnee) {
-                        if (donnee.result == "OK") {
-                            var nom = donnee.nom;
-                            var url = "/Home/MainPage?nomCommune=" + nom;
-                            window.location.href = url;
+        $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            data: { nomCommune: nomCommune },
+            url: '@Url.Action("checkIfCommuneExists", "Commune")',
+            success: function (donnee) {
+                if (donnee.result == "OK") {
+                    var nom = donnee.nom;
+                    var url = "/Home/MainPage?nomCommune=" + nom;
+                    window.location.href = url;
+                }
+                else {
+                    $('#modalTexte').html("commune inexistante");
+                    $('#modal_commune').dialog({
+                        open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
+                        resizable: false,
+                        height: "auto",
+                        width: "400",
+                        modal: true,
+                        title: 'commune inexistante',
+                        buttons: {
+                            "ok": function () { $(this).dialog("close") }
                         }
-                        else {
-                             $('#modalTexte').html("commune inexistante");
-                             $('#modal_commune').dialog({
-                            open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
-                            resizable: false,
-                            height: "auto",
-                            width: "400",
-                            modal: true,
-                            title: 'commune inexistante',
-                            buttons: {
-                                "ok": function () { $(this).dialog("close") }
-                            }
-                        })
-                        }
-                    }
-                })
-    })
+                    })
+                }
+            }
+        })
+    });
 </script>
 
 
