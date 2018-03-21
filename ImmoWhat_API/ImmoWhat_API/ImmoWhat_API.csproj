@@ -277,6 +277,9 @@
     <Compile Include="DAL\GetInfoEvolutionPrices_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\GetMyProfiles_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetMyProfile_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>

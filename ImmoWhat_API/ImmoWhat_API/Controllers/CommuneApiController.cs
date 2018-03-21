@@ -132,6 +132,29 @@ namespace ImmoWhat_API.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet]
+        [Route("GetCommuneContourPoints")]
+        public List<Models.CommuneContourPoint> GetCommuneContourPoints()
+        {
+            List<Models.CommuneContourPoint> ListePoints = new List<Models.CommuneContourPoint>();
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                List<DAL.GetCommuneContourPoints_Result> Result = dbContext.GetCommuneContourPoints().ToList();
+
+                foreach (var x in Result)
+                {
+                    ListePoints.Add(new Models.CommuneContourPoint { id = x.id, latitude = x.Latitude, longitude = x.Longitude, codePostal = x.Commune_CodePostal});
+                }
+
+                return ListePoints;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
     
 }

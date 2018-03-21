@@ -597,5 +597,19 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAverageAndTransactionTable_Result>("GetAverageAndTransactionTable", compareYearParameter, codePostalParameter);
         }
+    
+        public virtual ObjectResult<GetMyProfiles_Result> GetMyProfiles(string mail)
+        {
+            var mailParameter = mail != null ?
+                new ObjectParameter("mail", mail) :
+                new ObjectParameter("mail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyProfiles_Result>("GetMyProfiles", mailParameter);
+        }
+    
+        public virtual ObjectResult<GetCommuneContourPoints_Result> GetCommuneContourPoints()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCommuneContourPoints_Result>("GetCommuneContourPoints");
+        }
     }
 }

@@ -12,9 +12,10 @@ namespace ImmoWhatApp.Models
         [Required]
         public string mail { get; set; }
         [Required]
+        [StringLength(30, MinimumLength = 6, ErrorMessage = "minimum 6 caractères !")]
         public string pswd { get; set; }
         [Required]
-        [Compare("pswd", ErrorMessage = "Les deux mots de pass ne correspondent pas!")]
+        [Compare("pswd", ErrorMessage = "Les deux mots de pass ne correspondent pas !")]
         public string pswd2 { get; set; }
         [Required]
         public string nom { get; set; }

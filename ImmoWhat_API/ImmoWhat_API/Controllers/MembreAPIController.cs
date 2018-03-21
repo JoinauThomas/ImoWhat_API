@@ -58,7 +58,7 @@ namespace ImmoWhat_API.Controllers
             {
                 DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
 
-                List<DAL.GetMyProfile_Result> moiDB = dbContext.GetMyProfile(mail).ToList();
+                List<DAL.GetMyProfiles_Result> moiDB = dbContext.GetMyProfiles(mail).ToList();
 
 
                 Models.MembreModels moi = new Models.MembreModels
@@ -73,7 +73,7 @@ namespace ImmoWhat_API.Controllers
                     numero = moiDB[0].numero,
                     boite = moiDB[0].boite,
                     mail = moiDB[0].mail,
-                    roleUser = moiDB[0].Role,
+                    roleUser = moiDB[0].RoleMembre,
                     telephone = moiDB[0].PhoneNumber,
                     photo = moiDB[0].photo
                 };

@@ -147,6 +147,18 @@ namespace ImmoWhatApp.Controllers
             return View(mesStats);
         }
 
+        [HttpGet]
+        public JsonResult GetCommuneContourPointsInJson()
+        {
+            List<Models.CommuneContourPoint> ListePoints = new List<Models.CommuneContourPoint>();
+            ListePoints = BLL.CommuneBLL.GetCommuneContourPoints();
+
+
+            return Json(new { result = "OK", listePoints = ListePoints }, JsonRequestBehavior.AllowGet);
+        }
+        
+
+
 
     }
 }

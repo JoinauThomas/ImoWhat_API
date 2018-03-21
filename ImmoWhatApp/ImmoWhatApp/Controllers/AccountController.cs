@@ -108,5 +108,11 @@ namespace ImmoWhatApp.Controllers
             }
 
         }
+
+        public ActionResult CheckMyProfile()
+        {
+            Models.MembreModels moi = (Models.MembreModels)Session["moi"];
+            return View(moi);
+        }
     }
 }

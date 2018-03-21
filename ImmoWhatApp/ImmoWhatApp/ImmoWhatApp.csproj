@@ -3275,6 +3275,7 @@
     <Content Include="Views\Stat\PartialTableStat.cshtml" />
     <Content Include="Views\Stat\PartialViewPoiCommune.cshtml" />
     <Content Include="Views\Stat\PartialViewPoiAdresse.cshtml" />
+    <Content Include="Views\Account\CheckMyProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -457,10 +457,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         <Function Name="ajoutIdCouleursDsMapsParams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="CommunesToLower" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="GetAverageAndTransactionsTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="compareYear" Type="int" Mode="In" />
-          <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="GetAverageAndTransactionTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="compareYear" Type="int" Mode="In" />
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
@@ -508,6 +504,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="type" Type="nvarchar" Mode="In" />
           <Parameter Name="codePostCommune" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="GetCommuneContourPoints" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetHighestYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetIdMmbre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
@@ -525,6 +522,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="GetMyProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="mail" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetMyProfiles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="GetPriceTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -944,6 +944,10 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <Parameter Name="compareYear" Mode="In" Type="Int32" />
             <Parameter Name="codePostal" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetMyProfiles" ReturnType="Collection(ImmoWhatModel.GetMyProfiles_Result)">
+          <Parameter Name="mail" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetCommuneContourPoints" ReturnType="Collection(ImmoWhatModel.GetCommuneContourPoints_Result)" />
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1440,6 +1444,31 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Type="Int32" Name="currentyear0" Nullable="true" />
           <Property Type="Decimal" Name="evolutions" Nullable="true" Precision="9" Scale="2" />
         </ComplexType>
+        <ComplexType Name="GetMyProfiles_Result">
+          <Property Type="Int32" Name="idMembre" Nullable="false" />
+          <Property Type="String" Name="mail" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="nom" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="prenom" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Commune" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="rue" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="numero" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="boite" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="dateDeNaissance" Nullable="false" />
+          <Property Type="Boolean" Name="estProprietaire" Nullable="false" />
+          <Property Type="String" Name="photo" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="deleted" Nullable="false" />
+          <Property Type="String" Name="idUser" Nullable="false" MaxLength="128" />
+          <Property Type="DateTime" Name="DateEnregistrement" Nullable="false" />
+          <Property Type="DateTime" Name="DateSuppression" Nullable="true" />
+          <Property Type="String" Name="RoleMembre" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="PhoneNumber" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetCommuneContourPoints_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="Latitude" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Longitude" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Commune_CodePostal" Nullable="false" MaxLength="10" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1823,17 +1852,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetHighestYear" FunctionName="ImmoWhatModel.Store.GetHighestYear" />
-          <FunctionImportMapping FunctionImportName="GetAverageAndTransactionsTable" FunctionName="ImmoWhatModel.Store.GetAverageAndTransactionsTable">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ImmoWhatModel.GetAverageAndTransactionsTable_Result">
-                <ScalarProperty Name="typ" ColumnName="typ" />
-                <ScalarProperty Name="anneeRecherchee" ColumnName="anneeRecherchee" />
-                <ScalarProperty Name="currentyear1" ColumnName="currentyear1" />
-                <ScalarProperty Name="currentyear0" ColumnName="currentyear0" />
-                <ScalarProperty Name="evolutions" ColumnName="evolutions" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetTableTransactions" FunctionName="ImmoWhatModel.Store.GetTableTransactions">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ImmoWhatModel.GetTableTransactions_Result">
@@ -1876,6 +1894,39 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
                 <ScalarProperty Name="currentyear1" ColumnName="currentyear1" />
                 <ScalarProperty Name="currentyear0" ColumnName="currentyear0" />
                 <ScalarProperty Name="evolutions" ColumnName="evolutions" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetMyProfiles" FunctionName="ImmoWhatModel.Store.GetMyProfiles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetMyProfiles_Result">
+                <ScalarProperty Name="idMembre" ColumnName="idMembre" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="Commune" ColumnName="Commune" />
+                <ScalarProperty Name="rue" ColumnName="rue" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="boite" ColumnName="boite" />
+                <ScalarProperty Name="dateDeNaissance" ColumnName="dateDeNaissance" />
+                <ScalarProperty Name="estProprietaire" ColumnName="estProprietaire" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="DateEnregistrement" ColumnName="DateEnregistrement" />
+                <ScalarProperty Name="DateSuppression" ColumnName="DateSuppression" />
+                <ScalarProperty Name="RoleMembre" ColumnName="RoleMembre" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCommuneContourPoints" FunctionName="ImmoWhatModel.Store.GetCommuneContourPoints">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetCommuneContourPoints_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Commune_CodePostal" ColumnName="Commune_CodePostal" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
