@@ -611,5 +611,14 @@ namespace ImmoWhat_API.DAL
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCommuneContourPoints_Result>("GetCommuneContourPoints");
         }
+    
+        public virtual ObjectResult<Nullable<int>> CheckIfMailExists(string mail)
+        {
+            var mailParameter = mail != null ?
+                new ObjectParameter("mail", mail) :
+                new ObjectParameter("mail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CheckIfMailExists", mailParameter);
+        }
     }
 }

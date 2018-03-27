@@ -181,5 +181,40 @@ namespace ImmoWhatApp.BLL
                 throw ex;
             }
         }
+
+        public static bool CheckIfMailExists(string mail)
+        {
+            bool res;
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    Models.MembreModels moi = new Models.MembreModels();
+                    client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+                    var responseTask = client.GetAsync("CheckIfMailExists?mail=" + mail);
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<bool>();
+                        readTask.Wait();
+
+                        res = readTask.Result;
+                        return res;
+                    }
+                    else
+                    {
+                        var responseString = result.Content.ReadAsStringAsync();
+                        var error = responseString.Result;
+                        return true;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

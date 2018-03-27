@@ -8,7 +8,7 @@ var longit = $('#longitude').val();
 var home = { lat: Number(latit), lng: Number(longit) };
 var mapPoiCommune;
 var infowindow;
-var radius = 500;
+var radius = 1000;
 var radiusHopital = 2000;
 var hopitalTab = [];
 var parkTab = [];

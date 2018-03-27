@@ -274,6 +274,9 @@
     <Compile Include="DAL\GetAveragePrice1_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\GetCommuneContourPoints_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetInfoEvolutionPrices_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
@@ -352,6 +355,7 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommuneComplet.cs" />
+    <Compile Include="Models\CommuneContourPoint.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MembreModels.cs" />
     <Compile Include="Models\ResultInscription.cs" />

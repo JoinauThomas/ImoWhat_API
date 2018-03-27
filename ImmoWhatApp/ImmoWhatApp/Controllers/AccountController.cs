@@ -18,13 +18,31 @@ namespace ImmoWhatApp.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public string CheckIfMailExists(string mail)
+        {
+            try
+            {
+                bool result = BLL.MembreBLL.CheckIfMailExists(mail);
+
+                return result.ToString();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
+            
+        }
+
         [HttpPost]
         public ActionResult CreerCompte(Models.MembreModels newMembre, HttpPostedFileBase monfichier)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(newMembre);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(newMembre);
+            //}
             if(monfichier == null)
             {
                 newMembre.photo = "0";
@@ -42,7 +60,7 @@ namespace ImmoWhatApp.Controllers
             if (resultInscription.resultQuery == "ok")
             {
 
-                return RedirectToAction("Index");
+                return View();
             }
             else
             {

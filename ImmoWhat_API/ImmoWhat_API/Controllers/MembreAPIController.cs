@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -84,6 +85,49 @@ namespace ImmoWhat_API.Controllers
                 throw ex;
             }
             
+        }
+
+
+        [HttpGet]
+        [Route("CheckIfMailExists")]
+        public bool CheckIfMailExists(string mail)
+        {
+            bool x;
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                try
+                {
+                    using (SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=ImmoWhat;Integrated Security=True"))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("CheckIfMailExists", con))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add("@mail", SqlDbType.VarChar).Value = mail;
+
+                            con.Open();
+                            var y = cmd.ExecuteScalar().ToString();
+                            if (y == "0")
+                                x = false;
+                            else
+                                x = true;
+                            con.Close();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+
+                return x;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

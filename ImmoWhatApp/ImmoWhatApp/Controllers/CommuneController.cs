@@ -1,4 +1,5 @@
 ﻿using ImmoWhatApp.Helpers;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -152,6 +153,39 @@ namespace ImmoWhatApp.Controllers
         {
             List<Models.CommuneContourPoint> ListePoints = new List<Models.CommuneContourPoint>();
             ListePoints = BLL.CommuneBLL.GetCommuneContourPoints();
+
+            Models.coordonneesContourCommuneModels maCoordonnee = new Models.coordonneesContourCommuneModels();
+            List<Models.coordonneesContourCommuneModels> listeDeCoord = new List<Models.coordonneesContourCommuneModels>();
+            string codePost = "";
+
+            JObject xxx = new JObject();
+            xxx["result"] = "ok";
+            JArray coordonnee = new JArray();
+
+            
+            
+                       
+
+            
+            foreach(var x in ListePoints)
+            {
+                if(x.codePostal != codePost)
+                {
+                    codePost = x.codePostal;
+                    JArray coordonneeContour = new JArray();
+                    coordonneeContour.Add("id:" + x.id);
+                    coordonneeContour.Add("latitude:" + x.latitude);
+                    coordonneeContour.Add("longitude:" + x.longitude);
+
+                    
+                    coordonnee.Add("CodePostal:" + x.codePostal);
+                    coordonnee.Add("coordonneeContour:" + coordonneeContour);
+                    maCoordonnee = new Models.coordonneesContourCommuneModels { idCoordonnee = x.id, latitude = x.latitude, longitude = x.longitude };
+                }
+            }
+            xxx["coordonnees"] = coordonnee;
+
+            string test = xxx.ToString();
 
 
             return Json(new { result = "OK", listePoints = ListePoints }, JsonRequestBehavior.AllowGet);

@@ -3,9 +3,6 @@
     if (Session["moi"] != null)
     {
         ImmoWhatApp.Models.MembreModels moi = (ImmoWhatApp.Models.MembreModels)Session["moi"];
-        string nom = moi.nom;
-        string prenom = moi.prenom;
-        <h2>@prenom @nom</h2>
     }
 }
 
@@ -25,7 +22,6 @@
 <div id="modal_commune" style="display:none">
     <p id="modalTexte" class="modal-contents"></p>
 </div>
-<button id="test">test</button>
 
 <script>
     $('#test').click(function () {

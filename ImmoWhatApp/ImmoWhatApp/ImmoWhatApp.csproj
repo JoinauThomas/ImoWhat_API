@@ -3215,6 +3215,8 @@
     </Compile>
     <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Models\Commune.cs" />
+    <Compile Include="Models\CommuneContourPoint.cs" />
+    <Compile Include="Models\coordonneesContourCommuneModels.cs" />
     <Compile Include="Models\RechercheMoyennePrixCommune.cs" />
     <Compile Include="Models\ResultRequest.cs" />
     <Compile Include="Models\Identification.cs" />
