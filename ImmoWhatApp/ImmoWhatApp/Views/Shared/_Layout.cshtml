@@ -36,7 +36,7 @@
             if (Session["moi"] == null)
             {
                 <nav class="nav col-lg-3">
-                    <a class="nav-link col-lg" href="#">@Html.ActionLink("se connecter", "connexion", "Account", new { area = "" }, null)</a>
+                    <a id="btnConnexion" class="nav-link col-lg" href="#">se connecterss</a>
                     <a class="nav-link col-lg" href="#" id="deconnexion">@Html.ActionLink("s'inscrire", "CreerCompte", "Account", new { area = "" }, null)</a>
                 </nav>
             }
@@ -100,10 +100,36 @@
         </footer>
     </div>
     <div id="modal_connection" style="display:none">
-        <p id="modalTexte" class="modal-contents">aaaaaaa</p>
+        <p class="modal-contents modalTexte">aaaaaaa</p>
     </div>
     <script>
-
+        $('#btnConnexion').click(function () {
+            
+            $.ajax({
+                type: 'GET',
+                datatype: 'html',
+                url: '@Url.Action("Connexion", "Account")',
+                success:
+                function (response) {
+                    $('.modalTexte').html(response);
+                        $('#modal_connection').dialog({
+                            open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
+                            resizable: false,
+                            height: "auto",
+                            width: "500",
+                            modal: true,
+                            title: 'connexion',
+                            buttons: {
+                                "retour": function () { $(this).dialog("close") }
+                            }
+                        })
+                },
+                error:
+                function (response) {
+                    alert("un problème a été détecté... " + response.nom);
+                }
+            })
+        })
 
 
     </script>
@@ -116,7 +142,7 @@
                 success:
                 function (response) {
                     if (response.result != "OK") {
-                        $('#modalTexte').html("probleme detecté");
+                        $('.modalTexte').html("probleme detecté");
                         $('#modal_connection').dialog({
                             open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
                             resizable: false,
@@ -130,7 +156,7 @@
                         })
                     }
                     else {
-                        $('#modalTexte').html("au revoir " + " " + response.nom + " " + response.prenom);
+                        $('.modalTexte').html("au revoir " + " " + response.nom + " " + response.prenom);
                         $('#modal_connection').dialog({
 
                             open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },

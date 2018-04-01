@@ -3265,7 +3265,6 @@
     <Content Include="Views\User\CreerCompte.cshtml" />
     <Content Include="Views\User\Connexion.cshtml" />
     <Content Include="Views\Account\CreerCompte.cshtml" />
-    <Content Include="Views\Account\Connexion.cshtml" />
     <Content Include="Views\User\CreerCpte.cshtml" />
     <Content Include="Views\Home\MainPage.cshtml" />
     <Content Include="Views\Commune\GetTableStatPrixCommune.cshtml" />
@@ -3278,6 +3277,7 @@
     <Content Include="Views\Stat\PartialViewPoiCommune.cshtml" />
     <Content Include="Views\Stat\PartialViewPoiAdresse.cshtml" />
     <Content Include="Views\Account\CheckMyProfile.cshtml" />
+    <Content Include="Views\Account\Connexion.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

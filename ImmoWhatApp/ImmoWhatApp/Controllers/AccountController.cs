@@ -72,7 +72,7 @@ namespace ImmoWhatApp.Controllers
         [HttpGet]
         public ActionResult Connexion()
         {
-            return View();
+            return PartialView();
         }
         [HttpPost]
         public JsonResult Connexion(string login, string password)
