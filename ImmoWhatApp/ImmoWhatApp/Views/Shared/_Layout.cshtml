@@ -24,29 +24,90 @@
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
 </head>
 <body>
+    <!--Navbar-->
+
+    <nav class="navbar navbar-expand-lg navbar-light warning-color lighten-5 justify-content-between">
+
+        <!-- Navbar brand -->
+        <div>
+        <a class="navbar-brand" href="#">Immowhat</a>
+
+        <span class="navbar-text white-text">
+            The true value of your property
+        </span>
+            </div>
+        <div>
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">se connecter</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">mon profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">admin</a>
+                </li>
+
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+
+            </ul>
+            <!-- Links -->
+            </div>
+            
+        </div>
+        <!-- Collapsible content -->
+
+    </nav>
+    <!--/.Navbar-->
+
+
     <nav class="navbar navbar-expand-lg navbar-light col-lg-12" style="background-color: green; position:fixed; z-index:99; height:10%">
         <a class="navbar-brand col-lg-2" href="#">IMMOWHAT</a>
-        <span class="col-lg-6" style="background-color: grey">The true value of your property <span class="sr-only">(current)</span></span>
+        <span class="navbar-text col-lg-5" style="background-color: grey">The true value of your property <span class="sr-only">(current)</span></span>
 
 
 
 
         @{
-            ImmoWhatApp.Models.MembreModels moi = (ImmoWhatApp.Models.MembreModels)Session["moi"];
+
             if (Session["moi"] == null)
             {
-                <nav class="nav col-lg-3">
-                    <a id="btnConnexion" class="nav-link col-lg" href="#">se connecterss</a>
-                    <a class="nav-link col-lg" href="#" id="deconnexion">@Html.ActionLink("s'inscrire", "CreerCompte", "Account", new { area = "" }, null)</a>
+                <nav class="nav col-lg-4">
+                    <a id="btnConnexion" class="nav-link col-lg-5" href="#">se connecter</a>
+                    <a class="nav-link col-lg-5" href="#">@Html.ActionLink("s'inscrire", "CreerCompte", "Account", new { area = "" }, null)</a>
                 </nav>
             }
             else
             {
+                ImmoWhatApp.Models.MembreModels moi = (ImmoWhatApp.Models.MembreModels)Session["moi"];
+                if (moi.roleUser == "1")
+                {
+                    <nav class="nav col-lg-4">
+                        <a class="nav-link col-lg-3" href="#">admin</a>
+                        <a class="nav-link col-lg-3" href="#">@Html.ActionLink("mon profile", "CheckMyProfile", "Account", new { area = "" }, null)</a>
+                        <a class="nav-link col-lg-3 deconnexion" href="#">se deconnecter</a>
+                    </nav>
+                }
+                else
+                {
+                    <nav class="nav col-lg-4">
+                        <a class="nav-link col-lg-5" href="#">@Html.ActionLink("mon profile", "CheckMyProfile", "Account", new { area = "" }, null)</a>
+                        <a class="nav-link col-lg-5 deconnexion" href="#">se deconnecter</a>
+                    </nav>
+                }
 
-                <nav class="nav col-lg-3">
-                    <a class="nav-link col-lg" href="#">@Html.ActionLink("mon profile", "CheckMyProfile", "Account", new { area = "" }, null)</a>
-                    <a class="nav-link col-lg" href="#" id="deconnexion">se deconnecter</a>
-                </nav>
 
             }
         }
@@ -104,7 +165,7 @@
     </div>
     <script>
         $('#btnConnexion').click(function () {
-            
+
             $.ajax({
                 type: 'GET',
                 datatype: 'html',
@@ -134,7 +195,7 @@
 
     </script>
     <script>
-        $('#deconnexion').click(function () {
+        $('.deconnexion').click(function () {
             $.ajax({
                 type: 'POST',
                 datatype: 'json',
