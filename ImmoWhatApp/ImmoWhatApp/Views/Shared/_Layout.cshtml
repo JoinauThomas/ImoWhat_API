@@ -26,132 +26,177 @@
 <body>
     <!--Navbar-->
 
-    <nav class="navbar navbar-expand-lg navbar-light warning-color lighten-5 justify-content-between">
+    <nav style="background-color: green;  z-index:99; height:10%" class="fixed-top navbar navbar-expand-lg navbar-light warning-color lighten-5 justify-content-between">
 
         <!-- Navbar brand -->
         <div>
-        <a class="navbar-brand" href="#">Immowhat</a>
+            <a class="navbar-brand" href="#">Immowhat</a>
 
-        <span class="navbar-text white-text">
-            The true value of your property
-        </span>
-            </div>
+            <span class="navbar-text white-text">
+                The true value of your property
+            </span>
+        </div>
         <div>
-        <!-- Collapsible content -->
-        <div class="collapse navbar-collapse" id="basicExampleNav">
+            <!-- Collapsible content -->
+            <div class="collapse navbar-collapse" id="basicExampleNav">
+                <ul class="navbar-nav mr-auto">
 
-            <!-- Links -->
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">se connecter</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">mon profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">admin</a>
-                </li>
+                    @{
+                        if (Session["moi"] == null)
+                        {
+                            <!-- Links -->
+                            <li class="nav-item">
+                                <a id="btnConnexion" class="nav-link" href="#">se connecter</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link inscription" href="#">s'inscrire</a>
+                            </li>
+                        }
+                        else
+                        {
+                            ImmoWhatApp.Models.MembreModels moi = (ImmoWhatApp.Models.MembreModels)Session["moi"];
+                            if (moi.roleUser == "1")
+                            {
+                                <!-- Links -->
+                                <li class="nav-item">
+                                    <a class="nav-link deconnexion" href="#">se déconnecter</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link checkProfile" href="#">mon profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">admin</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <!-- Links -->
+                                <li class="nav-item">
+                                    <a class="nav-link deconnexion" href="#">se déconnecter</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link checkProfile" href="#">mon profile</a>
+                                </li>
+                            }
+                        }
+                    }
+                    @{
+                        var langue = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
 
-                <!-- Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
+                        <!-- Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@langue</a>
+                            <div class="dropdown-menu dropdown-primary dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                @if (langue == "fr")
+                                {
+                                    <button class="dropdown-item langue active" type="button" value="fr">FR</button>
+                                    <button class="dropdown-item langue" type="button" value="nl">NL</button>
+                                    <button class="dropdown-item langue" type="button" value="en">EN</button>
+                                }
+                                else if (langue == "en")
+                                {
+                                    <button class="dropdown-item langue" type="button" value="fr">FR</button>
+                                    <button class="dropdown-item langue" type="button" value="nl">NL</button>
+                                    <button class="dropdown-item langue active" type="button" value="en">EN</button>
+                                }
+                                else
+                                {
+                                    <button class="dropdown-item langue" type="button" value="fr">FR</button>
+                                    <button class="dropdown-item langue active" type="button" value="nl">NL</button>
+                                    <button class="dropdown-item langue" type="button" value="en">EN</button>
+                                }
 
-            </ul>
-            <!-- Links -->
+                            </div>
+                        </li>
+                    }
+                </ul>
+                <!-- Links -->
             </div>
-            
+
         </div>
         <!-- Collapsible content -->
 
     </nav>
     <!--/.Navbar-->
-
-
-    <nav class="navbar navbar-expand-lg navbar-light col-lg-12" style="background-color: green; position:fixed; z-index:99; height:10%">
-        <a class="navbar-brand col-lg-2" href="#">IMMOWHAT</a>
-        <span class="navbar-text col-lg-5" style="background-color: grey">The true value of your property <span class="sr-only">(current)</span></span>
+    @*<nav class="navbar navbar-expand-lg navbar-light col-lg-12" style="background-color: green; position:fixed; z-index:99; height:10%">
+            <a class="navbar-brand col-lg-2" href="#">IMMOWHAT</a>
+            <span class="navbar-text col-lg-5" style="background-color: grey">The true value of your property <span class="sr-only">(current)</span></span>
 
 
 
 
-        @{
+            @{
 
-            if (Session["moi"] == null)
-            {
-                <nav class="nav col-lg-4">
-                    <a id="btnConnexion" class="nav-link col-lg-5" href="#">se connecter</a>
-                    <a class="nav-link col-lg-5" href="#">@Html.ActionLink("s'inscrire", "CreerCompte", "Account", new { area = "" }, null)</a>
-                </nav>
-            }
-            else
-            {
-                ImmoWhatApp.Models.MembreModels moi = (ImmoWhatApp.Models.MembreModels)Session["moi"];
-                if (moi.roleUser == "1")
+                if (Session["moi"] == null)
                 {
                     <nav class="nav col-lg-4">
-                        <a class="nav-link col-lg-3" href="#">admin</a>
-                        <a class="nav-link col-lg-3" href="#">@Html.ActionLink("mon profile", "CheckMyProfile", "Account", new { area = "" }, null)</a>
-                        <a class="nav-link col-lg-3 deconnexion" href="#">se deconnecter</a>
+                        <a id="btnConnexion" class="nav-link col-lg-5" href="#">se connecter</a>
+                        <a class="nav-link col-lg-5" href="#">@Html.ActionLink("s'inscrire", "CreerCompte", "Account", new { area = "" }, null)</a>
                     </nav>
                 }
                 else
                 {
-                    <nav class="nav col-lg-4">
-                        <a class="nav-link col-lg-5" href="#">@Html.ActionLink("mon profile", "CheckMyProfile", "Account", new { area = "" }, null)</a>
-                        <a class="nav-link col-lg-5 deconnexion" href="#">se deconnecter</a>
-                    </nav>
-                }
-
-
-            }
-        }
-        <ul class="nav navbar-nav col-lg-1">
-            <li class="nav-item dropdown col-lg-1 ">
-
-                @*<div class="btn-group dropleft">
-                        <button id="aaaaa" type="button" class="btn btn-secondary btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            FR
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right" id="langue">
-                            <a id="lnEN" class="dropdown-item" href="EN">@Html.ActionLink("EN", "SetCulture", "Home", new { culture = "en" }, null)</a>
-                            <a id="lnFR" class="dropdown-item" href="FR">@Html.ActionLink("FR", "SetCulture", "Home", new { culture = "fr" }, null)</a>
-                            <a id="lnNL" class="dropdown-item" href="NL">@Html.ActionLink("NL", "SetCulture", "Home", new { culture = "nl" }, null)</a>
-                        </div>
-                    </div>*@
-                <select name="langue" id="langue" class="btn btn-danger dropdown-toggle">
-                    @{
-                        var langue = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
-                        if (langue == "fr")
-                        {
-                            <option value="fr" selected="selected">FR</option>
-                            <option value="en">EN</option>
-                            <option value="nl">NL</option>
-                        }
-                        else if (langue == "en")
-                        {
-                            <option value="fr">FR</option>
-                            <option value="en" selected="selected">EN</option>
-                            <option value="nl">NL</option>
-                        }
-                        else
-                        {
-                            <option value="fr">FR</option>
-                            <option value="en">EN</option>
-                            <option value="nl" selected="selected">NL</option>
-                        }
-
+                    ImmoWhatApp.Models.MembreModels moi = (ImmoWhatApp.Models.MembreModels)Session["moi"];
+                    if (moi.roleUser == "1")
+                    {
+                        <nav class="nav col-lg-4">
+                            <a class="nav-link col-lg-3" href="#">admin</a>
+                            <a class="nav-link col-lg-3" href="#">@Html.ActionLink("mon profile", "CheckMyProfile", "Account", new { area = "" }, null)</a>
+                            <a class="nav-link col-lg-3 deconnexion" href="#">se deconnecter</a>
+                        </nav>
                     }
-                </select>
+                    else
+                    {
+                        <nav class="nav col-lg-4">
+                            <a class="nav-link col-lg-5" href="#">@Html.ActionLink("mon profile", "CheckMyProfile", "Account", new { area = "" }, null)</a>
+                            <a class="nav-link col-lg-5 deconnexion" href="#">se deconnecter</a>
+                        </nav>
+                    }
 
-            </li>
-        </ul>
-    </nav>
+
+                }
+            }
+            <ul class="nav navbar-nav col-lg-1">
+                <li class="nav-item dropdown col-lg-1 ">
+
+                    @*<div class="btn-group dropleft">
+                            <button id="aaaaa" type="button" class="btn btn-secondary btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                FR
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" id="langue">
+                                <a id="lnEN" class="dropdown-item" href="EN">@Html.ActionLink("EN", "SetCulture", "Home", new { culture = "en" }, null)</a>
+                                <a id="lnFR" class="dropdown-item" href="FR">@Html.ActionLink("FR", "SetCulture", "Home", new { culture = "fr" }, null)</a>
+                                <a id="lnNL" class="dropdown-item" href="NL">@Html.ActionLink("NL", "SetCulture", "Home", new { culture = "nl" }, null)</a>
+                            </div>
+                        </div>
+                    <select name="langue" id="langue" class="btn btn-danger dropdown-toggle">
+                        @{
+                            var langue = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+                            if (langue == "fr")
+                            {
+                                <option value="fr" selected="selected">FR</option>
+                                <option value="en">EN</option>
+                                <option value="nl">NL</option>
+                            }
+                            else if (langue == "en")
+                            {
+                                <option value="fr">FR</option>
+                                <option value="en" selected="selected">EN</option>
+                                <option value="nl">NL</option>
+                            }
+                            else
+                            {
+                                <option value="fr">FR</option>
+                                <option value="en">EN</option>
+                                <option value="nl" selected="selected">NL</option>
+                            }
+
+                        }
+                    </select>
+
+                </li>
+            </ul>
+        </nav>*@
 
     <div class="body-content" style="padding-top:5%">
         @RenderBody()
@@ -161,9 +206,17 @@
         </footer>
     </div>
     <div id="modal_connection" style="display:none">
-        <p class="modal-contents modalTexte">aaaaaaa</p>
+        <p class="modal-contents modalTexte"></p>
     </div>
     <script>
+        $('.inscription').click(function () {
+            window.location = '@Url.Action("CreerCompte", "Account")';
+        })
+
+        $('.checkProfile').click(function () {
+            window.location = '@Url.Action("CheckMyProfile", "Account")';
+        })
+
         $('#btnConnexion').click(function () {
 
             $.ajax({
@@ -249,6 +302,21 @@
     </script>
 
     <script>
+        $('.langue').click(function () {
+            var langue = $(this).val();
+             $.ajax({
+                url: '@Url.Action("SetCulture", "Home")',
+                data: { culture: langue },
+                success:
+                function () {
+                    location.reload()
+                },
+                error:
+                function (response) {
+                    alert("un problème a été détecté... " + response.nom);
+                }
+            })
+        })
         $('#langue').change(function () {
             var langue = $('#langue').val();
             $.ajax({
