@@ -3206,6 +3206,7 @@
     <Compile Include="BLL\StatBLL.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BienController.cs" />
     <Compile Include="Controllers\CommuneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StatController.cs" />
@@ -3214,6 +3215,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CultureHelper.cs" />
+    <Compile Include="Models\BienModels.cs" />
     <Compile Include="Models\Commune.cs" />
     <Compile Include="Models\CommuneContourPoint.cs" />
     <Compile Include="Models\coordonneesContourCommuneModels.cs" />
@@ -3278,6 +3280,7 @@
     <Content Include="Views\Stat\PartialViewPoiAdresse.cshtml" />
     <Content Include="Views\Account\CheckMyProfile.cshtml" />
     <Content Include="Views\Account\Connexion.cshtml" />
+    <Content Include="Views\Bien\AddNewBien.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

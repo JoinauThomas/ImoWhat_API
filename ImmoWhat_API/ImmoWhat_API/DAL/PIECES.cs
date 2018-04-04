@@ -12,18 +12,18 @@ namespace ImmoWhat_API.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class OPTIONS
+    public partial class PIECES
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OPTIONS()
+        public PIECES()
         {
-            this.BIEN_OPTION = new HashSet<BIEN_OPTION>();
+            this.BIEN_PIECES = new HashSet<BIEN_PIECES>();
         }
     
-        public int IdOption { get; set; }
-        public string Libelle { get; set; }
+        public int idPiece { get; set; }
+        public string libelle { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BIEN_OPTION> BIEN_OPTION { get; set; }
+        public virtual ICollection<BIEN_PIECES> BIEN_PIECES { get; set; }
     }
 }

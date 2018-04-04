@@ -130,11 +130,17 @@ namespace ImmoWhatApp.BLL
                         //get access token from response body
                         var jObject = JObject.Parse(responseString.Result);
                         MyToken = jObject.GetValue("access_token").ToString();
+                        CookieHeaderValue cookie = new CookieHeaderValue("myToken", MyToken);
+                       
 
                         resultRequest.idError = 0;
                         resultRequest.msg = "ok";
                     }
                 }
+                HttpCookie myToken = new HttpCookie("myToken");
+                myToken.Value = MyToken;
+                HttpContext.Current.Response.Cookies.Add(myToken);
+
                 var currentSession = HttpContext.Current.Session;
                 var token = currentSession["monToken"];
                 currentSession["monToken"] = MyToken;
@@ -154,8 +160,13 @@ namespace ImmoWhatApp.BLL
             {
                 using (var client = new HttpClient())
                 {
+                    var token = HttpContext.Current.Request.Cookies["myToken"].Value;
                     Models.MembreModels moi = new Models.MembreModels();
                     client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
                     var responseTask = client.GetAsync("GetMyProfile?mail=" + mail);
                     responseTask.Wait();
                     var result = responseTask.Result;

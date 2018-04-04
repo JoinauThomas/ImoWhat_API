@@ -52,6 +52,7 @@ namespace ImmoWhat_API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("GetMyProfile")]
         public Models.MembreModels GetMyProfile(string mail)
         {

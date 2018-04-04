@@ -17,26 +17,36 @@ namespace ImmoWhat_API.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BIEN()
         {
-            this.OPTIONS = new HashSet<OPTIONS>();
+            this.BIEN_OPTION = new HashSet<BIEN_OPTION>();
+            this.BIEN_PHOTOS = new HashSet<BIEN_PHOTOS>();
+            this.BIEN_PIECES = new HashSet<BIEN_PIECES>();
         }
     
         public int BIEN_Id { get; set; }
         public int BIEN_IdType { get; set; }
         public int BIEN_IdProprietaire { get; set; }
-        public double BIEN_Prix { get; set; }
-        public double BIEN_Superficie { get; set; }
+        public int BIEN_Prix { get; set; }
+        public int BIEN_Superficie { get; set; }
         public int BIEN_idCommune { get; set; }
         public string Bien_Rue { get; set; }
         public string BIEN_Numero { get; set; }
         public string BIEN_Boite { get; set; }
-        public int BIEN_NbChambre { get; set; }
-        public int BIEN_NbSDB { get; set; }
         public bool BIEN_Vendu { get; set; }
+        public bool BIEN_Supprime { get; set; }
+        public int BIEN_Etages { get; set; }
+        public string BIEN_Libelle { get; set; }
+        public int BIEN_AnneeDeConstruction { get; set; }
+        public string BIEN_Energie { get; set; }
+        public int BIEN_PhotoPrincipale { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BIEN_OPTION> BIEN_OPTION { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BIEN_PHOTOS> BIEN_PHOTOS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BIEN_PIECES> BIEN_PIECES { get; set; }
         public virtual COMMUNE COMMUNE { get; set; }
         public virtual MEMBRE MEMBRE { get; set; }
         public virtual TYPEBIEN TYPEBIEN { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OPTIONS> OPTIONS { get; set; }
     }
 }

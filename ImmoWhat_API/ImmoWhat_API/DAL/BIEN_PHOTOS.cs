@@ -16,5 +16,7 @@ namespace ImmoWhat_API.DAL
     {
         public int idBien { get; set; }
         public string lien { get; set; }
+    
+        public virtual BIEN BIEN { get; set; }
     }
 }

@@ -17,7 +17,14 @@ select,
 textarea {
     max-width: 280px;
 }
-
+.navLatD {
+    background-color: coral;
+    height: 89vh;
+}
+.zoneMaison {
+    height: 80vh;
+    overflow-y: scroll;
+}
 #entete-immowhat {
     font-family: 'Century Schoolbook';
 }

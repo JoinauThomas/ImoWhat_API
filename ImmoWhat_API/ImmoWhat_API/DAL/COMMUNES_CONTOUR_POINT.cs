@@ -12,18 +12,11 @@ namespace ImmoWhat_API.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class OPTIONS
+    public partial class COMMUNES_CONTOUR_POINT
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OPTIONS()
-        {
-            this.BIEN_OPTION = new HashSet<BIEN_OPTION>();
-        }
-    
-        public int IdOption { get; set; }
-        public string Libelle { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BIEN_OPTION> BIEN_OPTION { get; set; }
+        public int id { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
+        public string Commune_CodePostal { get; set; }
     }
 }
