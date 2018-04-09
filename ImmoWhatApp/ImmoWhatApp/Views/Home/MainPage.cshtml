@@ -29,10 +29,10 @@
             </div>
             
                 <div class="d-flex justify-content-around">
-                    <div role="button" class="p-1 btn btn-outline-light">house</div>
-                    <div role="button" class="p-1 btn btn-outline-light">flat</div>
-                    <div role="button" class="p-1 btn btn-outline-light">terrain</div>
-                    <div role="button" class="p-1 btn btn-outline-light">villa</div>
+                    <div role="button" class="p-1 btn btn-outline-light">@Resource.maison</div>
+                    <div role="button" class="p-1 btn btn-outline-light">@Resource.appartement</div>
+                    <div role="button" class="p-1 btn btn-outline-light">@Resource.terrain</div>
+                    <div role="button" class="p-1 btn btn-outline-light">@Resource.villa</div>
                 </div>
                 @*<div style="width:20%" id="maison" class="btnTypeBien btn btn-danger">house</div>
                 <div style="width:20%" id="appartement" class="btnTypeBien btn btn-danger">flat</div>
@@ -209,7 +209,7 @@
 <script>
 
     $('#btnAjoutBien').click(function () {
-        window.location = '@Url.Action("AddNewBien", "Bien")';
+        location.href = '@Url.Action("AddNewBien", "Bien")';
     })
     $('#tablePrix').click(function () {
 

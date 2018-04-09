@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace ImmoWhatApp.Controllers
 {
-    public class StatController : Controller
+    public class StatController : BaseController
     {
         
         [HttpGet]

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace ImmoWhatApp.Controllers
 {
-    public class BienController : Controller
+    public class BienController : BaseController
     {
         // GET: Bien
         [Authorize]
@@ -18,6 +18,15 @@ namespace ImmoWhatApp.Controllers
         [HttpGet]
         public ActionResult AddNewBien()
         {
+            List<Models.TypeBienModels> typesBiensList = new List<Models.TypeBienModels>
+            {
+                new Models.TypeBienModels{idTypeBien = 1, libelle = Resource.terrain},
+                new Models.TypeBienModels{idTypeBien = 2, libelle = Resource.maison},
+                new Models.TypeBienModels{idTypeBien = 3, libelle = Resource.villa},
+                new Models.TypeBienModels{idTypeBien = 4, libelle = Resource.appartement}
+            };
+
+            ViewBag.ListeTypesBiens = new SelectList(typesBiensList, "idTypeBien", "libelle");
             return View();
         }
     }

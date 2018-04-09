@@ -138,4 +138,72 @@
   <data name="slogan" xml:space="preserve">
     <value>3 klikken om alles over uw m² te weten</value>
   </data>
+  <data name="appartement" xml:space="preserve">
+    <value>appartement</value>
+  </data>
+  <data name="maison" xml:space="preserve">
+    <value>huis</value>
+  </data>
+  <data name="terrain" xml:space="preserve">
+    <value>grond</value>
+  </data>
+  <data name="villa" xml:space="preserve">
+    <value>villa</value>
+  </data>
+  <data name="alarm" xml:space="preserve">
+    <value>alarm</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="boite" xml:space="preserve">
+    <value>postkantoor</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="commune" xml:space="preserve">
+    <value>gemeenschap</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="cuisineEquipee" xml:space="preserve">
+    <value>uitgeruste keuken</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="doubleVitrage" xml:space="preserve">
+    <value>dubbele beglazing</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="jardin" xml:space="preserve">
+    <value>tuin</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="nbEtages" xml:space="preserve">
+    <value>aantal verdiepingen</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="numero" xml:space="preserve">
+    <value>nummer</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="parking" xml:space="preserve">
+    <value>parkeren</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="piscine" xml:space="preserve">
+    <value>zwembad</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="rue" xml:space="preserve">
+    <value>straat</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="superficie" xml:space="preserve">
+    <value>gebied</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="typeBien" xml:space="preserve">
+    <value>type woning</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="codePostale" xml:space="preserve">
+    <value>postcode</value>
+    <comment>BienModels</comment>
+  </data>
 </root>

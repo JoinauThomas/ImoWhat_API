@@ -138,4 +138,72 @@
   <data name="slogan" xml:space="preserve">
     <value>3 clicks to know everything about your m²</value>
   </data>
+  <data name="appartement" xml:space="preserve">
+    <value>apartment</value>
+  </data>
+  <data name="maison" xml:space="preserve">
+    <value>house</value>
+  </data>
+  <data name="terrain" xml:space="preserve">
+    <value>ground</value>
+  </data>
+  <data name="villa" xml:space="preserve">
+    <value>villa</value>
+  </data>
+  <data name="alarm" xml:space="preserve">
+    <value>alarm</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="boite" xml:space="preserve">
+    <value>post box</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="commune" xml:space="preserve">
+    <value>gemeenschap</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="cuisineEquipee" xml:space="preserve">
+    <value>equipped kitchen</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="doubleVitrage" xml:space="preserve">
+    <value>double glazing</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="jardin" xml:space="preserve">
+    <value>garden</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="nbEtages" xml:space="preserve">
+    <value>number of floors</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="numero" xml:space="preserve">
+    <value>number</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="parking" xml:space="preserve">
+    <value>car park</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="piscine" xml:space="preserve">
+    <value>pool</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="rue" xml:space="preserve">
+    <value>town</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="superficie" xml:space="preserve">
+    <value>area</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="typeBien" xml:space="preserve">
+    <value>type of building</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="codePostale" xml:space="preserve">
+    <value>zip</value>
+    <comment>BienModels</comment>
+  </data>
 </root>

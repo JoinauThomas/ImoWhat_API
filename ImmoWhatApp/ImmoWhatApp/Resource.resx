@@ -138,4 +138,75 @@
   <data name="slogan" xml:space="preserve">
     <value>3 clics pour tout savoir sur vos m²</value>
   </data>
+  <data name="appartement" xml:space="preserve">
+    <value>appartement</value>
+  </data>
+  <data name="maison" xml:space="preserve">
+    <value>maison</value>
+  </data>
+  <data name="terrain" xml:space="preserve">
+    <value>terrain</value>
+  </data>
+  <data name="villa" xml:space="preserve">
+    <value>villa</value>
+  </data>
+  <data name="alarm" xml:space="preserve">
+    <value>alarme</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="boite" xml:space="preserve">
+    <value>boite</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="commune" xml:space="preserve">
+    <value>commune</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="cuisineEquipee" xml:space="preserve">
+    <value>cuisine équipée</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="doubleVitrage" xml:space="preserve">
+    <value>double vitrage</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="jardin" xml:space="preserve">
+    <value>jardin</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="nbChambrez" xml:space="preserve">
+    <value>nombre de chambres</value>
+  </data>
+  <data name="nbEtages" xml:space="preserve">
+    <value>nombre d'étages</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="numero" xml:space="preserve">
+    <value>numero</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="parking" xml:space="preserve">
+    <value>parking</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="piscine" xml:space="preserve">
+    <value>piscine</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="rue" xml:space="preserve">
+    <value>rue</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="superficie" xml:space="preserve">
+    <value>superficie</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="typeBien" xml:space="preserve">
+    <value>type de bien</value>
+    <comment>BienModels</comment>
+  </data>
+  <data name="codePostale" xml:space="preserve">
+    <value>code postale</value>
+    <comment>BienModels</comment>
+  </data>
 </root>

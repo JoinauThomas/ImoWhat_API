@@ -3229,6 +3229,7 @@
     <Compile Include="Models\tablePriceStat.cs" />
     <Compile Include="Models\TableResultGraphic.cs" />
     <Compile Include="Models\tableStatModels.cs" />
+    <Compile Include="Models\TypeBienModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -117,87 +117,11 @@
         <!-- Collapsible content -->
 
     </nav>
-    <!--/.Navbar-->
-    @*<nav class="navbar navbar-expand-lg navbar-light col-lg-12" style="background-color: green; position:fixed; z-index:99; height:10%">
-            <a class="navbar-brand col-lg-2" href="#">IMMOWHAT</a>
-            <span class="navbar-text col-lg-5" style="background-color: grey">The true value of your property <span class="sr-only">(current)</span></span>
 
 
 
 
-            @{
-
-                if (Session["moi"] == null)
-                {
-                    <nav class="nav col-lg-4">
-                        <a id="btnConnexion" class="nav-link col-lg-5" href="#">se connecter</a>
-                        <a class="nav-link col-lg-5" href="#">@Html.ActionLink("s'inscrire", "CreerCompte", "Account", new { area = "" }, null)</a>
-                    </nav>
-                }
-                else
-                {
-                    ImmoWhatApp.Models.MembreModels moi = (ImmoWhatApp.Models.MembreModels)Session["moi"];
-                    if (moi.roleUser == "1")
-                    {
-                        <nav class="nav col-lg-4">
-                            <a class="nav-link col-lg-3" href="#">admin</a>
-                            <a class="nav-link col-lg-3" href="#">@Html.ActionLink("mon profile", "CheckMyProfile", "Account", new { area = "" }, null)</a>
-                            <a class="nav-link col-lg-3 deconnexion" href="#">se deconnecter</a>
-                        </nav>
-                    }
-                    else
-                    {
-                        <nav class="nav col-lg-4">
-                            <a class="nav-link col-lg-5" href="#">@Html.ActionLink("mon profile", "CheckMyProfile", "Account", new { area = "" }, null)</a>
-                            <a class="nav-link col-lg-5 deconnexion" href="#">se deconnecter</a>
-                        </nav>
-                    }
-
-
-                }
-            }
-            <ul class="nav navbar-nav col-lg-1">
-                <li class="nav-item dropdown col-lg-1 ">
-
-                    @*<div class="btn-group dropleft">
-                            <button id="aaaaa" type="button" class="btn btn-secondary btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                FR
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right" id="langue">
-                                <a id="lnEN" class="dropdown-item" href="EN">@Html.ActionLink("EN", "SetCulture", "Home", new { culture = "en" }, null)</a>
-                                <a id="lnFR" class="dropdown-item" href="FR">@Html.ActionLink("FR", "SetCulture", "Home", new { culture = "fr" }, null)</a>
-                                <a id="lnNL" class="dropdown-item" href="NL">@Html.ActionLink("NL", "SetCulture", "Home", new { culture = "nl" }, null)</a>
-                            </div>
-                        </div>
-                    <select name="langue" id="langue" class="btn btn-danger dropdown-toggle">
-                        @{
-                            var langue = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
-                            if (langue == "fr")
-                            {
-                                <option value="fr" selected="selected">FR</option>
-                                <option value="en">EN</option>
-                                <option value="nl">NL</option>
-                            }
-                            else if (langue == "en")
-                            {
-                                <option value="fr">FR</option>
-                                <option value="en" selected="selected">EN</option>
-                                <option value="nl">NL</option>
-                            }
-                            else
-                            {
-                                <option value="fr">FR</option>
-                                <option value="en">EN</option>
-                                <option value="nl" selected="selected">NL</option>
-                            }
-
-                        }
-                    </select>
-
-                </li>
-            </ul>
-        </nav>*@
-
+   
     <div class="body-content" style="padding-top:5%">
         @RenderBody()
         <hr />
