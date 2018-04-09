@@ -79,39 +79,39 @@
                     <div class="col-lg-12">
                         <div class="col-lg-7">
                             <div class="row justify-content-between">
-                                <div style="border-style: double;height:250px; width:250px">
-                                    <img class="img-fluid" href="#" src="adds.png" alt="plus" />
+                                <div style="border-style: double;height:250px; width:250px; position:relative">
+                                    <img id="img0" class=" rounded " href="#" src="~/img/bien/homeAdd.png" alt="plus" style="max-height:100%; max-width:100%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%); display: none;" />
                                 </div>
-                                <div style="border-style: double;height:250px; width:250px">
-                                    <img id="btnImg" class="img-fluid" href="#" src="add.png" alt="plus" />
+                                <div style="height:250px; width:250px; position:relative">
+                                    <button type="button" id="btnImg" href="#" style="height:75%; width:75%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%)" class="btn btn-primary btn-lg rounded-circle btnImg"><img src="~/assets/png/plus-8x.png" style="width:80%; width:80%" /></button>
                                     <input type="file" id="my_file" style="display: none;" />
                                 </div>
                             </div>
                         </div>
                         <div class="row mt-5 justify-content-between">
-                            <div style="border-style: double;height:100px; width:100px">
-                                <img id="btnImg" class="img-fluid" href="#" src="adds.png" alt="plus" />
+                            <div style="height:100px; width:100px; position:relative">
+                                <img id="img1" class=" rounded " href="#" src="" alt="plus" style="max-height:100%; max-width:100%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%); display: none;" />
                             </div>
-                            <div style="border-style: double;height:100px; width:100px">
-                                <img id="btnImg" class="img-fluid" href="#" src="adds.png" alt="plus" />
+                            <div style="height:100px; width:100px; position:relative">
+                                <img id="img2" class=" rounded " href="#" src="" alt="plus" style="max-height:100%; max-width:100%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%); display: none;" />
                             </div>
-                            <div style="border-style: double;height:100px; width:100px">
-                                <img id="btnImg" class="img-fluid" href="#" src="adds.png" alt="plus" />
+                            <div style="height:100px; width:100px; position:relative">
+                                <img id="img3" class=" rounded " href="#" src="" alt="plus" style="max-height:100%; max-width:100%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%); display: none;" />
                             </div>
-                            <div style="border-style: double;height:100px; width:100px">
-                                <img id="btnImg" class="img-fluid" href="#" src="adds.png" alt="plus" />
+                            <div style="height:100px; width:100px; position:relative">
+                                <img id="img4" class=" rounded " href="#" src="" alt="plus" style="max-height:100%; max-width:100%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%); display: none;" />
                             </div>
-                            <div style="border-style: double;height:100px; width:100px">
-                                <img id="btnImg" class="img-fluid" href="#" src="adds.png" alt="plus" />
+                            <div style="height:100px; width:100px; position:relative">
+                                <img id="img5" class=" rounded " href="#" src="" alt="plus" style="max-height:100%; max-width:100%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%); display: none;" />
                             </div>
-                            <div style="border-style: double;height:100px; width:100px">
-                                <img id="btnImg" class="img-fluid" href="#" src="adds.png" alt="plus" />
+                            <div style="height:100px; width:100px; position:relative">
+                                <img id="img6" class=" rounded " href="#" src="" alt="plus" style="max-height:100%; max-width:100%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%); display: none;" />
                             </div>
-                            <div style="border-style: double;height:100px; width:100px">
-                                <img id="btnImg" class="img-fluid" href="#" src="adds.png" alt="plus" />
+                            <div style="height:100px; width:100px; position:relative">
+                                <img id="img7" class=" rounded " href="#" src="" alt="plus" style="max-height:100%; max-width:100%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%); display: none;" />
                             </div>
-                            <div style="border-style: double;height:100px; width:100px">
-                                <img id="btnImg" class="img-fluid" href="#" src="adds.png" alt="plus" />
+                            <div style="height:100px; width:100px; position:relative">
+                                <img id="img8" class=" rounded " href="#" src="" alt="plus" style="max-height:100%; max-width:100%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%); display: none;" />
                             </div>
                         </div>
                     </div>
@@ -444,6 +444,43 @@
 </div>
 
 <script type="text/javascript">
+
+    var liste = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    function readURL(input) {
+        
+        if (input.files && input.files[0]) {
+            for (var i = 0; i < liste.length; i++) {
+                if ($('#img' + i, ).attr('src') == "" || $('#img' + i, ).attr('src') == "/img/bien/homeAdd.png") {
+
+
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#img' + i).attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+
+                    $('#img' + i, ).fadeIn(1800, 'linear');
+                    if (i == liste.length-1) {
+                        $('.btnImg').attr('disabled', true);
+                    }
+                    break
+                }
+
+
+            }
+        
+       
+
+           
+            
+        }
+    }
+
+    $("#my_file").change(function () {
+        readURL(this);
+    });
+
 
     function initialize() {
         var options = {
