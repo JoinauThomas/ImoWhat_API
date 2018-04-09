@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div id="googleMap" class="col-lg-12" style="height:100%;"></div>
+                            <div id="googleMap" class="col-lg-12" style="height:100%; border-style:double"></div>
                         </div>
                     </div>
             </div>
@@ -506,6 +506,7 @@
     
     function initMap(lat, lng) {
         if (lat == null && lng == null) {
+
             var myLatLng = { lat: 50.7146900, lng: 4.3991000 };
         }
         else {
@@ -514,7 +515,7 @@
 
         var mapProp = {
             center: new google.maps.LatLng(myLatLng),
-            zoom: 13,
+            zoom: 15,
             scrollwheel: false,
             navigationControl: false,
             mapTypeControl: false,
@@ -529,17 +530,35 @@
         });
     }
     function myMap() {
+        if ($('#searchTextField').val() != "") {
+            var adresse = $('#searchTextField').val();
+
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ 'address': adresse }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    // do something with the geocoded result
+                    //
+                    lat = results[0].geometry.location.lat();
+                    lon = results[0].geometry.location.lng();
+                    initMap(lat, lon)
+
+                }
+            })
+        }
+        else {
             var myLatLng = { lat: 50.7146900, lng: 4.3991000 };
 
-        var mapProp = {
-            center: new google.maps.LatLng(myLatLng),
-            zoom: 5,
-            scrollwheel: false,
-            navigationControl: false,
-            mapTypeControl: false,
-            scaleControl: false,
-            draggable: false
-        };
+            var mapProp = {
+                center: new google.maps.LatLng(myLatLng),
+                zoom: 5,
+                scrollwheel: false,
+                navigationControl: false,
+                mapTypeControl: false,
+                scaleControl: false,
+                draggable: false
+            };
+        }
+            
         var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
         
     }
