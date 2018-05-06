@@ -16,15 +16,22 @@ namespace ImmoWhatApp.Models
 
 
         public int idProprietaire { get; set; }
+
+        [Required(ErrorMessage = "Le nom du restaurant doit être saisi")]
         public int prix { get; set; }
+
+        [Required(ErrorMessage = "Le nom du restaurant doit être saisi")]
         public int superficie { get; set; }
 
         [Display(ResourceType = typeof(Resource), Name = "commune")]
+        [Required(ErrorMessage = "Le nom du restaurant doit être saisi")]
         public string commune { get; set; }
 
         [Display(ResourceType = typeof(Resource), Name = "codePostale")]
+        [Required(ErrorMessage = "Le nom du restaurant doit être saisi")]
         public string codePostal { get; set; }
 
+        [Required(ErrorMessage = "Le nom du restaurant doit être saisi")]
         [Display(ResourceType = typeof(Resource), Name = "rue")]
         public string rue { get; set; }
 

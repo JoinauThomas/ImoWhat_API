@@ -28,11 +28,11 @@
                 </div>
             </div>
             
-                <div class="d-flex justify-content-around">
-                    <div role="button" class="p-1 btn btn-outline-light">@Resource.maison</div>
-                    <div role="button" class="p-1 btn btn-outline-light">@Resource.appartement</div>
-                    <div role="button" class="p-1 btn btn-outline-light">@Resource.terrain</div>
-                    <div role="button" class="p-1 btn btn-outline-light">@Resource.villa</div>
+                <div id="typeBien" class="d-flex justify-content-around">
+                    <div id="maison" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.maison</div>
+                    <div id="appartement" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.appartement</div>
+                    <div id="terrain" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.terrain</div>
+                    <div id="villa" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.villa</div>
                 </div>
                 @*<div style="width:20%" id="maison" class="btnTypeBien btn btn-danger">house</div>
                 <div style="width:20%" id="appartement" class="btnTypeBien btn btn-danger">flat</div>
@@ -303,7 +303,6 @@
             url: '@Url.Action("GetAverageClass2", "Commune")',
             data: { annee: annee, typeBien: type, codePostale: codePostal, },
             success: function (donnee) {
-                
                 var x = 0
                 while (x < 10) {
                     $('#prix' + (x + 1)).css('background-color', donnee.tablePrix[x].refColor);
@@ -313,7 +312,7 @@
                 $('#listePrix a').css('border-style', 'none');
                 $('#prix' + (donnee.classePrix)).css('border-style', 'inset');
                 $('#prix' + (donnee.classePrix)).css('border-color', 'purple');
-
+                $('#prixMoyen').html(donnee.prixMoyen+"€")
 
 
                 reponse($.map(donnee.commune, function (objet) {
@@ -329,8 +328,8 @@
 
     $(document).ready(function () {
 
-        $('#maison').removeClass("btn-danger");
-        $('#maison').addClass("btn-warning");
+        $('#maison').removeClass("btn-outline-light");
+        $('#maison').addClass("btn-outline-dark");
         GetListeClassePrix("maison");
 
         $("#inputComm").autocomplete({
@@ -366,10 +365,10 @@
 
     $('#typeBien').click(function (event) {
         var type = $(event.target).attr('id');
-        $('.btnTypeBien').removeClass("btn-danger");
-        $('.btnTypeBien').addClass("btn-danger");
-        $("#" + type).removeClass("btn-danger");
-        $("#" + type).addClass("btn-warning");
+        $('.btnTypeBien').removeClass("btn-outline-dark");
+        $('.btnTypeBien').addClass("btn-outline-light");
+        $("#" + type).removeClass("btn-outline-light");
+        $("#" + type).addClass("btn-outline-dark");
 
         GetListeClassePrix(type)
 

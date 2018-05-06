@@ -158,9 +158,12 @@ namespace ImmoWhatApp.BLL
         {
             try
             {
+               
+
                 using (var client = new HttpClient())
                 {
-                    var token = HttpContext.Current.Request.Cookies["myToken"].Value;
+                    var currentSession = HttpContext.Current.Session;
+                    var token = currentSession["monToken"];
                     Models.MembreModels moi = new Models.MembreModels();
                     client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
                     client.DefaultRequestHeaders.Accept.Clear();
