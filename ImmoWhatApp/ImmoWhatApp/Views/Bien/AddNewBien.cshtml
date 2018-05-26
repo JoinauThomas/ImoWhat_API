@@ -89,8 +89,8 @@
                                     <img id="img0" class=" rounded " href="#" src="~/img/bien/homeAdd.png" alt="plus" style="max-height:100%; max-width:100%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%); display: none;" />
                                 </div>
                                 <div style="height:250px; width:250px; position:relative">
-                                    <button type="button" id="btnImg" href="#" style="height:75%; width:75%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%)" class="btn btn-primary btn-lg rounded-circle btnImg"><img src="~/assets/png/plus-8x.png" style="width:80%; width:80%" /></button>
-                                    <input type="file" id="my_file" style="display: none;" />
+                                    @*<button type="button" id="btnImg" href="#" style="height:75%; width:75%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%)" class="btn btn-primary btn-lg rounded-circle btnImg"><img src="~/assets/png/plus-8x.png" style="width:80%; width:80%" /></button>*@
+                                    <input type="file" id="my_file" style="display: unset;" />
                                 </div>
                             </div>
                         </div>
@@ -348,26 +348,26 @@
 
 
     @{
-    
-       
 
 
-           
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.nbPhotos, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.nbPhotos, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.nbPhotos, "", new { @class = "text-danger" })
-                </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nbPhotos, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nbPhotos, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nbPhotos, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input id="btnPostForm" type="button" class="btn btn-default" />
-                </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="btnPostForm" type="button" class="btn btn-default" />
             </div>
-    
- 
+        </div>
+
+
     }
 </form>
 <div>
@@ -406,7 +406,7 @@
             $('#errorMail').hide();
         }
 
-       
+
 
         if (nom == "") {
             $('#errorNom').html("veuillez mettre un nom svp");
@@ -457,12 +457,16 @@
 
 <script type="text/javascript">
     $('#btnPostForm').click(function () {
+        var nbImg = liste2.length;
+
+        //alert("image " + 1 + "/" + nbImg + ", nom du fichier : " + liste2[0][0].name + "\nimage " + 1 + "/" + nbImg + ", nom du fichier : " + liste2[1][0].name);
+
         var formData = new FormData($('#formAjoutBien')[0]);
         formData.append("commune", $('#commune').val());
         formData.append("rue", $('#rue').val());
         formData.append("numero", $('#numero').val());
-        formData.append("")
-        alert(formData[4]);
+        formData.append("codePostal", $('#codePostal').val());
+
                         $.ajax({
                             type: 'POST',
                             url: '@Url.Action("addNewBien", "Bien")',
@@ -470,6 +474,40 @@
                             processData: false,
                             contentType: false,
                             success: function (donnee) {
+                                //alert('okidoki');
+
+                                if (nbImg > 0) {
+                                    for (var i = 0; i < nbImg; i++) {
+                                        var mesfichiers = liste2[i];
+                                        alert("test: " + liste2[i])
+                                        //var mesfichiers = $('#img' + i).attr('src');
+                                        //alert("image " + i + "/" + nbImg + ", nom du fichier : " + liste[i][0].name);
+                                        //alert($('#img' + i ).attr('src'));
+                                        var fileData = new FormData();
+                                        fileData.append("mesfichiers", mesfichiers); 
+
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '@Url.Action("AddPhotoBien", "Bien")',
+                                            async: false,
+                                            data: fileData,
+                                            processData: false,
+                                            contentType: false,
+                                            success: function (donnee) {
+                                                alert('photo ajoutee')
+                                            },
+                                            error: function (donnee) {
+                                                alert('image pas envoyee')
+                                            }
+                                        })
+                                    }
+
+
+
+                                }
+                            
+
+                                list.length
                                 $("#chargement").hide();
                                 $('#modalTexte').html("votre compte a été créé");
                                 $('#MyModal').dialog({
@@ -497,18 +535,27 @@
 </script>
 <script type="text/javascript">
 
-    var liste = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    var liste = [];
+    var liste2 = [];
+    var liste3 = [];
     function readURL(input) {
 
         if (input.files && input.files[0]) {
-            for (var i = 0; i < liste.length; i++) {
+            for (var i = 0; liste.length < 5; i++) {
                 if ($('#img' + i, ).attr('src') == "" || $('#img' + i, ).attr('src') == "/img/bien/homeAdd.png") {
-
 
                     var reader = new FileReader();
 
                     reader.onload = function (e) {
                         $('#img' + i).attr('src', e.target.result);
+                        liste3.push(e.target.result);
+                        //alert(liste3[i]);
+                        var fileUpload = $("#my_file").get(0);
+                        var files = fileUpload.files;
+                        //liste.push(files);
+                        liste[i] = files;
+                        //alert("aaa"+liste[i][0].name);
+                       
                     }
                     reader.readAsDataURL(input.files[0]);
 
@@ -530,8 +577,34 @@
     }
 
     $("#my_file").change(function () {
+        var fileUpload = $("#my_file").get(0);
+        var files = fileUpload.files;
+        //liste2.push(files);
+
+        var file = document.querySelector('#my_file').files[0];
+        getBase64(file); // prints the base64 string
+
+
         readURL(this);
     });
+
+    function getBase64(file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            var adrCompl = reader.result;
+            var block = adrCompl.split(";");
+            var URL24 = block[1].split(",")[1];
+            liste2.push(URL24);
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+    }
+
+    var file = document.querySelector('#my_file').files[0];
+    getBase64(file); // prints the base64 string
+
 
 
     function initialize() {
