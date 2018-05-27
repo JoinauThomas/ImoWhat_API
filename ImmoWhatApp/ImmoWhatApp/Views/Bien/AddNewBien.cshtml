@@ -93,10 +93,10 @@
                                     <input type="file" id="my_file" style="display: none;" />
                                 </div>
                                 @*<input type="text" id="im1" value="" />
-                                <input type="text" id="im2" value="" />
-                                <input type="text" id="im3" value="" />
-                                <input type="text" id="im4" value="" />
-                                <input type="text" id="im5" value="" />*@
+                                    <input type="text" id="im2" value="" />
+                                    <input type="text" id="im3" value="" />
+                                    <input type="text" id="im4" value="" />
+                                    <input type="text" id="im5" value="" />*@
                             </div>
                         </div>
                         <div class="row mt-5 justify-content-between">
@@ -377,7 +377,9 @@
         <div id="myModal" style="display:none">
             <p id="modal_content" class="modalTxt "></p>
         </div>
-
+        <div id="progressBar" class="progress" style="height: 30px; position:fixed;top:50%; left:25%; width:50%; background-color:#69ff0e; display:none">
+            <div id="progressBarCount" class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" style="width: 21%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">21%</div>
+        </div>
 
     }
 </form>
@@ -508,18 +510,39 @@
 
                             // ENREGISTRER LES PHOTOS
 
+                            //compter le nombre de photos
+                            var nbPhotos = 0;
+                            var pourcentagesParImg
+
+                            for (var x = 0; x < 9; x++) {
+                                var image = $('#img' + x).val().toString();
+                                if (image != "") {
+                                    nbPhotos++
+                                }
+                                else {
+                                    break
+                                }
+                            }
+                            pourcentagesParImg = 100.00 / nbPhotos;
+
+                            //enregistrement des photos
                             for (var x = 0; x < 9; x++) {
                                 var idBien = donnee;
                                 var mesfichiers = "";
                                 mesfichiers = $('#img' + x).val().toString();
 
+                                var pct = (x + 1) * pourcentagesParImg;
+
                                 if (mesfichiers != "") {
-                                    
+                                    $('#progressBar').show();
+                                    $('#progressBarCount').attr('style', 'width:' +pct+'%');
+                                    $('#progressBarCount').html((x + 1) + "/" + nbPhotos);
 
                                     var fileData = new FormData();
                                     fileData.append("mesfichiers", mesfichiers);
                                     fileData.append("idBien", idBien);
                                     fileData.append("numero", x);
+                                    
                                     $.ajax({
                                         type: 'POST',
                                         url: '@Url.Action("AddPhotoBien", "Bien")',
@@ -530,8 +553,8 @@
                                         contentType: false,
                                         success: function (donnee) {
                                             if (donnee.success) {
-                                                CreateModal('parfait!', donnee.responseText, true);
-
+                                                
+                                                
                                             }
                                             else {
                                                 CreateModal('erreur', donnee.responseText, false);
@@ -543,11 +566,13 @@
                                     });
                                 }
                                 else {
-                                    CreateModal('parfait!', "aaaa", true);
+                                    $('#progressBar').hide();
+                                    CreateModal('parfait!', donnee.responseText, true);
                                     break
                                 }
                             }
-
+                            $('#progressBar').hide();
+                            CreateModal('parfait!', '@Resource.LeBienABienEteEnregistre', true);
                         },
                         error: function (donnee) {
                             alert("non")
@@ -559,8 +584,10 @@
                     CreateModal('erreur', donnee.responseText, false);
                 }
             },
-            error: function (error) {
-                alert("error");
+            error: function (donnee) {
+                $("#chargement").hide();
+                //erreur 401 = pas autorisé (pas connecté)
+                alert("erreur " + donnee.status + " : " + donnee.statusText + "\n" + JSON.stringify(donnee, null, 1));
             }
         });
     });

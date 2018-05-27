@@ -11,6 +11,7 @@ namespace ImmoWhat_API.Controllers
     public class BienAPIController : ApiController
     {
         [HttpPost]
+        [Authorize]
         [Route("addNewBien")]
         public IHttpActionResult addNewBien(Models.BienModels newBien)
         {
@@ -29,6 +30,7 @@ namespace ImmoWhat_API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("GetIdBien")]
         public int GetIdBien(string codePostale, string rue, string numero, string boite)
         {
@@ -51,6 +53,7 @@ namespace ImmoWhat_API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("CheckIfAdressExists")]
         public bool CheckIfAdressExists(string codePostale, string rue, string numero, string boite)
         {
@@ -73,6 +76,7 @@ namespace ImmoWhat_API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("PostNewPhotos")]
         public IHttpActionResult PostNewPhotos(Models.imageModels images )
         {
