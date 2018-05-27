@@ -17,13 +17,13 @@ namespace ImmoWhat_API.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public OPTIONS()
         {
-            this.BIEN_OPTION = new HashSet<BIEN_OPTION>();
+            this.BIEN = new HashSet<BIEN>();
         }
     
         public int IdOption { get; set; }
         public string Libelle { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BIEN_OPTION> BIEN_OPTION { get; set; }
+        public virtual ICollection<BIEN> BIEN { get; set; }
     }
 }

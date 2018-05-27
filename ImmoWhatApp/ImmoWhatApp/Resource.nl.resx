@@ -206,4 +206,10 @@
     <value>postcode</value>
     <comment>BienModels</comment>
   </data>
+  <data name="LeBienABienEteEnregistre" xml:space="preserve">
+    <value>de woning is geregistreerd</value>
+  </data>
+  <data name="LeBienExisteDeja" xml:space="preserve">
+    <value>de woning bestaat al</value>
+  </data>
 </root>

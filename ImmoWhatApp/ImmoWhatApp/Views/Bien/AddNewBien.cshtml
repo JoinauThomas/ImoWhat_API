@@ -89,8 +89,8 @@
                                     <img id="img0" class=" rounded " href="#" src="~/img/bien/homeAdd.png" alt="plus" style="max-height:100%; max-width:100%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%); display: none;" />
                                 </div>
                                 <div style="height:250px; width:250px; position:relative">
-                                    @*<button type="button" id="btnImg" href="#" style="height:75%; width:75%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%)" class="btn btn-primary btn-lg rounded-circle btnImg"><img src="~/assets/png/plus-8x.png" style="width:80%; width:80%" /></button>*@
-                                    <input type="file" id="my_file" style="display: unset;" />
+                                    <button type="button" id="btnImg" href="#" style="height:75%; width:75%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%)" class="btn btn-primary btn-lg rounded-circle btnImg"><img src="~/assets/png/plus-8x.png" style="width:80%; width:80%" /></button>
+                                    <input type="file" id="my_file" style="display: none;" />
                                 </div>
                             </div>
                         </div>
@@ -368,6 +368,12 @@
         </div>
 
 
+        <img id="chargement" src="~/img/loaders/infini.gif" style="display: none" alt="Chargement en cours..." class="loaderConnection col-md-offset-5 col-md-2 col-md-offset-5" />
+        <div id="myModal" style="display:none">
+            <p id="modal_content" class="modalTxt "></p>
+        </div>
+
+
     }
 </form>
 <div>
@@ -457,6 +463,9 @@
 
 <script type="text/javascript">
     $('#btnPostForm').click(function () {
+
+        $("#chargement").show();
+
         var nbImg = liste2.length;
 
         //alert("image " + 1 + "/" + nbImg + ", nom du fichier : " + liste2[0][0].name + "\nimage " + 1 + "/" + nbImg + ", nom du fichier : " + liste2[1][0].name);
@@ -467,71 +476,113 @@
         formData.append("numero", $('#numero').val());
         formData.append("codePostal", $('#codePostal').val());
 
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("addNewBien", "Bien")',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (donnee) {
+                if (donnee.success) {
+                    alert(donnee.responseText);
+                    //alert('okidoki');
+                    //var mesfichiers = [];
+                    if (nbImg > 0) {
+                        var tabFin = [];
+                        for (var i = 0; i < nbImg; i++) {
+                            //mesfichiers.push(liste2[i]);
+                            var mesfichiers = ["value1", "value2", "value3", "value4", "value5"];
+                            mesfichiers = JSON.stringify({ 'mesfichiers': mesfichiers });
+                            //tabFin[i] = mesfichiers;
+
+
+
+                        }
+                        alert(mesfichiers.length);
+                        var fileData = new FormData();
+                        fileData.append("mesfichiers", mesfichiers);
+
                         $.ajax({
                             type: 'POST',
-                            url: '@Url.Action("addNewBien", "Bien")',
-                            data: formData,
+                            url: '@Url.Action("AddPhotoBien", "Bien")',
+                            async: false,
+                            dataType: "json",
+                            data: fileData,
                             processData: false,
                             contentType: false,
                             success: function (donnee) {
-                                //alert('okidoki');
-
-                                if (nbImg > 0) {
-                                    for (var i = 0; i < nbImg; i++) {
-                                        var mesfichiers = liste2[i];
-                                        alert("test: " + liste2[i])
-                                        //var mesfichiers = $('#img' + i).attr('src');
-                                        //alert("image " + i + "/" + nbImg + ", nom du fichier : " + liste[i][0].name);
-                                        //alert($('#img' + i ).attr('src'));
-                                        var fileData = new FormData();
-                                        fileData.append("mesfichiers", mesfichiers); 
-
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: '@Url.Action("AddPhotoBien", "Bien")',
-                                            async: false,
-                                            data: fileData,
-                                            processData: false,
-                                            contentType: false,
-                                            success: function (donnee) {
-                                                alert('photo ajoutee')
-                                            },
-                                            error: function (donnee) {
-                                                alert('image pas envoyee')
-                                            }
-                                        })
-                                    }
-
-
-
-                                }
-                            
-
-                                list.length
-                                $("#chargement").hide();
-                                $('#modalTexte').html("votre compte a été créé");
-                                $('#MyModal').dialog({
-                                    open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
-                                    resizable: false,
-                                    height: "auto",
-                                    width: "400",
-                                    modal: true,
-                                    title: 'parfait!',
-                                    buttons: {
-                                        "ok": function () {
-                                            $(this).dialog("close");
-                                            location.href = "../Home/Index";
-                                        }
-
-                                    }
-                                });
+                                CreateModal('parfait!', donnee.responseText, true);
 
                             },
-                            error: function (error) {
-                                alert("error");
+                            error: function (donnee) {
+                                CreateModal('erreur', "img pas envoyée\nproblème : " + donnee, false);
                             }
-                        });
-    })
+                        })
+
+
+
+
+                    }
+                    else {
+                        CreateModal('parfait!', donnee.responseText, true);
+                    }
+                }
+                else {
+                    CreateModal('erreur', donnee.responseText, false);
+                }
+
+
+
+
+
+            },
+            error: function (error) {
+                alert("error");
+            }
+        });
+    });
+
+    function CreateModal(title, text, returnToMainPage) {
+
+        if (returnToMainPage == false) {
+            $("#chargement").hide();
+            $('#modal_content').html(text);
+            $('#myModal').dialog({
+                open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
+                resizable: false,
+                height: "auto",
+                width: "400",
+                modal: true,
+                title: title,
+                buttons: {
+                    "ok": function () {
+                        $(this).dialog("close");
+                    }
+
+                }
+            });
+        }
+        else {
+            $("#chargement").hide();
+            $('#modal_content').html(text);
+            $('#myModal').dialog({
+                open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
+                resizable: false,
+                height: "auto",
+                width: "400",
+                modal: true,
+                title: title,
+                buttons: {
+                    "ok": function () {
+                        $(this).dialog("close");
+                        location.href = "../Home/Index";
+                    }
+
+                }
+            });
+        }
+       
+    }
 </script>
 <script type="text/javascript">
 
@@ -555,7 +606,7 @@
                         //liste.push(files);
                         liste[i] = files;
                         //alert("aaa"+liste[i][0].name);
-                       
+
                     }
                     reader.readAsDataURL(input.files[0]);
 
@@ -607,59 +658,12 @@
 
 
 
-    function initialize() {
-        var options = {
-            componentRestrictions: {
-                country: "BE"
-            }
-        };
 
-        var input = document.getElementById('searchTextField');
-        var autocomplete = new google.maps.places.Autocomplete(input, options);
-        var places = autocomplete.getPlace();
-
-        google.maps.event.addListener(autocomplete, 'place_changed', function () {
-            var place = autocomplete.getPlace();
-
-            $('#commune').val(place.address_components[2].long_name);
-            $('#rue').val(place.address_components[1].long_name);
-            $('#numero').val(place.address_components[0].long_name);
-            $('#codePostal').val(place.address_components[5].long_name);
-
-
-
-            var lat;
-            var lon;
-            var geocoder = new google.maps.Geocoder();
-            var adresse = $('#searchTextField').val();
-            geocoder.geocode({ 'address': adresse }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    // do something with the geocoded result
-                    //
-                    lat = results[0].geometry.location.lat();
-                    lon = results[0].geometry.location.lng();
-
-                    initMap(lat, lon)
-
-                }
-            });
-        });
-
-
-    }
-    google.maps.event.addDomListener(window, 'load', initialize);
-
-    $('#searchTextField').change(function () {
-        $('#commune').val("");
-        $('#rue').val("");
-        $('#numero').val("");
-        $('#codePostal').val("");
-    });
 </script>
 
 <script>
     $('#typeBien').change(function () {
-        alert($(this).val())
+        //alert($(this).val())
     })
     $('#btnImg').click(function () {
         $("input[id='my_file']").click();
@@ -723,7 +727,55 @@
         var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
     }
+    function initialize() {
+        var options = {
+            componentRestrictions: {
+                country: "BE"
+            }
+        };
+
+        var input = document.getElementById('searchTextField');
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
+        var places = autocomplete.getPlace();
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var place = autocomplete.getPlace();
+
+            $('#commune').val(place.address_components[2].long_name);
+            $('#rue').val(place.address_components[1].long_name);
+            $('#numero').val(place.address_components[0].long_name);
+            $('#codePostal').val(place.address_components[5].long_name);
+
+
+
+            var lat;
+            var lon;
+            var geocoder = new google.maps.Geocoder();
+            var adresse = $('#searchTextField').val();
+            geocoder.geocode({ 'address': adresse }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    // do something with the geocoded result
+                    //
+                    lat = results[0].geometry.location.lat();
+                    lon = results[0].geometry.location.lng();
+
+                    initMap(lat, lon)
+
+                }
+            });
+        });
+
+
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    $('#searchTextField').change(function () {
+        $('#commune').val("");
+        $('#rue').val("");
+        $('#numero').val("");
+        $('#codePostal').val("");
+    });
 
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0&callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0=myMap"></script>

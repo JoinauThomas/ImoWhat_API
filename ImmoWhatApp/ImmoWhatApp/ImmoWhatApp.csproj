@@ -3201,6 +3201,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BLL\BienBLL.cs" />
     <Compile Include="BLL\CommuneBLL.cs" />
     <Compile Include="BLL\HomeBLL.cs" />
     <Compile Include="BLL\MembreBLL.cs" />
@@ -3216,12 +3217,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CultureHelper.cs" />
+    <Compile Include="Models\adresseModels.cs" />
     <Compile Include="Models\BienModels.cs" />
     <Compile Include="Models\Commune.cs" />
     <Compile Include="Models\CommuneContourPoint.cs" />
     <Compile Include="Models\coordonneesContourCommuneModels.cs" />
     <Compile Include="Models\nbPieces.cs" />
     <Compile Include="Models\RechercheMoyennePrixCommune.cs" />
+    <Compile Include="Models\RequestResultM.cs" />
     <Compile Include="Models\ResultRequest.cs" />
     <Compile Include="Models\Identification.cs" />
     <Compile Include="Models\MembreModels.cs" />

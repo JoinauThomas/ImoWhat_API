@@ -13,6 +13,7 @@ namespace ImmoWhat_API.Models
         public int prix { get; set; }
         public int superficie { get; set; }
         public string commune { get; set; }
+        public string CodePostale { get; set; }
         public string rue { get; set; }
         public string numero { get; set; }
         public string boite { get; set; }

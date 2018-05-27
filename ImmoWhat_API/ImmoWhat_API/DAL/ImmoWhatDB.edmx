@@ -94,7 +94,6 @@
           </Key>
           <Property Name="IdBien" Type="int" Nullable="false" />
           <Property Name="IdOption" Type="int" Nullable="false" />
-          <Property Name="estPresent" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BIEN_PHOTOS">
           <Key>
@@ -134,55 +133,6 @@
           <Property Name="Longitude" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Commune_CodePostal" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <!--Erreurs détectées durant la génération :
-avertissement 6013: Aucune clé primaire n'est définie pour la table/vue 'ImmoWhat.dbo.CsvTemplate' ; en outre, aucune clé primaire valide n'a pu être déduite. Cette table/vue a été exclue. Pour utiliser l'entité, vous devez passer en revue votre schéma, ajouter les clés appropriées et supprimer le commentaire associé.
-        <EntityType Name="CsvTemplate">
-          <Property Name="codePostal" Type="varchar" MaxLength="50" />
-          <Property Name="nomCommune" Type="varchar" MaxLength="50" />
-          <Property Name="GMapZonePartRecord_Id" Type="varchar" MaxLength="50" />
-          <Property Name="Year" Type="int" />
-          <Property Name="Trimester" Type="varchar" MaxLength="50" />
-          <Property Name="HouseTransactions" Type="int" />
-          <Property Name="HouseTotalPrice" Type="int" />
-          <Property Name="HouseTotalSurface" Type="int" />
-          <Property Name="HouseAveragePrice" Type="int" />
-          <Property Name="HouseQ10" Type="int" />
-          <Property Name="HouseQ25" Type="int" />
-          <Property Name="HouseQ50" Type="int" />
-          <Property Name="HouseQ75" Type="int" />
-          <Property Name="HouseQ90" Type="int" />
-          <Property Name="HousePricePerM2" Type="int" />
-          <Property Name="VillaTransactions" Type="int" />
-          <Property Name="VillaAveragePrice" Type="int" />
-          <Property Name="VillaTotalPrice" Type="int" />
-          <Property Name="VillaTotalSurface" Type="int" />
-          <Property Name="VillaQ10" Type="int" />
-          <Property Name="VillaQ25" Type="int" />
-          <Property Name="VillaQ50" Type="int" />
-          <Property Name="VillaQ75" Type="int" />
-          <Property Name="VillaQ90" Type="int" />
-          <Property Name="VillaPricePerM2" Type="int" />
-          <Property Name="FlatTransactions" Type="int" />
-          <Property Name="FlatTotalPrice" Type="int" />
-          <Property Name="FlatTotalSurface" Type="int" />
-          <Property Name="FlatAveragePrice" Type="int" />
-          <Property Name="FlatQ10" Type="int" />
-          <Property Name="FlatQ25" Type="int" />
-          <Property Name="FlatQ50" Type="int" />
-          <Property Name="FlatQ75" Type="int" />
-          <Property Name="FlatQ90" Type="int" />
-          <Property Name="FlatPricePerM2" Type="int" />
-          <Property Name="FieldTransactions" Type="int" />
-          <Property Name="FieldTotalPrice" Type="int" />
-          <Property Name="FieldTotalSurface" Type="int" />
-          <Property Name="FieldAveragePrice" Type="int" />
-          <Property Name="FieldQ10" Type="int" />
-          <Property Name="FieldQ25" Type="int" />
-          <Property Name="FieldQ50" Type="int" />
-          <Property Name="FieldQ75" Type="int" />
-          <Property Name="FieldQ90" Type="int" />
-          <Property Name="FieldPricePerM2" Type="int" />
-        </EntityType>-->
         <!--Erreurs détectées durant la génération :
 avertissement 6002: La table/vue 'ImmoWhat.dbo.MapsParams' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
         <EntityType Name="MapsParams">
@@ -314,7 +264,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <PropertyRef Name="Terrain_Q75Prix" />
             <PropertyRef Name="Terrain_P90Prix" />
           </Key>
-          <Property Name="codePostal" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="codePostal" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="refnis" Type="int" Nullable="false" />
           <Property Name="localite" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="annee" Type="int" Nullable="false" />
@@ -618,6 +568,12 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="photo" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="ajoutIdCouleursDsMapsParams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="CheckIfAdressExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
+          <Parameter Name="rue" Type="nvarchar" Mode="In" />
+          <Parameter Name="numero" Type="nvarchar" Mode="In" />
+          <Parameter Name="boite" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="CheckIfMailExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
         </Function>
@@ -672,6 +628,12 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         </Function>
         <Function Name="GetCommuneContourPoints" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetHighestYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetIdBien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
+          <Parameter Name="rue" Type="nvarchar" Mode="In" />
+          <Parameter Name="numero" Type="nvarchar" Mode="In" />
+          <Parameter Name="boite" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="GetIdMmbre" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
         </Function>
@@ -715,6 +677,38 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         </Function>
         <Function Name="insertCodePostInCsvTemplate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="insertCodePostInStatImmo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PostNewBien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="typeBien" Type="int" Mode="In" />
+          <Parameter Name="idMembre" Type="int" Mode="In" />
+          <Parameter Name="prixBien" Type="int" Mode="In" />
+          <Parameter Name="surfaceHabitable" Type="int" Mode="In" />
+          <Parameter Name="commune" Type="nvarchar" Mode="In" />
+          <Parameter Name="rue" Type="nvarchar" Mode="In" />
+          <Parameter Name="numero" Type="nvarchar" Mode="In" />
+          <Parameter Name="boite" Type="nvarchar" Mode="In" />
+          <Parameter Name="etages" Type="int" Mode="In" />
+          <Parameter Name="libelle" Type="nvarchar" Mode="In" />
+          <Parameter Name="anneeDeConstr" Type="int" Mode="In" />
+          <Parameter Name="energie" Type="varchar" Mode="In" />
+          <Parameter Name="nbPhotos" Type="int" Mode="In" />
+          <Parameter Name="chambre" Type="int" Mode="In" />
+          <Parameter Name="sdb" Type="int" Mode="In" />
+          <Parameter Name="dressing" Type="int" Mode="In" />
+          <Parameter Name="sam" Type="int" Mode="In" />
+          <Parameter Name="salon" Type="int" Mode="In" />
+          <Parameter Name="buanderie" Type="int" Mode="In" />
+          <Parameter Name="cave" Type="int" Mode="In" />
+          <Parameter Name="grenier" Type="int" Mode="In" />
+          <Parameter Name="toilette" Type="int" Mode="In" />
+          <Parameter Name="veranda" Type="int" Mode="In" />
+          <Parameter Name="garage" Type="int" Mode="In" />
+          <Parameter Name="piscine" Type="bit" Mode="In" />
+          <Parameter Name="cuisineEqu" Type="bit" Mode="In" />
+          <Parameter Name="parking" Type="bit" Mode="In" />
+          <Parameter Name="jardin" Type="bit" Mode="In" />
+          <Parameter Name="alarme" Type="bit" Mode="In" />
+          <Parameter Name="doubleVitr" Type="bit" Mode="In" />
+        </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -1105,13 +1099,18 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <Parameter Name="alarme" Mode="In" Type="Boolean" />
             <Parameter Name="doubleVitr" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="GetIdBien" ReturnType="Collection(Int32)">
+            <Parameter Name="codePostal" Mode="In" Type="String" />
+            <Parameter Name="rue" Mode="In" Type="String" />
+            <Parameter Name="numero" Mode="In" Type="String" />
+            <Parameter Name="boite" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="C__MigrationHistory" EntityType="ImmoWhatModel.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="ImmoWhatModel.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="ImmoWhatModel.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="ImmoWhatModel.AspNetUserLogins" />
           <EntitySet Name="AspNetUsers" EntityType="ImmoWhatModel.AspNetUsers" />
           <EntitySet Name="BIEN" EntityType="ImmoWhatModel.BIEN" />
-          <EntitySet Name="BIEN_OPTION" EntityType="ImmoWhatModel.BIEN_OPTION" />
           <EntitySet Name="BIEN_PHOTOS" EntityType="ImmoWhatModel.BIEN_PHOTOS" />
           <EntitySet Name="BIEN_PIECES" EntityType="ImmoWhatModel.BIEN_PIECES" />
           <EntitySet Name="COMMUNE" EntityType="ImmoWhatModel.COMMUNE" />
@@ -1139,10 +1138,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
-          <AssociationSet Name="FK_BIEN_OPTION_BIENS" Association="ImmoWhatModel.FK_BIEN_OPTION_BIENS">
-            <End Role="BIEN" EntitySet="BIEN" />
-            <End Role="BIEN_OPTION" EntitySet="BIEN_OPTION" />
-          </AssociationSet>
           <AssociationSet Name="FK_BIEN_PHOTOS_BIEN" Association="ImmoWhatModel.FK_BIEN_PHOTOS_BIEN">
             <End Role="BIEN" EntitySet="BIEN" />
             <End Role="BIEN_PHOTOS" EntitySet="BIEN_PHOTOS" />
@@ -1163,10 +1158,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
             <End Role="BIEN" EntitySet="BIEN" />
           </AssociationSet>
-          <AssociationSet Name="FK_BIEN_OPTION_OPTIONS" Association="ImmoWhatModel.FK_BIEN_OPTION_OPTIONS">
-            <End Role="OPTIONS" EntitySet="OPTIONS" />
-            <End Role="BIEN_OPTION" EntitySet="BIEN_OPTION" />
-          </AssociationSet>
           <AssociationSet Name="FK_BIEN_PIECES_PIECES" Association="ImmoWhatModel.FK_BIEN_PIECES_PIECES">
             <End Role="PIECES" EntitySet="PIECES" />
             <End Role="BIEN_PIECES" EntitySet="BIEN_PIECES" />
@@ -1183,6 +1174,48 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <AssociationSet Name="BIEN_OPTION" Association="ImmoWhatModel.BIEN_OPTION">
+            <End Role="BIEN" EntitySet="BIEN" />
+            <End Role="OPTIONS" EntitySet="OPTIONS" />
+          </AssociationSet>
+          <FunctionImport Name="PostNewBien">
+            <Parameter Name="typeBien" Mode="In" Type="Int32" />
+            <Parameter Name="idMembre" Mode="In" Type="Int32" />
+            <Parameter Name="prixBien" Mode="In" Type="Int32" />
+            <Parameter Name="surfaceHabitable" Mode="In" Type="Int32" />
+            <Parameter Name="commune" Mode="In" Type="String" />
+            <Parameter Name="rue" Mode="In" Type="String" />
+            <Parameter Name="numero" Mode="In" Type="String" />
+            <Parameter Name="boite" Mode="In" Type="String" />
+            <Parameter Name="etages" Mode="In" Type="Int32" />
+            <Parameter Name="libelle" Mode="In" Type="String" />
+            <Parameter Name="anneeDeConstr" Mode="In" Type="Int32" />
+            <Parameter Name="energie" Mode="In" Type="String" />
+            <Parameter Name="nbPhotos" Mode="In" Type="Int32" />
+            <Parameter Name="chambre" Mode="In" Type="Int32" />
+            <Parameter Name="sdb" Mode="In" Type="Int32" />
+            <Parameter Name="dressing" Mode="In" Type="Int32" />
+            <Parameter Name="sam" Mode="In" Type="Int32" />
+            <Parameter Name="salon" Mode="In" Type="Int32" />
+            <Parameter Name="buanderie" Mode="In" Type="Int32" />
+            <Parameter Name="cave" Mode="In" Type="Int32" />
+            <Parameter Name="grenier" Mode="In" Type="Int32" />
+            <Parameter Name="toilette" Mode="In" Type="Int32" />
+            <Parameter Name="veranda" Mode="In" Type="Int32" />
+            <Parameter Name="garage" Mode="In" Type="Int32" />
+            <Parameter Name="piscine" Mode="In" Type="Boolean" />
+            <Parameter Name="cuisineEqu" Mode="In" Type="Boolean" />
+            <Parameter Name="parking" Mode="In" Type="Boolean" />
+            <Parameter Name="jardin" Mode="In" Type="Boolean" />
+            <Parameter Name="alarme" Mode="In" Type="Boolean" />
+            <Parameter Name="doubleVitr" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="CheckIfAdressExists" ReturnType="Collection(Boolean)">
+            <Parameter Name="codePostal" Mode="In" Type="String" />
+            <Parameter Name="rue" Mode="In" Type="String" />
+            <Parameter Name="numero" Mode="In" Type="String" />
+            <Parameter Name="boite" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1393,23 +1426,12 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Name="BIEN_AnneeDeConstruction" Type="Int32" Nullable="false" />
           <Property Name="BIEN_Energie" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="BIEN_PhotoPrincipale" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BIEN_OPTION" Relationship="ImmoWhatModel.FK_BIEN_OPTION_BIENS" FromRole="BIEN" ToRole="BIEN_OPTION" />
           <NavigationProperty Name="BIEN_PHOTOS" Relationship="ImmoWhatModel.FK_BIEN_PHOTOS_BIEN" FromRole="BIEN" ToRole="BIEN_PHOTOS" />
           <NavigationProperty Name="BIEN_PIECES" Relationship="ImmoWhatModel.FK_BIEN_PIECES_BIEN" FromRole="BIEN" ToRole="BIEN_PIECES" />
           <NavigationProperty Name="COMMUNE" Relationship="ImmoWhatModel.FK_BIENS_COMMUNE" FromRole="BIEN" ToRole="COMMUNE" />
           <NavigationProperty Name="MEMBRE" Relationship="ImmoWhatModel.FK_BIENS_MEMBRE" FromRole="BIEN" ToRole="MEMBRE" />
           <NavigationProperty Name="TYPEBIEN" Relationship="ImmoWhatModel.FK_BIENS_TYPEBIEN" FromRole="BIEN" ToRole="TYPEBIEN" />
-        </EntityType>
-        <EntityType Name="BIEN_OPTION">
-          <Key>
-            <PropertyRef Name="IdBien" />
-            <PropertyRef Name="IdOption" />
-          </Key>
-          <Property Name="IdBien" Type="Int32" Nullable="false" />
-          <Property Name="IdOption" Type="Int32" Nullable="false" />
-          <Property Name="estPresent" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="BIEN" Relationship="ImmoWhatModel.FK_BIEN_OPTION_BIENS" FromRole="BIEN_OPTION" ToRole="BIEN" />
-          <NavigationProperty Name="OPTIONS" Relationship="ImmoWhatModel.FK_BIEN_OPTION_OPTIONS" FromRole="BIEN_OPTION" ToRole="OPTIONS" />
+          <NavigationProperty Name="OPTIONS" Relationship="ImmoWhatModel.BIEN_OPTION" FromRole="BIEN" ToRole="OPTIONS" />
         </EntityType>
         <EntityType Name="BIEN_PHOTOS">
           <Key>
@@ -1482,7 +1504,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           </Key>
           <Property Name="IdOption" Type="Int32" Nullable="false" />
           <Property Name="Libelle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BIEN_OPTION" Relationship="ImmoWhatModel.FK_BIEN_OPTION_OPTIONS" FromRole="OPTIONS" ToRole="BIEN_OPTION" />
+          <NavigationProperty Name="BIEN" Relationship="ImmoWhatModel.BIEN_OPTION" FromRole="OPTIONS" ToRole="BIEN" />
         </EntityType>
         <EntityType Name="PIECES">
           <Key>
@@ -1617,7 +1639,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <PropertyRef Name="Terrain_Q75Prix" />
             <PropertyRef Name="Terrain_P90Prix" />
           </Key>
-          <Property Name="codePostal" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="codePostal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="refnis" Type="Int32" Nullable="false" />
           <Property Name="localite" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="annee" Type="Int32" Nullable="false" />
@@ -1700,18 +1722,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_BIEN_OPTION_BIENS">
-          <End Type="ImmoWhatModel.BIEN" Role="BIEN" Multiplicity="1" />
-          <End Type="ImmoWhatModel.BIEN_OPTION" Role="BIEN_OPTION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BIEN">
-              <PropertyRef Name="BIEN_Id" />
-            </Principal>
-            <Dependent Role="BIEN_OPTION">
-              <PropertyRef Name="IdBien" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_BIEN_PHOTOS_BIEN">
           <End Type="ImmoWhatModel.BIEN" Role="BIEN" Multiplicity="1" />
           <End Type="ImmoWhatModel.BIEN_PHOTOS" Role="BIEN_PHOTOS" Multiplicity="*" />
@@ -1772,18 +1782,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_BIEN_OPTION_OPTIONS">
-          <End Type="ImmoWhatModel.OPTIONS" Role="OPTIONS" Multiplicity="1" />
-          <End Type="ImmoWhatModel.BIEN_OPTION" Role="BIEN_OPTION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OPTIONS">
-              <PropertyRef Name="IdOption" />
-            </Principal>
-            <Dependent Role="BIEN_OPTION">
-              <PropertyRef Name="IdOption" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_BIEN_PIECES_PIECES">
           <End Type="ImmoWhatModel.PIECES" Role="PIECES" Multiplicity="1" />
           <End Type="ImmoWhatModel.BIEN_PIECES" Role="BIEN_PIECES" Multiplicity="*" />
@@ -1823,6 +1821,10 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         <Association Name="AspNetUserRoles">
           <End Type="ImmoWhatModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
           <End Type="ImmoWhatModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+        </Association>
+        <Association Name="BIEN_OPTION">
+          <End Type="ImmoWhatModel.BIEN" Role="BIEN" Multiplicity="*" />
+          <End Type="ImmoWhatModel.OPTIONS" Role="OPTIONS" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -2038,6 +2040,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="CheckIfMailExists" FunctionName="ImmoWhatModel.Store.CheckIfMailExists" />
           <FunctionImportMapping FunctionImportName="addNewBien" FunctionName="ImmoWhatModel.Store.addNewBien" />
+          <FunctionImportMapping FunctionImportName="GetIdBien" FunctionName="ImmoWhatModel.Store.GetIdBien" />
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="ImmoWhatModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -2112,15 +2115,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
                 <ScalarProperty Name="BIEN_IdProprietaire" ColumnName="BIEN_IdProprietaire" />
                 <ScalarProperty Name="BIEN_IdType" ColumnName="BIEN_IdType" />
                 <ScalarProperty Name="BIEN_Id" ColumnName="BIEN_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BIEN_OPTION">
-            <EntityTypeMapping TypeName="ImmoWhatModel.BIEN_OPTION">
-              <MappingFragment StoreEntitySet="BIEN_OPTION">
-                <ScalarProperty Name="estPresent" ColumnName="estPresent" />
-                <ScalarProperty Name="IdOption" ColumnName="IdOption" />
-                <ScalarProperty Name="IdBien" ColumnName="IdBien" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2339,6 +2333,16 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <AssociationSetMapping Name="BIEN_OPTION" TypeName="ImmoWhatModel.BIEN_OPTION" StoreEntitySet="BIEN_OPTION">
+            <EndProperty Name="OPTIONS">
+              <ScalarProperty Name="IdOption" ColumnName="IdOption" />
+            </EndProperty>
+            <EndProperty Name="BIEN">
+              <ScalarProperty Name="BIEN_Id" ColumnName="IdBien" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="PostNewBien" FunctionName="ImmoWhatModel.Store.PostNewBien" />
+          <FunctionImportMapping FunctionImportName="CheckIfAdressExists" FunctionName="ImmoWhatModel.Store.CheckIfAdressExists" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

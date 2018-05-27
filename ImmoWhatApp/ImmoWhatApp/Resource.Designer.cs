@@ -178,6 +178,24 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à le bien a bien été enregistré.
+        /// </summary>
+        public static string LeBienABienEteEnregistre {
+            get {
+                return ResourceManager.GetString("LeBienABienEteEnregistre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à le bien existe déja.
+        /// </summary>
+        public static string LeBienExisteDeja {
+            get {
+                return ResourceManager.GetString("LeBienExisteDeja", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à maison.
         /// </summary>
         public static string maison {

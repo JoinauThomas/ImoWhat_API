@@ -209,4 +209,10 @@
     <value>code postale</value>
     <comment>BienModels</comment>
   </data>
+  <data name="LeBienABienEteEnregistre" xml:space="preserve">
+    <value>le bien a bien été enregistré</value>
+  </data>
+  <data name="LeBienExisteDeja" xml:space="preserve">
+    <value>le bien existe déja</value>
+  </data>
 </root>

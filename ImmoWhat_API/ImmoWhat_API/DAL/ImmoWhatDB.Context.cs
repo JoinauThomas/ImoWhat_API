@@ -33,7 +33,6 @@ namespace ImmoWhat_API.DAL
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<BIEN> BIEN { get; set; }
-        public virtual DbSet<BIEN_OPTION> BIEN_OPTION { get; set; }
         public virtual DbSet<BIEN_PHOTOS> BIEN_PHOTOS { get; set; }
         public virtual DbSet<BIEN_PIECES> BIEN_PIECES { get; set; }
         public virtual DbSet<COMMUNE> COMMUNE { get; set; }
@@ -750,6 +749,173 @@ namespace ImmoWhat_API.DAL
                 new ObjectParameter("doubleVitr", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("addNewBien", typeBienParameter, idMembreParameter, prixBienParameter, surfaceHabitableParameter, communeParameter, rueParameter, numeroParameter, boiteParameter, etagesParameter, libelleParameter, anneeDeConstrParameter, energieParameter, nbPhotosParameter, chambreParameter, sdbParameter, dressingParameter, samParameter, salonParameter, buanderieParameter, caveParameter, grenierParameter, toiletteParameter, verandaParameter, garageParameter, piscineParameter, cuisineEquParameter, parkingParameter, jardinParameter, alarmeParameter, doubleVitrParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetIdBien(string codePostal, string rue, string numero, string boite)
+        {
+            var codePostalParameter = codePostal != null ?
+                new ObjectParameter("codePostal", codePostal) :
+                new ObjectParameter("codePostal", typeof(string));
+    
+            var rueParameter = rue != null ?
+                new ObjectParameter("rue", rue) :
+                new ObjectParameter("rue", typeof(string));
+    
+            var numeroParameter = numero != null ?
+                new ObjectParameter("numero", numero) :
+                new ObjectParameter("numero", typeof(string));
+    
+            var boiteParameter = boite != null ?
+                new ObjectParameter("boite", boite) :
+                new ObjectParameter("boite", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetIdBien", codePostalParameter, rueParameter, numeroParameter, boiteParameter);
+        }
+    
+        public virtual int PostNewBien(Nullable<int> typeBien, Nullable<int> idMembre, Nullable<int> prixBien, Nullable<int> surfaceHabitable, string commune, string rue, string numero, string boite, Nullable<int> etages, string libelle, Nullable<int> anneeDeConstr, string energie, Nullable<int> nbPhotos, Nullable<int> chambre, Nullable<int> sdb, Nullable<int> dressing, Nullable<int> sam, Nullable<int> salon, Nullable<int> buanderie, Nullable<int> cave, Nullable<int> grenier, Nullable<int> toilette, Nullable<int> veranda, Nullable<int> garage, Nullable<bool> piscine, Nullable<bool> cuisineEqu, Nullable<bool> parking, Nullable<bool> jardin, Nullable<bool> alarme, Nullable<bool> doubleVitr)
+        {
+            var typeBienParameter = typeBien.HasValue ?
+                new ObjectParameter("typeBien", typeBien) :
+                new ObjectParameter("typeBien", typeof(int));
+    
+            var idMembreParameter = idMembre.HasValue ?
+                new ObjectParameter("idMembre", idMembre) :
+                new ObjectParameter("idMembre", typeof(int));
+    
+            var prixBienParameter = prixBien.HasValue ?
+                new ObjectParameter("prixBien", prixBien) :
+                new ObjectParameter("prixBien", typeof(int));
+    
+            var surfaceHabitableParameter = surfaceHabitable.HasValue ?
+                new ObjectParameter("surfaceHabitable", surfaceHabitable) :
+                new ObjectParameter("surfaceHabitable", typeof(int));
+    
+            var communeParameter = commune != null ?
+                new ObjectParameter("commune", commune) :
+                new ObjectParameter("commune", typeof(string));
+    
+            var rueParameter = rue != null ?
+                new ObjectParameter("rue", rue) :
+                new ObjectParameter("rue", typeof(string));
+    
+            var numeroParameter = numero != null ?
+                new ObjectParameter("numero", numero) :
+                new ObjectParameter("numero", typeof(string));
+    
+            var boiteParameter = boite != null ?
+                new ObjectParameter("boite", boite) :
+                new ObjectParameter("boite", typeof(string));
+    
+            var etagesParameter = etages.HasValue ?
+                new ObjectParameter("etages", etages) :
+                new ObjectParameter("etages", typeof(int));
+    
+            var libelleParameter = libelle != null ?
+                new ObjectParameter("libelle", libelle) :
+                new ObjectParameter("libelle", typeof(string));
+    
+            var anneeDeConstrParameter = anneeDeConstr.HasValue ?
+                new ObjectParameter("anneeDeConstr", anneeDeConstr) :
+                new ObjectParameter("anneeDeConstr", typeof(int));
+    
+            var energieParameter = energie != null ?
+                new ObjectParameter("energie", energie) :
+                new ObjectParameter("energie", typeof(string));
+    
+            var nbPhotosParameter = nbPhotos.HasValue ?
+                new ObjectParameter("nbPhotos", nbPhotos) :
+                new ObjectParameter("nbPhotos", typeof(int));
+    
+            var chambreParameter = chambre.HasValue ?
+                new ObjectParameter("chambre", chambre) :
+                new ObjectParameter("chambre", typeof(int));
+    
+            var sdbParameter = sdb.HasValue ?
+                new ObjectParameter("sdb", sdb) :
+                new ObjectParameter("sdb", typeof(int));
+    
+            var dressingParameter = dressing.HasValue ?
+                new ObjectParameter("dressing", dressing) :
+                new ObjectParameter("dressing", typeof(int));
+    
+            var samParameter = sam.HasValue ?
+                new ObjectParameter("sam", sam) :
+                new ObjectParameter("sam", typeof(int));
+    
+            var salonParameter = salon.HasValue ?
+                new ObjectParameter("salon", salon) :
+                new ObjectParameter("salon", typeof(int));
+    
+            var buanderieParameter = buanderie.HasValue ?
+                new ObjectParameter("buanderie", buanderie) :
+                new ObjectParameter("buanderie", typeof(int));
+    
+            var caveParameter = cave.HasValue ?
+                new ObjectParameter("cave", cave) :
+                new ObjectParameter("cave", typeof(int));
+    
+            var grenierParameter = grenier.HasValue ?
+                new ObjectParameter("grenier", grenier) :
+                new ObjectParameter("grenier", typeof(int));
+    
+            var toiletteParameter = toilette.HasValue ?
+                new ObjectParameter("toilette", toilette) :
+                new ObjectParameter("toilette", typeof(int));
+    
+            var verandaParameter = veranda.HasValue ?
+                new ObjectParameter("veranda", veranda) :
+                new ObjectParameter("veranda", typeof(int));
+    
+            var garageParameter = garage.HasValue ?
+                new ObjectParameter("garage", garage) :
+                new ObjectParameter("garage", typeof(int));
+    
+            var piscineParameter = piscine.HasValue ?
+                new ObjectParameter("piscine", piscine) :
+                new ObjectParameter("piscine", typeof(bool));
+    
+            var cuisineEquParameter = cuisineEqu.HasValue ?
+                new ObjectParameter("cuisineEqu", cuisineEqu) :
+                new ObjectParameter("cuisineEqu", typeof(bool));
+    
+            var parkingParameter = parking.HasValue ?
+                new ObjectParameter("parking", parking) :
+                new ObjectParameter("parking", typeof(bool));
+    
+            var jardinParameter = jardin.HasValue ?
+                new ObjectParameter("jardin", jardin) :
+                new ObjectParameter("jardin", typeof(bool));
+    
+            var alarmeParameter = alarme.HasValue ?
+                new ObjectParameter("alarme", alarme) :
+                new ObjectParameter("alarme", typeof(bool));
+    
+            var doubleVitrParameter = doubleVitr.HasValue ?
+                new ObjectParameter("doubleVitr", doubleVitr) :
+                new ObjectParameter("doubleVitr", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PostNewBien", typeBienParameter, idMembreParameter, prixBienParameter, surfaceHabitableParameter, communeParameter, rueParameter, numeroParameter, boiteParameter, etagesParameter, libelleParameter, anneeDeConstrParameter, energieParameter, nbPhotosParameter, chambreParameter, sdbParameter, dressingParameter, samParameter, salonParameter, buanderieParameter, caveParameter, grenierParameter, toiletteParameter, verandaParameter, garageParameter, piscineParameter, cuisineEquParameter, parkingParameter, jardinParameter, alarmeParameter, doubleVitrParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> CheckIfAdressExists(string codePostal, string rue, string numero, string boite)
+        {
+            var codePostalParameter = codePostal != null ?
+                new ObjectParameter("codePostal", codePostal) :
+                new ObjectParameter("codePostal", typeof(string));
+    
+            var rueParameter = rue != null ?
+                new ObjectParameter("rue", rue) :
+                new ObjectParameter("rue", typeof(string));
+    
+            var numeroParameter = numero != null ?
+                new ObjectParameter("numero", numero) :
+                new ObjectParameter("numero", typeof(string));
+    
+            var boiteParameter = boite != null ?
+                new ObjectParameter("boite", boite) :
+                new ObjectParameter("boite", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("CheckIfAdressExists", codePostalParameter, rueParameter, numeroParameter, boiteParameter);
         }
     }
 }
