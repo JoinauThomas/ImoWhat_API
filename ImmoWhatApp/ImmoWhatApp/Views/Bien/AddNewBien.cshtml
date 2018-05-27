@@ -740,14 +740,21 @@
 
         google.maps.event.addListener(autocomplete, 'place_changed', function () {
             var place = autocomplete.getPlace();
-
-            $('#commune').val(place.address_components[2].long_name);
-            $('#rue').val(place.address_components[1].long_name);
-            $('#numero').val(place.address_components[0].long_name);
-            $('#codePostal').val(place.address_components[5].long_name);
-
-
-
+            for (var i = 0; i < 10; i++) {
+                var type = place.address_components[i].types
+                if (type == "street_number") {
+                    $('#numero').val(place.address_components[i].long_name);
+                }
+                else if (type == "locality,political") {
+                    $('#commune').val(place.address_components[i].long_name);
+                }
+                else if (type == "postal_code") {
+                    $('#codePostal').val(place.address_components[i].long_name);
+                }
+                else if (type == "route") {
+                    $('#rue').val(place.address_components[i].long_name);
+                }
+            }
             var lat;
             var lon;
             var geocoder = new google.maps.Geocoder();
