@@ -92,6 +92,11 @@
                                     <button type="button" id="btnImg" href="#" style="height:75%; width:75%; position:absolute; margin:0; top:50%; margin-left:50%; transform: translate(-50%, -50%)" class="btn btn-primary btn-lg rounded-circle btnImg"><img src="~/assets/png/plus-8x.png" style="width:80%; width:80%" /></button>
                                     <input type="file" id="my_file" style="display: none;" />
                                 </div>
+                                @*<input type="text" id="im1" value="" />
+                                <input type="text" id="im2" value="" />
+                                <input type="text" id="im3" value="" />
+                                <input type="text" id="im4" value="" />
+                                <input type="text" id="im5" value="" />*@
                             </div>
                         </div>
                         <div class="row mt-5 justify-content-between">
@@ -467,6 +472,7 @@
         $("#chargement").show();
 
         var nbImg = liste2.length;
+        var listString = "";
 
         //alert("image " + 1 + "/" + nbImg + ", nom du fichier : " + liste2[0][0].name + "\nimage " + 1 + "/" + nbImg + ", nom du fichier : " + liste2[1][0].name);
 
@@ -484,57 +490,71 @@
             contentType: false,
             success: function (donnee) {
                 if (donnee.success) {
-                    alert(donnee.responseText);
-                    //alert('okidoki');
-                    //var mesfichiers = [];
-                    if (nbImg > 0) {
-                        var tabFin = [];
-                        for (var i = 0; i < nbImg; i++) {
-                            //mesfichiers.push(liste2[i]);
-                            var mesfichiers = ["value1", "value2", "value3", "value4", "value5"];
-                            mesfichiers = JSON.stringify({ 'mesfichiers': mesfichiers });
-                            //tabFin[i] = mesfichiers;
 
+                    // RECUPERER ID DU BIEN
 
+                    var CodePostal = $('#codePostal').val().toString();
+                    var Rue = $('#rue').val();
+                    var Numero = $('#numero').val();
+                    var Boite = $('#boite').val();
 
-                        }
-                        alert(mesfichiers.length);
-                        var fileData = new FormData();
-                        fileData.append("mesfichiers", mesfichiers);
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("GetIdBien", "Bien")',
+                        data: { codePostal: CodePostal, rue: Rue, numero: Numero, boite: Boite },
+                        async: false,
+                        datatype: 'json',
+                        success: function (donnee) {
 
-                        $.ajax({
-                            type: 'POST',
-                            url: '@Url.Action("AddPhotoBien", "Bien")',
-                            async: false,
-                            dataType: "json",
-                            data: fileData,
-                            processData: false,
-                            contentType: false,
-                            success: function (donnee) {
-                                CreateModal('parfait!', donnee.responseText, true);
+                            // ENREGISTRER LES PHOTOS
 
-                            },
-                            error: function (donnee) {
-                                CreateModal('erreur', "img pas envoyée\nproblème : " + donnee, false);
+                            for (var x = 0; x < 9; x++) {
+                                var idBien = donnee;
+                                var mesfichiers = "";
+                                mesfichiers = $('#img' + x).val().toString();
+
+                                if (mesfichiers != "") {
+                                    
+
+                                    var fileData = new FormData();
+                                    fileData.append("mesfichiers", mesfichiers);
+                                    fileData.append("idBien", idBien);
+                                    fileData.append("numero", x);
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '@Url.Action("AddPhotoBien", "Bien")',
+                                        data: fileData,
+                                        datatype: 'json',
+                                        async: false,
+                                        processData: false,
+                                        contentType: false,
+                                        success: function (donnee) {
+                                            alert("oui")
+                                            CreateModal('parfait!', donnee.responseText, true);
+
+                                        },
+                                        error: function (donnee) {
+                                            alert("non")
+                                            CreateModal('erreur', "img pas envoyée\nproblème : " + donnee, false);
+                                        }
+                                    });
+                                }
+                                else {
+                                    CreateModal('parfait!', "aaaa", true);
+                                    break
+                                }
                             }
-                        })
 
-
-
-
-                    }
-                    else {
-                        CreateModal('parfait!', donnee.responseText, true);
-                    }
+                        },
+                        error: function (donnee) {
+                            alert("non")
+                            CreateModal('erreur', "img pas envoyée\nproblème : " + donnee, false);
+                        }
+                    });
                 }
                 else {
                     CreateModal('erreur', donnee.responseText, false);
                 }
-
-
-
-
-
             },
             error: function (error) {
                 alert("error");
@@ -577,11 +597,10 @@
                         $(this).dialog("close");
                         location.href = "../Home/Index";
                     }
-
                 }
             });
         }
-       
+
     }
 </script>
 <script type="text/javascript">
@@ -599,13 +618,24 @@
 
                     reader.onload = function (e) {
                         $('#img' + i).attr('src', e.target.result);
-                        liste3.push(e.target.result);
-                        //alert(liste3[i]);
-                        var fileUpload = $("#my_file").get(0);
-                        var files = fileUpload.files;
-                        //liste.push(files);
-                        liste[i] = files;
-                        //alert("aaa"+liste[i][0].name);
+                        
+                        //var fileUpload = $("#my_file").get(0);
+                        //var file = fileUpload.files;
+
+                        var file = document.querySelector('#my_file').files[0];
+                        var reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = function () {
+                            var adrCompl = "";
+                            var block = "";
+                            var URL24 = "";
+
+                            var adrCompl = reader.result;
+                            var block = adrCompl.split(";");
+                            var URL24 = block[1].split(",")[1];
+                            //alert("image " + i + " = " + URL24);
+                            $('#img' + i).val(URL24)
+                        }
 
                     }
                     reader.readAsDataURL(input.files[0]);
@@ -633,8 +663,17 @@
         //liste2.push(files);
 
         var file = document.querySelector('#my_file').files[0];
-        getBase64(file); // prints the base64 string
-
+        
+        //var reader = new FileReader();
+        //reader.readAsDataURL(file);
+        //reader.onload = function () {
+        //    var adrCompl = reader.result;
+        //    var block = adrCompl.split(";");
+        //    var URL24 = block[1].split(",")[1];
+            
+        //    liste2.push(URL24);
+        //    $('#img' + liste2.length).val(URL24)
+        //};
 
         readURL(this);
     });
@@ -647,6 +686,7 @@
             var block = adrCompl.split(";");
             var URL24 = block[1].split(",")[1];
             liste2.push(URL24);
+            $('#img' + liste2.length).val(URL24)
         };
         reader.onerror = function (error) {
             console.log('Error: ', error);

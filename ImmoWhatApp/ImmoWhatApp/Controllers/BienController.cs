@@ -105,22 +105,30 @@ namespace ImmoWhatApp.Controllers
             }
         }
 
-        public ActionResult AddPhotoBien (List<string> mesfichiers)
+        [HttpGet]
+        public int GetIdBien (string codePostal, string rue, string numero, string boite)
         {
-            for(int i = 0; i<mesfichiers.Count; i++)
-            {
-                using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(mesfichiers[i])))
+            Models.adresseModels adresse = new Models.adresseModels{ CodePostal = codePostal, Numero = numero, Boite = boite, Rue = rue};
+            int id = BLL.BienBLL.GetIdBien(adresse);
+            return id;
+        }
+
+        [HttpPost]
+        public ActionResult AddPhotoBien (string mesfichiers, int idBien, int numero)
+        {
+            
+                using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(mesfichiers)))
                 {
                     using (Bitmap bm2 = new Bitmap(ms))
                     {
-                        bm2.Save("C:/Users/thoma/OneDrive/EPHEC/TFE/immowhat-API/ImmoWhatApp/ImmoWhatApp/img/bien/" + "ImageName"+i+".jpg");
+                        bm2.Save("C:/Users/thoma/OneDrive/EPHEC/TFE/immowhat-API/ImmoWhatApp/ImmoWhatApp/img/bien/" +idBien+ "_" + numero + ".jpg");
                     }
                 }
-            }
-           
-        
+            
 
-           
+
+
+
 
             return View();
         }

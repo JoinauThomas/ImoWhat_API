@@ -28,15 +28,15 @@ namespace ImmoWhat_API.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("GetIdBien")]
-        public int GetIdBien(Models.adresseModels adresse)
+        public int GetIdBien(string codePostale, string rue, string numero, string boite)
         {
             int idBien = 0;
             try
             {
                 DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
-                var result = dbContext.GetIdBien(adresse.CodePostal, adresse.Rue, adresse.Numero, adresse.Boite);
+                var result = dbContext.GetIdBien(codePostale, rue, numero, boite);
                 foreach(int x in result)
                 {
                     idBien = x;

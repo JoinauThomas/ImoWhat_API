@@ -94,5 +94,52 @@ namespace ImmoWhatApp.BLL
                 throw ex;
             }
         }
+
+        public static int GetIdBien(Models.adresseModels adresse)
+        {
+            int id = -1;
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    // CHECK IF MEMBER IS CONNECTED
+
+                    var currentSession = HttpContext.Current.Session;
+                    var token = currentSession["monToken"];
+                    string tokens = token.ToString();
+
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokens);
+
+                    
+
+                   client.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
+                    var responseTask = client.GetAsync("GetIdBien?codePostale=" + adresse.CodePostal + "&rue=" + adresse.Rue + "&numero=" + adresse.Numero + "&boite=" + adresse.Boite);
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<int>();
+                        readTask.Wait();
+                        id = readTask.Result;
+
+                        // SI ELLE N EXISTE PAS ENCORE, ON CREE LA NVELLE ADRESSE
+
+                        
+
+                    }
+                    return id;
+
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
