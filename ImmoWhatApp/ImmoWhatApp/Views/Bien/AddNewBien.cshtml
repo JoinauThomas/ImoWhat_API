@@ -529,12 +529,15 @@
                                         processData: false,
                                         contentType: false,
                                         success: function (donnee) {
-                                            alert("oui")
-                                            CreateModal('parfait!', donnee.responseText, true);
+                                            if (donnee.success) {
+                                                CreateModal('parfait!', donnee.responseText, true);
 
+                                            }
+                                            else {
+                                                CreateModal('erreur', donnee.responseText, false);
+                                            }
                                         },
                                         error: function (donnee) {
-                                            alert("non")
                                             CreateModal('erreur', "img pas envoyée\nproblème : " + donnee, false);
                                         }
                                     });
@@ -646,14 +649,7 @@
                     }
                     break
                 }
-
-
             }
-
-
-
-
-
         }
     }
 

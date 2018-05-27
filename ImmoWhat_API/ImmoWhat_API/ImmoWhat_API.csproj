@@ -375,6 +375,7 @@
     <Compile Include="Models\CommuneComplet.cs" />
     <Compile Include="Models\CommuneContourPoint.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\imageModels.cs" />
     <Compile Include="Models\MembreModels.cs" />
     <Compile Include="Models\ResultInscription.cs" />
     <Compile Include="Models\TableGraphTransactions.cs" />

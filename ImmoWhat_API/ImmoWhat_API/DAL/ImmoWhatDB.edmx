@@ -709,6 +709,10 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="alarme" Type="bit" Mode="In" />
           <Parameter Name="doubleVitr" Type="bit" Mode="In" />
         </Function>
+        <Function Name="PostNewPhotos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idBien" Type="int" Mode="In" />
+          <Parameter Name="lien" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -1215,6 +1219,10 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <Parameter Name="rue" Mode="In" Type="String" />
             <Parameter Name="numero" Mode="In" Type="String" />
             <Parameter Name="boite" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PostNewPhotos">
+            <Parameter Name="idBien" Mode="In" Type="Int32" />
+            <Parameter Name="lien" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -2343,6 +2351,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="PostNewBien" FunctionName="ImmoWhatModel.Store.PostNewBien" />
           <FunctionImportMapping FunctionImportName="CheckIfAdressExists" FunctionName="ImmoWhatModel.Store.CheckIfAdressExists" />
+          <FunctionImportMapping FunctionImportName="PostNewPhotos" FunctionName="ImmoWhatModel.Store.PostNewPhotos" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

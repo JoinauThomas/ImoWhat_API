@@ -917,5 +917,18 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("CheckIfAdressExists", codePostalParameter, rueParameter, numeroParameter, boiteParameter);
         }
+    
+        public virtual int PostNewPhotos(Nullable<int> idBien, string lien)
+        {
+            var idBienParameter = idBien.HasValue ?
+                new ObjectParameter("idBien", idBien) :
+                new ObjectParameter("idBien", typeof(int));
+    
+            var lienParameter = lien != null ?
+                new ObjectParameter("lien", lien) :
+                new ObjectParameter("lien", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PostNewPhotos", idBienParameter, lienParameter);
+        }
     }
 }

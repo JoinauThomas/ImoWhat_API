@@ -114,23 +114,30 @@ namespace ImmoWhatApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddPhotoBien (string mesfichiers, int idBien, int numero)
+        public ActionResult AddPhotoBien(string mesfichiers, int idBien, int numero)
         {
-            
-                using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(mesfichiers)))
+            List<string> listeImg = new List<string>();
+            using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(mesfichiers)))
+            {
+                using (Bitmap bm2 = new Bitmap(ms))
                 {
-                    using (Bitmap bm2 = new Bitmap(ms))
-                    {
-                        bm2.Save("C:/Users/thoma/OneDrive/EPHEC/TFE/immowhat-API/ImmoWhatApp/ImmoWhatApp/img/bien/" +idBien+ "_" + numero + ".jpg");
-                    }
+                    string img = idBien + "-" + numero;
+                    bm2.Save("C:/Users/thoma/OneDrive/EPHEC/TFE/immowhat-API/ImmoWhatApp/ImmoWhatApp/img/bien/" + img + ".jpg");
+                    listeImg.Add(img);
                 }
+            }
+            Models.RequestResultM result = BLL.BienBLL.PostNewPhotos(idBien, listeImg);
+            if(result.result == "OK")
+            {
+                return Json(new { success = true, responseText = result.msg }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                // reagir si il y a eu un probleme
+                return Json(new { success = false, responseText = result.msg }, JsonRequestBehavior.AllowGet);
+            }
+
             
-
-
-
-
-
-            return View();
         }
     }
 }

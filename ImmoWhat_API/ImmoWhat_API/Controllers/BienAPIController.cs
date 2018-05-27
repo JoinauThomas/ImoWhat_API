@@ -72,5 +72,25 @@ namespace ImmoWhat_API.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("PostNewPhotos")]
+        public IHttpActionResult PostNewPhotos(Models.imageModels images )
+        {
+            int idBien = images.idBien;
+            List<string> liens = images.liens;
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                for(int i = 0; i<liens.Count; i++)
+                {
+                    dbContext.PostNewPhotos(idBien, liens[i]);
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
