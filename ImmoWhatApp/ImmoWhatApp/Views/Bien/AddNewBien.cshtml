@@ -28,18 +28,17 @@
 
                         <div class="form-group col-12">
                             <input id="searchTextField" type="text" class="form-control col-12" placeholder="adresse" aria-label="Recipient's username" aria-describedby="basic-addon2">
-
-
+                            <span style="display:none" class="text-danger" id="errorsearchTextField"></span>
                         </div>
                         <div class="form-row justify-content-between">
-                            <div class="form-group col-lg-9">
+                            <div class="form-group col-lg-8">
                                 @Html.LabelFor(model => model.commune, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-12" disabled>
                                     @Html.EditorFor(model => model.commune, new { htmlAttributes = new { @class = "form-control col-12", disabled = "disabled" } })
                                     <span style="display:none" class="text-danger" id="errorCommune"></span>
                                 </div>
                             </div>
-                            <div class="form-group col-lg-3">
+                            <div class="form-group col-lg-4">
                                 @Html.LabelFor(model => model.codePostal, htmlAttributes: new { @class = "control-label col-md-12" })
                                 <div class="col-md-12">
                                     @Html.EditorFor(model => model.codePostal, new { htmlAttributes = new { @class = "form-control col-12", disabled = "disabled" } })
@@ -145,24 +144,24 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.nbEtages, htmlAttributes: new { @class = "control-label col-md-5" })
+                            @Html.LabelFor(model => model.nbEtages, htmlAttributes: new { @class = "control-label col-md-12" })
                             <div class="col-md-10">
                                 @Html.DropDownList("nbEtages", (SelectList)ViewBag.nbPieces, new { @class = "form-control " })
                                 @Html.ValidationMessageFor(model => model.nbEtages, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.superficie, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.superficie, htmlAttributes: new { @class = "control-label col-md-12" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.superficie, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.superficie, "", new { @class = "text-danger" })
+                                <span style="display:none" class="text-danger" id="errorSuperficie"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(model => model.anneeConstruction, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.anneeConstruction, htmlAttributes: new { @class = "control-label col-md-12" })
                             <div class="col-md-10">
                                 @Html.EditorFor(model => model.anneeConstruction, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.anneeConstruction, "", new { @class = "text-danger" })
+                                <span style="display:none" class="text-danger" id="errorAnneeConstr"></span>
                             </div>
                         </div>
 
@@ -180,14 +179,14 @@
                             @Html.LabelFor(model => model.prix, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-4">
                                 @Html.EditorFor(model => model.prix, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.prix, "", new { @class = "text-danger" })
+                                <span style="display:none" class="text-danger" id="errorPrix"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.libelle, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.TextAreaFor(model => model.libelle, new { @class = "form-control col-12", rows = 13 })
-                                @Html.ValidationMessageFor(model => model.libelle, "", new { @class = "text-danger" })
+                                <span style="display:none" class="text-danger" id="errorLibelle"></span>
                             </div>
                         </div>
 
@@ -207,7 +206,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.nbChambres, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.nbChambres, htmlAttributes: new { @class = "control-label col-md-12" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("nbChambres", (SelectList)ViewBag.nbPieces, new { @class = "form-control " })
                                         @Html.ValidationMessageFor(model => model.nbChambres, "", new { @class = "text-danger" })
@@ -215,7 +214,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.nbSdb, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.nbSdb, htmlAttributes: new { @class = "control-label col-md-12" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("nbSdb", (SelectList)ViewBag.nbPieces, new { @class = "form-control " })
                                         @Html.ValidationMessageFor(model => model.nbSdb, "", new { @class = "text-danger" })
@@ -223,7 +222,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.nbDressing, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.nbDressing, htmlAttributes: new { @class = "control-label col-md-12" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("nbDressing", (SelectList)ViewBag.nbPieces, new { @class = "form-control " })
                                         @Html.ValidationMessageFor(model => model.nbDressing, "", new { @class = "text-danger" })
@@ -231,7 +230,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.nbSam, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.nbSam, htmlAttributes: new { @class = "control-label col-md-12" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("nbSam", (SelectList)ViewBag.nbPieces, new { @class = "form-control " })
                                         @Html.ValidationMessageFor(model => model.nbSam, "", new { @class = "text-danger" })
@@ -242,7 +241,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.nbSalon, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.nbSalon, htmlAttributes: new { @class = "control-label col-md-12" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("nbSalon", (SelectList)ViewBag.nbPieces, new { @class = "form-control " })
                                         @Html.ValidationMessageFor(model => model.nbSalon, "", new { @class = "text-danger" })
@@ -250,7 +249,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.nbBuanderie, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.nbBuanderie, htmlAttributes: new { @class = "control-label col-md-12" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("nbBuanderie", (SelectList)ViewBag.nbPieces, new { @class = "form-control " })
                                         @Html.ValidationMessageFor(model => model.nbBuanderie, "", new { @class = "text-danger" })
@@ -258,7 +257,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.nbCave, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.nbCave, htmlAttributes: new { @class = "control-label col-md-12" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("nbCave", (SelectList)ViewBag.nbPieces, new { @class = "form-control " })
                                         @Html.ValidationMessageFor(model => model.nbCave, "", new { @class = "text-danger" })
@@ -266,7 +265,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.nbGrenier, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.nbGrenier, htmlAttributes: new { @class = "control-label col-md-12" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("nbGrenier", (SelectList)ViewBag.nbPieces, new { @class = "form-control " })
                                         @Html.ValidationMessageFor(model => model.nbGrenier, "", new { @class = "text-danger" })
@@ -277,7 +276,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.nbToilette, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.nbToilette, htmlAttributes: new { @class = "control-label col-md-12" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("nbToilette", (SelectList)ViewBag.nbPieces, new { @class = "form-control " })
                                         @Html.ValidationMessageFor(model => model.nbToilette, "", new { @class = "text-danger" })
@@ -285,7 +284,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.nbVeranda, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.nbVeranda, htmlAttributes: new { @class = "control-label col-md-12" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("nbVeranda", (SelectList)ViewBag.nbPieces, new { @class = "form-control " })
                                         @Html.ValidationMessageFor(model => model.nbVeranda, "", new { @class = "text-danger" })
@@ -293,7 +292,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.nbGarage, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.nbGarage, htmlAttributes: new { @class = "control-label col-md-12" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("nbGarage", (SelectList)ViewBag.nbPieces, new { @class = "form-control " })
                                         @Html.ValidationMessageFor(model => model.nbGarage, "", new { @class = "text-danger" })
@@ -302,42 +301,41 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4 offset-1 border border-primary  pt-3 rounded">
+                    <div class="col-4 offset-1 border border-primary pt-3 rounded">
                         <div class="row">
                             <h4 class="pl-4">Options</h4>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-5">
-                                <div class="form-check mt-4">
-                                    @Html.EditorFor(model => model.piscine)
+                        <div class="row h-75" >
+                            <div class="col-lg-6 d-flex flex-column justify-content-md-around">
+                                <div class="form-check d-flex align-items-center">
+                                    @Html.EditorFor(model => model.piscine, "", new { @class = "col-md-12" })
                                     @Html.ValidationMessageFor(model => model.piscine, "", new { @class = "text-danger" })
-                                    @Html.LabelFor(model => model.piscine, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.piscine, htmlAttributes: new { @class = "control-label col-md-10" })
                                 </div>
-                                <div class="form-check mt-5">
-                                    @Html.EditorFor(model => model.cuisineEquipee)
-                                    @Html.ValidationMessageFor(model => model.cuisineEquipee, "", new { @class = "text-danger" })
-                                    @Html.LabelFor(model => model.cuisineEquipee, htmlAttributes: new { @class = "control-label col-md-2" })
-                                </div>
-                                <div class="form-check mt-5">
+                                <div class="form-check d-flex align-items-center">
                                     @Html.EditorFor(model => model.parking)
                                     @Html.ValidationMessageFor(model => model.parking, "", new { @class = "text-danger" })
-                                    @Html.LabelFor(model => model.parking, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.parking, htmlAttributes: new { @class = "control-label col-md-12" })
                                 </div>
-
+                                <div class="form-check d-flex align-items-center">
+                                    @Html.EditorFor(model => model.cuisineEquipee)
+                                    @Html.ValidationMessageFor(model => model.cuisineEquipee, "", new { @class = "text-danger" })
+                                    @Html.LabelFor(model => model.cuisineEquipee, htmlAttributes: new { @class = "control-label col-md-6" })
+                                </div>
                             </div>
 
-                            <div class="col-lg-5">
-                                <div class="form-check mt-4">
+                            <div class="col-lg-6 d-flex flex-column justify-content-md-around">
+                                <div class="form-check d-flex align-items-center">
                                     @Html.EditorFor(model => model.jardin)
                                     @Html.ValidationMessageFor(model => model.jardin, "", new { @class = "text-danger" })
-                                    @Html.LabelFor(model => model.jardin, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    @Html.LabelFor(model => model.jardin, htmlAttributes: new { @class = "control-label col-md-12" })
                                 </div>
-                                <div class="form-check mt-5">
+                                <div class="form-check d-flex align-items-center">
                                     @Html.EditorFor(model => model.alarme)
                                     @Html.ValidationMessageFor(model => model.alarme, "", new { @class = "text-danger" })
                                     @Html.LabelFor(model => model.alarme, htmlAttributes: new { @class = "control-label col-md-2" })
                                 </div>
-                                <div class="form-check mt-5">
+                                <div class="form-check d-flex align-items-center">
                                     @Html.EditorFor(model => model.doubleVitrage)
                                     @Html.ValidationMessageFor(model => model.doubleVitrage, "", new { @class = "text-danger" })
                                     @Html.LabelFor(model => model.doubleVitrage, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -359,7 +357,7 @@
 
 
 
-        <div class="form-group">
+        <div class="form-group" style="display:none">
             @Html.LabelFor(model => model.nbPhotos, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.nbPhotos, new { htmlAttributes = new { @class = "form-control" } })
@@ -387,74 +385,62 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 <script>
+    // vérifie
+    function isInt(value) {
+        return !isNaN(value) && (function (x) { return (x | 0) === x; })(parseFloat(value))
+    }
     function validateForm() {
+
+        var adresse = $('#searchTextField').val();
         var commune = $('#commune').val();
+        var codePostal = $('#codePostal').val();
         var rue = $('#rue').val();
         var numero = $('#numero').val();
-        var nbEtages = $('#nbEtages').val();
         var superficie = $('#superficie').val();
-        var nbChambres = $('#nbChambres').val();
-        var nbSdb = $('#nbSdb').val();
-        var nbDressing = $('#nbDressing').val();
-        var nbSam = $('#nbSam').val();
-        var nbSalon = $('#nbSalon').val();
-        var nbBuanderie = $('#nbBuanderie').val();
-        var nbCave = $('#nbCave').val();
-        var nbGrenier = $('#nbGrenier').val();
-        var nbToilette = $('#nbToilette').val();
-        var nbVeranda = $('#nbVeranda').val();
-        var nbGarage = $('#nbGarage').val();
         var prix = $('#prix').val();
         var libelle = $('#libelle').val();
-        var anneeConstruction = $('#anneeConstruction').val();
-
+        var anneeConstruction = $('#anneeConstruction').val().toString();
+       
         var ok = true;
 
+        if(adresse == "")
+        {
+            $('#errorsearchTextField').html("veuillez mettre une adresse valide svp");
+            $('#errorsearchTextField').show();
+        }
+        else {
+            $('#errorsearchTextField').hide();
+        }
+
         if (commune == "") {
-            $('#erroCommune').html("veuillez mettre une adresse mail svp");
-            $('#errorMail').show();
-            ok = false;
-        }
-        else {
-            $('#errorMail').hide();
-        }
-
-
-
-        if (nom == "") {
-            $('#errorNom').html("veuillez mettre un nom svp");
-            $('#errorNom').show();
-            ok = false;
-        }
-        else {
-            $('#errorNom').hide();
-        }
-        if (prenom == "") {
-            $('#errorPrenom').html("veuillez mettre un prénom svp");
-            $('#errorPrenom').show();
-            ok = false;
-        }
-        else {
-            $('#errorPrenom').hide();
-        }
-        if (commune == "") {
-            $('#errorCommune').html("veuillez mettre une commune svp");
+            $('#errorCommune').html("pas de commune");
             $('#errorCommune').show();
             ok = false;
         }
         else {
             $('#errorCommune').hide();
         }
+        
+        if (codePostal == "") {
+            $('#errorCodePostal').html("pas de code postal");
+            $('#errorCodePostal').show();
+            ok = false;
+        }
+        else {
+            $('#errorCodePostal').hide();
+        }
+        
         if (rue == "") {
-            $('#errorRue').html("veuillez mettre votre rue svp");
+            $('#errorRue').html("pas de rue");
             $('#errorRue').show();
             ok = false;
         }
         else {
-            $('#errorRue').hide();
+            $('#errorNom').hide();
         }
-        if (num == "") {
-            $('#errorNumero').html("veuillez mettre un numero svp");
+
+        if (numero == "") {
+            $('#errorNumero').html("pas de numéro");
             $('#errorNumero').show();
             ok = false;
         }
@@ -462,6 +448,56 @@
             $('#errorNumero').hide();
         }
 
+        if (superficie == "") {
+            $('#errorSuperficie').html("superficie obligatoire");
+            $('#errorSuperficie').show();
+            ok = false;
+        }
+        else {
+            $('#errorSuperficie').hide();
+        }
+
+        if (prix == "") {
+            $('#errorPrix').html("prix obligatoire");
+            $('#errorPrix').show();
+            ok = false;
+        }
+        else {
+            $('#errorPrix').hide();
+        }
+        if (isInt(prix) == false) {
+            $('#errorPrix').html("pas un nombre");
+            $('#errorPrix').show();
+            ok = false;
+        }
+        else {
+            $('#errorPrix').hide();
+        }
+
+        if (libelle == "") {
+            $('#errorLibelle').html("déscription obligatoire");
+            $('#errorLibelle').show();
+            ok = false;
+        }
+        else {
+            $('#errorLibelle').hide();
+        }
+
+        if (anneeConstruction == "") {
+            $('#errorAnneeConstr').html("année de construction obligatoire");
+            $('#errorAnneeConstr').show();
+            ok = false;
+        }
+        else if (isInt(anneeConstruction) == false) {
+            $('#errorAnneeConstr').html("pas un nombre");
+            $('#errorAnneeConstr').show();
+            ok = false;
+        }
+        else {
+            $('#errorAnneeConstr').hide();
+        }
+        
+        
         return ok;
 
     }
@@ -470,8 +506,25 @@
 
 <script type="text/javascript">
     $('#btnPostForm').click(function () {
+        var verificationForm = validateForm();
+        if (verificationForm == true) {
+             $("#chargement").show();
 
-        $("#chargement").show();
+        //compter le nombre de photos
+        var nbPhotos = 0;
+        var pourcentagesParImg
+
+        for (var x = 0; x < 9; x++) {
+            var image = $('#img' + x).val().toString();
+            if (image != "") {
+                nbPhotos++
+            }
+            else {
+                break
+            }
+        }
+        $('#nbPhotos').val(nbPhotos);
+
 
         var nbImg = liste2.length;
         var listString = "";
@@ -510,22 +563,8 @@
 
                             // ENREGISTRER LES PHOTOS
 
-                            //compter le nombre de photos
-                            var nbPhotos = 0;
-                            var pourcentagesParImg
-
-                            for (var x = 0; x < 9; x++) {
-                                var image = $('#img' + x).val().toString();
-                                if (image != "") {
-                                    nbPhotos++
-                                }
-                                else {
-                                    break
-                                }
-                            }
                             pourcentagesParImg = 100.00 / nbPhotos;
 
-                            //enregistrement des photos
                             for (var x = 0; x < 9; x++) {
                                 var idBien = donnee;
                                 var mesfichiers = "";
@@ -542,7 +581,7 @@
                                     fileData.append("mesfichiers", mesfichiers);
                                     fileData.append("idBien", idBien);
                                     fileData.append("numero", x);
-                                    
+
                                     $.ajax({
                                         type: 'POST',
                                         url: '@Url.Action("AddPhotoBien", "Bien")',
@@ -553,8 +592,8 @@
                                         contentType: false,
                                         success: function (donnee) {
                                             if (donnee.success) {
-                                                
-                                                
+
+
                                             }
                                             else {
                                                 CreateModal('erreur', donnee.responseText, false);
@@ -590,6 +629,11 @@
                 alert("erreur " + donnee.status + " : " + donnee.statusText + "\n" + JSON.stringify(donnee, null, 1));
             }
         });
+        }
+        else {
+            alert("pas ok");
+        }
+
     });
 
     function CreateModal(title, text, returnToMainPage) {

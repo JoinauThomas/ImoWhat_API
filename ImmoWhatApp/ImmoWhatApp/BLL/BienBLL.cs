@@ -46,12 +46,22 @@ namespace ImmoWhatApp.BLL
 
                         if (exist == false)
                         {
-                                client.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
-                                responseTask = client.PostAsJsonAsync("addNewBien", newBien);
-                                responseTask.Wait();
-                                result = responseTask.Result;
+                            
+                            using (var client2 = new HttpClient())
+                            {
 
-                                if (result.IsSuccessStatusCode)
+                               
+                                client2.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+                                client2.DefaultRequestHeaders.Accept.Clear();
+                                client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                                client2.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                                client2.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
+                                var responseTask2 = client.PostAsJsonAsync("addNewBien", newBien);
+                                responseTask2.Wait();
+                                var result2 = responseTask2.Result;
+
+                                if (result2.IsSuccessStatusCode)
                                 {
 
                                     resultatRequete = new Models.RequestResultM { result = "OK", msg = Resource.LeBienABienEteEnregistre };
@@ -60,12 +70,12 @@ namespace ImmoWhatApp.BLL
                                 }
                                 else
                                 {
-                                    var responseString = result.Content.ReadAsStringAsync();
+                                    var responseString = result2.Content.ReadAsStringAsync();
                                     resultatRequete = new Models.RequestResultM { result = "NOTOK", msg = responseString.Result };
                                     return resultatRequete;
                                 }
 
-                            
+                            }
                         }
                         else
                         {
