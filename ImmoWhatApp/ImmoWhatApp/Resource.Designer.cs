@@ -70,6 +70,24 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à alarme.
+        /// </summary>
+        public static string alarme {
+            get {
+                return ResourceManager.GetString("alarme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à année de construction.
+        /// </summary>
+        public static string anneeDeConstruction {
+            get {
+                return ResourceManager.GetString("anneeDeConstruction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à appartement.
         /// </summary>
         public static string appartement {
@@ -169,6 +187,24 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à énergie.
+        /// </summary>
+        public static string energie {
+            get {
+                return ResourceManager.GetString("energie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à enregistrer.
+        /// </summary>
+        public static string enregistrer {
+            get {
+                return ResourceManager.GetString("enregistrer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à jardin.
         /// </summary>
         public static string jardin {
@@ -196,6 +232,15 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à déscription.
+        /// </summary>
+        public static string libelleDescription {
+            get {
+                return ResourceManager.GetString("libelleDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à maison.
         /// </summary>
         public static string maison {
@@ -205,11 +250,38 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à nombre de chambres.
+        ///   Recherche une chaîne localisée semblable à buanderies.
         /// </summary>
-        public static string nbChambrez {
+        public static string nbBuanderie {
             get {
-                return ResourceManager.GetString("nbChambrez", resourceCulture);
+                return ResourceManager.GetString("nbBuanderie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à caves.
+        /// </summary>
+        public static string nbCave {
+            get {
+                return ResourceManager.GetString("nbCave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à chambres.
+        /// </summary>
+        public static string nbChambres {
+            get {
+                return ResourceManager.GetString("nbChambres", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à dressings.
+        /// </summary>
+        public static string nbDressing {
+            get {
+                return ResourceManager.GetString("nbDressing", resourceCulture);
             }
         }
         
@@ -219,6 +291,78 @@ namespace ImmoWhatApp {
         public static string nbEtages {
             get {
                 return ResourceManager.GetString("nbEtages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à places de garage.
+        /// </summary>
+        public static string nbGarage {
+            get {
+                return ResourceManager.GetString("nbGarage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à greniers.
+        /// </summary>
+        public static string nbGrenier {
+            get {
+                return ResourceManager.GetString("nbGrenier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à nombre de photos.
+        /// </summary>
+        public static string nbPhotos {
+            get {
+                return ResourceManager.GetString("nbPhotos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à salons.
+        /// </summary>
+        public static string nbSalon {
+            get {
+                return ResourceManager.GetString("nbSalon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à salles à manger.
+        /// </summary>
+        public static string nbSam {
+            get {
+                return ResourceManager.GetString("nbSam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à salles de bain.
+        /// </summary>
+        public static string nbSdb {
+            get {
+                return ResourceManager.GetString("nbSdb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à toilettes.
+        /// </summary>
+        public static string nbToilette {
+            get {
+                return ResourceManager.GetString("nbToilette", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à vérandas.
+        /// </summary>
+        public static string nbVeranda {
+            get {
+                return ResourceManager.GetString("nbVeranda", resourceCulture);
             }
         }
         
@@ -246,6 +390,15 @@ namespace ImmoWhatApp {
         public static string piscine {
             get {
                 return ResourceManager.GetString("piscine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à prix.
+        /// </summary>
+        public static string prix {
+            get {
+                return ResourceManager.GetString("prix", resourceCulture);
             }
         }
         
@@ -286,6 +439,15 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à supprimé.
+        /// </summary>
+        public static string supprime {
+            get {
+                return ResourceManager.GetString("supprime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à terrain.
         /// </summary>
         public static string terrain {
@@ -300,6 +462,15 @@ namespace ImmoWhatApp {
         public static string typeBien {
             get {
                 return ResourceManager.GetString("typeBien", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à vendu.
+        /// </summary>
+        public static string vendu {
+            get {
+                return ResourceManager.GetString("vendu", resourceCulture);
             }
         }
         

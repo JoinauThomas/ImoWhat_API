@@ -147,9 +147,6 @@
   <data name="terrain" xml:space="preserve">
     <value>ground</value>
   </data>
-  <data name="villa" xml:space="preserve">
-    <value>villa</value>
-  </data>
   <data name="alarm" xml:space="preserve">
     <value>alarm</value>
     <comment>BienModels</comment>
@@ -211,5 +208,68 @@
   </data>
   <data name="LeBienExisteDeja" xml:space="preserve">
     <value>the property already exists</value>
+  </data>
+  <data name="alarme" xml:space="preserve">
+    <value>alarm</value>
+  </data>
+  <data name="anneeDeConstruction" xml:space="preserve">
+    <value>year of construction</value>
+  </data>
+  <data name="energie" xml:space="preserve">
+    <value>energy</value>
+  </data>
+  <data name="enregistrer" xml:space="preserve">
+    <value>save</value>
+  </data>
+  <data name="libelleDescription" xml:space="preserve">
+    <value>description</value>
+  </data>
+  <data name="nbBuanderie" xml:space="preserve">
+    <value>laundry</value>
+  </data>
+  <data name="nbCave" xml:space="preserve">
+    <value>cellars</value>
+  </data>
+  <data name="nbChambres" xml:space="preserve">
+    <value>bedrooms</value>
+  </data>
+  <data name="nbDressing" xml:space="preserve">
+    <value>dressings</value>
+  </data>
+  <data name="nbGarage" xml:space="preserve">
+    <value>garage spaces</value>
+  </data>
+  <data name="nbGrenier" xml:space="preserve">
+    <value>garners</value>
+  </data>
+  <data name="nbPhotos" xml:space="preserve">
+    <value>number of photos</value>
+  </data>
+  <data name="nbSalon" xml:space="preserve">
+    <value>salons</value>
+  </data>
+  <data name="nbSam" xml:space="preserve">
+    <value>dining rooms</value>
+  </data>
+  <data name="nbSdb" xml:space="preserve">
+    <value>bathrooms</value>
+  </data>
+  <data name="nbToilette" xml:space="preserve">
+    <value>WC</value>
+  </data>
+  <data name="nbVeranda" xml:space="preserve">
+    <value>verandas</value>
+  </data>
+  <data name="prix" xml:space="preserve">
+    <value>price</value>
+  </data>
+  <data name="supprime" xml:space="preserve">
+    <value>deleted</value>
+  </data>
+  <data name="vendu" xml:space="preserve">
+    <value>sold</value>
+  </data>
+  <data name="villa" xml:space="preserve">
+    <value>villa</value>
   </data>
 </root>

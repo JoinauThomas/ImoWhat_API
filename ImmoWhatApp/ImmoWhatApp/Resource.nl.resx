@@ -212,4 +212,64 @@
   <data name="LeBienExisteDeja" xml:space="preserve">
     <value>de woning bestaat al</value>
   </data>
+  <data name="alarme" xml:space="preserve">
+    <value>alarm</value>
+  </data>
+  <data name="anneeDeConstruction" xml:space="preserve">
+    <value>bouwjaar</value>
+  </data>
+  <data name="energie" xml:space="preserve">
+    <value>energie</value>
+  </data>
+  <data name="enregistrer" xml:space="preserve">
+    <value>opnemen</value>
+  </data>
+  <data name="libelleDescription" xml:space="preserve">
+    <value>Beschrijving</value>
+  </data>
+  <data name="nbBuanderie" xml:space="preserve">
+    <value>wasserij</value>
+  </data>
+  <data name="nbCave" xml:space="preserve">
+    <value>kelders</value>
+  </data>
+  <data name="nbChambres" xml:space="preserve">
+    <value>kamers</value>
+  </data>
+  <data name="nbDressing" xml:space="preserve">
+    <value>dressing</value>
+  </data>
+  <data name="nbGarage" xml:space="preserve">
+    <value>garage ruimtes</value>
+  </data>
+  <data name="nbGrenier" xml:space="preserve">
+    <value>zolers</value>
+  </data>
+  <data name="nbPhotos" xml:space="preserve">
+    <value>aantal foto's</value>
+  </data>
+  <data name="nbSalon" xml:space="preserve">
+    <value>salons</value>
+  </data>
+  <data name="nbSam" xml:space="preserve">
+    <value>eetzalen</value>
+  </data>
+  <data name="nbSdb" xml:space="preserve">
+    <value>badkamers</value>
+  </data>
+  <data name="nbToilette" xml:space="preserve">
+    <value>toiletten</value>
+  </data>
+  <data name="nbVeranda" xml:space="preserve">
+    <value>veranda's</value>
+  </data>
+  <data name="prix" xml:space="preserve">
+    <value>prijs</value>
+  </data>
+  <data name="supprime" xml:space="preserve">
+    <value>verwijderde</value>
+  </data>
+  <data name="vendu" xml:space="preserve">
+    <value>uitverkocht</value>
+  </data>
 </root>

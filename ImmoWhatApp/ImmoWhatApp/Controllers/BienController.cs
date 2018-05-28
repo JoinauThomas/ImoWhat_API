@@ -64,13 +64,7 @@ namespace ImmoWhatApp.Controllers
         {
             try
             {
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            List<Models.TypeBienModels> typesBiensList = new List<Models.TypeBienModels>
+                List<Models.TypeBienModels> typesBiensList = new List<Models.TypeBienModels>
             {
                 new Models.TypeBienModels{idTypeBien = 1, libelle = Resource.terrain},
                 new Models.TypeBienModels{idTypeBien = 2, libelle = Resource.maison},
@@ -78,7 +72,7 @@ namespace ImmoWhatApp.Controllers
                 new Models.TypeBienModels{idTypeBien = 4, libelle = Resource.appartement}
             };
 
-            List<Models.nbPieces> nbPieces = new List<Models.nbPieces>
+                List<Models.nbPieces> nbPieces = new List<Models.nbPieces>
             {
                 new Models.nbPieces{qtite = 0, affiche = "0"},
                 new Models.nbPieces{qtite = 1, affiche = "1"},
@@ -93,29 +87,35 @@ namespace ImmoWhatApp.Controllers
                 new Models.nbPieces{qtite = 10, affiche = "10+"},
             };
 
-            List<string> noteNRJ = new List<string> { "--", "A", "B", "C", "D", "E", "F", "G" };
+                List<string> noteNRJ = new List<string> { "--", "A", "B", "C", "D", "E", "F", "G" };
 
-            ViewBag.nrj = new SelectList(noteNRJ);
-            ViewBag.nbPieces = new SelectList(nbPieces, "qtite", "affiche");
-            ViewBag.ListeTypesBiens = new SelectList(typesBiensList, "idTypeBien", "libelle");
+                ViewBag.nrj = new SelectList(noteNRJ);
+                ViewBag.nbPieces = new SelectList(nbPieces, "qtite", "affiche");
+                ViewBag.ListeTypesBiens = new SelectList(typesBiensList, "idTypeBien", "libelle");
 
-            if (!ModelState.IsValid)
-            {
-                return View(monNvBien);
+                if (!ModelState.IsValid)
+                {
+                    return View(monNvBien);
+                }
+                Models.MembreModels monProfile = (Models.MembreModels)Session["moi"];
+                monNvBien.idProprietaire = monProfile.idMembre;
+
+                Models.RequestResultM resultRequest = BLL.BienBLL.addNewBien(monNvBien);
+
+                if (resultRequest.result == "OK")
+                {
+                    return Json(new { success = true, responseText = resultRequest.msg }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, responseText = resultRequest.msg }, JsonRequestBehavior.AllowGet);
+                }
             }
-            Models.MembreModels monProfile = (Models.MembreModels)Session["moi"];
-            monNvBien.idProprietaire = monProfile.idMembre;
-
-            Models.RequestResultM resultRequest = BLL.BienBLL.addNewBien(monNvBien);
-
-            if(resultRequest.result == "OK")
+            catch (Exception ex)
             {
-                return Json(new { success = true, responseText = resultRequest.msg }, JsonRequestBehavior.AllowGet);
+                throw ex;
             }
-            else
-            {
-                return Json(new { success = false, responseText = resultRequest.msg }, JsonRequestBehavior.AllowGet);
-            }
+           
         }
 
         [HttpGet]

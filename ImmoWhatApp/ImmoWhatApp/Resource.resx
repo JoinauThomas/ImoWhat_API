@@ -174,9 +174,6 @@
     <value>jardin</value>
     <comment>BienModels</comment>
   </data>
-  <data name="nbChambrez" xml:space="preserve">
-    <value>nombre de chambres</value>
-  </data>
   <data name="nbEtages" xml:space="preserve">
     <value>nombre d'étages</value>
     <comment>BienModels</comment>
@@ -214,5 +211,65 @@
   </data>
   <data name="LeBienExisteDeja" xml:space="preserve">
     <value>le bien existe déja</value>
+  </data>
+  <data name="enregistrer" xml:space="preserve">
+    <value>enregistrer</value>
+  </data>
+  <data name="alarme" xml:space="preserve">
+    <value>alarme</value>
+  </data>
+  <data name="anneeDeConstruction" xml:space="preserve">
+    <value>année de construction</value>
+  </data>
+  <data name="energie" xml:space="preserve">
+    <value>énergie</value>
+  </data>
+  <data name="libelleDescription" xml:space="preserve">
+    <value>déscription</value>
+  </data>
+  <data name="nbBuanderie" xml:space="preserve">
+    <value>buanderies</value>
+  </data>
+  <data name="nbCave" xml:space="preserve">
+    <value>caves</value>
+  </data>
+  <data name="nbChambres" xml:space="preserve">
+    <value>chambres</value>
+  </data>
+  <data name="nbDressing" xml:space="preserve">
+    <value>dressings</value>
+  </data>
+  <data name="nbGarage" xml:space="preserve">
+    <value>places de garage</value>
+  </data>
+  <data name="nbGrenier" xml:space="preserve">
+    <value>greniers</value>
+  </data>
+  <data name="nbPhotos" xml:space="preserve">
+    <value>nombre de photos</value>
+  </data>
+  <data name="nbSalon" xml:space="preserve">
+    <value>salons</value>
+  </data>
+  <data name="nbSam" xml:space="preserve">
+    <value>salles à manger</value>
+  </data>
+  <data name="nbSdb" xml:space="preserve">
+    <value>salles de bain</value>
+  </data>
+  <data name="nbToilette" xml:space="preserve">
+    <value>toilettes</value>
+  </data>
+  <data name="nbVeranda" xml:space="preserve">
+    <value>vérandas</value>
+  </data>
+  <data name="prix" xml:space="preserve">
+    <value>prix</value>
+  </data>
+  <data name="supprime" xml:space="preserve">
+    <value>supprimé</value>
+  </data>
+  <data name="vendu" xml:space="preserve">
+    <value>vendu</value>
   </data>
 </root>

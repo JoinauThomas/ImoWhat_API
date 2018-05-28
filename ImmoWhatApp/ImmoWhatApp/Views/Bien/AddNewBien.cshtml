@@ -368,7 +368,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="btnPostForm" type="button" class="btn btn-default" />
+                <input id="btnPostForm" type="button" class="btn btn-default" value="@Resource.enregistrer" />
             </div>
         </div>
 
@@ -795,7 +795,7 @@
             componentRestrictions: {
                 country: "BE"
             }
-        };
+        }
 
         var input = document.getElementById('searchTextField');
         var autocomplete = new google.maps.places.Autocomplete(input, options);
@@ -803,7 +803,8 @@
 
         google.maps.event.addListener(autocomplete, 'place_changed', function () {
             var place = autocomplete.getPlace();
-            for (var i = 0; i < 10; i++) {
+            var nbDeTypes = place.address_components.length;
+            for (var i = 0; i < nbDeTypes; i++) {
                 var type = place.address_components[i].types
                 if (type == "street_number") {
                     $('#numero').val(place.address_components[i].long_name);
@@ -817,11 +818,15 @@
                 else if (type == "route") {
                     $('#rue').val(place.address_components[i].long_name);
                 }
+                else if (type == null) {
+                    break
+                }
             }
             var lat;
             var lon;
             var geocoder = new google.maps.Geocoder();
             var adresse = $('#searchTextField').val();
+
             geocoder.geocode({ 'address': adresse }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     // do something with the geocoded result

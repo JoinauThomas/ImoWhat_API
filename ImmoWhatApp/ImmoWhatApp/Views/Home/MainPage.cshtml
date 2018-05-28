@@ -198,7 +198,16 @@
                 </div>
             </div>
             <br />
-            <button id="btnAjoutBien" class="btn btn-outline-light">ajouter un bien</button>
+            @{
+
+                if (Session["moi"] != null)
+                {
+                    <button id="btnAjoutBien" class="btn btn-outline-light">ajouter un bien</button>
+                }
+                else {
+                    <button id="btnAjoutBien" class="btn btn-outline-light" disabled="true">ajouter un bien</button>
+                    }
+                }
         </div>
     </div>
 </div>
@@ -328,38 +337,40 @@
 
     $(document).ready(function () {
 
+      
+
         $('#maison').removeClass("btn-outline-light");
         $('#maison').addClass("btn-outline-dark");
-        GetListeClassePrix("maison");
+                    GetListeClassePrix("maison");
 
         $("#inputComm").autocomplete({
-            autoFocus: true,
+                        autoFocus: true,
             source: function (requete, reponse) {
-                var name = $('#inputComm').val();
+                            var name = $('#inputComm').val();
                 //alert(name);
                 $.ajax({
-                    type: 'GET',
+                                type: 'GET',
                     datatype: 'json',
                     data: { nom: name.toLowerCase() },
                     url: '@Url.Action("GetCommunesByNameInJson", "Commune")',
                     success: function (donnee) {
-                        reponse($.map(donnee.commune, function (objet) {
-                            return {
-                                label: objet.Localite + " ( " + objet.CodePostal+" )",
+                                    reponse($.map(donnee.commune, function (objet) {
+                                        return {
+                                            label: objet.Localite + " ( " + objet.CodePostal+" )",
                                 value: objet.Localite,
                                 id: objet.id
-                        }
-                        }));
-                    }
-                })
+                                    }
+                                    }));
+                                }
+                            })
             },
             minLength: 3,
 
             select: function (event, ui) { // lors de la sélection d'une proposition
-                idCommune = ui.item.id
+                    idCommune = ui.item.id
             }
 
-        })
+                })
 
     });
 

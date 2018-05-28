@@ -20,11 +20,11 @@ namespace ImmoWhatApp.BLL
 
                     var currentSession = HttpContext.Current.Session;
                     var token = currentSession["monToken"];
-                    string tokens = token.ToString();
-
+                    Models.MembreModels moi = new Models.MembreModels();
+                    client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokens);
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
 
                     // CHECK SI ADRESSE EXISTE DEJA
@@ -46,19 +46,12 @@ namespace ImmoWhatApp.BLL
 
                         if (exist == false)
                         {
-                            Models.MembreModels moi = new Models.MembreModels();
-                            //client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
-                            //client.DefaultRequestHeaders.Accept.Clear();
-                            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                            //client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                            using (var client2 = new HttpClient())
-                            {
-                                client2.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
-                                var responseTask2 = client.PostAsJsonAsync("addNewBien", newBien);
-                                responseTask2.Wait();
-                                var result2 = responseTask2.Result;
+                                client.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
+                                responseTask = client.PostAsJsonAsync("addNewBien", newBien);
+                                responseTask.Wait();
+                                result = responseTask.Result;
 
-                                if (result2.IsSuccessStatusCode)
+                                if (result.IsSuccessStatusCode)
                                 {
 
                                     resultatRequete = new Models.RequestResultM { result = "OK", msg = Resource.LeBienABienEteEnregistre };
@@ -67,12 +60,12 @@ namespace ImmoWhatApp.BLL
                                 }
                                 else
                                 {
-                                    var responseString = result2.Content.ReadAsStringAsync();
+                                    var responseString = result.Content.ReadAsStringAsync();
                                     resultatRequete = new Models.RequestResultM { result = "NOTOK", msg = responseString.Result };
                                     return resultatRequete;
                                 }
 
-                            }
+                            
                         }
                         else
                         {
@@ -106,11 +99,11 @@ namespace ImmoWhatApp.BLL
 
                     var currentSession = HttpContext.Current.Session;
                     var token = currentSession["monToken"];
-                    string tokens = token.ToString();
-
+                    Models.MembreModels moi = new Models.MembreModels();
+                    client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokens);
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
 
 
@@ -152,11 +145,11 @@ namespace ImmoWhatApp.BLL
 
                     var currentSession = HttpContext.Current.Session;
                     var token = currentSession["monToken"];
-                    string tokens = token.ToString();
-
+                    Models.MembreModels moi = new Models.MembreModels();
+                    client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokens);
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
                     client.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
                     var responseTask = client.PostAsJsonAsync("PostNewPhotos", images);
