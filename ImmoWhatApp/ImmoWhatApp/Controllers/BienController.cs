@@ -164,5 +164,14 @@ namespace ImmoWhatApp.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet]
+        public JsonResult GetListBiensFromCPAndType (string codePostale, int type)
+        {
+            List<Models.BienModels> listeDeBiens = new List<Models.BienModels>();
+            listeDeBiens = BLL.BienBLL.GetListBiensFromCPAndType(codePostale, type);
+
+            return Json(new { result = "OK", listeBiens = listeDeBiens }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

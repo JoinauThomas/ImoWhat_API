@@ -1763,8 +1763,8 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Global.asax" />
-    <Content Include="img\bien\homeAdd.png" />
     <Content Include="img\Bruxelles.jpg" />
+    <Content Include="img\house.png" />
     <Content Include="img\loaders\infini.gif" />
     <Content Include="img\logo.png" />
     <Content Include="img\membre\photo0.jpg" />
@@ -3297,6 +3297,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="img\bien\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Login\" />
   </ItemGroup>

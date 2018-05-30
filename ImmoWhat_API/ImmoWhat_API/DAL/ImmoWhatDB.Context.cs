@@ -930,5 +930,44 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PostNewPhotos", idBienParameter, lienParameter);
         }
+    
+        public virtual ObjectResult<GetListBiensFromCPAndType_Result> GetListBiensFromCPAndType(string codePostal, Nullable<int> type)
+        {
+            var codePostalParameter = codePostal != null ?
+                new ObjectParameter("codePostal", codePostal) :
+                new ObjectParameter("codePostal", typeof(string));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetListBiensFromCPAndType_Result>("GetListBiensFromCPAndType", codePostalParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<GetListBiensFromCPAndType1_Result> GetListBiensFromCPAndType1(string codePostal, Nullable<int> type)
+        {
+            var codePostalParameter = codePostal != null ?
+                new ObjectParameter("codePostal", codePostal) :
+                new ObjectParameter("codePostal", typeof(string));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetListBiensFromCPAndType1_Result>("GetListBiensFromCPAndType1", codePostalParameter, typeParameter);
+        }
+    
+        public virtual ObjectResult<GetListBiensFromCPostAndType_Result> GetListBiensFromCPostAndType(string codePostal, Nullable<int> type)
+        {
+            var codePostalParameter = codePostal != null ?
+                new ObjectParameter("codePostal", codePostal) :
+                new ObjectParameter("codePostal", typeof(string));
+    
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetListBiensFromCPostAndType_Result>("GetListBiensFromCPostAndType", codePostalParameter, typeParameter);
+        }
     }
 }

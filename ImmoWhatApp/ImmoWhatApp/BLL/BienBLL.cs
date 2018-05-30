@@ -186,5 +186,37 @@ namespace ImmoWhatApp.BLL
             }
             
         }
+
+        public static List<Models.BienModels> GetListBiensFromCPAndType(string codePostale, int type)
+        {
+            List<Models.BienModels> listeDeBiens = new List<Models.BienModels>();
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
+                    var responseTask = client.GetAsync("GetListBiensFromCPAndType?codePostale=" + codePostale + "&type=" + type );
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<List<Models.BienModels>>();
+                        readTask.Wait();
+                        listeDeBiens = readTask.Result;
+                        
+
+                    }
+                    return listeDeBiens;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

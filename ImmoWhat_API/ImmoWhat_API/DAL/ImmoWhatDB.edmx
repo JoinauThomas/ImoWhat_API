@@ -640,6 +640,14 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         <Function Name="GetInfoEvolutionPrices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="GetListBiensFromCPAndType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
+          <Parameter Name="type" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetListBiensFromCPostAndType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
+          <Parameter Name="type" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetMinYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
         </Function>
@@ -1223,6 +1231,18 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <FunctionImport Name="PostNewPhotos">
             <Parameter Name="idBien" Mode="In" Type="Int32" />
             <Parameter Name="lien" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetListBiensFromCPAndType" ReturnType="Collection(ImmoWhatModel.GetListBiensFromCPAndType_Result)">
+            <Parameter Name="codePostal" Mode="In" Type="String" />
+            <Parameter Name="type" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetListBiensFromCPAndType1" ReturnType="Collection(ImmoWhatModel.GetListBiensFromCPAndType1_Result)">
+            <Parameter Name="codePostal" Mode="In" Type="String" />
+            <Parameter Name="type" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetListBiensFromCPostAndType" ReturnType="Collection(ImmoWhatModel.GetListBiensFromCPostAndType_Result)">
+            <Parameter Name="codePostal" Mode="In" Type="String" />
+            <Parameter Name="type" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -1834,6 +1854,25 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <End Type="ImmoWhatModel.BIEN" Role="BIEN" Multiplicity="*" />
           <End Type="ImmoWhatModel.OPTIONS" Role="OPTIONS" Multiplicity="*" />
         </Association>
+        <ComplexType Name="GetListBiensFromCPAndType_Result">
+          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
+          <Property Type="Int32" Name="nombreChambres" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetListBiensFromCPAndType1_Result">
+          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
+          <Property Type="Int32" Name="nombreChambres" Nullable="false" />
+          <Property Type="Int32" Name="nbPhotos" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetListBiensFromCPostAndType_Result">
+          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
+          <Property Type="Int32" Name="nombreChambres" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2352,6 +2391,27 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <FunctionImportMapping FunctionImportName="PostNewBien" FunctionName="ImmoWhatModel.Store.PostNewBien" />
           <FunctionImportMapping FunctionImportName="CheckIfAdressExists" FunctionName="ImmoWhatModel.Store.CheckIfAdressExists" />
           <FunctionImportMapping FunctionImportName="PostNewPhotos" FunctionName="ImmoWhatModel.Store.PostNewPhotos" />
+          <FunctionImportMapping FunctionImportName="GetListBiensFromCPAndType1" FunctionName="ImmoWhatModel.Store.GetListBiensFromCPAndType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetListBiensFromCPAndType1_Result">
+                <ScalarProperty Name="BIEN_Id" ColumnName="BIEN_Id" />
+                <ScalarProperty Name="BIEN_Prix" ColumnName="BIEN_Prix" />
+                <ScalarProperty Name="BIEN_Superficie" ColumnName="BIEN_Superficie" />
+                <ScalarProperty Name="nombreChambres" ColumnName="nombreChambres" />
+                <ScalarProperty Name="nbPhotos" ColumnName="nbPhotos" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetListBiensFromCPostAndType" FunctionName="ImmoWhatModel.Store.GetListBiensFromCPostAndType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetListBiensFromCPostAndType_Result">
+                <ScalarProperty Name="BIEN_Id" ColumnName="BIEN_Id" />
+                <ScalarProperty Name="BIEN_Prix" ColumnName="BIEN_Prix" />
+                <ScalarProperty Name="BIEN_Superficie" ColumnName="BIEN_Superficie" />
+                <ScalarProperty Name="nombreChambres" ColumnName="nombreChambres" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

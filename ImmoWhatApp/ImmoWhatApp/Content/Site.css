@@ -18,7 +18,7 @@ textarea {
     max-width: 280px;
 }
 .navLatD {
-    background-color: coral;
+    background-color: green;
     height: 89vh;
 }
 .zoneMaison {
@@ -156,7 +156,7 @@ body {
 
 #carte {
     height: 85vh;
-    background-color: grey;
+    background-color: green;
     color: white;
 }
 #cartePOI {

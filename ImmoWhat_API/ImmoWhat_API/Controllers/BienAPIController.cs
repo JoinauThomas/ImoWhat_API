@@ -96,5 +96,29 @@ namespace ImmoWhat_API.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet]
+        [Route("GetListBiensFromCPAndType")]
+        public List<Models.BienModels> GetListBiensFromCPAndType(string codePostale, int type)
+        {
+            try
+            {
+                List<Models.BienModels> listeDeBiens = new List<Models.BienModels>();
+
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                List<DAL.GetListBiensFromCPostAndType_Result> result = dbContext.GetListBiensFromCPostAndType(codePostale, type).ToList();
+
+                foreach (var x in result)
+                {
+                    listeDeBiens.Add(new Models.BienModels { idBien = x.BIEN_Id, prix = x.BIEN_Prix, superficie = x.BIEN_Superficie, nbChambres = x.nombreChambres });
+                }
+
+                return listeDeBiens;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -27,18 +27,18 @@
                     @Model.CodePostal @Model.Localite
                 </div>
             </div>
-            
-                <div id="typeBien" class="d-flex justify-content-around">
-                    <div id="maison" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.maison</div>
-                    <div id="appartement" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.appartement</div>
-                    <div id="terrain" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.terrain</div>
-                    <div id="villa" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.villa</div>
-                </div>
-                @*<div style="width:20%" id="maison" class="btnTypeBien btn btn-danger">house</div>
-                <div style="width:20%" id="appartement" class="btnTypeBien btn btn-danger">flat</div>
-                <div style="width:20%" id="villa" class="btnTypeBien btn btn-danger">villa</div>
-                <div style="width:20%" id="terrain" class="btnTypeBien btn btn-danger">field</div>*@
-              
+
+            <div id="typeBien" class="d-flex justify-content-around">
+                <div id="maison" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.maison</div>
+                <div id="appartement" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.appartement</div>
+                <div id="terrain" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.terrain</div>
+                <div id="villa" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.villa</div>
+            </div>
+            @*<div style="width:20%" id="maison" class="btnTypeBien btn btn-danger">house</div>
+        <div style="width:20%" id="appartement" class="btnTypeBien btn btn-danger">flat</div>
+        <div style="width:20%" id="villa" class="btnTypeBien btn btn-danger">villa</div>
+        <div style="width:20%" id="terrain" class="btnTypeBien btn btn-danger">field</div>*@
+
             <div class="row">
                 <div id="menuPrixMoyen" class="col-lg-12 h-50">
                     <span>prix moyen à @Model.Localite:</span>
@@ -46,18 +46,17 @@
                     <span id="prixMoyen"></span>
                 </div>
             </div>
-                <div id="GroupStat" class="row justify-content-lg-center">
-                    <div class="d-flex justify-content-around w-100">
-                        <div role="button" id="tablePrix" class="btn btn-outline-light">table des prix</div>
-                        <div role="button" id="graphique" class="btn btn-outline-light">@Html.ActionLink("graph", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "graph" }, null)</div>
-                    </div>
-                    <div class="d-flex justify-content-around w-100">
-                        <div id="POI" class="btn btn-outline-light">@Html.ActionLink("POI", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "poi" }, null)</div>
-                        <div id="commentaire" class="btn btn-outline-light">@Html.ActionLink("commentaire", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "comment" }, null)</div>
-                        </div>
-                    </div>
-               
-            
+            <div id="GroupStat" class="row justify-content-lg-center">
+                <div class="d-flex justify-content-around w-100">
+                    <div role="button" id="tablePrix" class="btn btn-outline-light">table des prix</div>
+                    <div role="button" id="graphique" class="btn btn-outline-light">@Html.ActionLink("graph", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "graph" }, null)</div>
+                </div>
+                <div class="d-flex justify-content-around w-100">
+                    <div id="POI" class="btn btn-outline-light">@Html.ActionLink("POI", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "poi" }, null)</div>
+                    <div id="commentaire" class="btn btn-outline-light">@Html.ActionLink("commentaire", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "comment" }, null)</div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="list-group col-lg-12" style="position: relative" id="listePrix">
                     <a id="prix1" href="#" class=" list-group-item-action"></a>
@@ -72,129 +71,23 @@
                     <a id="prix10" href="#" class=" list-group-item-action"></a>
                 </div>
                 @*<ul style="height:8vh" class="col-lg-12 " id="listePrix">
-                    LISTE DES PRIX
-                </ul>*@
+                LISTE DES PRIX
+            </ul>*@
             </div>
-
+               
+                
+                
+                
+                
+            
         </nav>
-        <div id="carte" class="col-lg-7">
+        <div id="carte" class="col-lg-7" >
             <div id="map" style="width:100%; height:100%;"></div>
         </div>
         <div class="col-lg-3 navLatD bt container">
-            <div class="list-group container">
-                <div class="zoneMaison">
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">maison</h5>
-                            <small class="mt-1">300000 eu</small>
-                        </div>
-                        <div class="d-flex w-100 justify-content-between">
-                            <img class="imgHouse" src="house.png" alt="Photo de montagne" />
-                            <small class="mt-3">
-                                120m<br />
-                                3 chambres<br />
-                                2 toilettes<br />
-                            </small>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">maison</h5>
-                            <small class="mt-1">300000 eu</small>
-                        </div>
-                        <div class="d-flex w-100 justify-content-between">
-                            <img class="imgHouse" src="house.png" alt="Photo de montagne" />
-                            <small class="mt-3">
-                                120m<br />
-                                3 chambres<br />
-                                2 toilettes<br />
-                            </small>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">maison</h5>
-                            <small class="mt-1">300000 eu</small>
-                        </div>
-                        <div class="d-flex w-100 justify-content-between">
-                            <img class="imgHouse" src="house.png" alt="Photo de montagne" />
-                            <small class="mt-3">
-                                120m<br />
-                                3 chambres<br />
-                                2 toilettes<br />
-                            </small>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">maison</h5>
-                            <small class="mt-1">300000 eu</small>
-                        </div>
-                        <div class="d-flex w-100 justify-content-between">
-                            <img class="imgHouse" src="house.png" alt="Photo de montagne" />
-                            <small class="mt-3">
-                                120m<br />
-                                3 chambres<br />
-                                2 toilettes<br />
-                            </small>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">maison</h5>
-                            <small class="mt-1">300000 eu</small>
-                        </div>
-                        <div class="d-flex w-100 justify-content-between">
-                            <img class="imgHouse" src="house.png" alt="Photo de montagne" />
-                            <small class="mt-3">
-                                120m<br />
-                                3 chambres<br />
-                                2 toilettes<br />
-                            </small>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">maison</h5>
-                            <small class="mt-1">300000 eu</small>
-                        </div>
-                        <div class="d-flex w-100 justify-content-between">
-                            <img class="imgHouse" src="house.png" alt="Photo de montagne" />
-                            <small class="mt-3">
-                                120m<br />
-                                3 chambres<br />
-                                2 toilettes<br />
-                            </small>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">maison</h5>
-                            <small class="mt-1">300000 eu</small>
-                        </div>
-                        <div class="d-flex w-100 justify-content-between">
-                            <img class="imgHouse" src="house.png" alt="Photo de montagne" />
-                            <small class="mt-3">
-                                120m<br />
-                                3 chambres<br />
-                                2 toilettes<br />
-                            </small>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">maison</h5>
-                            <small class="mt-1">300000 eu</small>
-                        </div>
-                        <div class="d-flex w-100 justify-content-between">
-                            <img class="imgHouse" src="house.png" alt="Photo de montagne" />
-                            <small class="mt-3">
-                                120m<br />
-                                3 chambres<br />
-                                2 toilettes<br />
-                            </small>
-                        </div>
-                    </a>
+            <div class="">
+                <div class="zoneMaison" id="az">
+                   
                 </div>
             </div>
             <br />
@@ -205,7 +98,7 @@
                     <button id="btnAjoutBien" class="btn btn-outline-light">ajouter un bien</button>
                 }
                 else {
-                    <button id="btnAjoutBien" class="btn btn-outline-light" disabled="true">ajouter un bien</button>
+                    <button id="btnAjoutBien" class="btn btn-outline-light" disabled>ajouter un bien</button>
                     }
                 }
         </div>
@@ -214,6 +107,118 @@
 <div id="modal_commune" style="display:none">
     <p id="modalTexte" class="modal-contents"></p>
 </div>
+@*<img class="imgHouse" src="~/img/Bruxelles.jpg" alt="Photo de montagne" />*@
+@*<img src="~/img/Bruxelles.jpg" />*@
+<script>
+
+
+
+    //CHARGER LA LISTE DE BIENS EN FONCTION DU CODE POSTEL ET DU TYPE
+
+    function loadListeBiens(codePostal, type) {
+
+         $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            url: '@Url.Action("GetListBiensFromCPAndType", "Bien")',
+            data: { codePostale: codePostal, type: type },
+            success: function (donnee) {
+                var i = donnee.listeBiens.length;
+                var tableString = "";
+                for (var x = 0; x < i; x++) {
+                    var img = donnee.listeBiens[x].idBien + "-0.jpg";
+                    //alert(img);
+                    tableString += '<a href="#"><div id="' + donnee.listeBiens[x].idBien +'" class="bien card bg-dark text-white">' +
+                        '<img id="img' + donnee.listeBiens[x].idBien + '" class="card-img" src="/img/bien/' + img +'" alt="pas d image" />' +
+                        '<div class="card-img-overlay">' +
+                        '<h5 class="card-title">Card title</h5>' +
+                        '<p style="color:black; background-color:rgba(177, 174, 174, 0.60)" class="card-text">' + donnee.listeBiens[x].prix + '€<br/>' + donnee.listeBiens[x].superficie + 'm²<br />' + donnee.listeBiens[x].nbChambres + ' chambres</p>'+
+                        
+                        '</div>' +
+                        '</div ></a>';
+                    
+
+                    //tableString += '<a id="' + donnee.listeBiens[x].idBien+'" href="#" class="bien list-group-item list-group-item-action flex-column align-items-start">' +
+                    //    '<div class="d-flex w-100 justify-content-between">' +
+                    //    '<h5 class="mb-1">maison</h5>' +
+                    //    '<small class="mt-1">' + donnee.listeBiens[x].prix+'€</small>' +
+                    //    '</div>' +
+                    //    '<div class="d-flex w-100 justify-content-between">' +
+                    //    '<img id="img' + donnee.listeBiens[x].idBien +'" class="imgHouse" src="/img/bien/'+img+'" alt="pas d image" />' +
+                    //    '<small class="mt-3">' +
+                    //    donnee.listeBiens[x].superficie + 'm²<br />' +
+                    //    donnee.listeBiens[x].nbChambres + ' chambres<br />' +
+                    //    '<br />' +
+                    //    '</small>' +
+                    //    '</div>' +
+                    //    '</a>';
+                }
+                $('.zoneMaison').html(tableString);
+                //for (x = 0; x < i; x++) {
+                //    $('#img' + donnee.listeBiens[x].idBien).attr("src", "/img/logo.png");
+                //    alert('#img' + donnee.listeBiens[x].idBien);
+                //}
+                $('.bien').click(function () {
+                    var id = $(this).attr("id")
+                    alert(id);
+                })
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        })
+    }
+
+
+    @*function loadListeBiens(codePostal, type) {
+
+         $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            url: '@Url.Action("GetListBiensFromCPAndType", "Bien")',
+            data: { codePostale: codePostal, type: type },
+            success: function (donnee) {
+                var i = donnee.listeBiens.length;
+                var tableString = '<ul id="ert">';
+                for (var x = 0; x < i; x++) {
+                    var img = donnee.listeBiens[x].idBien + "-0.jpg";
+                    //alert(img);
+                    tableString += '<li class ="lis" id="' + donnee.listeBiens[x].idBien +'"><a href="#" class="bien list-group-item list-group-item-action flex-column align-items-start">' +
+                        '<div class="d-flex w-100 justify-content-between">' +
+                        '<h5 class="mb-1">maison</h5>' +
+                        '<small class="mt-1">' + donnee.listeBiens[x].prix+'€</small>' +
+                        '</div>' +
+                        '<div class="d-flex w-100 justify-content-between">' +
+                        '<img id="img' + donnee.listeBiens[x].idBien +'" class="imgHouse" src="/img/bien/'+img+'" alt="pas d image" />' +
+                        '<small class="mt-3">' +
+                        donnee.listeBiens[x].superficie + 'm²<br />' +
+                        donnee.listeBiens[x].nbChambres + ' chambres<br />' +
+                        '<br />' +
+                        '</small>' +
+                        '</div>' +
+                        '</a></li>';
+                }
+                tableString += "</ul>"
+                $('#qqq').append(tableString);
+                //for (x = 0; x < i; x++) {
+                //    $('#img' + donnee.listeBiens[x].idBien).attr("src", "/img/logo.png");
+                //    alert('#img' + donnee.listeBiens[x].idBien);
+                //}
+                $('.lis').click(function () {
+                    alert("oki");
+                    var id = $(this).attr("id")
+                    alert(id);
+                })
+                alert("oki")
+
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        })
+
+    }*@
+</script>
 
 <script>
 
@@ -336,8 +341,7 @@
     }
 
     $(document).ready(function () {
-
-      
+        loadListeBiens(@Model.CodePostal, 3);
 
         $('#maison').removeClass("btn-outline-light");
         $('#maison').addClass("btn-outline-dark");
@@ -376,11 +380,22 @@
 
     $('#typeBien').click(function (event) {
         var type = $(event.target).attr('id');
+        
         $('.btnTypeBien').removeClass("btn-outline-dark");
         $('.btnTypeBien').addClass("btn-outline-light");
         $("#" + type).removeClass("btn-outline-light");
         $("#" + type).addClass("btn-outline-dark");
 
+        var idType = 0;
+        if (type == "terrain")
+            idType = 1;
+        else if (type == "maison")
+            idType = 2;
+        else if (type == "villa")
+            idType = 3;
+        else if (type == "appartement")
+            idType = 4;
+        loadListeBiens(@Model.CodePostal, idType)
         GetListeClassePrix(type)
 
     });
