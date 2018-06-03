@@ -120,5 +120,30 @@ namespace ImmoWhat_API.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("GetOneBien")]
+        public Models.BienModels GetOneBien(int idBien)
+        {
+            try
+            {
+                Models.BienModels TheBien = new Models.BienModels();
+
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                List<DAL.GetOneBien_Result> result = dbContext.GetOneBien(idBien).ToList();
+
+                foreach (var x in result)
+                {
+                    TheBien = new Models.BienModels { idBien = (int)x.idBien, typeBien = (int)x.typeBien, idProprietaire = (int)x.idProprietaire, prix = (int)x.prix, superficie = (int)x.superficie, commune = x.commune, CodePostale = x.codePostal, rue = x.rue, numero = x.numero, boite = x.boite, nbEtages = (int)x.nbEtages, libelle = x.libbelle, anneeConstruction = (int)x.anneeDeConstr, energie = x.energie, estSupprime = (bool)x.estSupprime, estVendu = (bool)x.estVendu, nbPhotos = (int)x.nbPhotos, nbChambres = (int)x.nbChambre, nbSdb = (int)x.nbSdb, nbDressing = (int)x.nbdressing, nbSam = (int)x.nbsam, nbSalon = (int)x.nbsalon, nbBuanderie = (int)x.nbbuanderie, nbCave = (int)x.nbcave, nbGrenier = (int)x.nbgrenier, nbToilette = (int)x.nbtoilette, nbVeranda = (int)x.nbveranda, nbGarage = (int)x.nbgarage, piscine = (bool)x.piscine, cuisineEquipee = (bool)x.cuisineEqu, parking = (bool)x.parking, jardin = (bool)x.jardin, alarme = (bool)x.alarme, doubleVitrage = (bool)x.doubleVitre };
+                }
+
+                return TheBien;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

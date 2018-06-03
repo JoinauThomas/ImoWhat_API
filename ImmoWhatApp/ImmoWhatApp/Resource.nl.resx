@@ -272,4 +272,31 @@
   <data name="vendu" xml:space="preserve">
     <value>uitverkocht</value>
   </data>
+  <data name="chambres" xml:space="preserve">
+    <value>kamers</value>
+  </data>
+  <data name="chambre" xml:space="preserve">
+    <value>slaapkamer</value>
+  </data>
+  <data name="etage" xml:space="preserve">
+    <value>verdieping</value>
+  </data>
+  <data name="etages" xml:space="preserve">
+    <value>verdiepingen</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Beschrijving</value>
+  </data>
+  <data name="options" xml:space="preserve">
+    <value>opties</value>
+  </data>
+  <data name="pieces" xml:space="preserve">
+    <value>munten</value>
+  </data>
+  <data name="ajouterUnBien" xml:space="preserve">
+    <value>voeg een eigenschap toe</value>
+  </data>
+  <data name="envoyer" xml:space="preserve">
+    <value>sturen</value>
+  </data>
 </root>

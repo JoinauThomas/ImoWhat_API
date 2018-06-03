@@ -35,9 +35,9 @@
                 <div id="villa" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.villa</div>
             </div>
             @*<div style="width:20%" id="maison" class="btnTypeBien btn btn-danger">house</div>
-        <div style="width:20%" id="appartement" class="btnTypeBien btn btn-danger">flat</div>
-        <div style="width:20%" id="villa" class="btnTypeBien btn btn-danger">villa</div>
-        <div style="width:20%" id="terrain" class="btnTypeBien btn btn-danger">field</div>*@
+                <div style="width:20%" id="appartement" class="btnTypeBien btn btn-danger">flat</div>
+                <div style="width:20%" id="villa" class="btnTypeBien btn btn-danger">villa</div>
+                <div style="width:20%" id="terrain" class="btnTypeBien btn btn-danger">field</div>*@
 
             <div class="row">
                 <div id="menuPrixMoyen" class="col-lg-12 h-50">
@@ -71,45 +71,44 @@
                     <a id="prix10" href="#" class=" list-group-item-action"></a>
                 </div>
                 @*<ul style="height:8vh" class="col-lg-12 " id="listePrix">
-                LISTE DES PRIX
-            </ul>*@
+                        LISTE DES PRIX
+                    </ul>*@
             </div>
-               
-                
-                
-                
-                
-            
+
         </nav>
-        <div id="carte" class="col-lg-7" >
+        <div id="carte" class="col-lg-7">
             <div id="map" style="width:100%; height:100%;"></div>
         </div>
         <div class="col-lg-3 navLatD bt container">
             <div class="">
                 <div class="zoneMaison" id="az">
-                   
+
                 </div>
             </div>
             <br />
+            <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="attention" data-content="Veuillez vous connecter pour mettre votre bien en vente!">@Resource.ajouterUnBien</a>
+
             @{
 
                 if (Session["moi"] != null)
                 {
                     <button id="btnAjoutBien" class="btn btn-outline-light">ajouter un bien</button>
                 }
-                else {
-                    <button id="btnAjoutBien" class="btn btn-outline-light" disabled>ajouter un bien</button>
-                    }
+                else
+                {
+                    <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="attention" data-content="Veuillez vous connecter pour mettre votre bien en vente!">@Resource.ajouterUnBien</a>
+
                 }
+            }
         </div>
     </div>
 </div>
-<div id="modal_commune" style="display:none">
+<div id="modal_commune" style="display:none; ">
     <p id="modalTexte" class="modal-contents"></p>
 </div>
 @*<img class="imgHouse" src="~/img/Bruxelles.jpg" alt="Photo de montagne" />*@
 @*<img src="~/img/Bruxelles.jpg" />*@
-<script>
+<script type="text/javascript">
 
 
 
@@ -128,15 +127,15 @@
                 for (var x = 0; x < i; x++) {
                     var img = donnee.listeBiens[x].idBien + "-0.jpg";
                     //alert(img);
-                    tableString += '<a href="#"><div id="' + donnee.listeBiens[x].idBien +'" class="bien card bg-dark text-white">' +
-                        '<img id="img' + donnee.listeBiens[x].idBien + '" class="card-img" src="/img/bien/' + img +'" alt="pas d image" />' +
+                    tableString += '<a href="#" ><div  id="' + donnee.listeBiens[x].idBien +'" class="bien card bg-dark text-white">' +
+                        '<img style="max-height:175px" id="img' + donnee.listeBiens[x].idBien + '" class="card-img" src="/img/bien/' + img +'" alt="pas d image" />' +
                         '<div class="card-img-overlay">' +
                         '<h5 class="card-title">Card title</h5>' +
                         '<p style="color:black; background-color:rgba(177, 174, 174, 0.60)" class="card-text">' + donnee.listeBiens[x].prix + '€<br/>' + donnee.listeBiens[x].superficie + 'm²<br />' + donnee.listeBiens[x].nbChambres + ' chambres</p>'+
-                        
+
                         '</div>' +
                         '</div ></a>';
-                    
+
 
                     //tableString += '<a id="' + donnee.listeBiens[x].idBien+'" href="#" class="bien list-group-item list-group-item-action flex-column align-items-start">' +
                     //    '<div class="d-flex w-100 justify-content-between">' +
@@ -159,9 +158,33 @@
                 //    alert('#img' + donnee.listeBiens[x].idBien);
                 //}
                 $('.bien').click(function () {
-                    var id = $(this).attr("id")
-                    alert(id);
+                    if ('@Session["moi"]' != "") {
+                        var id = $(this).attr("id")
+                        alert(id);
+                        var url = "../Bien/voirLeBien?idBien=" + id;
+                        window.location.href = url;
+                    }
+                    else {
+                        alert("pas connecté");
+                    }
+
+                    //voirLeBien(id);
                 })
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        })
+    }
+    function voirLeBien(idBien) {
+        alert(idBien);
+        $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            url: '@Url.Action("voirLeBien", "Bien")',
+            data: { idBien: idBien },
+            success: function (donnee) {
+                alert('ok')
             },
             error: function (error) {
                 alert(error.responseText);
@@ -221,6 +244,9 @@
 </script>
 
 <script>
+    //$(function () {
+    //    $('[data-toggle="popover"]').popover({ delay: { "show": 50, "hide": 10 }, placement: 'top' })
+    //})
 
     $('#btnAjoutBien').click(function () {
         location.href = '@Url.Action("AddNewBien", "Bien")';
@@ -278,32 +304,32 @@
     }
 </script>
 @*<script type="text/javascript">
-    google.charts.load('current', {
-        'packages': ['geochart'],
-        // Note: you will need to get a mapsApiKey for your project.
-        // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-        'mapsApiKey': 'AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0'
-    });
-    google.charts.setOnLoadCallback(drawRegionsMap);
+        google.charts.load('current', {
+            'packages': ['geochart'],
+            // Note: you will need to get a mapsApiKey for your project.
+            // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+            'mapsApiKey': 'AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0'
+        });
+        google.charts.setOnLoadCallback(drawRegionsMap);
 
-    function drawRegionsMap() {
-        var data = google.visualization.arrayToDataTable([
-            ['Country', 'Popularity'],
-            ['Germany', 200],
-            ['United States', 300],
-            ['Brazil', 400],
-            ['Canada', 500],
-            ['France', 600],
-            ['RU', 700]
-        ]);
+        function drawRegionsMap() {
+            var data = google.visualization.arrayToDataTable([
+                ['Country', 'Popularity'],
+                ['Germany', 200],
+                ['United States', 300],
+                ['Brazil', 400],
+                ['Canada', 500],
+                ['France', 600],
+                ['RU', 700]
+            ]);
 
-        var options = {};
+            var options = {};
 
-        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
 
-        chart.draw(data, options);
-    }
-</script>*@
+            chart.draw(data, options);
+        }
+    </script>*@
 <script>
     var classCommune;
 
@@ -341,33 +367,55 @@
     }
 
     $(document).ready(function () {
-        loadListeBiens(@Model.CodePostal, 3);
 
-        $('#maison').removeClass("btn-outline-light");
-        $('#maison').addClass("btn-outline-dark");
-                    GetListeClassePrix("maison");
+
+        var typeBien = @ViewBag.typeBien;
+
+
+        loadListeBiens(@Model.CodePostal, typeBien);
+
+        if (typeBien == 1) {
+            $('#terrain').removeClass("btn-outline-light");
+            $('#terrain').addClass("btn-outline-dark");
+            GetListeClassePrix("terrain")
+        }
+        else if (typeBien == 2) {
+            $('#maison').removeClass("btn-outline-light");
+            $('#maison').addClass("btn-outline-dark");
+            GetListeClassePrix("maison")
+        }
+        else if (typeBien == 3) {
+            $('#villa').removeClass("btn-outline-light");
+            $('#villa').addClass("btn-outline-dark");
+            GetListeClassePrix("villa")
+        }
+        else if (typeBien == 4) {
+            $('#appartement').removeClass("btn-outline-light");
+            $('#appartement').addClass("btn-outline-dark");
+            GetListeClassePrix("appartement")
+        }
 
         $("#inputComm").autocomplete({
                         autoFocus: true,
-            source: function (requete, reponse) {
+                        source: function (requete, reponse) {
                             var name = $('#inputComm').val();
-                //alert(name);
-                $.ajax({
+                            //alert(name);
+                            $.ajax({
                                 type: 'GET',
-                    datatype: 'json',
-                    data: { nom: name.toLowerCase() },
-                    url: '@Url.Action("GetCommunesByNameInJson", "Commune")',
-                    success: function (donnee) {
+                                datatype: 'json',
+                                data: { nom: name.toLowerCase() },
+                                url: '@Url.Action("GetCommunesByNameInJson", "Commune")',
+                                success: function (donnee) {
                                     reponse($.map(donnee.commune, function (objet) {
                                         return {
-                                            label: objet.Localite + " ( " + objet.CodePostal+" )",
-                                value: objet.Localite,
-                                id: objet.id
-                                    }
+                                            label: objet.Localite + " ( " + objet.CodePostal + " )",
+                                            value: objet.Localite,
+                                            id: objet.id
+                                        }
                                     }));
                                 }
                             })
-            },
+                        },
             minLength: 3,
 
             select: function (event, ui) { // lors de la sélection d'une proposition
@@ -380,7 +428,7 @@
 
     $('#typeBien').click(function (event) {
         var type = $(event.target).attr('id');
-        
+
         $('.btnTypeBien').removeClass("btn-outline-dark");
         $('.btnTypeBien').addClass("btn-outline-light");
         $("#" + type).removeClass("btn-outline-light");
@@ -432,6 +480,7 @@
     });
 </script>
 
-
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0&callback=myMap"></script>

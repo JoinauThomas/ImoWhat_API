@@ -272,4 +272,31 @@
   <data name="villa" xml:space="preserve">
     <value>villa</value>
   </data>
+  <data name="chambres" xml:space="preserve">
+    <value>bedrooms</value>
+  </data>
+  <data name="chambre" xml:space="preserve">
+    <value>bedroom</value>
+  </data>
+  <data name="etage" xml:space="preserve">
+    <value>floor</value>
+  </data>
+  <data name="etages" xml:space="preserve">
+    <value>floors</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>description</value>
+  </data>
+  <data name="options" xml:space="preserve">
+    <value>options</value>
+  </data>
+  <data name="pieces" xml:space="preserve">
+    <value>rooms</value>
+  </data>
+  <data name="ajouterUnBien" xml:space="preserve">
+    <value>add a property</value>
+  </data>
+  <data name="envoyer" xml:space="preserve">
+    <value>to send</value>
+  </data>
 </root>

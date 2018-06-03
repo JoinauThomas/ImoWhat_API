@@ -969,5 +969,23 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetListBiensFromCPostAndType_Result>("GetListBiensFromCPostAndType", codePostalParameter, typeParameter);
         }
+    
+        public virtual ObjectResult<voirLeBien_Result> voirLeBien(Nullable<int> idBien)
+        {
+            var idBienParameter = idBien.HasValue ?
+                new ObjectParameter("idBien", idBien) :
+                new ObjectParameter("idBien", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<voirLeBien_Result>("voirLeBien", idBienParameter);
+        }
+    
+        public virtual ObjectResult<GetOneBien_Result> GetOneBien(Nullable<int> idBien)
+        {
+            var idBienParameter = idBien.HasValue ?
+                new ObjectParameter("idBien", idBien) :
+                new ObjectParameter("idBien", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetOneBien_Result>("GetOneBien", idBienParameter);
+        }
     }
 }

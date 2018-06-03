@@ -1,4 +1,159 @@
 ﻿@model ImmoWhatApp.Models.MembreModels
+
+<div class="container">
+    <div class="row border border-info rounded mt-3 mb-5" style="background-color:#009b84;">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col">
+                    <h1>mon profil</h1>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col">
+                    <form>
+                        <div class="form-row">
+                            <div class="col-lg-5">
+                                <div class="form-row mb-5">
+                                    <div class="col-lg-12 offset-lg-0"><span>enregistré depuis le &lt;date d'enrefistrement&gt;</span></div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>@Html.DisplayNameFor(model => model.mail)</label>
+                                    <input class="form-control" type="email" disabled="" value="@Html.DisplayFor(model => model.mail)">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>@Html.DisplayNameFor(model => model.nom)</label>
+                                    <input class="form-control" type="text" disabled="" value="@Html.DisplayFor(model => model.nom)">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>@Html.DisplayNameFor(model => model.prenom)</label>
+                                    <input class="form-control" type="text" disabled="" value="@Html.DisplayFor(model => model.prenom)">
+                                </div>
+                                <div class="form-group d-flex flex-row justify-content-between align-items-center col-12">
+                                    <div class="form-row">
+                                        <div class="col-lg-12">
+                                            <label class="col-form-label">@Html.DisplayNameFor(model => model.dateDeNaissance)</label>
+                                        </div>
+                                        <div class="col d-flex flex-row justify-content-between align-items-center align-self-center">
+                                            <input class="form-control col-3" type="number" disabled="" placeholder="jour">
+                                            <span class="col-1">/</span>
+                                            <input class="form-control col-3" type="number" disabled="" placeholder="mois">
+                                            <span class="col-1">/</span>
+                                            <input class="form-control col-3" type="number" disabled="" placeholder="année">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>@Html.DisplayNameFor(model => model.telephone)</label>
+                                <input class="form-control" type="text" disabled="" value="@Html.DisplayFor(model => model.telephone)"></div>
+                            </div>
+                            <div class="col-lg-5 offset-lg-1">
+                                <div class="form-row mb-2">
+                                    <div class="col d-flex flex-row justify-content-center">
+                                        <img src="assets/img/photo0.jpg" class="rounded-circle" style="width:50%;height:100%;max-width:47%;">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group col-12">
+                                            <label>@Html.DisplayNameFor(model => model.Commune)</label>
+                                            <input class="form-control" type="text" disabled="" value="@Html.DisplayFor(model => model.Commune)">
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label>@Html.DisplayNameFor(model => model.rue)</label>
+                                            <input class="form-control" type="text" disabled="" value="@Html.DisplayFor(model => model.rue)">
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col d-flex">
+                                                <div class="form-group col-4">
+                                                    <label>@Html.DisplayNameFor(model => model.numero)</label>
+                                                    <input class="form-control" type="text" disabled="" value="@Html.DisplayFor(model => model.numero)">
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <label>@Html.DisplayNameFor(model => model.boite)</label>
+                                                    <input class="form-control" type="text" disabled="" value="@Html.DisplayFor(model => model.boite)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row mt-3">
+                                    <div class="col">
+                                        <button class="btn btn-danger col-4 mr-5" type="button">supprimer</button>
+                                        <button class="btn btn-warning col-4" type="button">modifier</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col d-flex flex-row justify-content-end">
+                    <a href="#" style="font-size:1.5em">retour</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row border border-info rounded mt-5 mb-3" style="background-color:#009b84;">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col">
+                    <h1>mes biens</h1>
+                </div>
+            </div>
+            <div class="table-responsive d-flex" style="text-align:center">
+                <table class="table">
+                    <thead>
+                        <tr class="align-self-center">
+                            <th>est vendu</th>
+                            <th>adresse</th>
+                            <th>date d'enregistrement</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>avenue d'argenteil 53, 1410 Waterloo</td>
+                            <td>21/10/2016</td>
+                            <td><img></td>
+                            <td style="text-align:right">
+                                <button style="height:60px; width:60px" class="btn btn-success rounded-circle" type="button"><img src="https://png.icons8.com/windows/40/000000/handshake.png"></button>
+                                <button style="height:60px; width:60px" class="btn btn-warning rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/hand-with-pen.png"></button>
+                                <button style="height:60px; width:60px" class="btn btn-light rounded-circle"><img src="https://png.icons8.com/ios/40/000000/detective.png"></button>
+                                <button style="height:60px; width:60px" class="btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" checked=""></td>
+                            <td>avenue d'argenteil 53, 1410 Waterloo</td>
+                            <td>21/10/2016</td>
+                            <td><img></td>
+                            <td style="text-align:right">
+                                <button style="height:60px; width:60px" class="btn btn-warning rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/hand-with-pen.png"></button>
+                                <button style="height:60px; width:60px" class="btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"></button>
+                                <button style="height:60px; width:60px" class="btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row mt-3">
+                <div class="col d-flex flex-row justify-content-end"><button class="btn btn-success" type="button">ajouter un bien</button></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
 <div class="jumbotron col-12">
     <div class="row">
         <div class=" col-md-3">
@@ -27,136 +182,7 @@
 
 
 
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.idMembre)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.idMembre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.mail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.mail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.pswd)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.pswd)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.pswd2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.pswd2)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.nom)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.nom)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.prenom)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.prenom)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Commune)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Commune)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.rue)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.rue)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.numero)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.numero)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.boite)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.boite)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.roleUser)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.roleUser)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.telephone)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.telephone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.dateDeNaissance)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.dateDeNaissance)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.estProprietaire)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.estProprietaire)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.photo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.photo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.deleted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.deleted)
-        </dd>
-
-    </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |

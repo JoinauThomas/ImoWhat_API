@@ -302,6 +302,9 @@
     <Compile Include="DAL\GetMyProfile_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\GetOneBien_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetPriceTable_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
@@ -372,6 +375,9 @@
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\VAL_PRIX_MOYEN_BIEN.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\voirLeBien_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">

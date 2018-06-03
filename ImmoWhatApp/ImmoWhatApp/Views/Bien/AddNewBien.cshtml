@@ -39,9 +39,9 @@
                                 </div>
                             </div>
                             <div class="form-group col-lg-4">
-                                @Html.LabelFor(model => model.codePostal, htmlAttributes: new { @class = "control-label col-md-12" })
+                                @Html.LabelFor(model => model.codePostale, htmlAttributes: new { @class = "control-label col-md-12" })
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.codePostal, new { htmlAttributes = new { @class = "form-control col-12", disabled = "disabled" } })
+                                    @Html.EditorFor(model => model.codePostale, new { htmlAttributes = new { @class = "form-control col-12", disabled = "disabled" } })
                                     <span style="display:none" class="text-danger" id="errorCodePostal"></span>
                                 </div>
                             </div>
@@ -393,7 +393,7 @@
 
         var adresse = $('#searchTextField').val();
         var commune = $('#commune').val();
-        var codePostal = $('#codePostal').val();
+        var codePostale = $('#codePostale').val();
         var rue = $('#rue').val();
         var numero = $('#numero').val();
         var superficie = $('#superficie').val();
@@ -421,7 +421,7 @@
             $('#errorCommune').hide();
         }
         
-        if (codePostal == "") {
+        if (codePostale == "") {
             $('#errorCodePostal').html("pas de code postal");
             $('#errorCodePostal').show();
             ok = false;
@@ -535,7 +535,7 @@
         formData.append("commune", $('#commune').val());
         formData.append("rue", $('#rue').val());
         formData.append("numero", $('#numero').val());
-        formData.append("codePostal", $('#codePostal').val());
+        formData.append("codePostale", $('#codePostale').val());
 
         $.ajax({
             type: 'POST',
@@ -548,7 +548,7 @@
 
                     // RECUPERER ID DU BIEN
 
-                    var CodePostal = $('#codePostal').val().toString();
+                    var codePostale = $('#codePostale').val().toString();
                     var Rue = $('#rue').val();
                     var Numero = $('#numero').val();
                     var Boite = $('#boite').val();
@@ -556,7 +556,7 @@
                     $.ajax({
                         type: 'GET',
                         url: '@Url.Action("GetIdBien", "Bien")',
-                        data: { codePostal: CodePostal, rue: Rue, numero: Numero, boite: Boite },
+                        data: { codePostale: codePostale, rue: Rue, numero: Numero, boite: Boite },
                         async: false,
                         datatype: 'json',
                         success: function (donnee) {
@@ -857,7 +857,7 @@
                     $('#commune').val(place.address_components[i].long_name);
                 }
                 else if (type == "postal_code") {
-                    $('#codePostal').val(place.address_components[i].long_name);
+                    $('#codePostale').val(place.address_components[i].long_name);
                 }
                 else if (type == "route") {
                     $('#rue').val(place.address_components[i].long_name);
@@ -892,7 +892,7 @@
         $('#commune').val("");
         $('#rue').val("");
         $('#numero').val("");
-        $('#codePostal').val("");
+        $('#codePostale').val("");
     });
 
 </script>

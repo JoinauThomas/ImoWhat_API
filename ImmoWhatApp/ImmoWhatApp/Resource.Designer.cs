@@ -61,6 +61,15 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à ajouter un bien.
+        /// </summary>
+        public static string ajouterUnBien {
+            get {
+                return ResourceManager.GetString("ajouterUnBien", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à alarme.
         /// </summary>
         public static string alarm {
@@ -102,6 +111,24 @@ namespace ImmoWhatApp {
         public static string boite {
             get {
                 return ResourceManager.GetString("boite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à chambre.
+        /// </summary>
+        public static string chambre {
+            get {
+                return ResourceManager.GetString("chambre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à chambres.
+        /// </summary>
+        public static string chambres {
+            get {
+                return ResourceManager.GetString("chambres", resourceCulture);
             }
         }
         
@@ -169,6 +196,15 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à déscription.
+        /// </summary>
+        public static string description {
+            get {
+                return ResourceManager.GetString("description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Desole.
         /// </summary>
         public static string desole {
@@ -201,6 +237,33 @@ namespace ImmoWhatApp {
         public static string enregistrer {
             get {
                 return ResourceManager.GetString("enregistrer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à envoyer.
+        /// </summary>
+        public static string envoyer {
+            get {
+                return ResourceManager.GetString("envoyer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à étage.
+        /// </summary>
+        public static string etage {
+            get {
+                return ResourceManager.GetString("etage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à étages.
+        /// </summary>
+        public static string etages {
+            get {
+                return ResourceManager.GetString("etages", resourceCulture);
             }
         }
         
@@ -268,7 +331,7 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à chambres.
+        ///   Recherche une chaîne localisée semblable à chambre(s).
         /// </summary>
         public static string nbChambres {
             get {
@@ -376,11 +439,29 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à options.
+        /// </summary>
+        public static string options {
+            get {
+                return ResourceManager.GetString("options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à parking.
         /// </summary>
         public static string parking {
             get {
                 return ResourceManager.GetString("parking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à pièces.
+        /// </summary>
+        public static string pieces {
+            get {
+                return ResourceManager.GetString("pieces", resourceCulture);
             }
         }
         

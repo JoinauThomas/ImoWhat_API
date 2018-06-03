@@ -31,7 +31,7 @@ namespace ImmoWhatApp.Models
 
         [Display(ResourceType = typeof(Resource), Name = "codePostale")]
         [Required(ErrorMessage = "Le nom du restaurant doit être saisi")]
-        public string codePostal { get; set; }
+        public string codePostale { get; set; }
 
         [Required(ErrorMessage = "Le nom du restaurant doit être saisi")]
         [Display(ResourceType = typeof(Resource), Name = "rue")]

@@ -234,7 +234,7 @@
     <value>caves</value>
   </data>
   <data name="nbChambres" xml:space="preserve">
-    <value>chambres</value>
+    <value>chambre(s)</value>
   </data>
   <data name="nbDressing" xml:space="preserve">
     <value>dressings</value>
@@ -271,5 +271,32 @@
   </data>
   <data name="vendu" xml:space="preserve">
     <value>vendu</value>
+  </data>
+  <data name="chambres" xml:space="preserve">
+    <value>chambres</value>
+  </data>
+  <data name="chambre" xml:space="preserve">
+    <value>chambre</value>
+  </data>
+  <data name="etage" xml:space="preserve">
+    <value>étage</value>
+  </data>
+  <data name="etages" xml:space="preserve">
+    <value>étages</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>déscription</value>
+  </data>
+  <data name="options" xml:space="preserve">
+    <value>options</value>
+  </data>
+  <data name="pieces" xml:space="preserve">
+    <value>pièces</value>
+  </data>
+  <data name="ajouterUnBien" xml:space="preserve">
+    <value>ajouter un bien</value>
+  </data>
+  <data name="envoyer" xml:space="preserve">
+    <value>envoyer</value>
   </data>
 </root>

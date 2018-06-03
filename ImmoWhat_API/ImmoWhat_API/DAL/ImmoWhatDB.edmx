@@ -663,6 +663,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         <Function Name="GetMyProfiles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="GetOneBien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idBien" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetPriceTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="compareYear" Type="int" Mode="In" />
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
@@ -755,6 +758,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="annee" Type="int" Mode="In" />
           <Parameter Name="type" Type="nvarchar" Mode="In" />
           <Parameter Name="codePostCommune" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="voirLeBien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idBien" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="ImmoWhatModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
@@ -1243,6 +1249,12 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <FunctionImport Name="GetListBiensFromCPostAndType" ReturnType="Collection(ImmoWhatModel.GetListBiensFromCPostAndType_Result)">
             <Parameter Name="codePostal" Mode="In" Type="String" />
             <Parameter Name="type" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="voirLeBien" ReturnType="Collection(ImmoWhatModel.voirLeBien_Result)">
+          <Parameter Name="idBien" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneBien" ReturnType="Collection(ImmoWhatModel.GetOneBien_Result)">
+            <Parameter Name="idBien" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -1873,6 +1885,77 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
           <Property Type="Int32" Name="nombreChambres" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="voirLeBien_Result">
+          <Property Type="Int32" Name="idBien" Nullable="true" />
+          <Property Type="Int32" Name="typeBien" Nullable="true" />
+          <Property Type="Int32" Name="idProprietaire" Nullable="true" />
+          <Property Type="Int32" Name="prix" Nullable="true" />
+          <Property Type="Int32" Name="superficie" Nullable="true" />
+          <Property Type="String" Name="commune" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="codePostal" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="rue" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="numero" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="boite" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="nbEtages" Nullable="true" />
+          <Property Type="String" Name="libbelle" Nullable="true" MaxLength="550" />
+          <Property Type="String" Name="energie" Nullable="true" MaxLength="5" />
+          <Property Type="Boolean" Name="estSupprime" Nullable="true" />
+          <Property Type="Boolean" Name="estVendu" Nullable="true" />
+          <Property Type="Int32" Name="nbPhotos" Nullable="true" />
+          <Property Type="Int32" Name="nbChambre" Nullable="true" />
+          <Property Type="Int32" Name="nbSdb" Nullable="true" />
+          <Property Type="Int32" Name="nbdressing" Nullable="true" />
+          <Property Type="Int32" Name="nbsam" Nullable="true" />
+          <Property Type="Int32" Name="nbsalon" Nullable="true" />
+          <Property Type="Int32" Name="nbbuanderie" Nullable="true" />
+          <Property Type="Int32" Name="nbcave" Nullable="true" />
+          <Property Type="Int32" Name="nbgrenier" Nullable="true" />
+          <Property Type="Int32" Name="nbtoilette" Nullable="true" />
+          <Property Type="Int32" Name="nbveranda" Nullable="true" />
+          <Property Type="Int32" Name="nbgarage" Nullable="true" />
+          <Property Type="Boolean" Name="piscine" Nullable="true" />
+          <Property Type="Boolean" Name="cuisineEqu" Nullable="true" />
+          <Property Type="Boolean" Name="parking" Nullable="true" />
+          <Property Type="Boolean" Name="jardin" Nullable="true" />
+          <Property Type="Boolean" Name="alarme" Nullable="true" />
+          <Property Type="Boolean" Name="doubleVitre" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetOneBien_Result">
+          <Property Type="Int32" Name="idBien" Nullable="true" />
+          <Property Type="Int32" Name="typeBien" Nullable="true" />
+          <Property Type="Int32" Name="idProprietaire" Nullable="true" />
+          <Property Type="Int32" Name="prix" Nullable="true" />
+          <Property Type="Int32" Name="superficie" Nullable="true" />
+          <Property Type="String" Name="commune" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="codePostal" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="rue" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="numero" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="boite" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="nbEtages" Nullable="true" />
+          <Property Type="String" Name="libbelle" Nullable="true" MaxLength="550" />
+          <Property Type="Int32" Name="anneeDeConstr" Nullable="true" />
+          <Property Type="String" Name="energie" Nullable="true" MaxLength="5" />
+          <Property Type="Boolean" Name="estSupprime" Nullable="true" />
+          <Property Type="Boolean" Name="estVendu" Nullable="true" />
+          <Property Type="Int32" Name="nbPhotos" Nullable="true" />
+          <Property Type="Int32" Name="nbChambre" Nullable="true" />
+          <Property Type="Int32" Name="nbSdb" Nullable="true" />
+          <Property Type="Int32" Name="nbdressing" Nullable="true" />
+          <Property Type="Int32" Name="nbsam" Nullable="true" />
+          <Property Type="Int32" Name="nbsalon" Nullable="true" />
+          <Property Type="Int32" Name="nbbuanderie" Nullable="true" />
+          <Property Type="Int32" Name="nbcave" Nullable="true" />
+          <Property Type="Int32" Name="nbgrenier" Nullable="true" />
+          <Property Type="Int32" Name="nbtoilette" Nullable="true" />
+          <Property Type="Int32" Name="nbveranda" Nullable="true" />
+          <Property Type="Int32" Name="nbgarage" Nullable="true" />
+          <Property Type="Boolean" Name="piscine" Nullable="true" />
+          <Property Type="Boolean" Name="cuisineEqu" Nullable="true" />
+          <Property Type="Boolean" Name="parking" Nullable="true" />
+          <Property Type="Boolean" Name="jardin" Nullable="true" />
+          <Property Type="Boolean" Name="alarme" Nullable="true" />
+          <Property Type="Boolean" Name="doubleVitre" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2409,6 +2492,85 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
                 <ScalarProperty Name="BIEN_Prix" ColumnName="BIEN_Prix" />
                 <ScalarProperty Name="BIEN_Superficie" ColumnName="BIEN_Superficie" />
                 <ScalarProperty Name="nombreChambres" ColumnName="nombreChambres" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="voirLeBien" FunctionName="ImmoWhatModel.Store.voirLeBien">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.voirLeBien_Result">
+                <ScalarProperty Name="idBien" ColumnName="idBien" />
+                <ScalarProperty Name="typeBien" ColumnName="typeBien" />
+                <ScalarProperty Name="idProprietaire" ColumnName="idProprietaire" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+                <ScalarProperty Name="superficie" ColumnName="superficie" />
+                <ScalarProperty Name="commune" ColumnName="commune" />
+                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
+                <ScalarProperty Name="rue" ColumnName="rue" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="boite" ColumnName="boite" />
+                <ScalarProperty Name="nbEtages" ColumnName="nbEtages" />
+                <ScalarProperty Name="libbelle" ColumnName="libbelle" />
+                <ScalarProperty Name="energie" ColumnName="energie" />
+                <ScalarProperty Name="estSupprime" ColumnName="estSupprime" />
+                <ScalarProperty Name="estVendu" ColumnName="estVendu" />
+                <ScalarProperty Name="nbPhotos" ColumnName="nbPhotos" />
+                <ScalarProperty Name="nbChambre" ColumnName="nbChambre" />
+                <ScalarProperty Name="nbSdb" ColumnName="nbSdb" />
+                <ScalarProperty Name="nbdressing" ColumnName="nbdressing" />
+                <ScalarProperty Name="nbsam" ColumnName="nbsam" />
+                <ScalarProperty Name="nbsalon" ColumnName="nbsalon" />
+                <ScalarProperty Name="nbbuanderie" ColumnName="nbbuanderie" />
+                <ScalarProperty Name="nbcave" ColumnName="nbcave" />
+                <ScalarProperty Name="nbgrenier" ColumnName="nbgrenier" />
+                <ScalarProperty Name="nbtoilette" ColumnName="nbtoilette" />
+                <ScalarProperty Name="nbveranda" ColumnName="nbveranda" />
+                <ScalarProperty Name="nbgarage" ColumnName="nbgarage" />
+                <ScalarProperty Name="piscine" ColumnName="piscine" />
+                <ScalarProperty Name="cuisineEqu" ColumnName="cuisineEqu" />
+                <ScalarProperty Name="parking" ColumnName="parking" />
+                <ScalarProperty Name="jardin" ColumnName="jardin" />
+                <ScalarProperty Name="alarme" ColumnName="alarme" />
+                <ScalarProperty Name="doubleVitre" ColumnName="doubleVitre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneBien" FunctionName="ImmoWhatModel.Store.GetOneBien">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetOneBien_Result">
+                <ScalarProperty Name="idBien" ColumnName="idBien" />
+                <ScalarProperty Name="typeBien" ColumnName="typeBien" />
+                <ScalarProperty Name="idProprietaire" ColumnName="idProprietaire" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+                <ScalarProperty Name="superficie" ColumnName="superficie" />
+                <ScalarProperty Name="commune" ColumnName="commune" />
+                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
+                <ScalarProperty Name="rue" ColumnName="rue" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="boite" ColumnName="boite" />
+                <ScalarProperty Name="nbEtages" ColumnName="nbEtages" />
+                <ScalarProperty Name="libbelle" ColumnName="libbelle" />
+                <ScalarProperty Name="anneeDeConstr" ColumnName="anneeDeConstr" />
+                <ScalarProperty Name="energie" ColumnName="energie" />
+                <ScalarProperty Name="estSupprime" ColumnName="estSupprime" />
+                <ScalarProperty Name="estVendu" ColumnName="estVendu" />
+                <ScalarProperty Name="nbPhotos" ColumnName="nbPhotos" />
+                <ScalarProperty Name="nbChambre" ColumnName="nbChambre" />
+                <ScalarProperty Name="nbSdb" ColumnName="nbSdb" />
+                <ScalarProperty Name="nbdressing" ColumnName="nbdressing" />
+                <ScalarProperty Name="nbsam" ColumnName="nbsam" />
+                <ScalarProperty Name="nbsalon" ColumnName="nbsalon" />
+                <ScalarProperty Name="nbbuanderie" ColumnName="nbbuanderie" />
+                <ScalarProperty Name="nbcave" ColumnName="nbcave" />
+                <ScalarProperty Name="nbgrenier" ColumnName="nbgrenier" />
+                <ScalarProperty Name="nbtoilette" ColumnName="nbtoilette" />
+                <ScalarProperty Name="nbveranda" ColumnName="nbveranda" />
+                <ScalarProperty Name="nbgarage" ColumnName="nbgarage" />
+                <ScalarProperty Name="piscine" ColumnName="piscine" />
+                <ScalarProperty Name="cuisineEqu" ColumnName="cuisineEqu" />
+                <ScalarProperty Name="parking" ColumnName="parking" />
+                <ScalarProperty Name="jardin" ColumnName="jardin" />
+                <ScalarProperty Name="alarme" ColumnName="alarme" />
+                <ScalarProperty Name="doubleVitre" ColumnName="doubleVitre" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

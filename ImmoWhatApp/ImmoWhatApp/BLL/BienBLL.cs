@@ -29,7 +29,7 @@ namespace ImmoWhatApp.BLL
 
                     // CHECK SI ADRESSE EXISTE DEJA
 
-                    Models.adresseModels adresse = new Models.adresseModels { CodePostal = newBien.codePostal, Rue = newBien.rue, Numero = newBien.numero, Boite = newBien.boite };
+                    Models.adresseModels adresse = new Models.adresseModels { CodePostal = newBien.codePostale, Rue = newBien.rue, Numero = newBien.numero, Boite = newBien.boite };
                     client.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
                     var responseTask = client.GetAsync("CheckIfAdressExists?codePostale=" + adresse.CodePostal + "&rue=" + adresse.Rue + "&numero=" + adresse.Numero + "&boite=" + adresse.Boite);
                     responseTask.Wait();
@@ -209,6 +209,50 @@ namespace ImmoWhatApp.BLL
 
                     }
                     return listeDeBiens;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static Models.BienModels GetOneBien(int idBien)
+        {
+            Models.BienModels TheBien = new Models.BienModels();
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    // CHECK IF MEMBER IS CONNECTED
+
+                    var currentSession = HttpContext.Current.Session;
+                    var token = currentSession["monToken"];
+                    Models.MembreModels moi = new Models.MembreModels();
+                    client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                    // GET THE BIEN
+
+                    client.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
+                    var responseTask = client.GetAsync("GetOneBien?idBien=" + idBien);
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<Models.BienModels>();
+                        readTask.Wait();
+                        TheBien = readTask.Result;
+
+
+                    }
+                    return TheBien;
 
                 }
 

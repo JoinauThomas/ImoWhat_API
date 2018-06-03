@@ -56,9 +56,16 @@ namespace ImmoWhatApp.Controllers
             return View();
         }
 
-        public ActionResult MainPage(string nomCommune)
+        public ActionResult MainPage(string nomCommune, int? typeBien)
         {
-            
+            if(typeBien != null)
+            {
+                ViewBag.typeBien = typeBien;
+            }
+            else
+            {
+                ViewBag.typeBien = 2;
+            }
             Models.Commune maCommune = BLL.CommuneBLL.checkIfCommuneExistsBLL(nomCommune);
             return View(maCommune);
         }

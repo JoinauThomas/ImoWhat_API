@@ -119,11 +119,11 @@ namespace ImmoWhatApp.Controllers
         }
 
         [HttpGet]
-        public int GetIdBien (string codePostal, string rue, string numero, string boite)
+        public int GetIdBien (string codePostale, string rue, string numero, string boite)
         {
             try
             {
-                Models.adresseModels adresse = new Models.adresseModels { CodePostal = codePostal, Numero = numero, Boite = boite, Rue = rue };
+                Models.adresseModels adresse = new Models.adresseModels { CodePostal = codePostale, Numero = numero, Boite = boite, Rue = rue };
                 int id = BLL.BienBLL.GetIdBien(adresse);
                 return id;
             }
@@ -172,6 +172,16 @@ namespace ImmoWhatApp.Controllers
             listeDeBiens = BLL.BienBLL.GetListBiensFromCPAndType(codePostale, type);
 
             return Json(new { result = "OK", listeBiens = listeDeBiens }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult voirLeBien(int idBien)
+        {
+            Models.BienModels TheBien = new Models.BienModels();
+
+            TheBien = BLL.BienBLL.GetOneBien(idBien);
+
+            return View(TheBien);
         }
     }
 }
