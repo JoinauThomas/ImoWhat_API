@@ -385,6 +385,10 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 <script>
+
+    $(document).ready(function () {
+        alert("aaa");
+    })
     // vérifie
     function isInt(value) {
         return !isNaN(value) && (function (x) { return (x | 0) === x; })(parseFloat(value))

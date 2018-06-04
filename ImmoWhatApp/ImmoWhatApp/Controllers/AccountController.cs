@@ -51,7 +51,7 @@ namespace ImmoWhatApp.Controllers
            
             resultInscription = BLL.MembreBLL.CreerCompte(newMembre);
 
-            if (monfichier != null && monfichier.ContentLength > 0)
+            if (newMembre.photo == "1")
             {
                 string path = Path.Combine(Server.MapPath("~/img/membre"), "photoMembre" + resultInscription.idMembre.ToString() + ".jpg");
                 monfichier.SaveAs(path);

@@ -147,9 +147,8 @@
 
 
 <script>
-
-    $('#az').click(function () {
-        alert($('#mail').val());
+    $(document).ready(function () {
+       
     })
 
     // envoie la requete pour creer un profile
@@ -243,13 +242,22 @@
         return ok;
             
     }
-
+    function checkIfPhotoIsNull() {
+        var photo = $('#photo').attr('src')
+        if (photo == "/img/membre/photo0.jpg")
+            photo = 0
+        else
+            photo = 1
+        return photo;
+    }
 
     $('#btnEnvoiForm').click(function () {
+        
+        
         var formValide = validateForm();
         if (formValide == true) {
             $("#chargement").show();
-
+            var photo = $('#photo').attr('src')
             var mail = $('#mail').val();
             $.ajax({
                 type: 'GET',
@@ -276,7 +284,9 @@
                         });
                     }
                     else {
+                        var photo = checkIfPhotoIsNull()
                         var formData = new FormData($('#formAjoutMembre')[0]);
+                        formData.append("photo", photo)
                         $.ajax({
                             type: 'POST',
                             url: '@Url.Action("CreerCompte", "Account")',

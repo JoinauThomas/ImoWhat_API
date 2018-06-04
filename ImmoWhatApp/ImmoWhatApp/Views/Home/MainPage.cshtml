@@ -4,105 +4,135 @@
     ViewBag.Title = "MainPage";
 }
 
-<div id="corpsMainPage">
-    <div class="row">
-        <nav id="navigation" class="col-lg-2">
 
-            <div class="row">
-                <div id="menuNav" class="col-lg-12">
-                    Home/carte-prix/@Model.Localite
-                </div>
-                <button id="testCoord">test des coordonnees</button>
-            </div>
-            <div class="row" style="margin-top:3%; margin-bottom:3%">
-                <div class="input-group col-lg-10 offset-lg-1">
-                    <input id="inputComm" type="text" class="form-control" placeholder="@Model.Localite" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button id="btnValidCommune" class="btn btn-success" type="button"><span class="oi" data-glyph="magnifying-glass" title="magnifying-glass" aria-hidden="true"></span><span class="glyphicon glyphicon-envelope"></span></button>
+<div class="row" style="margin:0;margin-right:0px;margin-left:0px;height:100%;">
+
+    @*  LA PARTIE NAVIGATION  *@
+    <div class="d-inline-flex flex-column align-content-center col-auto col-md-2 col-lg-3 col-xl-2 col-lg-2 h-100 w-100" style="margin-right:0px;padding:0px;padding-right:-15px;padding-left:-15px;">
+        <div class="d-inline-flex flex-column justify-content-start align-content-center flex-wrap m-auto col-lg-12" style="padding-left:0px;padding-right:0px;height:100%;width:90%;">
+            <div class="row" style="height:5%;width:100%;margin-right:0px;margin-left:0px;">
+                <div class="col" style="padding-right:0px;padding-left:0px;width:100%;">
+                    <div class="d-flex flex-row justify-content-center align-items-center" style="height:100%;background-color:rgba(0,0,0,0.35);color:rgba(255,255,255,0);width:100%;">
+                        <div class="input-group" style="width:100%;height:100%;">
+                            <div class="input-group-prepend"></div>
+                            <input id="inputComm" class="form-control" type="text" style="font-size:0.8em;">
+                            <div class="input-group-append">
+                                <button id="btnValidCommune" class="btn btn-primary d-flex" type="button"><span class="oi" data-glyph="magnifying-glass" title="magnifying-glass" aria-hidden="true"></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div id="menuInfoCommune" class="col-lg-12">
-                    @Model.CodePostal @Model.Localite
+            <div class="row no-gutters d-flex" style="width:100%;margin-right:0px;margin-left:0px;height:5%;">
+                <div class="col" style="width:100%;height:100%;">
+                    <div id="menuInfoCommune" class="d-flex flex-row justify-content-center align-items-center" style="height:100%;background-color:#000000;color:rgb(204,185,14);width:100%;">
+                        <span>@Model.CodePostal @Model.Localite</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-right:0px;margin-left:0px;height:15%;">
+                <div class="col-lg-12 col-xl-12 offset-xl-0 col-lg-12" style="padding-right:0px;padding-left:0px;height:100%;width:100%;">
+                    <div id="typeBien" class="d-flex flex-row justify-content-around align-self-center flex-wrap col-lg-12" style="padding-right:0px;padding-left:0px;">
+                        <button id="maison" class="btnTypeBien btn btn-outline-dark btn-sm col-lg-5" type="button" style="height:40%;margin:0px;margin-top:8px;margin-bottom:4px;font-size:0.7em;">@Resource.maison</button>
+                        <button id="appartement" class="btnTypeBien btn btn-outline-light btn-block btn-sm col-lg-5" type="button" style="margin-top:8px;margin-bottom:4px;height:40%;font-size:0.7em;">@Resource.appartement</button>
+                        <button id="terrain" class="btnTypeBien btn btn btn-outline-light col-lg-5" type="button" style="height:40%;margin-top:4px;margin-bottom:8px;font-size:0.7em;padding-top:4px;padding-right:8px;padding-bottom:4px;padding-left:8px;">@Resource.terrain</button>
+                        <button id="villa" class="btnTypeBien btn btn-outline-light col-lg-5" type="button" style="margin-top:4px;margin-bottom:8px;font-size:0.7em;height:40%;padding-top:4px;padding-right:8px;padding-bottom:4px;padding-left:8px;">@Resource.villa</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row no-gutters d-flex" style="width:100%;margin-right:0px;margin-left:0px;height:10%;">
+                <div class="col d-flex flex-column justify-content-center align-items-center align-content-center" style="width:100%;">
+                    <div class="d-flex flex-column justify-content-lg-around align-items-center align-content-center" style="height:100%;background-color:#000000;color:rgb(204,185,14);width:100%;">
+                        <span class="row">prix moyen à @Model.Localite:</span>
+
+                        <span class="row" id="prixMoyen"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row no-gutters d-flex justify-content-center align-items-center" style="margin-right:0px;margin-left:0px;width:100%;height:15%;">
+                <div id="GroupStat" class="col d-flex flex-row justify-content-start align-items-center align-content-center" style="height:100%;width:100%;">
+                    <div class="d-flex flex-row justify-content-around align-items-center align-content-center align-self-center flex-wrap col-lg-12" style="padding-right:0px;padding-left:0px;height:auto;">
+                        <button id="tablePrix" class="btn btn-outline-light btn-sm col-lg-5" type="button" style="height:40%;margin:0px;margin-top:5px;margin-bottom:5px;font-size:0.7em;">table des prix</button>
+                        <div id="graphique" class="btn btn-outline-light btn-sm col-lg-5" type="button" style="margin-top:8px;margin-bottom:4px;height:40%;font-size:0.7em;">@Html.ActionLink("graph", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "graph" }, "")</div>
+                        <button id="POI" class="btn btn-outline-light col-lg-5" type="button" style="height:40%;margin-top:4px;margin-bottom:8px;font-size:0.7em;padding-top:4px;padding-right:8px;padding-bottom:4px;padding-left:8px;">@Html.ActionLink("POI", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "poi" }, null)</button>
+                        <button id="commentaire" class="btn btn-outline-light align-items-center flex-wrap col-lg-5" type="button" style="margin-top:4px;margin-bottom:8px;font-size:0.7em;padding-top:4px;padding-right:8px;padding-bottom:4px;padding-left:8px;">@Html.ActionLink("commentaire", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "comment" }, null)</button>
+                    </div>
                 </div>
             </div>
 
-            <div id="typeBien" class="d-flex justify-content-around">
-                <div id="maison" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.maison</div>
-                <div id="appartement" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.appartement</div>
-                <div id="terrain" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.terrain</div>
-                <div id="villa" role="button" class="btnTypeBien p-1 btn btn-outline-light">@Resource.villa</div>
-            </div>
-            @*<div style="width:20%" id="maison" class="btnTypeBien btn btn-danger">house</div>
-                <div style="width:20%" id="appartement" class="btnTypeBien btn btn-danger">flat</div>
-                <div style="width:20%" id="villa" class="btnTypeBien btn btn-danger">villa</div>
-                <div style="width:20%" id="terrain" class="btnTypeBien btn btn-danger">field</div>*@
-
-            <div class="row">
-                <div id="menuPrixMoyen" class="col-lg-12 h-50">
-                    <span>prix moyen à @Model.Localite:</span>
-                    <br>
-                    <span id="prixMoyen"></span>
+            <div class="row  d-flex flex-column justify-content-lg-center align-items-center align-content-center align-self-center" style="margin-right:0px;margin-left:0px;width:100%;height:50%;margin-top:0%;margin-bottom:0%">
+                <div class="col-auto d-flex flex-column justify-content-center align-items-center align-self-center" style="width:100%;height:100%; ">
+                    <div id="listePrix" class="list-group d-flex flex-column justify-content-end align-items-center" style="width:100%;height:100%;">
+                        <a id="prix1" class="list-group-item list-group-item-action d-flex flex-column justify-content-start align-items-center align-content-center" style="height:10%;padding:0;padding-top:0px;width:100%;border:groove;margin-bottom:0px;padding-bottom:0px;">
+                            <span class="d-flex justify-content-center align-items-center align-content-around" style="width:100%;height:90%;"></span>
+                        </a>
+                        <a id="prix2" class="list-group-item list-group-item-action d-flex flex-column justify-content-start align-items-center align-content-center" style="height:10%;padding:0;padding-top:0px;width:100%;border:groove;margin-bottom:0px;padding-bottom:0px;">
+                            <span class="d-flex justify-content-center align-items-center align-content-around" style="width:100%;height:90%;"></span>
+                        </a>
+                        <a id="prix3" class="list-group-item list-group-item-action d-flex flex-column justify-content-start align-items-center align-content-center" style="height:10%;padding:0;padding-top:0px;width:100%;border:groove;margin-bottom:0px;padding-bottom:0px;">
+                            <span class="d-flex justify-content-center align-items-center align-content-around" style="width:100%;height:90%;"></span>
+                        </a>
+                        <a id="prix4" class="list-group-item list-group-item-action d-flex flex-column justify-content-start align-items-center align-content-center" style="height:10%;padding:0;padding-top:0px;width:100%;border:groove;margin-bottom:0px;padding-bottom:0px;">
+                            <span class="d-flex justify-content-center align-items-center align-content-around" style="width:100%;height:90%;"></span>
+                        </a>
+                        <a id="prix5" class="list-group-item list-group-item-action d-flex flex-column justify-content-start align-items-center align-content-center" style="height:10%;padding:0;padding-top:0px;width:100%;border:groove;margin-bottom:0px;padding-bottom:0px;">
+                            <span class="d-flex justify-content-center align-items-center align-content-around" style="width:100%;height:90%;"></span>
+                        </a>
+                        <a id="prix6" class="list-group-item list-group-item-action d-flex flex-column justify-content-start align-items-center align-content-center" style="height:10%;padding:0;padding-top:0px;width:100%;border:groove;margin-bottom:0px;padding-bottom:0px;">
+                            <span class="d-flex justify-content-center align-items-center align-content-around" style="width:100%;height:90%;"></span>
+                        </a>
+                        <a id="prix7" class="list-group-item list-group-item-action d-flex flex-column justify-content-start align-items-center align-content-center" style="height:10%;padding:0;padding-top:0px;width:100%;border:groove;margin-bottom:0px;padding-bottom:0px;">
+                            <span class="d-flex justify-content-center align-items-center align-content-around" style="width:100%;height:90%;"></span>
+                        </a>
+                        <a id="prix8" class="list-group-item list-group-item-action d-flex flex-column justify-content-start align-items-center align-content-center" style="height:10%;padding:0;padding-top:0px;width:100%;border:groove;margin-bottom:0px;padding-bottom:0px;">
+                            <span class="d-flex justify-content-center align-items-center align-content-around" style="width:100%;height:90%;"></span>
+                        </a>
+                        <a id="prix9" class="list-group-item list-group-item-action d-flex flex-column justify-content-start align-items-center align-content-center" style="height:10%;padding:0;padding-top:0px;width:100%;border:groove;margin-bottom:0px;padding-bottom:0px;">
+                            <span class="d-flex justify-content-center align-items-center align-content-around" style="width:100%;height:90%;"></span>
+                        </a>
+                        <a id="prix10" class="list-group-item list-group-item-action d-flex flex-column justify-content-start align-items-center align-content-center" style="height:10%;padding:0;padding-top:0px;width:100%;border:groove;margin-bottom:0px;padding-bottom:0px;">
+                            <span class="d-flex justify-content-center align-items-center align-content-around" style="width:100%;height:90%;"></span>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div id="GroupStat" class="row justify-content-lg-center">
-                <div class="d-flex justify-content-around w-100">
-                    <div role="button" id="tablePrix" class="btn btn-outline-light">table des prix</div>
-                    <div role="button" id="graphique" class="btn btn-outline-light">@Html.ActionLink("graph", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "graph" }, null)</div>
-                </div>
-                <div class="d-flex justify-content-around w-100">
-                    <div id="POI" class="btn btn-outline-light">@Html.ActionLink("POI", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "poi" }, null)</div>
-                    <div id="commentaire" class="btn btn-outline-light">@Html.ActionLink("commentaire", "Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = Model.latitude, lon = Model.longitude, id = Model.id, langue = Model.langue, province = Model.Province, bouton = "comment" }, null)</div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="list-group col-lg-12" style="position: relative" id="listePrix">
-                    <a id="prix1" href="#" class=" list-group-item-action"></a>
-                    <a id="prix2" href="#" class=" list-group-item-action"></a>
-                    <a id="prix3" href="#" class=" list-group-item-action"></a>
-                    <a id="prix4" href="#" class=" list-group-item-action"></a>
-                    <a id="prix5" href="#" class=" list-group-item-action"></a>
-                    <a id="prix6" href="#" class=" list-group-item-action"></a>
-                    <a id="prix7" href="#" class=" list-group-item-action"></a>
-                    <a id="prix8" href="#" class=" list-group-item-action"></a>
-                    <a id="prix9" href="#" class=" list-group-item-action"></a>
-                    <a id="prix10" href="#" class=" list-group-item-action"></a>
-                </div>
-                @*<ul style="height:8vh" class="col-lg-12 " id="listePrix">
-                        LISTE DES PRIX
-                    </ul>*@
-            </div>
-
-        </nav>
-        <div id="carte" class="col-lg-7">
-            <div id="map" style="width:100%; height:100%;"></div>
         </div>
-        <div class="col-lg-3 navLatD bt container">
-            <div class="">
-                <div class="zoneMaison" id="az">
+    </div>
 
-                </div>
+    @*  LA PARTIE CARTE  *@
+    <div id="carte" class="col-md-7 col-lg-2 col-xl-7 col-lg-6 m-0 p-0" style="">
+        <div id="map" style="width:100%; height:100%; background-color:#0038ff;"></div>
+    </div>
+
+    @*  LA PARTIE BIENS A VENDRE  *@
+    <div class="col-lg-3 col-xl-3 h-100 ">
+        <div class="row" style="height:90%">
+            <div class="col-12 zoneMaison h-100" id="az">
+
             </div>
-            <br />
-            <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="attention" data-content="Veuillez vous connecter pour mettre votre bien en vente!">@Resource.ajouterUnBien</a>
+        </div>
+        <div class="row " style="height:10%; ">
+            <div class="col-12 ">
+                @{
 
-            @{
+                    if (Session["moi"] != null)
+                    {
+                        <button id="btnAjoutBien" class="btn btn-outline-light col-8 offset-2">ajouter un bien</button>
+                    }
+                    else
+                    {
+                        <a tabindex="0" class="btn btn-lg btn-danger col-8 offset-2" role="button" data-toggle="popover" data-trigger="focus" title="attention" data-content="Veuillez vous connecter pour mettre votre bien en vente!">@Resource.ajouterUnBien</a>
 
-                if (Session["moi"] != null)
-                {
-                    <button id="btnAjoutBien" class="btn btn-outline-light">ajouter un bien</button>
+                    }
                 }
-                else
-                {
-                    <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="attention" data-content="Veuillez vous connecter pour mettre votre bien en vente!">@Resource.ajouterUnBien</a>
-
-                }
-            }
+            </div>
         </div>
     </div>
 </div>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+
 <div id="modal_commune" style="display:none; ">
     <p id="modalTexte" class="modal-contents"></p>
 </div>
@@ -252,28 +282,30 @@
         location.href = '@Url.Action("AddNewBien", "Bien")';
     })
     $('#tablePrix').click(function () {
+        var codePostal = '@Model.CodePostal';
 
-        var codePostal = @Model.CodePostal;
-        var commune = @Model.Localite;
-        var lat = @Model.latitude;
-        var lon = @Model.longitude;
-        var id = @Model.id;
-        var langue = @Model.langue;
-        var province = "test";
+        var commune = '@Model.Localite';
+        var lat = '@Model.latitude';
+        var lon = '@Model.longitude';
+        var id = '@Model.id';
+        var langue = '@Model.langue';
+        var province = '@Model.Province';
         var bouton = "tablePrix";
-        alert(codePostal);
-        $.ajax({
+
+
+        @*window.location.href = '@Html.Action("Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = @Model.latitude, lon = @Model.longitude, id = @Model.id, langue = @Model.langue, province = @Model.Province, bouton = "graph" })';*@
+        @*$.ajax({
             type: 'GET',
             datatype: 'json',
             url: '@Url.Action("Graphic", "Home")',
             data: { codePostal: codePostal, commune: commune, lat: lat, lon: lon, id: id, langue: langue, province: province, bouton: bouton },
             success: function (donnee) {
-                alert("oki")
+
             },
             error: function (error) {
                 alert(error.responseText);
             }
-        });
+        });*@
 
 
     });
@@ -351,7 +383,7 @@
                 }
                 $('#listePrix a').css('border-style', 'none');
                 $('#prix' + (donnee.classePrix)).css('border-style', 'inset');
-                $('#prix' + (donnee.classePrix)).css('border-color', 'purple');
+                $('#prix' + (donnee.classePrix)).css('border-color', 'black');
                 $('#prixMoyen').html(donnee.prixMoyen+"€")
 
 
@@ -428,7 +460,6 @@
 
     $('#typeBien').click(function (event) {
         var type = $(event.target).attr('id');
-
         $('.btnTypeBien').removeClass("btn-outline-dark");
         $('.btnTypeBien').addClass("btn-outline-light");
         $("#" + type).removeClass("btn-outline-light");

@@ -37,5 +37,7 @@ namespace ImmoWhat_API.Models
         public string photo { get; set; }
 
         public bool deleted { get; set; }
+
+        public DateTime dateEnregistrement { get; set; }
     }
 }

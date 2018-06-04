@@ -15,6 +15,10 @@ namespace ImmoWhatApp.BLL
         {
             try
             {
+                if(newMembre.boite == null)
+                {
+                    newMembre.boite = "-1";
+                }
                 Models.ResultInscription resultInscription = new Models.ResultInscription();
 
                 // inscription d'un nouveau USER dans la DB

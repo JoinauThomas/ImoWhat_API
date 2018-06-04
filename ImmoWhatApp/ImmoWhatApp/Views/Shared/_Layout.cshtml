@@ -25,10 +25,10 @@
 
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
 </head>
-<body>
+<body class="h-100 w-100 p-0 m-0" style="height:100vh;width:100%; background-color:forestgreen">
     <!--Navbar-->
 
-    <nav style="background-color: green;  z-index:99; height:10%" class="fixed-top navbar navbar-expand-lg navbar-light warning-color lighten-5 justify-content-between">
+    <nav style="background-color:green;  z-index:99; height:8vh" class="fixed-top navbar navbar-expand-lg navbar-light warning-color lighten-5 justify-content-between">
 
         <!-- Navbar brand -->
         <div>
@@ -123,19 +123,24 @@
 
 
 
-   
-    <div class="body-content" style="padding-top:5%">
+
+    <div class="body-content" style="margin-top:8vh; height:84vh">
         @RenderBody()
-        <hr />
-        <footer>
+
+        <footer style="background-color:#edeaea; z-index:99; height:8vh">
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
+
+    
+
+
     <div id="modal_connection" style="display:none">
         <p class="modal-contents modalTexte"></p>
     </div>
+
     <script>
-        
+
 
         $('#backToHome').click(function () {
             window.location = '@Url.Action("Index", "Home")';

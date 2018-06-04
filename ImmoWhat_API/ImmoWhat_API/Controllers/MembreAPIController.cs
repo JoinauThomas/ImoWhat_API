@@ -77,7 +77,10 @@ namespace ImmoWhat_API.Controllers
                     mail = moiDB[0].mail,
                     roleUser = moiDB[0].RoleMembre,
                     telephone = moiDB[0].PhoneNumber,
-                    photo = moiDB[0].photo
+                    photo = moiDB[0].photo,
+                    dateEnregistrement = moiDB[0].DateEnregistrement,
+                    deleted = moiDB[0].deleted,
+                    estProprietaire = moiDB[0].estProprietaire
                 };
                 return moi;
             }

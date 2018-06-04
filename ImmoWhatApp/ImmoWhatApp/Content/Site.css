@@ -1,7 +1,13 @@
 ﻿/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -12,17 +18,8 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-.navLatD {
-    background-color: green;
-    height: 89vh;
-}
+
 .zoneMaison {
-    height: 80vh;
     overflow-y: scroll;
 }
 #entete-immowhat {
@@ -34,15 +31,14 @@ textarea {
 }
 
 #corps {
-    height: 100vh;
+    height: 100%;
     background-image: url("../img/Bruxelles.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    margin-top: -10%;
 }
 
 #intro {
-    margin-top: 30vh;
+    margin-top: 5%;
     text-align: center;
     color: white;
     font-family: 'Harlow Solid';
@@ -51,21 +47,21 @@ textarea {
 
 #logo {
     
-    margin-bottom: 2vh;
-    height: 10%;
+    margin-bottom: 2%;
+    height: 20%;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
-#inputCommune {
-    height: 5vh;
+/*#inputCommune {
+    height: 1vh;
 }
 
 #btnCommune {
-    height: 5vh;
+    height: 1vh;
     width: 100%;
-}
+}*/
 
 #aaa {
     text-align: center;
@@ -106,87 +102,30 @@ li a {
 }
 
 /*pour label MainPage*/
-#corpsMainPage {
-    height: 85vh;
-}
 
-body {
-    width: 100%;
-}
 
-#header {
-    height: 10vh;
-    background-color: red;
-    color: white;
-}
 
-#navigation {
-    height: 85vh;
-    background-color: green;
-    color: black;
-    text-align: center;
-}
 
-#menuNav {
-    background-color: black;
-    color:orange
-}
 
-#SearchMenu {
-    color: white;
-}
 
-#menuInfoCommune {
-    background-color: black;
-    color:orange;
-    height: 5%;
-    text-align: center;
-}
 
-#menuTypeBien {
-    background-color: green!important;
-    height: 10%;
-    text-align: center;
-}
 
-#menuPrixMoyen {
-    text-align: center;
-    background-color: brown;
-}
 
-#carte {
-    height: 85vh;
-    background-color: green;
-    color: white;
-}
+
+
 #cartePOI {
     height: 50%;
     width : 100%;
     background-color: grey;
     color: white;
 }
-.carte {
-    height: 85vh;
-}
 
-#biens {
-    height: 85vh;
-    background-color: purple;
-    color: white;
-}
 
-#footer {
-    height: 9vh;
-    background-color: blue;
-    color: white;
-}
 
-.lignePrix {
-    height: 100%;
-    vertical-align:middle;
-    padding-top:initial;
-    padding-bottom:initial;
-}
+
+
+
+
 
 .test {
     display: inline-block;
@@ -211,8 +150,5 @@ body {
 .titreSecPage {
     font-size: 2rem;
 }
-#listePrix a{
-    margin-left: 3%;
-    margin-right: 3%;
-}
+
 
