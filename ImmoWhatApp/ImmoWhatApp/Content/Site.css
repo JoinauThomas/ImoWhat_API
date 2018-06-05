@@ -103,21 +103,13 @@ li a {
 
 /*pour label MainPage*/
 
+.listPOI :hover {
+    color: red;
+    cursor: pointer;
+}
 
-
-
-
-
-
-
-
-
-
-#cartePOI {
-    height: 50%;
-    width : 100%;
-    background-color: grey;
-    color: white;
+.cusorArrow :hover {
+    cursor: context-menu;
 }
 
 
@@ -127,7 +119,33 @@ li a {
 
 
 
-.test {
+
+/*#cartePOI {
+    height: 50%;
+    width : 100%;
+    background-color: grey;
+    color: white;
+}*/
+
+
+
+/*html, body {
+    height: 100%
+}*/
+
+/*#holder {
+    min-height: 100%;
+    position: relative;
+}*/
+
+
+
+
+
+
+
+
+/*.test {
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
@@ -149,6 +167,6 @@ li a {
 }
 .titreSecPage {
     font-size: 2rem;
-}
+}*/
 
 

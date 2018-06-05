@@ -1,38 +1,37 @@
-﻿<div id="mapPoiCommune" style="width:100%; height:400px"></div>
-<br />
-<div class="container">
-    <div class="row" >
-        <div id="checkZonePOI" class="col-lg-12" style="text-align:center; position:relative">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxBar" value="bars">
-                <label class="form-check-label" for="checkboxBar">bars</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxEcoles" value="écoles">
-                <label class="form-check-label" for="checkboxEcoles">écoles</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxHopital" value="hopitaux">
-                <label class="form-check-label" for="checkboxHopital">hopitaux</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxRestaurent" value="restaurent">
-                <label class="form-check-label" for="checkboxRestaurent">restaurent</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxStation" value="bus">
-                <label class="form-check-label" for="checkboxStation">bus</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="checkboxPark" value="park">
-                <label class="form-check-label" for="checkboxPark">park</label>
-            </div>
-        </div>
-
-
+﻿<div class="row">
+    <div class="col">
+        <div id="mapPoiCommune" style="width:100%; height:400px"></div>
     </div>
-    <br />
-    <div class="row" style="font-size:small">
+</div>
+<div class="row">
+    <div class="col d-flex flex-row justify-content-around align-items-center align-content-center" style="height:44px;">
+        <div class="form-check" style="width:auto;min-width:13px;">
+            <input class="form-check-input" type="checkbox" id="checkboxBar">
+            <label class="form-check-label" for="checkboxBar">bars</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkboxEcoles">
+            <label class="form-check-label" for="checkboxEcoles">écoles</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkboxHopital">
+            <label class="form-check-label" for="checkboxHopital">hopitaux</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkboxRestaurent">
+            <label class="form-check-label" for="checkboxRestaurent">restaurents</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkboxStation">
+            <label class="form-check-label" for="checkboxStation">bus</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkboxPark">
+            <label class="form-check-label" for="checkboxPark">park</label>
+        </div>
+    </div>
+</div>
+<div class="row">
         <div class="col-lg-4">
             <h3 style="text-align:center">Hopitaux</h3>
             <ul id="hopital" class="listPOI list-group"></ul>
@@ -54,8 +53,6 @@
             <h3 style="text-align:center">Station</h3>
             <ul id="station" class="listPOI list-group"></ul>
         </div>
-        
-    </div>
 </div>
 <input id="latitude" value="@ViewBag.latitude" style="display:none" />
 <input id="longitude" value="@ViewBag.longitude" style="display:none" />

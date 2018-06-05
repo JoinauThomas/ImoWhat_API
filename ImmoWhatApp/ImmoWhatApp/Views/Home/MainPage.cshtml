@@ -190,7 +190,7 @@
                 $('.bien').click(function () {
                     if ('@Session["moi"]' != "") {
                         var id = $(this).attr("id")
-                        alert(id);
+                        
                         var url = "../Bien/voirLeBien?idBien=" + id;
                         window.location.href = url;
                     }
@@ -207,7 +207,7 @@
         })
     }
     function voirLeBien(idBien) {
-        alert(idBien);
+       
         $.ajax({
             type: 'GET',
             datatype: 'json',
