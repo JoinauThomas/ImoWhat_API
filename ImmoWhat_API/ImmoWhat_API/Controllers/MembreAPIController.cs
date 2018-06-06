@@ -44,11 +44,11 @@ namespace ImmoWhat_API.Controllers
                 DAL.MEMBRE moi = Membres.Find(x => (x.mail == mail));
                 return moi.idMembre;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
-           
+
         }
 
         [HttpGet]
@@ -88,7 +88,7 @@ namespace ImmoWhat_API.Controllers
             {
                 throw ex;
             }
-            
+
         }
 
 
@@ -127,6 +127,90 @@ namespace ImmoWhat_API.Controllers
 
 
                 return x;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet]
+        [Route("GetCountOfNewMails")]
+        public int GetCountOfNewMails(int idMembre)
+        {
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+
+                using (SqlConnection con = new SqlConnection("Data Source=localhost;Initial Catalog=ImmoWhat;Integrated Security=True"))
+                {
+                    using (SqlCommand cmd = new SqlCommand("GetCountOfNewMails", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@idProprietaire", SqlDbType.Int).Value = idMembre;
+
+                        con.Open();
+                        int nbMsg = (int)cmd.ExecuteScalar();
+
+                        con.Close();
+
+                        return nbMsg;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("GetListOfMails")]
+        public List<Models.Mail> GetListOfMails(int idMembre)
+        {
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+
+                List<DAL.GetListOfMails_Result> listeMailsResult = dbContext.GetListOfMails(idMembre).ToList();
+
+                List<Models.Mail> listeMail = new List<Models.Mail>();
+
+                foreach(var x in listeMailsResult)
+                {
+                    if(x.repondu != null)
+                        listeMail.Add(new Models.Mail { adresseMail = x.adresseMail, idProprietaire = x.idProprietaire, dateEnvoi = x.dateEnvoi, idMail = x.idMail, lu = x.lu, message = x.msg, repondu = (DateTime)x.repondu, sujet = x.sujet });
+                    else
+                        listeMail.Add(new Models.Mail { adresseMail = x.adresseMail, idProprietaire = x.idProprietaire, dateEnvoi = x.dateEnvoi, idMail = x.idMail, lu = x.lu, message = x.msg, sujet = x.sujet });
+
+                }
+
+                return listeMail;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+        [HttpPost]
+        [Route("sendMail")]
+        public IHttpActionResult sendMail(Models.Mail newMail)
+        {
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                dbContext.SendMail(newMail.adresseMail, newMail.sujet, newMail.message, newMail.idProprietaire);
+                return Ok();
             }
             catch (Exception ex)
             {

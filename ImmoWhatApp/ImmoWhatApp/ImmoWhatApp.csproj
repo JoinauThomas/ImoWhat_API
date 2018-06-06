@@ -3224,6 +3224,7 @@
     <Compile Include="Models\CommuneContourPoint.cs" />
     <Compile Include="Models\coordonneesContourCommuneModels.cs" />
     <Compile Include="Models\imageModels.cs" />
+    <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\nbPieces.cs" />
     <Compile Include="Models\RechercheMoyennePrixCommune.cs" />
     <Compile Include="Models\RequestResultM.cs" />
@@ -3290,6 +3291,7 @@
     <Content Include="Views\Account\Connexion.cshtml" />
     <Content Include="Views\Bien\AddNewBien.cshtml" />
     <Content Include="Views\Bien\voirLeBien.cshtml" />
+    <Content Include="Views\Account\VoirMesMails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -48,6 +48,7 @@ namespace ImmoWhat_API.DAL
         public virtual DbSet<VAL_PRIX_MOYEN_BIEN> VAL_PRIX_MOYEN_BIEN { get; set; }
         public virtual DbSet<MapsParams> MapsParams { get; set; }
         public virtual DbSet<StatImmo> StatImmo { get; set; }
+        public virtual DbSet<mail> mail { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -986,6 +987,66 @@ namespace ImmoWhat_API.DAL
                 new ObjectParameter("idBien", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetOneBien_Result>("GetOneBien", idBienParameter);
+        }
+    
+        public virtual int SendAMail(string mailAddress, string sujet, string message, Nullable<int> idProprietaire)
+        {
+            var mailAddressParameter = mailAddress != null ?
+                new ObjectParameter("mailAddress", mailAddress) :
+                new ObjectParameter("mailAddress", typeof(string));
+    
+            var sujetParameter = sujet != null ?
+                new ObjectParameter("sujet", sujet) :
+                new ObjectParameter("sujet", typeof(string));
+    
+            var messageParameter = message != null ?
+                new ObjectParameter("message", message) :
+                new ObjectParameter("message", typeof(string));
+    
+            var idProprietaireParameter = idProprietaire.HasValue ?
+                new ObjectParameter("idProprietaire", idProprietaire) :
+                new ObjectParameter("idProprietaire", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SendAMail", mailAddressParameter, sujetParameter, messageParameter, idProprietaireParameter);
+        }
+    
+        public virtual int SendMail(string mailAddress, string sujet, string message, Nullable<int> idProprietaire)
+        {
+            var mailAddressParameter = mailAddress != null ?
+                new ObjectParameter("mailAddress", mailAddress) :
+                new ObjectParameter("mailAddress", typeof(string));
+    
+            var sujetParameter = sujet != null ?
+                new ObjectParameter("sujet", sujet) :
+                new ObjectParameter("sujet", typeof(string));
+    
+            var messageParameter = message != null ?
+                new ObjectParameter("message", message) :
+                new ObjectParameter("message", typeof(string));
+    
+            var idProprietaireParameter = idProprietaire.HasValue ?
+                new ObjectParameter("idProprietaire", idProprietaire) :
+                new ObjectParameter("idProprietaire", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SendMail", mailAddressParameter, sujetParameter, messageParameter, idProprietaireParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetCountOfNewMails(Nullable<int> idProprietaire)
+        {
+            var idProprietaireParameter = idProprietaire.HasValue ?
+                new ObjectParameter("idProprietaire", idProprietaire) :
+                new ObjectParameter("idProprietaire", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetCountOfNewMails", idProprietaireParameter);
+        }
+    
+        public virtual ObjectResult<GetListOfMails_Result> GetListOfMails(Nullable<int> idMembre)
+        {
+            var idMembreParameter = idMembre.HasValue ?
+                new ObjectParameter("idMembre", idMembre) :
+                new ObjectParameter("idMembre", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetListOfMails_Result>("GetListOfMails", idMembreParameter);
         }
     }
 }

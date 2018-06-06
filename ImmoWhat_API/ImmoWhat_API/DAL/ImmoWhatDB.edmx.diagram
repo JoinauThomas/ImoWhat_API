@@ -39,6 +39,8 @@
         <AssociationConnector Association="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN" />
         <AssociationConnector Association="ImmoWhatModel.AspNetUserRoles" />
         <AssociationConnector Association="ImmoWhatModel.BIEN_OPTION" />
+        <EntityTypeShape EntityType="ImmoWhatModel.mail" Width="1.5" PointX="5.25" PointY="19.375" />
+        <AssociationConnector Association="ImmoWhatModel.FK_mail_MEMBRE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -130,7 +131,95 @@ namespace ImmoWhatApp.Controllers
         public ActionResult CheckMyProfile()
         {
             Models.MembreModels moi = (Models.MembreModels)Session["moi"];
+            
             return View(moi);
         }
-    }
+
+        [HttpGet]
+        public JsonResult GetCountOfNewMails(int idMembre)
+        {
+            try
+            {
+                Models.RequestResultM resuleRequest = BLL.MembreBLL.GetCountOfNewMails(idMembre);
+
+                if (resuleRequest.result == "OK")
+                    return Json(new { result = "OK", nbNvMsg = resuleRequest.resultRequest }, JsonRequestBehavior.AllowGet);
+                else
+                    return Json(new { result = "NoOK", msg = resuleRequest.msg }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
+
+        public JsonResult SendMail(string adresseMail, string msg, int idProprietaire, string sujet)
+        {
+            try
+            {
+                Models.Mail newMail = new Models.Mail{ adresseMail = adresseMail, message = msg, idProprietaire = idProprietaire, sujet = sujet };
+
+                Models.RequestResultM resultRequest = BLL.MembreBLL.sendMail(newMail);
+
+                if(resultRequest.result == "ok")
+                    return Json(new { result = "OK", msg = resultRequest.msg });
+                else
+                    return Json(new { result = "NoOK", msg = resultRequest.msg });
+
+
+            }
+            
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void envoiMail()
+        {
+            envoiMail2();
+        }
+
+        protected void envoiMail2()
+        {
+            MailMessage mail = new MailMessage();
+            mail.To.Add("iwhat02018@gmail.com");
+
+            mail.From = new MailAddress("thomasjoinau@gmail.com");
+            mail.Subject = "Email using Gmail";
+
+            string Body = "Hi, this mail is to test sending mail" +
+                          "using Gmail in ASP.NET";
+            mail.Body = Body;
+
+            mail.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.Credentials = new System.Net.NetworkCredential
+                 ("iwhat02018@gmail.com", "ImmoWhat2018");
+
+            smtp.EnableSsl = true;
+            smtp.Port = 587;
+            smtp.Send(mail);
+
+        }
+
+        public ActionResult VoirMesMails(int idMembre)
+        {
+            try
+            {
+                Models.RequestResultM resultRequest = BLL.MembreBLL.GetListOfMails(idMembre);
+                List<Models.Mail> listeMails = resultRequest.listeMails;
+
+                return View(listeMails);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
+    
+}
 }

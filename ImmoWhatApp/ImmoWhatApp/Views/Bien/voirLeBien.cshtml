@@ -338,31 +338,34 @@
                 </div>
             </div>
         </div>
+
+
+        @*   CONTACTER LE PROPRIETAIRE   *@
         <div class="col-lg-3 border">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <h5>Contacter le propriétaire</h5>
-                            </div>
-                            <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h5>Contacter le propriétaire</h5>
+                        </div>
+                        <div class="col-lg-12">
+                            <form id="formSendMail">
                                 <div class="form-group">
                                     @{
                                         ImmoWhatApp.Models.MembreModels moi = (ImmoWhatApp.Models.MembreModels)Session["moi"];
                                     }
-                                    <input class="form-control" type="text" placeholder="@moi.prenom" disabled>
-                                    <input class="form-control" type="text" placeholder="@moi.nom" disabled>
-                                    <input class="form-control" type="email" placeholder="@moi.mail" disabled>
-                                    <textarea class="form-control" rows="10">Pourriez-vous me contacter concernant cette annonce publiée svp ?</textarea>
-                                    <button class="btn btn-warning btn-block btn-lg" type="submit">
+                                    <input class="form-control" type="text" value="@moi.prenom" placeholder="@moi.prenom" disabled>
+                                    <input class="form-control" type="text" value="@moi.nom" placeholder="@moi.nom" disabled>
+                                    <input id="mailEmmeteur" class="form-control" value="@moi.mail" type="email" placeholder="@moi.mail" disabled>
+                                    <textarea id="msg" class="form-control" rows="10">Pourriez-vous me contacter concernant cette annonce publiée svp ?</textarea>
+                                    <button id="btnEnvoiMsg" class="btn btn-warning btn-block btn-lg" type="button">
                                         <img src="https://png.icons8.com/dotty/30/000000/filled-sent.png"><span>   @Resource.envoyer</span>
                                     </button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-
-
                     </div>
+                </div>
             </div>
         </div>
     </div>
@@ -373,5 +376,43 @@
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     @Html.ActionLink("Back to List", "MainPage", "Home", new { nomCommune = Model.commune, typeBien = Model.typeBien }, "")
 </p>
+
+<script>
+    $('#btnEnvoiMsg').click(function () {
+        
+        var mailEmmeteur = $('#mailEmmeteur').val();
+        var message = $('#msg').val();
+        var idProprietaire = '@Model.idProprietaire';
+        var sujet = "demande d'information sur un bien";
+
+        var formData = new FormData();
+        formData.append("adresseMail", $('#mailEmmeteur').val());
+        formData.append("sujet", "demande d'information sur un bien");
+        formData.append("message", $('#msg').val());
+        formData.append("idProprietaire", '@Model.idProprietaire');
+        alert('@Model.idProprietaire')
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("SendMail", "Account")',
+            data: {
+                "adresseMail": mailEmmeteur, "msg": message, "idProprietaire": idProprietaire, "sujet": sujet },
+            success: function (donnee) {
+                if (donnee.result == "OK") {
+                    alert("oki")
+                }
+                else {
+                    alert(donnee.msg);
+                }
+                
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        });
+
+    });
+</script>
+
 <script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
 

@@ -48,6 +48,9 @@
                                     <label>@Html.DisplayNameFor(model => model.telephone)</label>
                                     <input class="form-control col-10" type="text" disabled="" value="@Html.DisplayFor(model => model.telephone)">
                                 </div>
+                                <div class="col-12">
+                                    <button id="btnMesMessages" type="button" class="btn btn-outline-light col-6 offset-2 btn-lg">messages<span style="position:absolute; top:0; right:0; font-size:1.1em" id="nbNvMessages" class="badge badge-primary rounded-circle"></span></button>
+                                </div>
                             </div>
                             <div class="col-lg-5 offset-lg-1">
                                 <div class="form-row mb-2">
@@ -173,7 +176,31 @@
 
 <script>
     $(document).ready(function () {
+        var idMembre = '@Model.idMembre';
+        $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            url: '@Url.Action("GetCountOfNewMails", "Account")',
+            data: { "idMembre": idMembre },
+            success: function (donnee) {
+                if (donnee.result == "OK") {
+                    $('#nbNvMessages').html(donnee.nbNvMsg);
+                }
+                else {
+                    alert("gros problème :\n"+donnee.msg);
+                }
+
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        });
         @*var x = @Model.dateEnregistrement.Day+"/"+@Model.dateEnregistrement.Month+"/"+@Model.dateEnregistrement.Year;
         $('#dateEnr').html("enregistré depuis le " + x)*@
+    })
+
+    $('#btnMesMessages').click(function () {
+        
+        location.href = '@Url.Action("VoirMesMails", "Account", new { idMembre = @Model.idMembre })'
     })
 </script>

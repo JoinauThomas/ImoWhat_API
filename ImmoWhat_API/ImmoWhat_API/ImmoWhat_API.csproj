@@ -296,6 +296,9 @@
     <Compile Include="DAL\GetListBiensFromCPostAndType_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\GetListOfMails_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetMyProfiles_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
@@ -337,6 +340,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ImmoWhatDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\mail.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\MapsParams.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
@@ -391,6 +397,7 @@
     <Compile Include="Models\CommuneContourPoint.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\imageModels.cs" />
+    <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\MembreModels.cs" />
     <Compile Include="Models\ResultInscription.cs" />
     <Compile Include="Models\TableGraphTransactions.cs" />

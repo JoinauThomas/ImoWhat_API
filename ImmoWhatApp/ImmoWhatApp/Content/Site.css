@@ -112,6 +112,10 @@ li a {
     cursor: context-menu;
 }
 
+.cusorHand :hover {
+    cursor: pointer;
+}
+
 
 
 

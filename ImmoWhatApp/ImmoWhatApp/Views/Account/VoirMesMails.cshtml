@@ -1,0 +1,106 @@
+﻿@model IEnumerable<ImmoWhatApp.Models.Mail>
+
+@{
+    ViewBag.Title = "VoirMesMails";
+}
+
+<div class="row">
+    <div class="col">
+        <div class="container">
+            <div class="row mb-3">
+                <div class="col">
+                    <h1>Mes mails</h1>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <h4>nouveaux messages</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 offset-lg-7">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend"></div><input class="form-control" type="text">
+                        <div class="input-group-append"><button class="btn btn-primary" type="button">recherche</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsive" style="text-align : center">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="d-none">@Html.DisplayNameFor(model => model.idMail)</th>
+                                    <th>@Html.DisplayNameFor(model => model.adresseMail)</th>
+                                    <th>@Html.DisplayNameFor(model => model.dateEnvoi)</th>
+                                    <th>@Html.DisplayNameFor(model => model.sujet)</th>
+                                    <th>@Html.DisplayNameFor(model => model.message)</th>
+                                    <th>@Html.DisplayNameFor(model => model.lu)</th>
+                                    <th>@Html.DisplayNameFor(model => model.repondu)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr class="cusorHand">
+                                        <td class="d-none">
+                                            @Html.DisplayFor(modelItem => item.idMail)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.adresseMail)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.dateEnvoi)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.sujet)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.message)
+                                        </td>
+                                        <td>
+                                            @if (item.lu == true)
+                                            {
+                                                <input type="checkbox" checked disabled>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled>
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @if (item.repondu == DateTime.MinValue)
+                                            {
+                                                <span>non</span>
+                                            }
+                                            else
+                                            {
+                                                @Html.DisplayFor(modelItem => item.repondu)
+                                            }
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col">
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                            <li class="page-item"><a class="page-link">1</a></li>
+                            <li class="page-item"><a class="page-link">2</a></li>
+                            <li class="page-item"><a class="page-link">3</a></li>
+                            <li class="page-item"><a class="page-link">4</a></li>
+                            <li class="page-item"><a class="page-link">5</a></li>
+                            <li class="page-item"><a class="page-link" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

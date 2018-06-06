@@ -133,6 +133,19 @@
           <Property Name="Longitude" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Commune_CodePostal" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
+        <EntityType Name="mail">
+          <Key>
+            <PropertyRef Name="idMail" />
+          </Key>
+          <Property Name="idMail" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adresseMail" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="dateEnvoi" Type="datetime" Nullable="false" />
+          <Property Name="sujet" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="msg" Type="nvarchar" MaxLength="550" Nullable="false" />
+          <Property Name="lu" Type="bit" Nullable="false" />
+          <Property Name="repondu" Type="datetime" />
+          <Property Name="idProprietaire" Type="int" Nullable="false" />
+        </EntityType>
         <!--Erreurs détectées durant la génération :
 avertissement 6002: La table/vue 'ImmoWhat.dbo.MapsParams' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
         <EntityType Name="MapsParams">
@@ -487,6 +500,18 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_mail_MEMBRE">
+          <End Role="MEMBRE" Type="Self.MEMBRE" Multiplicity="1" />
+          <End Role="mail" Type="Self.mail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEMBRE">
+              <PropertyRef Name="idMembre" />
+            </Principal>
+            <Dependent Role="mail">
+              <PropertyRef Name="idProprietaire" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MEMBRE_AspNetRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1" />
           <End Role="MEMBRE" Type="Self.MEMBRE" Multiplicity="*" />
@@ -627,6 +652,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="codePostCommune" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="GetCommuneContourPoints" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetCountOfNewMails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idProprietaire" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetHighestYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetIdBien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
@@ -647,6 +675,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         <Function Name="GetListBiensFromCPostAndType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
           <Parameter Name="type" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetListOfMails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idMembre" Type="int" Mode="In" />
         </Function>
         <Function Name="GetMinYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
@@ -724,6 +755,12 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="idBien" Type="int" Mode="In" />
           <Parameter Name="lien" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SendMail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="mailAddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="sujet" Type="nvarchar" Mode="In" />
+          <Parameter Name="message" Type="nvarchar" Mode="In" />
+          <Parameter Name="idProprietaire" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -759,9 +796,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="type" Type="nvarchar" Mode="In" />
           <Parameter Name="codePostCommune" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="voirLeBien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="idBien" Type="int" Mode="In" />
-        </Function>
         <EntityContainer Name="ImmoWhatModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -775,6 +809,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <EntitySet Name="BIEN_PIECES" EntityType="Self.BIEN_PIECES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="COMMUNE" EntityType="Self.COMMUNE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="COMMUNES_CONTOUR_POINT" EntityType="Self.COMMUNES_CONTOUR_POINT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mail" EntityType="Self.mail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MEMBRE" EntityType="Self.MEMBRE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OPTIONS" EntityType="Self.OPTIONS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PIECES" EntityType="Self.PIECES" Schema="dbo" store:Type="Tables" />
@@ -896,6 +931,10 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mail_MEMBRE" Association="Self.FK_mail_MEMBRE">
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+            <End Role="mail" EntitySet="mail" />
           </AssociationSet>
           <AssociationSet Name="FK_MEMBRE_AspNetRoles" Association="Self.FK_MEMBRE_AspNetRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -1254,7 +1293,30 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="idBien" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetOneBien" ReturnType="Collection(ImmoWhatModel.GetOneBien_Result)">
-            <Parameter Name="idBien" Mode="In" Type="Int32" />
+          <Parameter Name="idBien" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SendAMail">
+            <Parameter Name="mailAddress" Mode="In" Type="String" />
+            <Parameter Name="sujet" Mode="In" Type="String" />
+            <Parameter Name="message" Mode="In" Type="String" />
+            <Parameter Name="idProprietaire" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SendMail">
+            <Parameter Name="mailAddress" Mode="In" Type="String" />
+            <Parameter Name="sujet" Mode="In" Type="String" />
+            <Parameter Name="message" Mode="In" Type="String" />
+            <Parameter Name="idProprietaire" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetCountOfNewMails" ReturnType="Collection(Int32)">
+          <Parameter Name="idProprietaire" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="mail" EntityType="ImmoWhatModel.mail" />
+          <AssociationSet Name="FK_mail_MEMBRE" Association="ImmoWhatModel.FK_mail_MEMBRE">
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+            <End Role="mail" EntitySet="mail" />
+          </AssociationSet>
+          <FunctionImport Name="GetListOfMails" ReturnType="Collection(ImmoWhatModel.GetListOfMails_Result)">
+            <Parameter Name="idMembre" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -1537,6 +1599,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Name="RoleMembre" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetRoles" Relationship="ImmoWhatModel.FK_MEMBRE_AspNetRoles" FromRole="MEMBRE" ToRole="AspNetRoles" />
           <NavigationProperty Name="BIEN" Relationship="ImmoWhatModel.FK_BIENS_MEMBRE" FromRole="MEMBRE" ToRole="BIEN" />
+          <NavigationProperty Name="mail1" Relationship="ImmoWhatModel.FK_mail_MEMBRE" FromRole="MEMBRE" ToRole="mail" />
         </EntityType>
         <EntityType Name="OPTIONS">
           <Key>
@@ -1955,6 +2018,42 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Type="Boolean" Name="jardin" Nullable="true" />
           <Property Type="Boolean" Name="alarme" Nullable="true" />
           <Property Type="Boolean" Name="doubleVitre" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="mail">
+          <Key>
+            <PropertyRef Name="idMail" />
+          </Key>
+          <Property Name="idMail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adresseMail" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="dateEnvoi" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sujet" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="msg" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Name="lu" Type="Boolean" Nullable="false" />
+          <Property Name="repondu" Type="DateTime" Precision="3" />
+          <Property Name="idProprietaire" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MEMBRE" Relationship="ImmoWhatModel.FK_mail_MEMBRE" FromRole="mail" ToRole="MEMBRE" />
+        </EntityType>
+        <Association Name="FK_mail_MEMBRE">
+          <End Type="ImmoWhatModel.MEMBRE" Role="MEMBRE" Multiplicity="1" />
+          <End Type="ImmoWhatModel.mail" Role="mail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEMBRE">
+              <PropertyRef Name="idMembre" />
+            </Principal>
+            <Dependent Role="mail">
+              <PropertyRef Name="idProprietaire" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetListOfMails_Result">
+          <Property Type="Int32" Name="idMail" Nullable="false" />
+          <Property Type="String" Name="adresseMail" Nullable="false" MaxLength="250" />
+          <Property Type="DateTime" Name="dateEnvoi" Nullable="false" Precision="23" />
+          <Property Type="String" Name="sujet" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="550" />
+          <Property Type="Boolean" Name="lu" Nullable="false" />
+          <Property Type="DateTime" Name="repondu" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="idProprietaire" Nullable="false" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2495,45 +2594,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="voirLeBien" FunctionName="ImmoWhatModel.Store.voirLeBien">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ImmoWhatModel.voirLeBien_Result">
-                <ScalarProperty Name="idBien" ColumnName="idBien" />
-                <ScalarProperty Name="typeBien" ColumnName="typeBien" />
-                <ScalarProperty Name="idProprietaire" ColumnName="idProprietaire" />
-                <ScalarProperty Name="prix" ColumnName="prix" />
-                <ScalarProperty Name="superficie" ColumnName="superficie" />
-                <ScalarProperty Name="commune" ColumnName="commune" />
-                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
-                <ScalarProperty Name="rue" ColumnName="rue" />
-                <ScalarProperty Name="numero" ColumnName="numero" />
-                <ScalarProperty Name="boite" ColumnName="boite" />
-                <ScalarProperty Name="nbEtages" ColumnName="nbEtages" />
-                <ScalarProperty Name="libbelle" ColumnName="libbelle" />
-                <ScalarProperty Name="energie" ColumnName="energie" />
-                <ScalarProperty Name="estSupprime" ColumnName="estSupprime" />
-                <ScalarProperty Name="estVendu" ColumnName="estVendu" />
-                <ScalarProperty Name="nbPhotos" ColumnName="nbPhotos" />
-                <ScalarProperty Name="nbChambre" ColumnName="nbChambre" />
-                <ScalarProperty Name="nbSdb" ColumnName="nbSdb" />
-                <ScalarProperty Name="nbdressing" ColumnName="nbdressing" />
-                <ScalarProperty Name="nbsam" ColumnName="nbsam" />
-                <ScalarProperty Name="nbsalon" ColumnName="nbsalon" />
-                <ScalarProperty Name="nbbuanderie" ColumnName="nbbuanderie" />
-                <ScalarProperty Name="nbcave" ColumnName="nbcave" />
-                <ScalarProperty Name="nbgrenier" ColumnName="nbgrenier" />
-                <ScalarProperty Name="nbtoilette" ColumnName="nbtoilette" />
-                <ScalarProperty Name="nbveranda" ColumnName="nbveranda" />
-                <ScalarProperty Name="nbgarage" ColumnName="nbgarage" />
-                <ScalarProperty Name="piscine" ColumnName="piscine" />
-                <ScalarProperty Name="cuisineEqu" ColumnName="cuisineEqu" />
-                <ScalarProperty Name="parking" ColumnName="parking" />
-                <ScalarProperty Name="jardin" ColumnName="jardin" />
-                <ScalarProperty Name="alarme" ColumnName="alarme" />
-                <ScalarProperty Name="doubleVitre" ColumnName="doubleVitre" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetOneBien" FunctionName="ImmoWhatModel.Store.GetOneBien">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ImmoWhatModel.GetOneBien_Result">
@@ -2571,6 +2631,36 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
                 <ScalarProperty Name="jardin" ColumnName="jardin" />
                 <ScalarProperty Name="alarme" ColumnName="alarme" />
                 <ScalarProperty Name="doubleVitre" ColumnName="doubleVitre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SendMail" FunctionName="ImmoWhatModel.Store.SendMail" />
+          <FunctionImportMapping FunctionImportName="GetCountOfNewMails" FunctionName="ImmoWhatModel.Store.GetCountOfNewMails" />
+          <EntitySetMapping Name="mail">
+            <EntityTypeMapping TypeName="ImmoWhatModel.mail">
+              <MappingFragment StoreEntitySet="mail">
+                <ScalarProperty Name="idProprietaire" ColumnName="idProprietaire" />
+                <ScalarProperty Name="repondu" ColumnName="repondu" />
+                <ScalarProperty Name="lu" ColumnName="lu" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+                <ScalarProperty Name="sujet" ColumnName="sujet" />
+                <ScalarProperty Name="dateEnvoi" ColumnName="dateEnvoi" />
+                <ScalarProperty Name="adresseMail" ColumnName="adresseMail" />
+                <ScalarProperty Name="idMail" ColumnName="idMail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetListOfMails" FunctionName="ImmoWhatModel.Store.GetListOfMails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetListOfMails_Result">
+                <ScalarProperty Name="idMail" ColumnName="idMail" />
+                <ScalarProperty Name="adresseMail" ColumnName="adresseMail" />
+                <ScalarProperty Name="dateEnvoi" ColumnName="dateEnvoi" />
+                <ScalarProperty Name="sujet" ColumnName="sujet" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+                <ScalarProperty Name="lu" ColumnName="lu" />
+                <ScalarProperty Name="repondu" ColumnName="repondu" />
+                <ScalarProperty Name="idProprietaire" ColumnName="idProprietaire" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

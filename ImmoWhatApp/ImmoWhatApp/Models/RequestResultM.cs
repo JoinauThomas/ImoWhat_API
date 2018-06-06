@@ -9,5 +9,7 @@ namespace ImmoWhatApp.Models
     {
         public string result { get; set; }
         public string msg { get; set; }
+        public int resultRequest { get; set; }
+        public List<Models.Mail> listeMails { get; set; }
     }
 }
