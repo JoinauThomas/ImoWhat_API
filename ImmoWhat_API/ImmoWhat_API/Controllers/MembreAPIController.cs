@@ -199,9 +199,7 @@ namespace ImmoWhat_API.Controllers
             }
 
         }
-
-
-
+        
         [HttpPost]
         [Route("sendMail")]
         public IHttpActionResult sendMail(Models.Mail newMail)
@@ -217,5 +215,21 @@ namespace ImmoWhat_API.Controllers
                 throw ex;
             }
         }
+
+        //[HttpPost]
+        //[Route("changeStatutMailToLu")]
+        //public IHttpActionResult changeStatutMailToLu(int idMail)
+        //{
+        //    try
+        //    {
+        //        DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+        //        dbContext.changeStatutMailToLu(idMail);
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
     }
 }

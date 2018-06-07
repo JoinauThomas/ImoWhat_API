@@ -1048,5 +1048,14 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetListOfMails_Result>("GetListOfMails", idMembreParameter);
         }
+    
+        public virtual int changeStatutMailToLu(Nullable<int> idMail)
+        {
+            var idMailParameter = idMail.HasValue ?
+                new ObjectParameter("idMail", idMail) :
+                new ObjectParameter("idMail", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("changeStatutMailToLu", idMailParameter);
+        }
     }
 }

@@ -1768,6 +1768,8 @@
     <Content Include="img\loaders\infini.gif" />
     <Content Include="img\loaders\loading.gif" />
     <Content Include="img\logo.png" />
+    <Content Include="img\logos\enveloppeF.png" />
+    <Content Include="img\logos\enveloppeO.png" />
     <Content Include="img\membre\photo0.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -3205,6 +3207,7 @@
     <Compile Include="BLL\BienBLL.cs" />
     <Compile Include="BLL\CommuneBLL.cs" />
     <Compile Include="BLL\HomeBLL.cs" />
+    <Compile Include="BLL\MailBLL.cs" />
     <Compile Include="BLL\MembreBLL.cs" />
     <Compile Include="BLL\StatBLL.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -3212,6 +3215,7 @@
     <Compile Include="Controllers\BienController.cs" />
     <Compile Include="Controllers\CommuneController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\StatController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -3304,6 +3308,8 @@
     <Folder Include="img\bien\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Login\" />
+    <Folder Include="Views\MailBLL\" />
+    <Folder Include="Views\Mail\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

@@ -32,6 +32,7 @@
                             <thead>
                                 <tr>
                                     <th class="d-none">@Html.DisplayNameFor(model => model.idMail)</th>
+                                    <th class="">@Html.DisplayNameFor(model => model.lu)</th>
                                     <th>@Html.DisplayNameFor(model => model.adresseMail)</th>
                                     <th>@Html.DisplayNameFor(model => model.dateEnvoi)</th>
                                     <th>@Html.DisplayNameFor(model => model.sujet)</th>
@@ -43,23 +44,43 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr class="cusorHand">
+                                    string mail = "mail" + item.idMail;
+                                    string dateEnvoi = "envoi" + item.idMail;
+                                    string sujet = "sujet" + item.idMail;
+                                    string msg = "msg" + item.idMail;
+                                    string lu = "lu" + item.idMail;
+
+
+                                    <tr class="cusorHand monMail" id=@item.idMail>
                                         <td class="d-none">
                                             @Html.DisplayFor(modelItem => item.idMail)
                                         </td>
-                                        <td>
+                                        @if (item.lu == true)
+                                        {
+                                            <td class="align-middle">
+                                                <img width="43" src="~/img/logos/enveloppeO.png" /><input id="@lu" value="@item.lu.ToString()" style="display:none" />
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="align-middle">
+                                                <img width="43" src="~/img/logos/enveloppeF.png" /><input id="@lu" value="@item.lu.ToString()" style="display:none" />
+                                            </td>
+                                        }
+
+                                        <td class="align-middle" id="@mail">
                                             @Html.DisplayFor(modelItem => item.adresseMail)
                                         </td>
-                                        <td>
+                                        <td class="align-middle" id="@dateEnvoi">
                                             @Html.DisplayFor(modelItem => item.dateEnvoi)
                                         </td>
-                                        <td>
+                                        <td class="align-middle" id="@sujet">
                                             @Html.DisplayFor(modelItem => item.sujet)
                                         </td>
-                                        <td>
+                                        <td class="align-middle" id="@msg">
                                             @Html.DisplayFor(modelItem => item.message)
                                         </td>
-                                        <td>
+                                        <td class="align-middle">
                                             @if (item.lu == true)
                                             {
                                                 <input type="checkbox" checked disabled>
@@ -70,7 +91,7 @@
                                             }
 
                                         </td>
-                                        <td>
+                                        <td class="align-middle">
                                             @if (item.repondu == DateTime.MinValue)
                                             {
                                                 <span>non</span>
@@ -104,3 +125,117 @@
         </div>
     </div>
 </div>
+
+@*MODAL*@
+
+<!-- Modal -->
+<div id="modalMail" style="display:none">
+    <div class="row" style="margin:0px;height:100%;min-height:100%;">
+        <div class="col-lg-12">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h4>mail from :</h4>
+                    </div>
+                    <div class="col-lg-9">
+                        <h4 id="mailAdress"></h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h6>envoyé le :</h6>
+                    </div>
+                    <div class="col-lg-9">
+                        <h6 id="envoi"></h6>
+                    </div>
+                </div>
+                <div class="row border mt-4" style="height:100%;min-height:100%;">
+                    <div class="col" style="height:100%;min-height:100%;max-height:100%;">
+                        <p id="msg" style="height:100%;min-height:100%; white-space:pre-line"></p>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col offset-lg-9" style="padding:0px;">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-danger" type="button">Supprimer</button>
+                            <button class="btn btn-success" type="button">répondre</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $('.monMail').click(function () {
+        var idMail = $(this).attr("id");
+        var msg = $('#msg' + idMail).text();
+        var sujet = $('#sujet' + idMail).text();
+        var envoi = $('#envoi' + idMail).text();
+        var adressmail = $('#mail' + idMail).text();
+        var lu = $('#lu' + idMail).val();
+        
+        var date = new Date(envoi);
+        var jour = date.getDate();
+        if (jour < 10)
+            jour = "0" + jour;
+
+        var mois = (date.getMonth() + 1);
+        if (mois < 10)
+            mois = "0" + mois;
+
+        var annee = date.getFullYear();
+
+        var heure = date.getHours();
+        if (heure < 10)
+            heure = "0" + heure;
+
+        var minutes = date.getMinutes();
+        if (minutes < 10)
+            minutes = "0" + minutes;
+
+        var dateEnvoi = "le " + jour + "/" + mois + "/" + annee + " à " + heure + "h" + minutes;
+
+        if (lu == "False") {
+            alert(idMail);
+             $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("changeStatutMailToLu", "Mail")',
+            data: { "idMail": idMail },
+            success: function (donnee) {
+                alert(donnee.result);
+                if (donnee.result == "OK") {
+                    alert("ok");
+                }
+                else {
+                    alert("gros problème :\n"+donnee.msg);
+                }
+
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        });
+        }
+        $('#sujet').text(sujet);
+        $('#msg').text(msg);
+        $('#mailAdress').text(adressmail);
+        $('#envoi').text(dateEnvoi);
+        $("#modalMail").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: "auto",
+            width: "60%",
+            modal: true,
+            title: "sujet : " + sujet,
+            buttons: {
+                "retour": function () { $(this).dialog("close") }
+            }
+        });
+        $("#modalMail").dialog("open")
+    });
+</script>

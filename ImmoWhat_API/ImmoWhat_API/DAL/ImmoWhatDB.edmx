@@ -593,6 +593,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="photo" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="ajoutIdCouleursDsMapsParams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="changeStatutMailToLu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idMail" Type="int" Mode="In" />
+        </Function>
         <Function Name="CheckIfAdressExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
           <Parameter Name="rue" Type="nvarchar" Mode="In" />
@@ -1316,7 +1319,10 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <End Role="mail" EntitySet="mail" />
           </AssociationSet>
           <FunctionImport Name="GetListOfMails" ReturnType="Collection(ImmoWhatModel.GetListOfMails_Result)">
-            <Parameter Name="idMembre" Mode="In" Type="Int32" />
+          <Parameter Name="idMembre" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="changeStatutMailToLu">
+            <Parameter Name="idMail" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -2664,6 +2670,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="changeStatutMailToLu" FunctionName="ImmoWhatModel.Store.changeStatutMailToLu" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

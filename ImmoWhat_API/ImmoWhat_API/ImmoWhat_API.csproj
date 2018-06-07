@@ -233,6 +233,7 @@
     <Compile Include="Controllers\CommuneApiController.cs" />
     <Compile Include="Controllers\HomeApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MailAPIController.cs" />
     <Compile Include="Controllers\MembreAPIController.cs" />
     <Compile Include="Controllers\StatApiController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
