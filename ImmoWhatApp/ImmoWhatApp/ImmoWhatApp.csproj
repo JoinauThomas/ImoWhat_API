@@ -1768,7 +1768,9 @@
     <Content Include="img\loaders\infini.gif" />
     <Content Include="img\loaders\loading.gif" />
     <Content Include="img\logo.png" />
+    <Content Include="img\logos\attention.png" />
     <Content Include="img\logos\enveloppeF.png" />
+    <Content Include="img\logos\enveloppeF2.png" />
     <Content Include="img\logos\enveloppeO.png" />
     <Content Include="img\membre\photo0.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -3295,7 +3297,8 @@
     <Content Include="Views\Account\Connexion.cshtml" />
     <Content Include="Views\Bien\AddNewBien.cshtml" />
     <Content Include="Views\Bien\voirLeBien.cshtml" />
-    <Content Include="Views\Account\VoirMesMails.cshtml" />
+    <Content Include="Views\Mail\VoirMesMails.cshtml" />
+    <Content Include="Views\Mail\PartialViewListMails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3309,7 +3312,6 @@
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Login\" />
     <Folder Include="Views\MailBLL\" />
-    <Folder Include="Views\Mail\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

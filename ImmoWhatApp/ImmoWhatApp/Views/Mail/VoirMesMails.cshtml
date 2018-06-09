@@ -1,0 +1,510 @@
+﻿@model IEnumerable<ImmoWhatApp.Models.Mail>
+
+@{
+    ViewBag.Title = "VoirMesMails";
+}
+<input id="idMail0" style="display:none" />
+<input id="idEmetteur0" style="display:none" />
+<input id="mailEmetteur0" style="display:none" />
+<input id="idDestination0" style="display:none" value="@ViewBag.idMembre" />
+<input id="MailDestination0" style="display:none" value="@ViewBag.mail" />
+
+
+
+<div class="row" style="width:100%">
+    <div class="col">
+        <div class="container">
+            <div class="row mb-3">
+                <div class="col">
+                    <h1>Mes mails</h1>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <h4>nouveaux messages</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 offset-lg-7">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend"></div><input class="form-control" type="text">
+                        <div class="input-group-append"><button class="btn btn-primary" type="button">recherche</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="tableMails">
+                    @*PARTIAL VIEW*@
+                    <div class="col-lg-12">
+                        <div class="table-responsive" style="text-align : center">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="d-none">@Html.DisplayNameFor(model => model.idMail)</th>
+                                        <th class="d-none">emetteur id</th>
+                                        <th></th>
+                                        <th>@Html.DisplayNameFor(model => model.adresseMail)</th>
+                                        <th>@Html.DisplayNameFor(model => model.dateEnvoi)</th>
+                                        <th>@Html.DisplayNameFor(model => model.sujet)</th>
+                                        <th>@Html.DisplayNameFor(model => model.message)</th>
+                                        <th>@Html.DisplayNameFor(model => model.repondu)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        string mail = "mail" + item.idMail;
+                                        string dateEnvoi = "envoi" + item.idMail;
+                                        string sujet = "sujet" + item.idMail;
+                                        string msg = "msg" + item.idMail;
+                                        string lu = "lu" + item.idMail;
+                                        string idEmetteur = "idEmetteur" + item.idMail;
+                                        int lngMsg = item.message.Length;
+
+
+                                        <tr class="cusorHand monMail" id=@item.idMail>
+                                            <td class="d-none">
+                                                <input id="@idEmetteur" value="@item.idEmetteur" />
+                                                @Html.DisplayFor(modelItem => item.idMail)
+                                            </td>
+                                            @if (item.lu == true)
+                                            {
+                                                <td class="align-middle">
+                                                    <img width="43" src="~/img/logos/enveloppeO.png" /><input id="@lu" value="@item.lu.ToString()" style="display:none" />
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="align-middle">
+                                                    <img width="43" src="~/img/logos/enveloppeF.png" /><input id="@lu" value="@item.lu.ToString()" style="display:none" />
+                                                </td>
+                                            }
+
+                                                <td class="align-middle" id="@mail">
+                                                    @Html.DisplayFor(modelItem => item.adresseMail)
+                                                </td>
+                                            <td class="align-middle" id="@dateEnvoi">
+                                                @Html.DisplayFor(modelItem => item.dateEnvoi)
+                                            </td>
+                                            <td class="align-middle" id="@sujet">
+                                                @Html.DisplayFor(modelItem => item.sujet)
+                                            </td>
+                                            <td class="align-middle" >
+                                                @if (lngMsg > 50)
+    {
+                                                    <span class="d-none" id="@msg" style="white-space:normal">@Html.DisplayFor(modelItem => item.message);</span>
+                                            <span style="white-space:normal">@item.message.Substring(0,50) ...</span>
+                                                }
+                                                else
+                                                {
+                                            <span id="@msg" style="white-space:normal">@Html.DisplayFor(modelItem => item.message);</span>
+                                                }
+                                            </td>
+                                            <td class="align-middle">
+                                                @if (item.repondu == DateTime.MinValue)
+                                                {
+                                                    <span>non</span>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.repondu)
+                                                }
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mt-4">
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                            <li class="page-item"><a class="page-link">1</a></li>
+                            <li class="page-item"><a class="page-link">2</a></li>
+                            <li class="page-item"><a class="page-link">3</a></li>
+                            <li class="page-item"><a class="page-link">4</a></li>
+                            <li class="page-item"><a class="page-link">5</a></li>
+                            <li class="page-item"><a class="page-link" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL*@
+
+<!-- Modal lecture du mail -->
+<div id="modalMail" style="display:none">
+
+
+
+    <div class="row" style="margin:0px;height:100%;min-height:100%;">
+        <div class="col-lg-12">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h4>mail from :</h4>
+                    </div>
+                    <div class="col-lg-9">
+                        <h4 id="mailAdress"></h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h6>envoyé le :</h6>
+                    </div>
+                    <div class="col-lg-9">
+                        <h6 id="envoi"></h6>
+                    </div>
+                </div>
+                <div class="row border mt-4" style="height:100%;min-height:100%;">
+                    <div class="col" style="height:100%;min-height:100%;max-height:100%;">
+                        <p id="msg" style="height:100%;min-height:100%; white-space:pre-line"></p>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col offset-lg-9" style="padding:0px;">
+                        <div class="btn-group" role="group">
+                            <button id="btnDeleteMail" class="btn btn-danger" type="button">Supprimer</button>
+                            <button id="btnRepondre" class="btn btn-success" type="button">répondre</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal ecriture du mail -->
+<div id="modalReponseMail" style="display:none">
+
+    @*<input id="idEmeteurReponse" style="display:normal" />
+    <input id="idDestinataireReponse" style="display:normal" />
+    <input id="mailAdressFrom" style="display:normal" />*@
+
+
+    <div class="row" style="margin:0px;height:100%;min-height:100%;">
+        <div class="col-lg-12">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h4>mail to :</h4>
+                    </div>
+                    <div class="col-lg-9">
+                        <h4 id="mailAdressTo"></h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h6 class="col-lg-12">sujet :</h6>
+                    </div>
+                    <div class="col-lg-9">
+                        <input class="col-12" id="sujetReponse" />
+                    </div>
+                </div>
+                <div class="row mt-4" style="height:100%;min-height:100%;">
+                    <div class="col" style="height:100%;min-height:100%;max-height:100%;">
+                        <textarea class="col-12" rows="10" id="msgReponse"></textarea>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col offset-lg-10" style="padding:0px;">
+                        <div class="btn-group" role="group">
+
+                            <button id="btnEnvoi" class="btn btn-success" type="button">répondre</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal message -->
+<div id="modal_info" style="display:none; position:fixed; top:50%; left:50%">
+    <p id="modalTxt" class="modalTxt modal-contents"></p>
+</div>
+
+<!-- Modal Delete -->
+<div class="row" id="modal_delete" style="display:none;">
+    <div class="col-lg-3">
+        <img width="50" src="~/img/logos/attention.png" />
+    </div>
+    <div class="col-9">
+        <span id="modalDeleteTxt" class="modalTxt modal-contents"></span>
+    </div>
+    
+</div>
+
+
+<script type="text/javascript">
+
+
+
+
+    $('#btnDeleteMail').click(function () {
+        ModalDelete()
+    });
+
+    $('#btnEnvoi').click(function () {
+        var destinataire = $('#idEmetteur0').val();
+        var emetteur = $('#idDestination0').val();
+        var sujetReponse = $('#sujetReponse').val();
+        var msgReponse = $('#msgReponse').val();
+        var mailDEnvoi = $('#MailDestination0').val();
+        var idMail = $('#idMail0').val();
+
+        //alert("id mail = " + idMail +
+        //    "\nid du destinataire = " + destinataire +
+        //    "\nid du l'emetteur = " + emetteur +
+        //    "\nmail de l'Emetteur = " + mailDEnvoi +
+        //    "\nsujet = " + sujetReponse +
+        //    "\nmessage = " + msgReponse);
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("SendMail", "Mail")',
+            data: {
+                "idMail": idMail, "adresseMail": mailDEnvoi, "msg": msgReponse, "Recepteur": destinataire, "sujet": sujetReponse
+            },
+            success: function (donnee) {
+                if (donnee.result == "OK") {
+                    GetPartialViewListMails('@ViewBag.idMembre');
+                    $('#sujetReponse').val("");
+                    $('#msgReponse').val("");
+                    ModalInfo("bravo", "ca a marché!!!");
+                }
+                else {
+                    alert(donnee.msg);
+                }
+
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        });
+
+
+    });
+
+    $('#btnRepondre').click(function () {
+
+
+        var destinataire = $('#idEmetteur0').val();
+        var emetteur = $('#idDestination0').val();
+        var emailEmetteur = $('#MailDestination0').val();
+        var emailDstinataire = $('#mailEmetteur0').text();
+
+        $('#idEmeteurReponse').val(emetteur);
+        $('#idDestinataireReponse').val(destinataire);
+        $('#mailAdressFrom').val('@ViewBag.mail');
+        $('#mailAdressTo').text(emailDstinataire);
+
+        $("#modalReponseMail").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: "auto",
+            width: "60%",
+            modal: true,
+            title: "réponse",
+            buttons: {
+                "retour": function () { $(this).dialog("close") }
+            }
+        });
+
+        $("#modalReponseMail").dialog("open");
+
+    });
+
+    $('.monMail').click(function () {
+        // RECUPERATION DE L'IDMAIL DU MAIL SELECTIONNE
+        var idMail = $(this).attr("id");
+        $('#idMail0').val(idMail);
+
+        // RECUPERATION DE L'EMETTEUR DU MAIL SELECTIONNE
+        var idEmetteur = $('#idEmetteur' + idMail).val();
+        $('#idEmetteur0').val(idEmetteur);
+
+        // RECUPERATION DU MAIL DE L'EMETTEUR DU MAIL SELECTIONNE
+        var mailEmetteur = $('#mail' + idMail).text();
+        $('#mailEmetteur0').val(mailEmetteur);
+
+        // RECUPERATION DU DESTINATAIRE (= MEMBRE) DU MAIL SELECTIONNE
+        var idMembre = $('#idDestination0').val();
+
+        // RECUPERATION DU MAIL DU DESTINATAIRE (= MEMBRE) DU MAIL SELECTIONNE
+        var mailDestinataire = $('#MailDestination0').val();
+
+        
+
+        //alert("id du mail = " + idMail +
+        //    "\nid de l emetteur = " + idEmetteur +
+        //    "\nmail de l emetteur = " + mailEmetteur +
+        //    "\nid du membre = " + idMembre +
+        //    "\nmail de destination = " + mailDestinataire)
+
+        var msg = $('#msg' + idMail).text();
+        var sujet = $('#sujet' + idMail).text();
+        var lu = $('#lu' + idMail).val();
+
+
+        var envoi = $('#envoi' + idMail).text();
+        var date = new Date(envoi);
+        var jour = date.getDate();
+        if (jour < 10)
+            jour = "0" + jour;
+
+        var mois = (date.getMonth() + 1);
+        if (mois < 10)
+            mois = "0" + mois;
+
+        var annee = date.getFullYear();
+
+        var heure = date.getHours();
+        if (heure < 10)
+            heure = "0" + heure;
+
+        var minutes = date.getMinutes();
+        if (minutes < 10)
+            minutes = "0" + minutes;
+
+        var dateEnvoi = "le " + jour + "/" + mois + "/" + annee + " à " + heure + "h" + minutes;
+
+        if (lu == "False") {
+            $.ajax({
+                type: 'POST',
+                datatype: 'json',
+                url: '@Url.Action("changeStatutMailToLu", "Mail")',
+                data: { "idMail": idMail },
+                success: function (donnee) {
+                    if (donnee.result == "OK") {
+
+                        GetPartialViewListMails(idMembre);
+                    }
+                    else {
+                        alert("gros problème :\n" + donnee.msg);
+                    }
+
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            });
+        }
+
+        $('#mailAdress').text(mailEmetteur);
+        $('#sujet').text(sujet);
+        $('#msg').text(msg);
+        $('#envoi').text(dateEnvoi);
+        $('#idEmetteur').val(idEmetteur)
+        $('#idDestination').val(idMembre)
+        $("#modalMail").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: "auto",
+            width: "60%",
+            modal: true,
+            title: "sujet : " + sujet,
+            buttons: {
+                "retour": function () { $(this).dialog("close") }
+            }
+        });
+        $("#modalMail").dialog("open")
+    });
+
+
+    function GetPartialViewListMails(idMembre) {
+        $.ajax({
+            type: 'Get',
+            datatype: 'json',
+            url: '@Url.Action("PartialViewListMails", "Mail")',
+            data: { "idMembre": idMembre },
+            success: function (donnee) {
+                $('#tableMails').html(donnee);
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        });
+    }
+    function DeleteBienByUser(idMail) {
+        var idMembre = $('#idDestination0').val();
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("changeStatutMailToDeleted", "Mail")',
+            data: { "idMail": idMail },
+            success: function (donnee) {
+                if (donnee.result == "OK") {
+                    GetPartialViewListMails(idMembre);
+
+                    ModalInfo("info", "le mail a bien été supprimé")
+                }
+                else {
+                    alert("gros problème :\n" + donnee.msg);
+                }
+
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        });
+    };
+
+
+    function ModalInfo(title, body) {
+        $('#modalTxt').html(body);
+
+        $('#modal_info').dialog({
+            open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+            resizable: false,
+            height: "auto",
+            width: "400",
+            modal: true,
+            title: title,
+
+            buttons: {
+                "ok": function () {
+                    $(this).dialog("close");
+                    $('#modalReponseMail').dialog("close");
+                    $('#modalMail').dialog("close");
+
+                }
+            }
+        });
+    }
+
+    function ModalDelete() {
+        $('#modalDeleteTxt').html("Etes vous sure de vouloir supprimer ce mail?");
+
+        $('#modal_delete').dialog({
+            open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+            resizable: false,
+            height: "auto",
+            width: "400",
+            modal: true,
+            title: "ATTENTION",
+
+            buttons: {
+                "oui": function () {
+                    $(this).dialog("close");
+                    var idMail = $('#idMail0').val();
+                    DeleteBienByUser(idMail);
+                    $('#modalReponseMail').dialog("close");
+                    $('#modalMail').dialog("close");
+
+                },
+                "non": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    }
+</script>

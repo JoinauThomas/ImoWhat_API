@@ -180,7 +180,7 @@
         $.ajax({
             type: 'GET',
             datatype: 'json',
-            url: '@Url.Action("GetCountOfNewMails", "Account")',
+            url: '@Url.Action("GetCountOfNewMails", "Mail")',
             data: { "idMembre": idMembre },
             success: function (donnee) {
                 if (donnee.result == "OK") {
@@ -201,6 +201,6 @@
 
     $('#btnMesMessages').click(function () {
         
-        location.href = '@Url.Action("VoirMesMails", "Account", new { idMembre = @Model.idMembre })'
+        location.href = '@Url.Action("VoirMesMails", "Mail", new { idMembre = @Model.idMembre })'
     })
 </script>

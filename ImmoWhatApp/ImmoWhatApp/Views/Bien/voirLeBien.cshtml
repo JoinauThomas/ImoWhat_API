@@ -389,14 +389,14 @@
         formData.append("adresseMail", $('#mailEmmeteur').val());
         formData.append("sujet", "demande d'information sur un bien");
         formData.append("message", $('#msg').val());
-        formData.append("idProprietaire", '@Model.idProprietaire');
-        alert('@Model.idProprietaire')
+        formData.append("Recepteur", '@Model.idProprietaire');
+
         $.ajax({
             type: 'POST',
             datatype: 'json',
-            url: '@Url.Action("SendMail", "Account")',
+            url: '@Url.Action("SendMail", "Mail")',
             data: {
-                "adresseMail": mailEmmeteur, "msg": message, "idProprietaire": idProprietaire, "sujet": sujet },
+                "adresseMail": mailEmmeteur, "msg": message, "Recepteur": idProprietaire, "sujet": sujet },
             success: function (donnee) {
                 if (donnee.result == "OK") {
                     alert("oki")

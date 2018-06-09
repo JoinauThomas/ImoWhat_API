@@ -144,7 +144,9 @@
           <Property Name="msg" Type="nvarchar" MaxLength="550" Nullable="false" />
           <Property Name="lu" Type="bit" Nullable="false" />
           <Property Name="repondu" Type="datetime" />
-          <Property Name="idProprietaire" Type="int" Nullable="false" />
+          <Property Name="idRecepteur" Type="int" Nullable="false" />
+          <Property Name="idEmetteur" Type="int" Nullable="false" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
         </EntityType>
         <!--Erreurs détectées durant la génération :
 avertissement 6002: La table/vue 'ImmoWhat.dbo.MapsParams' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
@@ -508,7 +510,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
               <PropertyRef Name="idMembre" />
             </Principal>
             <Dependent Role="mail">
-              <PropertyRef Name="idProprietaire" />
+              <PropertyRef Name="idRecepteur" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -593,7 +595,13 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="photo" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="ajoutIdCouleursDsMapsParams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="changeStatutMailToDeleted" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idMail" Type="int" Mode="In" />
+        </Function>
         <Function Name="changeStatutMailToLu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idMail" Type="int" Mode="In" />
+        </Function>
+        <Function Name="changeStatutMailToRepondu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idMail" Type="int" Mode="In" />
         </Function>
         <Function Name="CheckIfAdressExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -682,6 +690,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         <Function Name="GetListOfMails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idMembre" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetListOfMails2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idMembre" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetMinYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
         </Function>
@@ -759,10 +770,18 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="lien" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SendMail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idEmetteur" Type="int" Mode="In" />
           <Parameter Name="mailAddress" Type="nvarchar" Mode="In" />
           <Parameter Name="sujet" Type="nvarchar" Mode="In" />
           <Parameter Name="message" Type="nvarchar" Mode="In" />
-          <Parameter Name="idProprietaire" Type="int" Mode="In" />
+          <Parameter Name="idRecepteur" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SendMail2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idEmetteur" Type="int" Mode="In" />
+          <Parameter Name="mailAddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="sujet" Type="nvarchar" Mode="In" />
+          <Parameter Name="message" Type="nvarchar" Mode="In" />
+          <Parameter Name="idRecepteur" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -1165,79 +1184,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <Parameter Name="numero" Mode="In" Type="String" />
             <Parameter Name="boite" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="C__MigrationHistory" EntityType="ImmoWhatModel.C__MigrationHistory" />
-          <EntitySet Name="AspNetRoles" EntityType="ImmoWhatModel.AspNetRoles" />
-          <EntitySet Name="AspNetUserClaims" EntityType="ImmoWhatModel.AspNetUserClaims" />
-          <EntitySet Name="AspNetUserLogins" EntityType="ImmoWhatModel.AspNetUserLogins" />
-          <EntitySet Name="AspNetUsers" EntityType="ImmoWhatModel.AspNetUsers" />
-          <EntitySet Name="BIEN" EntityType="ImmoWhatModel.BIEN" />
-          <EntitySet Name="BIEN_PHOTOS" EntityType="ImmoWhatModel.BIEN_PHOTOS" />
-          <EntitySet Name="BIEN_PIECES" EntityType="ImmoWhatModel.BIEN_PIECES" />
-          <EntitySet Name="COMMUNE" EntityType="ImmoWhatModel.COMMUNE" />
-          <EntitySet Name="COMMUNES_CONTOUR_POINT" EntityType="ImmoWhatModel.COMMUNES_CONTOUR_POINT" />
-          <EntitySet Name="MEMBRE" EntityType="ImmoWhatModel.MEMBRE" />
-          <EntitySet Name="OPTIONS" EntityType="ImmoWhatModel.OPTIONS" />
-          <EntitySet Name="PIECES" EntityType="ImmoWhatModel.PIECES" />
-          <EntitySet Name="RefCouleur" EntityType="ImmoWhatModel.RefCouleur" />
-          <EntitySet Name="RefCouleurAppart" EntityType="ImmoWhatModel.RefCouleurAppart" />
-          <EntitySet Name="RefCouleurTerrain" EntityType="ImmoWhatModel.RefCouleurTerrain" />
-          <EntitySet Name="sysdiagrams" EntityType="ImmoWhatModel.sysdiagrams" />
-          <EntitySet Name="TYPEBIEN" EntityType="ImmoWhatModel.TYPEBIEN" />
-          <EntitySet Name="VAL_PRIX_MOYEN_BIEN" EntityType="ImmoWhatModel.VAL_PRIX_MOYEN_BIEN" />
-          <EntitySet Name="MapsParams" EntityType="ImmoWhatModel.MapsParams" />
-          <EntitySet Name="StatImmo" EntityType="ImmoWhatModel.StatImmo" />
-          <AssociationSet Name="FK_MEMBRE_AspNetRoles" Association="ImmoWhatModel.FK_MEMBRE_AspNetRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="MEMBRE" EntitySet="MEMBRE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="ImmoWhatModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="ImmoWhatModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BIEN_PHOTOS_BIEN" Association="ImmoWhatModel.FK_BIEN_PHOTOS_BIEN">
-            <End Role="BIEN" EntitySet="BIEN" />
-            <End Role="BIEN_PHOTOS" EntitySet="BIEN_PHOTOS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BIEN_PIECES_BIEN" Association="ImmoWhatModel.FK_BIEN_PIECES_BIEN">
-            <End Role="BIEN" EntitySet="BIEN" />
-            <End Role="BIEN_PIECES" EntitySet="BIEN_PIECES" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BIENS_COMMUNE" Association="ImmoWhatModel.FK_BIENS_COMMUNE">
-            <End Role="COMMUNE" EntitySet="COMMUNE" />
-            <End Role="BIEN" EntitySet="BIEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BIENS_MEMBRE" Association="ImmoWhatModel.FK_BIENS_MEMBRE">
-            <End Role="MEMBRE" EntitySet="MEMBRE" />
-            <End Role="BIEN" EntitySet="BIEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BIENS_TYPEBIEN" Association="ImmoWhatModel.FK_BIENS_TYPEBIEN">
-            <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
-            <End Role="BIEN" EntitySet="BIEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BIEN_PIECES_PIECES" Association="ImmoWhatModel.FK_BIEN_PIECES_PIECES">
-            <End Role="PIECES" EntitySet="PIECES" />
-            <End Role="BIEN_PIECES" EntitySet="BIEN_PIECES" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VAL_PRIX_MOYEN_BIEN_RefCouleur" Association="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_RefCouleur">
-            <End Role="RefCouleur" EntitySet="RefCouleur" />
-            <End Role="VAL_PRIX_MOYEN_BIEN" EntitySet="VAL_PRIX_MOYEN_BIEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN" Association="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN">
-            <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
-            <End Role="VAL_PRIX_MOYEN_BIEN" EntitySet="VAL_PRIX_MOYEN_BIEN" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="ImmoWhatModel.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="BIEN_OPTION" Association="ImmoWhatModel.BIEN_OPTION">
-            <End Role="BIEN" EntitySet="BIEN" />
-            <End Role="OPTIONS" EntitySet="OPTIONS" />
-          </AssociationSet>
           <FunctionImport Name="PostNewBien">
             <Parameter Name="typeBien" Mode="In" Type="Int32" />
             <Parameter Name="idMembre" Mode="In" Type="Int32" />
@@ -1305,23 +1251,113 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <Parameter Name="idProprietaire" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SendMail">
+            <Parameter Name="idEmetteur" Mode="In" Type="Int32" />
             <Parameter Name="mailAddress" Mode="In" Type="String" />
             <Parameter Name="sujet" Mode="In" Type="String" />
             <Parameter Name="message" Mode="In" Type="String" />
-            <Parameter Name="idProprietaire" Mode="In" Type="Int32" />
+            <Parameter Name="idRecepteur" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetCountOfNewMails" ReturnType="Collection(Int32)">
           <Parameter Name="idProprietaire" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="mail" EntityType="ImmoWhatModel.mail" />
-          <AssociationSet Name="FK_mail_MEMBRE" Association="ImmoWhatModel.FK_mail_MEMBRE">
-            <End Role="MEMBRE" EntitySet="MEMBRE" />
-            <End Role="mail" EntitySet="mail" />
-          </AssociationSet>
           <FunctionImport Name="GetListOfMails" ReturnType="Collection(ImmoWhatModel.GetListOfMails_Result)">
           <Parameter Name="idMembre" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="changeStatutMailToLu">
+          <Parameter Name="idMail" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetListOfMails2" ReturnType="Collection(ImmoWhatModel.GetListOfMails2_Result)">
+          <Parameter Name="idMembre" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SendMail2">
+            <Parameter Name="idEmetteur" Mode="In" Type="Int32" />
+            <Parameter Name="mailAddress" Mode="In" Type="String" />
+            <Parameter Name="sujet" Mode="In" Type="String" />
+            <Parameter Name="message" Mode="In" Type="String" />
+            <Parameter Name="idRecepteur" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="C__MigrationHistory" EntityType="ImmoWhatModel.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="ImmoWhatModel.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="ImmoWhatModel.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="ImmoWhatModel.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="ImmoWhatModel.AspNetUsers" />
+          <EntitySet Name="BIEN" EntityType="ImmoWhatModel.BIEN" />
+          <EntitySet Name="BIEN_PHOTOS" EntityType="ImmoWhatModel.BIEN_PHOTOS" />
+          <EntitySet Name="BIEN_PIECES" EntityType="ImmoWhatModel.BIEN_PIECES" />
+          <EntitySet Name="COMMUNE" EntityType="ImmoWhatModel.COMMUNE" />
+          <EntitySet Name="COMMUNES_CONTOUR_POINT" EntityType="ImmoWhatModel.COMMUNES_CONTOUR_POINT" />
+          <EntitySet Name="mail" EntityType="ImmoWhatModel.mail" />
+          <EntitySet Name="MEMBRE" EntityType="ImmoWhatModel.MEMBRE" />
+          <EntitySet Name="OPTIONS" EntityType="ImmoWhatModel.OPTIONS" />
+          <EntitySet Name="PIECES" EntityType="ImmoWhatModel.PIECES" />
+          <EntitySet Name="RefCouleur" EntityType="ImmoWhatModel.RefCouleur" />
+          <EntitySet Name="RefCouleurAppart" EntityType="ImmoWhatModel.RefCouleurAppart" />
+          <EntitySet Name="RefCouleurTerrain" EntityType="ImmoWhatModel.RefCouleurTerrain" />
+          <EntitySet Name="sysdiagrams" EntityType="ImmoWhatModel.sysdiagrams" />
+          <EntitySet Name="TYPEBIEN" EntityType="ImmoWhatModel.TYPEBIEN" />
+          <EntitySet Name="VAL_PRIX_MOYEN_BIEN" EntityType="ImmoWhatModel.VAL_PRIX_MOYEN_BIEN" />
+          <EntitySet Name="MapsParams" EntityType="ImmoWhatModel.MapsParams" />
+          <EntitySet Name="StatImmo" EntityType="ImmoWhatModel.StatImmo" />
+          <AssociationSet Name="FK_MEMBRE_AspNetRoles" Association="ImmoWhatModel.FK_MEMBRE_AspNetRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="ImmoWhatModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="ImmoWhatModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BIEN_PHOTOS_BIEN" Association="ImmoWhatModel.FK_BIEN_PHOTOS_BIEN">
+            <End Role="BIEN" EntitySet="BIEN" />
+            <End Role="BIEN_PHOTOS" EntitySet="BIEN_PHOTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BIEN_PIECES_BIEN" Association="ImmoWhatModel.FK_BIEN_PIECES_BIEN">
+            <End Role="BIEN" EntitySet="BIEN" />
+            <End Role="BIEN_PIECES" EntitySet="BIEN_PIECES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BIENS_COMMUNE" Association="ImmoWhatModel.FK_BIENS_COMMUNE">
+            <End Role="COMMUNE" EntitySet="COMMUNE" />
+            <End Role="BIEN" EntitySet="BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BIENS_MEMBRE" Association="ImmoWhatModel.FK_BIENS_MEMBRE">
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+            <End Role="BIEN" EntitySet="BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BIENS_TYPEBIEN" Association="ImmoWhatModel.FK_BIENS_TYPEBIEN">
+            <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
+            <End Role="BIEN" EntitySet="BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BIEN_PIECES_PIECES" Association="ImmoWhatModel.FK_BIEN_PIECES_PIECES">
+            <End Role="PIECES" EntitySet="PIECES" />
+            <End Role="BIEN_PIECES" EntitySet="BIEN_PIECES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mail_MEMBRE" Association="ImmoWhatModel.FK_mail_MEMBRE">
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+            <End Role="mail" EntitySet="mail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VAL_PRIX_MOYEN_BIEN_RefCouleur" Association="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_RefCouleur">
+            <End Role="RefCouleur" EntitySet="RefCouleur" />
+            <End Role="VAL_PRIX_MOYEN_BIEN" EntitySet="VAL_PRIX_MOYEN_BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN" Association="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN">
+            <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
+            <End Role="VAL_PRIX_MOYEN_BIEN" EntitySet="VAL_PRIX_MOYEN_BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="ImmoWhatModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="BIEN_OPTION" Association="ImmoWhatModel.BIEN_OPTION">
+            <End Role="BIEN" EntitySet="BIEN" />
+            <End Role="OPTIONS" EntitySet="OPTIONS" />
+          </AssociationSet>
+          <FunctionImport Name="changeStatutMailToRepondu">
+          <Parameter Name="idMail" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="changeStatutMailToDeleted">
             <Parameter Name="idMail" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
@@ -1454,6 +1490,118 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Type="String" Name="Longitude" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="Commune_CodePostal" Nullable="false" MaxLength="10" />
         </ComplexType>
+        <ComplexType Name="GetListBiensFromCPAndType_Result">
+          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
+          <Property Type="Int32" Name="nombreChambres" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetListBiensFromCPAndType1_Result">
+          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
+          <Property Type="Int32" Name="nombreChambres" Nullable="false" />
+          <Property Type="Int32" Name="nbPhotos" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetListBiensFromCPostAndType_Result">
+          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
+          <Property Type="Int32" Name="nombreChambres" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="voirLeBien_Result">
+          <Property Type="Int32" Name="idBien" Nullable="true" />
+          <Property Type="Int32" Name="typeBien" Nullable="true" />
+          <Property Type="Int32" Name="idProprietaire" Nullable="true" />
+          <Property Type="Int32" Name="prix" Nullable="true" />
+          <Property Type="Int32" Name="superficie" Nullable="true" />
+          <Property Type="String" Name="commune" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="codePostal" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="rue" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="numero" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="boite" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="nbEtages" Nullable="true" />
+          <Property Type="String" Name="libbelle" Nullable="true" MaxLength="550" />
+          <Property Type="String" Name="energie" Nullable="true" MaxLength="5" />
+          <Property Type="Boolean" Name="estSupprime" Nullable="true" />
+          <Property Type="Boolean" Name="estVendu" Nullable="true" />
+          <Property Type="Int32" Name="nbPhotos" Nullable="true" />
+          <Property Type="Int32" Name="nbChambre" Nullable="true" />
+          <Property Type="Int32" Name="nbSdb" Nullable="true" />
+          <Property Type="Int32" Name="nbdressing" Nullable="true" />
+          <Property Type="Int32" Name="nbsam" Nullable="true" />
+          <Property Type="Int32" Name="nbsalon" Nullable="true" />
+          <Property Type="Int32" Name="nbbuanderie" Nullable="true" />
+          <Property Type="Int32" Name="nbcave" Nullable="true" />
+          <Property Type="Int32" Name="nbgrenier" Nullable="true" />
+          <Property Type="Int32" Name="nbtoilette" Nullable="true" />
+          <Property Type="Int32" Name="nbveranda" Nullable="true" />
+          <Property Type="Int32" Name="nbgarage" Nullable="true" />
+          <Property Type="Boolean" Name="piscine" Nullable="true" />
+          <Property Type="Boolean" Name="cuisineEqu" Nullable="true" />
+          <Property Type="Boolean" Name="parking" Nullable="true" />
+          <Property Type="Boolean" Name="jardin" Nullable="true" />
+          <Property Type="Boolean" Name="alarme" Nullable="true" />
+          <Property Type="Boolean" Name="doubleVitre" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetOneBien_Result">
+          <Property Type="Int32" Name="idBien" Nullable="true" />
+          <Property Type="Int32" Name="typeBien" Nullable="true" />
+          <Property Type="Int32" Name="idProprietaire" Nullable="true" />
+          <Property Type="Int32" Name="prix" Nullable="true" />
+          <Property Type="Int32" Name="superficie" Nullable="true" />
+          <Property Type="String" Name="commune" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="codePostal" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="rue" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="numero" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="boite" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="nbEtages" Nullable="true" />
+          <Property Type="String" Name="libbelle" Nullable="true" MaxLength="550" />
+          <Property Type="Int32" Name="anneeDeConstr" Nullable="true" />
+          <Property Type="String" Name="energie" Nullable="true" MaxLength="5" />
+          <Property Type="Boolean" Name="estSupprime" Nullable="true" />
+          <Property Type="Boolean" Name="estVendu" Nullable="true" />
+          <Property Type="Int32" Name="nbPhotos" Nullable="true" />
+          <Property Type="Int32" Name="nbChambre" Nullable="true" />
+          <Property Type="Int32" Name="nbSdb" Nullable="true" />
+          <Property Type="Int32" Name="nbdressing" Nullable="true" />
+          <Property Type="Int32" Name="nbsam" Nullable="true" />
+          <Property Type="Int32" Name="nbsalon" Nullable="true" />
+          <Property Type="Int32" Name="nbbuanderie" Nullable="true" />
+          <Property Type="Int32" Name="nbcave" Nullable="true" />
+          <Property Type="Int32" Name="nbgrenier" Nullable="true" />
+          <Property Type="Int32" Name="nbtoilette" Nullable="true" />
+          <Property Type="Int32" Name="nbveranda" Nullable="true" />
+          <Property Type="Int32" Name="nbgarage" Nullable="true" />
+          <Property Type="Boolean" Name="piscine" Nullable="true" />
+          <Property Type="Boolean" Name="cuisineEqu" Nullable="true" />
+          <Property Type="Boolean" Name="parking" Nullable="true" />
+          <Property Type="Boolean" Name="jardin" Nullable="true" />
+          <Property Type="Boolean" Name="alarme" Nullable="true" />
+          <Property Type="Boolean" Name="doubleVitre" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetListOfMails_Result">
+          <Property Type="Int32" Name="idMail" Nullable="false" />
+          <Property Type="String" Name="adresseMail" Nullable="false" MaxLength="250" />
+          <Property Type="DateTime" Name="dateEnvoi" Nullable="false" Precision="23" />
+          <Property Type="String" Name="sujet" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="550" />
+          <Property Type="Boolean" Name="lu" Nullable="false" />
+          <Property Type="DateTime" Name="repondu" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="idProprietaire" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetListOfMails2_Result">
+          <Property Type="Int32" Name="idMail" Nullable="false" />
+          <Property Type="String" Name="adresseMail" Nullable="false" MaxLength="250" />
+          <Property Type="DateTime" Name="dateEnvoi" Nullable="false" Precision="23" />
+          <Property Type="String" Name="sujet" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="msg" Nullable="false" MaxLength="550" />
+          <Property Type="Boolean" Name="lu" Nullable="false" />
+          <Property Type="DateTime" Name="repondu" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="idRecepteur" Nullable="false" />
+          <Property Type="Int32" Name="idEmetteur" Nullable="false" />
+          <Property Type="Boolean" Name="deleted" Nullable="false" />
+        </ComplexType>
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -1582,6 +1730,22 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Name="Latitude" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Longitude" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Commune_CodePostal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="mail">
+          <Key>
+            <PropertyRef Name="idMail" />
+          </Key>
+          <Property Name="idMail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adresseMail" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="dateEnvoi" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sujet" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="msg" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
+          <Property Name="lu" Type="Boolean" Nullable="false" />
+          <Property Name="repondu" Type="DateTime" Precision="3" />
+          <Property Name="idRecepteur" Type="Int32" Nullable="false" />
+          <Property Name="idEmetteur" Type="Int32" Nullable="false" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="MEMBRE" Relationship="ImmoWhatModel.FK_mail_MEMBRE" FromRole="mail" ToRole="MEMBRE" />
         </EntityType>
         <EntityType Name="MEMBRE">
           <Key>
@@ -1903,6 +2067,18 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_mail_MEMBRE">
+          <End Type="ImmoWhatModel.MEMBRE" Role="MEMBRE" Multiplicity="1" />
+          <End Type="ImmoWhatModel.mail" Role="mail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEMBRE">
+              <PropertyRef Name="idMembre" />
+            </Principal>
+            <Dependent Role="mail">
+              <PropertyRef Name="idRecepteur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_VAL_PRIX_MOYEN_BIEN_RefCouleur">
           <End Type="ImmoWhatModel.RefCouleur" Role="RefCouleur" Multiplicity="0..1" />
           <End Type="ImmoWhatModel.VAL_PRIX_MOYEN_BIEN" Role="VAL_PRIX_MOYEN_BIEN" Multiplicity="*" />
@@ -1935,132 +2111,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <End Type="ImmoWhatModel.BIEN" Role="BIEN" Multiplicity="*" />
           <End Type="ImmoWhatModel.OPTIONS" Role="OPTIONS" Multiplicity="*" />
         </Association>
-        <ComplexType Name="GetListBiensFromCPAndType_Result">
-          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
-          <Property Type="Int32" Name="nombreChambres" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="GetListBiensFromCPAndType1_Result">
-          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
-          <Property Type="Int32" Name="nombreChambres" Nullable="false" />
-          <Property Type="Int32" Name="nbPhotos" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetListBiensFromCPostAndType_Result">
-          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
-          <Property Type="Int32" Name="nombreChambres" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="voirLeBien_Result">
-          <Property Type="Int32" Name="idBien" Nullable="true" />
-          <Property Type="Int32" Name="typeBien" Nullable="true" />
-          <Property Type="Int32" Name="idProprietaire" Nullable="true" />
-          <Property Type="Int32" Name="prix" Nullable="true" />
-          <Property Type="Int32" Name="superficie" Nullable="true" />
-          <Property Type="String" Name="commune" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="codePostal" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="rue" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="numero" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="boite" Nullable="true" MaxLength="250" />
-          <Property Type="Int32" Name="nbEtages" Nullable="true" />
-          <Property Type="String" Name="libbelle" Nullable="true" MaxLength="550" />
-          <Property Type="String" Name="energie" Nullable="true" MaxLength="5" />
-          <Property Type="Boolean" Name="estSupprime" Nullable="true" />
-          <Property Type="Boolean" Name="estVendu" Nullable="true" />
-          <Property Type="Int32" Name="nbPhotos" Nullable="true" />
-          <Property Type="Int32" Name="nbChambre" Nullable="true" />
-          <Property Type="Int32" Name="nbSdb" Nullable="true" />
-          <Property Type="Int32" Name="nbdressing" Nullable="true" />
-          <Property Type="Int32" Name="nbsam" Nullable="true" />
-          <Property Type="Int32" Name="nbsalon" Nullable="true" />
-          <Property Type="Int32" Name="nbbuanderie" Nullable="true" />
-          <Property Type="Int32" Name="nbcave" Nullable="true" />
-          <Property Type="Int32" Name="nbgrenier" Nullable="true" />
-          <Property Type="Int32" Name="nbtoilette" Nullable="true" />
-          <Property Type="Int32" Name="nbveranda" Nullable="true" />
-          <Property Type="Int32" Name="nbgarage" Nullable="true" />
-          <Property Type="Boolean" Name="piscine" Nullable="true" />
-          <Property Type="Boolean" Name="cuisineEqu" Nullable="true" />
-          <Property Type="Boolean" Name="parking" Nullable="true" />
-          <Property Type="Boolean" Name="jardin" Nullable="true" />
-          <Property Type="Boolean" Name="alarme" Nullable="true" />
-          <Property Type="Boolean" Name="doubleVitre" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetOneBien_Result">
-          <Property Type="Int32" Name="idBien" Nullable="true" />
-          <Property Type="Int32" Name="typeBien" Nullable="true" />
-          <Property Type="Int32" Name="idProprietaire" Nullable="true" />
-          <Property Type="Int32" Name="prix" Nullable="true" />
-          <Property Type="Int32" Name="superficie" Nullable="true" />
-          <Property Type="String" Name="commune" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="codePostal" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="rue" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="numero" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="boite" Nullable="true" MaxLength="250" />
-          <Property Type="Int32" Name="nbEtages" Nullable="true" />
-          <Property Type="String" Name="libbelle" Nullable="true" MaxLength="550" />
-          <Property Type="Int32" Name="anneeDeConstr" Nullable="true" />
-          <Property Type="String" Name="energie" Nullable="true" MaxLength="5" />
-          <Property Type="Boolean" Name="estSupprime" Nullable="true" />
-          <Property Type="Boolean" Name="estVendu" Nullable="true" />
-          <Property Type="Int32" Name="nbPhotos" Nullable="true" />
-          <Property Type="Int32" Name="nbChambre" Nullable="true" />
-          <Property Type="Int32" Name="nbSdb" Nullable="true" />
-          <Property Type="Int32" Name="nbdressing" Nullable="true" />
-          <Property Type="Int32" Name="nbsam" Nullable="true" />
-          <Property Type="Int32" Name="nbsalon" Nullable="true" />
-          <Property Type="Int32" Name="nbbuanderie" Nullable="true" />
-          <Property Type="Int32" Name="nbcave" Nullable="true" />
-          <Property Type="Int32" Name="nbgrenier" Nullable="true" />
-          <Property Type="Int32" Name="nbtoilette" Nullable="true" />
-          <Property Type="Int32" Name="nbveranda" Nullable="true" />
-          <Property Type="Int32" Name="nbgarage" Nullable="true" />
-          <Property Type="Boolean" Name="piscine" Nullable="true" />
-          <Property Type="Boolean" Name="cuisineEqu" Nullable="true" />
-          <Property Type="Boolean" Name="parking" Nullable="true" />
-          <Property Type="Boolean" Name="jardin" Nullable="true" />
-          <Property Type="Boolean" Name="alarme" Nullable="true" />
-          <Property Type="Boolean" Name="doubleVitre" Nullable="true" />
-        </ComplexType>
-        <EntityType Name="mail">
-          <Key>
-            <PropertyRef Name="idMail" />
-          </Key>
-          <Property Name="idMail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="adresseMail" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="dateEnvoi" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="sujet" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="msg" Type="String" Nullable="false" MaxLength="550" FixedLength="false" Unicode="true" />
-          <Property Name="lu" Type="Boolean" Nullable="false" />
-          <Property Name="repondu" Type="DateTime" Precision="3" />
-          <Property Name="idProprietaire" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="MEMBRE" Relationship="ImmoWhatModel.FK_mail_MEMBRE" FromRole="mail" ToRole="MEMBRE" />
-        </EntityType>
-        <Association Name="FK_mail_MEMBRE">
-          <End Type="ImmoWhatModel.MEMBRE" Role="MEMBRE" Multiplicity="1" />
-          <End Type="ImmoWhatModel.mail" Role="mail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MEMBRE">
-              <PropertyRef Name="idMembre" />
-            </Principal>
-            <Dependent Role="mail">
-              <PropertyRef Name="idProprietaire" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <ComplexType Name="GetListOfMails_Result">
-          <Property Type="Int32" Name="idMail" Nullable="false" />
-          <Property Type="String" Name="adresseMail" Nullable="false" MaxLength="250" />
-          <Property Type="DateTime" Name="dateEnvoi" Nullable="false" Precision="23" />
-          <Property Type="String" Name="sujet" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="msg" Nullable="false" MaxLength="550" />
-          <Property Type="Boolean" Name="lu" Nullable="false" />
-          <Property Type="DateTime" Name="repondu" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="idProprietaire" Nullable="false" />
-        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2276,6 +2326,104 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <FunctionImportMapping FunctionImportName="CheckIfMailExists" FunctionName="ImmoWhatModel.Store.CheckIfMailExists" />
           <FunctionImportMapping FunctionImportName="addNewBien" FunctionName="ImmoWhatModel.Store.addNewBien" />
           <FunctionImportMapping FunctionImportName="GetIdBien" FunctionName="ImmoWhatModel.Store.GetIdBien" />
+          <FunctionImportMapping FunctionImportName="PostNewBien" FunctionName="ImmoWhatModel.Store.PostNewBien" />
+          <FunctionImportMapping FunctionImportName="CheckIfAdressExists" FunctionName="ImmoWhatModel.Store.CheckIfAdressExists" />
+          <FunctionImportMapping FunctionImportName="PostNewPhotos" FunctionName="ImmoWhatModel.Store.PostNewPhotos" />
+          <FunctionImportMapping FunctionImportName="GetListBiensFromCPAndType1" FunctionName="ImmoWhatModel.Store.GetListBiensFromCPAndType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetListBiensFromCPAndType1_Result">
+                <ScalarProperty Name="BIEN_Id" ColumnName="BIEN_Id" />
+                <ScalarProperty Name="BIEN_Prix" ColumnName="BIEN_Prix" />
+                <ScalarProperty Name="BIEN_Superficie" ColumnName="BIEN_Superficie" />
+                <ScalarProperty Name="nombreChambres" ColumnName="nombreChambres" />
+                <ScalarProperty Name="nbPhotos" ColumnName="nbPhotos" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetListBiensFromCPostAndType" FunctionName="ImmoWhatModel.Store.GetListBiensFromCPostAndType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetListBiensFromCPostAndType_Result">
+                <ScalarProperty Name="BIEN_Id" ColumnName="BIEN_Id" />
+                <ScalarProperty Name="BIEN_Prix" ColumnName="BIEN_Prix" />
+                <ScalarProperty Name="BIEN_Superficie" ColumnName="BIEN_Superficie" />
+                <ScalarProperty Name="nombreChambres" ColumnName="nombreChambres" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneBien" FunctionName="ImmoWhatModel.Store.GetOneBien">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetOneBien_Result">
+                <ScalarProperty Name="idBien" ColumnName="idBien" />
+                <ScalarProperty Name="typeBien" ColumnName="typeBien" />
+                <ScalarProperty Name="idProprietaire" ColumnName="idProprietaire" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+                <ScalarProperty Name="superficie" ColumnName="superficie" />
+                <ScalarProperty Name="commune" ColumnName="commune" />
+                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
+                <ScalarProperty Name="rue" ColumnName="rue" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="boite" ColumnName="boite" />
+                <ScalarProperty Name="nbEtages" ColumnName="nbEtages" />
+                <ScalarProperty Name="libbelle" ColumnName="libbelle" />
+                <ScalarProperty Name="anneeDeConstr" ColumnName="anneeDeConstr" />
+                <ScalarProperty Name="energie" ColumnName="energie" />
+                <ScalarProperty Name="estSupprime" ColumnName="estSupprime" />
+                <ScalarProperty Name="estVendu" ColumnName="estVendu" />
+                <ScalarProperty Name="nbPhotos" ColumnName="nbPhotos" />
+                <ScalarProperty Name="nbChambre" ColumnName="nbChambre" />
+                <ScalarProperty Name="nbSdb" ColumnName="nbSdb" />
+                <ScalarProperty Name="nbdressing" ColumnName="nbdressing" />
+                <ScalarProperty Name="nbsam" ColumnName="nbsam" />
+                <ScalarProperty Name="nbsalon" ColumnName="nbsalon" />
+                <ScalarProperty Name="nbbuanderie" ColumnName="nbbuanderie" />
+                <ScalarProperty Name="nbcave" ColumnName="nbcave" />
+                <ScalarProperty Name="nbgrenier" ColumnName="nbgrenier" />
+                <ScalarProperty Name="nbtoilette" ColumnName="nbtoilette" />
+                <ScalarProperty Name="nbveranda" ColumnName="nbveranda" />
+                <ScalarProperty Name="nbgarage" ColumnName="nbgarage" />
+                <ScalarProperty Name="piscine" ColumnName="piscine" />
+                <ScalarProperty Name="cuisineEqu" ColumnName="cuisineEqu" />
+                <ScalarProperty Name="parking" ColumnName="parking" />
+                <ScalarProperty Name="jardin" ColumnName="jardin" />
+                <ScalarProperty Name="alarme" ColumnName="alarme" />
+                <ScalarProperty Name="doubleVitre" ColumnName="doubleVitre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SendMail" FunctionName="ImmoWhatModel.Store.SendMail" />
+          <FunctionImportMapping FunctionImportName="GetCountOfNewMails" FunctionName="ImmoWhatModel.Store.GetCountOfNewMails" />
+          <FunctionImportMapping FunctionImportName="GetListOfMails" FunctionName="ImmoWhatModel.Store.GetListOfMails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetListOfMails_Result">
+                <ScalarProperty Name="idMail" ColumnName="idMail" />
+                <ScalarProperty Name="adresseMail" ColumnName="adresseMail" />
+                <ScalarProperty Name="dateEnvoi" ColumnName="dateEnvoi" />
+                <ScalarProperty Name="sujet" ColumnName="sujet" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+                <ScalarProperty Name="lu" ColumnName="lu" />
+                <ScalarProperty Name="repondu" ColumnName="repondu" />
+                <ScalarProperty Name="idProprietaire" ColumnName="idProprietaire" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="changeStatutMailToLu" FunctionName="ImmoWhatModel.Store.changeStatutMailToLu" />
+          <FunctionImportMapping FunctionImportName="GetListOfMails2" FunctionName="ImmoWhatModel.Store.GetListOfMails2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetListOfMails2_Result">
+                <ScalarProperty Name="idMail" ColumnName="idMail" />
+                <ScalarProperty Name="adresseMail" ColumnName="adresseMail" />
+                <ScalarProperty Name="dateEnvoi" ColumnName="dateEnvoi" />
+                <ScalarProperty Name="sujet" ColumnName="sujet" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+                <ScalarProperty Name="lu" ColumnName="lu" />
+                <ScalarProperty Name="repondu" ColumnName="repondu" />
+                <ScalarProperty Name="idRecepteur" ColumnName="idRecepteur" />
+                <ScalarProperty Name="idEmetteur" ColumnName="idEmetteur" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SendMail2" FunctionName="ImmoWhatModel.Store.SendMail2" />
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="ImmoWhatModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -2390,6 +2538,22 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mail">
+            <EntityTypeMapping TypeName="ImmoWhatModel.mail">
+              <MappingFragment StoreEntitySet="mail">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="idEmetteur" ColumnName="idEmetteur" />
+                <ScalarProperty Name="idRecepteur" ColumnName="idRecepteur" />
+                <ScalarProperty Name="repondu" ColumnName="repondu" />
+                <ScalarProperty Name="lu" ColumnName="lu" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+                <ScalarProperty Name="sujet" ColumnName="sujet" />
+                <ScalarProperty Name="dateEnvoi" ColumnName="dateEnvoi" />
+                <ScalarProperty Name="adresseMail" ColumnName="adresseMail" />
+                <ScalarProperty Name="idMail" ColumnName="idMail" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2576,101 +2740,8 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
               <ScalarProperty Name="BIEN_Id" ColumnName="IdBien" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="PostNewBien" FunctionName="ImmoWhatModel.Store.PostNewBien" />
-          <FunctionImportMapping FunctionImportName="CheckIfAdressExists" FunctionName="ImmoWhatModel.Store.CheckIfAdressExists" />
-          <FunctionImportMapping FunctionImportName="PostNewPhotos" FunctionName="ImmoWhatModel.Store.PostNewPhotos" />
-          <FunctionImportMapping FunctionImportName="GetListBiensFromCPAndType1" FunctionName="ImmoWhatModel.Store.GetListBiensFromCPAndType">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ImmoWhatModel.GetListBiensFromCPAndType1_Result">
-                <ScalarProperty Name="BIEN_Id" ColumnName="BIEN_Id" />
-                <ScalarProperty Name="BIEN_Prix" ColumnName="BIEN_Prix" />
-                <ScalarProperty Name="BIEN_Superficie" ColumnName="BIEN_Superficie" />
-                <ScalarProperty Name="nombreChambres" ColumnName="nombreChambres" />
-                <ScalarProperty Name="nbPhotos" ColumnName="nbPhotos" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetListBiensFromCPostAndType" FunctionName="ImmoWhatModel.Store.GetListBiensFromCPostAndType">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ImmoWhatModel.GetListBiensFromCPostAndType_Result">
-                <ScalarProperty Name="BIEN_Id" ColumnName="BIEN_Id" />
-                <ScalarProperty Name="BIEN_Prix" ColumnName="BIEN_Prix" />
-                <ScalarProperty Name="BIEN_Superficie" ColumnName="BIEN_Superficie" />
-                <ScalarProperty Name="nombreChambres" ColumnName="nombreChambres" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetOneBien" FunctionName="ImmoWhatModel.Store.GetOneBien">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ImmoWhatModel.GetOneBien_Result">
-                <ScalarProperty Name="idBien" ColumnName="idBien" />
-                <ScalarProperty Name="typeBien" ColumnName="typeBien" />
-                <ScalarProperty Name="idProprietaire" ColumnName="idProprietaire" />
-                <ScalarProperty Name="prix" ColumnName="prix" />
-                <ScalarProperty Name="superficie" ColumnName="superficie" />
-                <ScalarProperty Name="commune" ColumnName="commune" />
-                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
-                <ScalarProperty Name="rue" ColumnName="rue" />
-                <ScalarProperty Name="numero" ColumnName="numero" />
-                <ScalarProperty Name="boite" ColumnName="boite" />
-                <ScalarProperty Name="nbEtages" ColumnName="nbEtages" />
-                <ScalarProperty Name="libbelle" ColumnName="libbelle" />
-                <ScalarProperty Name="anneeDeConstr" ColumnName="anneeDeConstr" />
-                <ScalarProperty Name="energie" ColumnName="energie" />
-                <ScalarProperty Name="estSupprime" ColumnName="estSupprime" />
-                <ScalarProperty Name="estVendu" ColumnName="estVendu" />
-                <ScalarProperty Name="nbPhotos" ColumnName="nbPhotos" />
-                <ScalarProperty Name="nbChambre" ColumnName="nbChambre" />
-                <ScalarProperty Name="nbSdb" ColumnName="nbSdb" />
-                <ScalarProperty Name="nbdressing" ColumnName="nbdressing" />
-                <ScalarProperty Name="nbsam" ColumnName="nbsam" />
-                <ScalarProperty Name="nbsalon" ColumnName="nbsalon" />
-                <ScalarProperty Name="nbbuanderie" ColumnName="nbbuanderie" />
-                <ScalarProperty Name="nbcave" ColumnName="nbcave" />
-                <ScalarProperty Name="nbgrenier" ColumnName="nbgrenier" />
-                <ScalarProperty Name="nbtoilette" ColumnName="nbtoilette" />
-                <ScalarProperty Name="nbveranda" ColumnName="nbveranda" />
-                <ScalarProperty Name="nbgarage" ColumnName="nbgarage" />
-                <ScalarProperty Name="piscine" ColumnName="piscine" />
-                <ScalarProperty Name="cuisineEqu" ColumnName="cuisineEqu" />
-                <ScalarProperty Name="parking" ColumnName="parking" />
-                <ScalarProperty Name="jardin" ColumnName="jardin" />
-                <ScalarProperty Name="alarme" ColumnName="alarme" />
-                <ScalarProperty Name="doubleVitre" ColumnName="doubleVitre" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SendMail" FunctionName="ImmoWhatModel.Store.SendMail" />
-          <FunctionImportMapping FunctionImportName="GetCountOfNewMails" FunctionName="ImmoWhatModel.Store.GetCountOfNewMails" />
-          <EntitySetMapping Name="mail">
-            <EntityTypeMapping TypeName="ImmoWhatModel.mail">
-              <MappingFragment StoreEntitySet="mail">
-                <ScalarProperty Name="idProprietaire" ColumnName="idProprietaire" />
-                <ScalarProperty Name="repondu" ColumnName="repondu" />
-                <ScalarProperty Name="lu" ColumnName="lu" />
-                <ScalarProperty Name="msg" ColumnName="msg" />
-                <ScalarProperty Name="sujet" ColumnName="sujet" />
-                <ScalarProperty Name="dateEnvoi" ColumnName="dateEnvoi" />
-                <ScalarProperty Name="adresseMail" ColumnName="adresseMail" />
-                <ScalarProperty Name="idMail" ColumnName="idMail" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetListOfMails" FunctionName="ImmoWhatModel.Store.GetListOfMails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ImmoWhatModel.GetListOfMails_Result">
-                <ScalarProperty Name="idMail" ColumnName="idMail" />
-                <ScalarProperty Name="adresseMail" ColumnName="adresseMail" />
-                <ScalarProperty Name="dateEnvoi" ColumnName="dateEnvoi" />
-                <ScalarProperty Name="sujet" ColumnName="sujet" />
-                <ScalarProperty Name="msg" ColumnName="msg" />
-                <ScalarProperty Name="lu" ColumnName="lu" />
-                <ScalarProperty Name="repondu" ColumnName="repondu" />
-                <ScalarProperty Name="idProprietaire" ColumnName="idProprietaire" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="changeStatutMailToLu" FunctionName="ImmoWhatModel.Store.changeStatutMailToLu" />
+          <FunctionImportMapping FunctionImportName="changeStatutMailToRepondu" FunctionName="ImmoWhatModel.Store.changeStatutMailToRepondu" />
+          <FunctionImportMapping FunctionImportName="changeStatutMailToDeleted" FunctionName="ImmoWhatModel.Store.changeStatutMailToDeleted" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

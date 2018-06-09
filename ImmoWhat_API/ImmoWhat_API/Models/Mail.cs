@@ -14,6 +14,8 @@ namespace ImmoWhat_API.Models
         public string message { get; set; }
         public bool lu { get; set; }
         public DateTime repondu { get; set; }
-        public int idProprietaire { get; set; }
+        public int idRecepteur { get; set; }
+        public int idEmetteur { get; set; }
+        public bool deleted { get; set; }
     }
 }

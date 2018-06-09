@@ -10,9 +10,8 @@
 namespace ImmoWhat_API.DAL
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class mail
+    public partial class GetListOfMails2_Result
     {
         public int idMail { get; set; }
         public string adresseMail { get; set; }
@@ -24,7 +23,5 @@ namespace ImmoWhat_API.DAL
         public int idRecepteur { get; set; }
         public int idEmetteur { get; set; }
         public bool deleted { get; set; }
-    
-        public virtual MEMBRE MEMBRE { get; set; }
     }
 }
