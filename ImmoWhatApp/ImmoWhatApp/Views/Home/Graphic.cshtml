@@ -9,7 +9,7 @@
 
 <div class="row" style="height:auto;min-height:100%;width:100%; ">
     <div class="col-lg-1" style="min-height:100%;width:20%;min-width:20%;max-width:20%;padding:0px;">
-        <div class="float-left border rounded border-dark"  style="position:fixed;width:20%;height:84%; left:0; ">
+        <div class="float-left border rounded border-dark" style="position:fixed;width:20%;height:84%; left:0; ">
             <div class="row" style="height:5%;margin-left:0px;margin-right:0px;">
                 <div class="col"><span>waterloo</span></div>
             </div>
@@ -89,15 +89,15 @@
                                     <div class="row">
                                         <div class="col">
                                             <h5>appartements, maisons et villas</h5>
-                                           
-                                                <div class="row">
-                                                    <div id="myChart" class="col-lg-12">
-                                                        @*ON TROUVERA LE GRAPHIQUE ICI*@
-                                                    </div>
 
+                                            <div class="row">
+                                                <div id="myChart" class="col-lg-12">
+                                                    @*ON TROUVERA LE GRAPHIQUE ICI*@
                                                 </div>
 
-                                         
+                                            </div>
+
+
                                         </div>
                                     </div>
                                     <div class="row">
@@ -113,8 +113,8 @@
                         @*SECTION "POI"*@
                         <div id="poi" class="tab-pane active" role="tabpanel">
                             <div class="row">
-                                <div class="col mt-3">
-                                    <h3 class="mt-3 mb-2">Average &amp; Transactions - waterloo</h3>
+                                <div class="col mt-3 mb-3">
+                                    <h3 class="mt-3 mb-2">Points d'interets généraux</h3>
                                 </div>
                             </div>
                             <div class="row">
@@ -149,11 +149,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        @Html.ActionLink("retour", "MainPage", "Home", new { nomCommune = Model.Localite, typeBien = @ViewBag.typeBien }, "");
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div >
+    
+    <div>
         <div id="chart_div"></div>
         <input id="codePost" style="display:none" value="@Model.CodePostal" />
         <input id="bouton" style="display:none" value="@ViewBag.bouton" />
@@ -376,6 +380,7 @@
         GetStat(anneeRecherche);
     });
     $('#poi-tab').click(function () {
+        afficheCartePOICommune(home);
         $('#graphique').hide();
         $('#comment').hide();
         $('#tablePrix').hide();
@@ -384,7 +389,7 @@
         initMapPOI();
     });
     $('#comment-tab').click(function () {
-        afficheCartePOICommune(home);
+        
         $('#graphique').hide();
         $('#poi').hide();
         $('#tablePrix').hide();

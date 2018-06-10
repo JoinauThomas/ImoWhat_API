@@ -303,6 +303,12 @@
     <Compile Include="DAL\GetListOfMails_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\GetMyBiensList2_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GetMyBiensList_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetMyProfiles_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>

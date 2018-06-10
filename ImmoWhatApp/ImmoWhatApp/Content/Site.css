@@ -116,9 +116,91 @@ li a {
     cursor: pointer;
 }
 
+table thead tr th, tbody tr td {
+    text-align: center;
+}
+
+/*---------------CSS POUR LES TOOLTIPS---------------*/
+
+/*-----TOP */
+
+.tooltipT {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+    .tooltipT .tooltiptext {
+        visibility: hidden;
+        width: 90px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -45px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        white-space: pre-wrap;
+    }
+
+        .tooltipT .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+.tooltipT:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/*-----LEFT*/
+
+.tooltipL {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+    .tooltipL .tooltiptext {
+
+        visibility: hidden;
+        width: 120px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        top: -13px;
+        right: 105%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        white-space: pre-wrap;
+    }
 
 
 
+    .tooltipL:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
+
+     
+/*-----------------------------------------------------------------------*/
 
 
 

@@ -1,0 +1,122 @@
+﻿@model IEnumerable<ImmoWhatApp.Models.BienModels>
+
+
+<div class="row mt-5" style="margin:1px;">
+    <div class="col">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr style="width:100%;">
+                        <th class="align-middle" style="width:5%;"> @Html.DisplayNameFor(model => model.estVendu)</th>
+                        <th class="align-middle" style="width:10%;"> @Html.DisplayNameFor(model => model.typeBien)</th>
+                        <th class="align-middle" style="width:40%;">adresse</th>
+                        <th class="align-middle" style="width:15%;"></th>
+                        <th class="align-middle" style="width:30%;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        string adresse = "";
+                        string btnVendu = "vendu" + item.idBien;
+                        string urlImg = "/img/bien/" + item.idBien + "-0.jpg";
+                        if (item.boite == "-1")
+                        {
+                            adresse = item.numero + " " + item.rue + "\n" + item.codePostale + " " + item.commune;
+                        }
+                        else
+                        {
+                            adresse = item.numero + " " + item.rue + " bte " + item.boite + "\n" + item.codePostale + " " + item.commune;
+                        }
+
+                        <tr>
+                            @if (item.estVendu == true)
+                            {
+                                <td class="align-middle"><img src="~/img/logos/checkbox-true.png" style="width:40px;height:40px;"></td>
+                            }
+                            else
+                            {
+                                <td class="align-middle"><img src="~/img/logos/checkbox-false.png" style="width:40px;height:40px;"></td>
+                            }
+
+                            @switch (item.typeBien)
+                            {
+                                case 1:
+                                    <td class="align-middle">@Resource.terrain</td>
+                                    break;
+                                case 2:
+                                    <td class="align-middle">@Resource.maison</td>
+                                    break;
+                                case 3:
+                                    <td class="align-middle">@Resource.villa</td>
+                                    break;
+                                case 4:
+                                    <td class="align-middle">@Resource.appartement</td>
+                                    break;
+                                default:
+                                    <td class="align-middle">@Resource.maison</td>
+                                    break;
+                            }
+
+                            <td class="align-middle"><span style="white-space:pre-line">@adresse</span></td>
+                            <td class="align-middle"><img src='@urlImg' style="max-width:120px;max-height:120px;"></td>
+                            <td style="text-align:end" class="align-middle">
+                                @if (item.estVendu == false)
+                                {
+                                    <button value="@item.idBien" style="height:60px; width:60px" class="tooltipL btnVendu btn btn-success rounded-circle" type="button"><img src="https://png.icons8.com/windows/40/000000/handshake.png"><span class="tooltiptext">pour mettre le bien comme vendu</span></button>                               
+                                }
+                                <button  value="@item.idBien" style="height:60px; width:60px" class="tooltipT tooltiptt btnModifier btn btn-warning rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/hand-with-pen.png"><span class="tooltiptext">modifier</span></button>
+                                <button value="@item.idBien" style="height:60px; width:60px" class="tooltipT btnVoirBien btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"><span class="tooltiptext">voir le bien</span></button>
+                                <button value="@item.idBien" style="height:60px; width:60px" class="tooltipT btnSupprimerBien btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"><span class="tooltiptext">@Resource.supprime</span></button>
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+
+
+
+    $('.btnVendu').click(function () {
+        alert($(this).attr("value"));
+    })
+    $('.btnModifier').click(function () {
+        alert($(this).attr("value"));
+    })
+    $('.btnVoirBien').click(function () {
+        alert($(this).attr("value"));
+    })
+    $('.btnSupprimerBien').click(function () {
+        var idBien = $(this).attr("value");
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("DeleteBienByUser", "Bien")',
+            data: { "idBien": idBien },
+            success: function (donnee) {
+                if (donnee.res.result == "OK") {
+                    GetListBiens(idMembre)
+                    alert("oki, le bien no " + idBien + " a bien été supprimé")
+                }
+                else {
+                    alert("ca n a pas marché... pq???")
+                }
+
+
+            },
+            error: function (error) {
+
+                alert(error.text);
+            }
+        });
+    })
+</script>
+
+
+
+<script src="~/Scripts/popper.min.js"></script>

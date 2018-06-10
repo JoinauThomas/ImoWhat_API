@@ -4,25 +4,24 @@
     <table id="tableStat" class="table">
         <thead>
             <tr>
-                <th scope="col" style="color:orange">
+                <th scope="col" style="color:orange; text-align:center">
                     average pricess
                 </th>
-                <th>
+                <th style="text-align:center">
                     @Html.DisplayNameFor(model => model.type)
                 </th>
-                <th>
+                <th style="text-align:center">
                     @ViewBag.anneeRech
                 </th>
-                <th>
+                <th style="text-align:center">
                     @ViewBag.anneePrec
                 </th>
-                <th>
+                <th style="text-align:center">
                     @ViewBag.anneeCour
                 </th>
-                <th>
+                <th style="text-align:center">
                     @Html.DisplayNameFor(model => model.evolutionPrice)
                 </th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -34,39 +33,39 @@
                     x = x + 1;
                     <tr>
                         <td scope="row"></td>
-                        <td>
+                        <td style="text-align:center">
                             @Html.DisplayFor(modelItem => item.type)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.anneeRecherche)
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.anneeRecherche) €
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.anneePrecedente)
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.anneePrecedente) €
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.anneeCourante)
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.anneeCourante) €
                         </td>
                         @if (item.evolutionPrice == 999)
                         {
-                            <td>
+                            <td style="text-align:center">
                                 NA
                             </td>
                         }
                         else if (item.evolutionPrice > 0)
                         {
-                            <td style="color:green">
+                            <td style="color:green; text-align:center">
                                 @Html.DisplayFor(modelItem => item.evolutionPrice)%
                             </td>
                         }
                         else if (item.evolutionPrice == 0)
                         {
-                            <td style="color:blue">
+                            <td style="color:blue; text-align:center">
                                 @Html.DisplayFor(modelItem => item.evolutionPrice)%
                             </td>
                         }
                         else
                         {
-                            <td style="color:red">
+                            <td style="color:red; text-align:center">
                                 @Html.DisplayFor(modelItem => item.evolutionPrice)%
                             </td>
                         }

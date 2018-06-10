@@ -614,6 +614,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="CommunesToLower" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="DeleteBienByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idBien" Type="int" Mode="In" />
+        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetAverageAndTransactionTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="compareYear" Type="int" Mode="In" />
@@ -695,6 +698,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         </Function>
         <Function Name="GetMinYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetMyBiensList2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idMembre" Type="int" Mode="In" />
         </Function>
         <Function Name="GetMyId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
@@ -1358,7 +1364,16 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="idMail" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="changeStatutMailToDeleted">
-            <Parameter Name="idMail" Mode="In" Type="Int32" />
+          <Parameter Name="idMail" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetMyBiensList" ReturnType="Collection(ImmoWhatModel.GetMyBiensList_Result)">
+          <Parameter Name="idMembre" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetMyBiensList2" ReturnType="Collection(ImmoWhatModel.GetMyBiensList2_Result)">
+          <Parameter Name="idMembre" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteBienByUser">
+            <Parameter Name="idBien" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -2111,6 +2126,44 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <End Type="ImmoWhatModel.BIEN" Role="BIEN" Multiplicity="*" />
           <End Type="ImmoWhatModel.OPTIONS" Role="OPTIONS" Multiplicity="*" />
         </Association>
+        <ComplexType Name="GetMyBiensList_Result">
+          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_IdType" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_IdProprietaire" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_idCommune" Nullable="false" />
+          <Property Type="String" Name="Bien_Rue" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="BIEN_Numero" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="BIEN_Boite" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="BIEN_Vendu" Nullable="false" />
+          <Property Type="Boolean" Name="BIEN_Supprime" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Etages" Nullable="false" />
+          <Property Type="String" Name="BIEN_Libelle" Nullable="true" MaxLength="550" />
+          <Property Type="Int32" Name="BIEN_AnneeDeConstruction" Nullable="false" />
+          <Property Type="String" Name="BIEN_Energie" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="BIEN_PhotoPrincipale" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetMyBiensList2_Result">
+          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_IdType" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_IdProprietaire" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_idCommune" Nullable="false" />
+          <Property Type="String" Name="Bien_Rue" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="BIEN_Numero" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="BIEN_Boite" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="BIEN_Vendu" Nullable="false" />
+          <Property Type="Boolean" Name="BIEN_Supprime" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Etages" Nullable="false" />
+          <Property Type="String" Name="BIEN_Libelle" Nullable="true" MaxLength="550" />
+          <Property Type="Int32" Name="BIEN_AnneeDeConstruction" Nullable="false" />
+          <Property Type="String" Name="BIEN_Energie" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="BIEN_PhotoPrincipale" Nullable="false" />
+          <Property Type="String" Name="commune" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="CodePostal" Nullable="false" MaxLength="10" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2742,6 +2795,31 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="changeStatutMailToRepondu" FunctionName="ImmoWhatModel.Store.changeStatutMailToRepondu" />
           <FunctionImportMapping FunctionImportName="changeStatutMailToDeleted" FunctionName="ImmoWhatModel.Store.changeStatutMailToDeleted" />
+          <FunctionImportMapping FunctionImportName="GetMyBiensList2" FunctionName="ImmoWhatModel.Store.GetMyBiensList2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetMyBiensList2_Result">
+                <ScalarProperty Name="BIEN_Id" ColumnName="BIEN_Id" />
+                <ScalarProperty Name="BIEN_IdType" ColumnName="BIEN_IdType" />
+                <ScalarProperty Name="BIEN_IdProprietaire" ColumnName="BIEN_IdProprietaire" />
+                <ScalarProperty Name="BIEN_Prix" ColumnName="BIEN_Prix" />
+                <ScalarProperty Name="BIEN_Superficie" ColumnName="BIEN_Superficie" />
+                <ScalarProperty Name="BIEN_idCommune" ColumnName="BIEN_idCommune" />
+                <ScalarProperty Name="Bien_Rue" ColumnName="Bien_Rue" />
+                <ScalarProperty Name="BIEN_Numero" ColumnName="BIEN_Numero" />
+                <ScalarProperty Name="BIEN_Boite" ColumnName="BIEN_Boite" />
+                <ScalarProperty Name="BIEN_Vendu" ColumnName="BIEN_Vendu" />
+                <ScalarProperty Name="BIEN_Supprime" ColumnName="BIEN_Supprime" />
+                <ScalarProperty Name="BIEN_Etages" ColumnName="BIEN_Etages" />
+                <ScalarProperty Name="BIEN_Libelle" ColumnName="BIEN_Libelle" />
+                <ScalarProperty Name="BIEN_AnneeDeConstruction" ColumnName="BIEN_AnneeDeConstruction" />
+                <ScalarProperty Name="BIEN_Energie" ColumnName="BIEN_Energie" />
+                <ScalarProperty Name="BIEN_PhotoPrincipale" ColumnName="BIEN_PhotoPrincipale" />
+                <ScalarProperty Name="commune" ColumnName="commune" />
+                <ScalarProperty Name="CodePostal" ColumnName="CodePostal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DeleteBienByUser" FunctionName="ImmoWhatModel.Store.DeleteBienByUser" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

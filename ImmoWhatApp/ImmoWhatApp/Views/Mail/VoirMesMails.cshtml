@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<ImmoWhatApp.Models.Mail>
 
-@{
-    ViewBag.Title = "VoirMesMails";
-}
+
 <input id="idMail0" style="display:none" />
 <input id="idEmetteur0" style="display:none" />
 <input id="mailEmetteur0" style="display:none" />
@@ -11,8 +9,8 @@
 
 
 
-<div class="row" style="width:100%">
-    <div class="col">
+<div class="row" >
+    <div class="col-12">
         <div class="container">
             <div class="row mb-3">
                 <div class="col">
@@ -135,6 +133,11 @@
         </div>
     </div>
 </div>
+<div class="row">
+    @Html.ActionLink("retour", "CheckMyProfile", "Account")
+</div>
+
+
 
 @*MODAL*@
 
@@ -179,6 +182,7 @@
         </div>
     </div>
 </div>
+
 
 
 <!-- Modal ecriture du mail -->

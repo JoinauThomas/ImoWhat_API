@@ -180,8 +180,39 @@ namespace ImmoWhatApp.Controllers
             Models.BienModels TheBien = new Models.BienModels();
 
             TheBien = BLL.BienBLL.GetOneBien(idBien);
+            ViewBag.typeBien = TheBien.typeBien;
 
             return View(TheBien);
+        }
+
+        [HttpGet]
+        public ActionResult _MesBiensListe (int idMembre)
+        {
+            try
+            {
+                List<Models.BienModels> listeDeBiens = new List<Models.BienModels>();
+                listeDeBiens = BLL.BienBLL.GetMyBiensList(idMembre);
+
+                return PartialView(listeDeBiens);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+           
+        }
+
+        [HttpPost]
+        public JsonResult DeleteBienByUser(int idBien)
+        {
+            Models.RequestResultM resultRequest = new Models.RequestResultM();
+
+            resultRequest = BLL.BienBLL.DeleteBienByUser(idBien);
+            
+                return Json(new { result = "OK", res = resultRequest });
+
+
+
         }
     }
 }

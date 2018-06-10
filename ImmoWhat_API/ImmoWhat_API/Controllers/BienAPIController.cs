@@ -145,5 +145,49 @@ namespace ImmoWhat_API.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("GetMyBiensList")]
+        public List<Models.BienModels> GetMyBiensList(int idMembre)
+        {
+            try
+            {
+                List<Models.BienModels> myBiens = new List<Models.BienModels>();
+
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                List<DAL.GetMyBiensList2_Result> result = dbContext.GetMyBiensList2(idMembre).ToList();
+
+                foreach (var x in result)
+                {
+                    myBiens.Add( new Models.BienModels { idBien = (int)x.BIEN_Id, typeBien = (int)x.BIEN_IdType, idProprietaire = (int)x.BIEN_IdProprietaire, prix = (int)x.BIEN_Prix, superficie = (int)x.BIEN_Superficie, commune = x.commune, CodePostale = x.CodePostal, rue = x.Bien_Rue, numero = x.BIEN_Numero, boite = x.BIEN_Boite, anneeConstruction = (int)x.BIEN_AnneeDeConstruction, energie = x.BIEN_Energie, estSupprime = (bool)x.BIEN_Supprime, estVendu = (bool)x.BIEN_Vendu });
+                }
+
+                return myBiens;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("DeleteBienByUser")]
+        public IHttpActionResult DeleteBienByUser(Models.BienModels bienASupprimer)
+        {
+            int idBien = bienASupprimer.idBien;
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                dbContext.DeleteBienByUser(idBien);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

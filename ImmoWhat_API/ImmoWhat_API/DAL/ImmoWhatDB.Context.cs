@@ -1113,5 +1113,32 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("changeStatutMailToDeleted", idMailParameter);
         }
+    
+        public virtual ObjectResult<GetMyBiensList_Result> GetMyBiensList(Nullable<int> idMembre)
+        {
+            var idMembreParameter = idMembre.HasValue ?
+                new ObjectParameter("idMembre", idMembre) :
+                new ObjectParameter("idMembre", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyBiensList_Result>("GetMyBiensList", idMembreParameter);
+        }
+    
+        public virtual ObjectResult<GetMyBiensList2_Result> GetMyBiensList2(Nullable<int> idMembre)
+        {
+            var idMembreParameter = idMembre.HasValue ?
+                new ObjectParameter("idMembre", idMembre) :
+                new ObjectParameter("idMembre", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMyBiensList2_Result>("GetMyBiensList2", idMembreParameter);
+        }
+    
+        public virtual int DeleteBienByUser(Nullable<int> idBien)
+        {
+            var idBienParameter = idBien.HasValue ?
+                new ObjectParameter("idBien", idBien) :
+                new ObjectParameter("idBien", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteBienByUser", idBienParameter);
+        }
     }
 }

@@ -1766,9 +1766,12 @@
     <Content Include="img\Bruxelles.jpg" />
     <Content Include="img\house.png" />
     <Content Include="img\loaders\infini.gif" />
+    <Content Include="img\loaders\infini2.gif" />
     <Content Include="img\loaders\loading.gif" />
     <Content Include="img\logo.png" />
     <Content Include="img\logos\attention.png" />
+    <Content Include="img\logos\checkbox-false.png" />
+    <Content Include="img\logos\checkbox-true.png" />
     <Content Include="img\logos\enveloppeF.png" />
     <Content Include="img\logos\enveloppeF2.png" />
     <Content Include="img\logos\enveloppeO.png" />
@@ -3299,6 +3302,8 @@
     <Content Include="Views\Bien\voirLeBien.cshtml" />
     <Content Include="Views\Mail\VoirMesMails.cshtml" />
     <Content Include="Views\Mail\PartialViewListMails.cshtml" />
+    <Content Include="Views\Bien\_MesBiensListe.cshtml" />
+    <Content Include="Scripts\popper.min" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

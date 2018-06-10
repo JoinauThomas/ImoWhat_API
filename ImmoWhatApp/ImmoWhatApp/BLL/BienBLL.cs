@@ -262,5 +262,94 @@ namespace ImmoWhatApp.BLL
                 throw ex;
             }
         }
+
+        public static List<Models.BienModels> GetMyBiensList(int idMembre)
+        {
+            List<Models.BienModels> listeDeBiens = new List<Models.BienModels>();
+            try
+            {
+                using (var client = new HttpClient())
+                {
+
+                    // CHECK IF MEMBER IS CONNECTED
+
+                    var currentSession = HttpContext.Current.Session;
+                    var token = currentSession["monToken"];
+                    Models.MembreModels moi = new Models.MembreModels();
+                    client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                    // GET THE LIST OF BIENs
+
+                    client.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
+                    var responseTask = client.GetAsync("GetMyBiensList?idMembre=" + idMembre);
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<List<Models.BienModels>>();
+                        readTask.Wait();
+                        listeDeBiens = readTask.Result;
+
+
+                    }
+                    return listeDeBiens;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static Models.RequestResultM DeleteBienByUser(int idBien)
+        {
+            Models.RequestResultM resultatRequete;
+            Models.BienModels bienASupprimer = new Models.BienModels { idBien = idBien };
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    // CHECK IF MEMBER IS CONNECTED
+
+                    var currentSession = HttpContext.Current.Session;
+                    var token = currentSession["monToken"];
+                    Models.MembreModels moi = new Models.MembreModels();
+                    client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                    client.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
+                    var responseTask = client.PostAsJsonAsync("DeleteBienByUser", bienASupprimer);
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        resultatRequete = new Models.RequestResultM { result = "OK", msg = "Le bien a bien été supprimé" };
+
+                        return resultatRequete;
+                    }
+                    else
+                    {
+                        var responseString = result.Content.ReadAsStringAsync();
+                        resultatRequete = new Models.RequestResultM { result = "NOTOK", msg = responseString.Result };
+                        return resultatRequete;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
     }
 }
