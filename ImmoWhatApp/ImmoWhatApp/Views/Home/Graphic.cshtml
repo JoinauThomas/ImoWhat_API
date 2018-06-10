@@ -133,13 +133,13 @@
                             </div>
                         </div>
 
-                        @*SECTION "COMMENTAIRE"*@
+                        @*SECTION "INFO"*@
                         <div class="tab-pane" role="tabpanel" id="info">
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
                                         <div class="col">
-                                            <h1>commentaire</h1>
+                                            <h1>informations générales</h1>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -334,28 +334,37 @@
     var currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
 
 
-
+    // A CHARGER LORS DE L'OUVERTURE DE LA PAGE
     $(document).ready(function () {
+
         bouton = '@ViewBag.bouton';
-        
         anneeMin = '@Request.RequestContext.HttpContext.Session["anneeMin"]';
 
+        var anneeRecherche = currentYear - 3;
+        GetStat(anneeRecherche);
+
+        GetGraphiquePrixMoyen();
+
+        afficheCartePOICommune(home);
+
+        $('#poi').hide();
+        $('#info').hide();
+        $('#tablePrix').hide();
+        $('#graphique').hide()
 
         if (bouton == "graphique") {
             $(".nav").find(".active").removeClass("active");
             $('#ongletGraphique').addClass("active");
-            GetGraphiquePrixMoyen();
+            
         }
         else if (bouton == "tablePrix") {
             $(".nav").find(".active").removeClass("active");
             $('#ongletTablePrix').addClass("active");
             currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
-            var anneeRecherche = currentYear - 3;
-
-            GetStat(anneeRecherche);
+            
         }
         else if (bouton == "POI") {
-            afficheCartePOICommune(home);
+            
 
             $(".nav").find(".active").removeClass("active");
             $('#ongletPOI').addClass("active");
@@ -379,8 +388,26 @@
     $('#btnPrixMoyen').click(function () {
         GetGraphiquePrixMoyen();
     });
-    $('#graphique-tab').click(GetGraphiquePrixMoyen);
+    $('#graphique-tab').click(function () {
+        $(".nav").find(".active").removeClass("active");
+        $('#ongletGraphique').addClass("active");
+        $('#poi').hide();
+        $('#info').hide();
+        $('#tablePrix').hide();
+        $('#graphique').addClass("show");
+        $('#graphique').show()
+        GetGraphiquePrixMoyen();
+    });
     $('#tablePrix-tab').click(function () {
+        $(".nav").find(".active").removeClass("active");
+        $('#ongletTablePrix').addClass("active");
+
+        $('#poi').hide();
+        $('#info').hide();
+        $('#graphique').hide();
+
+        $('#tablePrix').addClass("show");
+        $('#tablePrix').show()
         var anneeRecherche = $('#inputYear').val();
         if (anneeRecherche == '') {
             currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
@@ -389,7 +416,7 @@
         GetStat(anneeRecherche);
     });
     $('#poi-tab').click(function () {
-        afficheCartePOICommune(home);
+        //afficheCartePOICommune(home);
         $('#graphique').hide();
         $('#info').hide();
         $('#tablePrix').hide();
@@ -525,13 +552,7 @@
     }
 
     function GetGraphiquePrixMoyen() {
-        $(".nav").find(".active").removeClass("active");
-        $('#ongletGraphique').addClass("active");
-        $('#poi').hide();
-        $('#info').hide();
-        $('#tablePrix').hide();
-        $('#graphique').addClass("show");
-        $('#graphique').show()
+       
             $("#chargement").show();
             var codePost = $('#codePost').val();
             $.ajax({
@@ -621,15 +642,7 @@
             });
     };
     function GetStat(anneeRecherche) {
-        $(".nav").find(".active").removeClass("active");
-        $('#ongletTablePrix').addClass("active");
-
-        $('#poi').hide();
-        $('#info').hide();
-        $('#graphique').hide();
-
-        $('#tablePrix').addClass("show");
-        $('#tablePrix').show()
+        
         $("#chargement").show();
 
          var codePost = $('#codePost').val();
