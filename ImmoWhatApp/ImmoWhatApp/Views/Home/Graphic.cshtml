@@ -36,10 +36,10 @@
             <div class="col-lg-10 offset-lg-1" style="padding:0px;min-width:10%;">
                 <div style="height:auto;min-height:100%;">
                     <ul class="nav nav-tabs">
-                        <li id="tablePrix-tab" class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tablePrix">table prix</a></li>
-                        <li id="graphique-tab" class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#graphique">graphique</a></li>
-                        <li id="poi-tab" class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#poi">POI</a></li>
-                        <li id="comment-tab" class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#comment">info</a></li>
+                        <li id="tablePrix-tab" class="nav-item"><a id="ongletTablePrix" class="nav-link" role="tab" data-toggle="tab" href="#tablePrix">table prix</a></li>
+                        <li id="graphique-tab" class="nav-item"><a id="ongletGraphique" class="nav-link" role="tab" data-toggle="tab" href="#graphique">graphique</a></li>
+                        <li id="poi-tab" class="nav-item"><a  id="ongletPOI" class="nav-link" role="tab" data-toggle="tab" href="#poi">POI</a></li>
+                        <li id="info-tab" class="nav-item"><a id="ongletInfo" class="nav-link" role="tab" data-toggle="tab" href="#info">info</a></li>
                     </ul>
                     <div id="myTabContent" class="tab-content" style="height:auto;min-height:100%;">
 
@@ -134,7 +134,7 @@
                         </div>
 
                         @*SECTION "COMMENTAIRE"*@
-                        <div class="tab-pane" role="tabpanel" id="comment">
+                        <div class="tab-pane" role="tabpanel" id="info">
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
@@ -156,16 +156,15 @@
             </div>
         </div>
     </div>
-    
+
     <div>
         <div id="chart_div"></div>
         <input id="codePost" style="display:none" value="@Model.CodePostal" />
-        <input id="bouton" style="display:none" value="@ViewBag.bouton" />
     </div>
 </div>
-   
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
 
 
@@ -193,12 +192,13 @@
     }
 </script>
 
+
+@*----------SCRIPT POUR LA GESTION DU CHANGEMENT DE COMMUNE DANS LA BARRE DE NAVIGATION----------*@
 <script>
     $("#inputComm").autocomplete({
         autoFocus: true,
         source: function (requete, reponse) {
             var name = $('#inputComm').val();
-            //alert(name);
             $.ajax({
                 type: 'GET',
                 datatype: 'json',
@@ -217,11 +217,11 @@
         },
         minLength: 3,
 
-        select: function (event, ui) { // lors de la sélection d'une proposition
+        select: function (event, ui) {
             idCommune = ui.item.id
         }
-
     });
+
 
     $('#btnRechercheCommune').click(function () {
         var nomCommune = $('#inputComm').val();
@@ -254,8 +254,10 @@
         })
     });
 </script>
-<script type="text/javascript">
 
+
+<script type="text/javascript">
+    var bouton;
     var mapPOI;
     var infowindow;
     var service;
@@ -271,7 +273,7 @@
     // bouton pour rechercher par une adresse
 
     $('#btnAdr').click(function () {
-        
+
         var address = document.getElementById("searchTextField").value;
         var lat;
         var lon;
@@ -322,8 +324,8 @@
             }
         });
     }
-    
-    
+
+
 
 
 
@@ -334,32 +336,39 @@
 
 
     $(document).ready(function () {
-        var bouton = $('#bouton').val();
+        bouton = '@ViewBag.bouton';
+        
         anneeMin = '@Request.RequestContext.HttpContext.Session["anneeMin"]';
-        if (bouton == "graph") {
+
+
+        if (bouton == "graphique") {
+            $(".nav").find(".active").removeClass("active");
+            $('#ongletGraphique').addClass("active");
             GetGraphiquePrixMoyen();
         }
         else if (bouton == "tablePrix") {
+            $(".nav").find(".active").removeClass("active");
+            $('#ongletTablePrix').addClass("active");
             currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
             var anneeRecherche = currentYear - 3;
 
             GetStat(anneeRecherche);
         }
-        else if (bouton == "poi") {
+        else if (bouton == "POI") {
             afficheCartePOICommune(home);
 
             $(".nav").find(".active").removeClass("active");
-            $('#poi-tab').addClass("active");
+            $('#ongletPOI').addClass("active");
 
             $('#poi').addClass("show");
             $('#poi').show()
         }
         else {
             $(".nav").find(".active").removeClass("active");
-            $('#comment-tab').addClass("active");
+            $('#ongletInfo').addClass("active");
 
-            $('#comment').addClass("show");
-            $('#comment').show()
+            $('#info').addClass("show");
+            $('#info').show()
         }
     })
 
@@ -382,19 +391,19 @@
     $('#poi-tab').click(function () {
         afficheCartePOICommune(home);
         $('#graphique').hide();
-        $('#comment').hide();
+        $('#info').hide();
         $('#tablePrix').hide();
         $('#poi').addClass("show");
         $('#poi').show();
         initMapPOI();
     });
-    $('#comment-tab').click(function () {
-        
+    $('#info-tab').click(function () {
+
         $('#graphique').hide();
         $('#poi').hide();
         $('#tablePrix').hide();
-        $('#comment').addClass("show");
-        $('#comment').show()
+        $('#info').addClass("show");
+        $('#info').show()
     });
 
     $('#btnSearchComparaisonYear').click(function () {
@@ -517,9 +526,9 @@
 
     function GetGraphiquePrixMoyen() {
         $(".nav").find(".active").removeClass("active");
-        $('#graphique-tab').addClass("active");
+        $('#ongletGraphique').addClass("active");
         $('#poi').hide();
-        $('#comment').hide();
+        $('#info').hide();
         $('#tablePrix').hide();
         $('#graphique').addClass("show");
         $('#graphique').show()
@@ -613,10 +622,10 @@
     };
     function GetStat(anneeRecherche) {
         $(".nav").find(".active").removeClass("active");
-        $('#tablePrix-tab').addClass("active");
+        $('#ongletTablePrix').addClass("active");
 
         $('#poi').hide();
-        $('#comment').hide();
+        $('#info').hide();
         $('#graphique').hide();
 
         $('#tablePrix').addClass("show");
@@ -682,7 +691,8 @@
     function initialize() {
         var options = {
             componentRestrictions: {
-                country: "BE" }
+                country: "BE"
+            }
         };
 
         var input = document.getElementById('searchTextField');
