@@ -189,5 +189,24 @@ namespace ImmoWhat_API.Controllers
                 throw ex;
             }
         }
+
+        [HttpPost]
+        [Authorize]
+        [Route("DeclareBienAsVendu")]
+        public IHttpActionResult DeclareBienAsVendu(Models.BienModels bienASupprimer)
+        {
+            int idBien = bienASupprimer.idBien;
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                dbContext.DeclareBienAsVendu(idBien);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

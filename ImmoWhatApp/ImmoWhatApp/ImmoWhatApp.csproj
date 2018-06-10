@@ -1772,6 +1772,7 @@
     <Content Include="img\logos\attention.png" />
     <Content Include="img\logos\checkbox-false.png" />
     <Content Include="img\logos\checkbox-true.png" />
+    <Content Include="img\logos\congratulation.png" />
     <Content Include="img\logos\enveloppeF.png" />
     <Content Include="img\logos\enveloppeF2.png" />
     <Content Include="img\logos\enveloppeO.png" />
@@ -3304,6 +3305,7 @@
     <Content Include="Views\Mail\PartialViewListMails.cshtml" />
     <Content Include="Views\Bien\_MesBiensListe.cshtml" />
     <Content Include="Scripts\popper.min" />
+    <Content Include="Views\Bien\voirMonBien.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

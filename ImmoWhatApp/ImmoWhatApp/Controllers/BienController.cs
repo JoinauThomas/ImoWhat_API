@@ -186,12 +186,25 @@ namespace ImmoWhatApp.Controllers
         }
 
         [HttpGet]
+        public ActionResult voirMonBien(int idBien)
+        {
+            Models.BienModels TheBien = new Models.BienModels();
+
+            TheBien = BLL.BienBLL.GetOneBien(idBien);
+            ViewBag.typeBien = TheBien.typeBien;
+
+            return View(TheBien);
+        }
+
+        [HttpGet]
         public ActionResult _MesBiensListe (int idMembre)
         {
             try
             {
                 List<Models.BienModels> listeDeBiens = new List<Models.BienModels>();
                 listeDeBiens = BLL.BienBLL.GetMyBiensList(idMembre);
+
+                ViewBag.idMembre = idMembre;
 
                 return PartialView(listeDeBiens);
             }
@@ -210,6 +223,19 @@ namespace ImmoWhatApp.Controllers
             resultRequest = BLL.BienBLL.DeleteBienByUser(idBien);
             
                 return Json(new { result = "OK", res = resultRequest });
+
+
+
+        }
+
+        [HttpPost]
+        public JsonResult DeclareBienAsVendu(int idBien)
+        {
+            Models.RequestResultM resultRequest = new Models.RequestResultM();
+
+            resultRequest = BLL.BienBLL.DeclareBienAsVendu(idBien);
+
+            return Json(new { result = "OK", res = resultRequest });
 
 
 

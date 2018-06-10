@@ -63,9 +63,9 @@
                             <td style="text-align:end" class="align-middle">
                                 @if (item.estVendu == false)
                                 {
-                                    <button value="@item.idBien" style="height:60px; width:60px" class="tooltipL btnVendu btn btn-success rounded-circle" type="button"><img src="https://png.icons8.com/windows/40/000000/handshake.png"><span class="tooltiptext">pour mettre le bien comme vendu</span></button>                               
+                                    <button value="@item.idBien" style="height:60px; width:60px" class="tooltipL btnVendu btn btn-success rounded-circle" type="button"><img src="https://png.icons8.com/windows/40/000000/handshake.png"><span class="tooltiptext">pour mettre le bien comme vendu</span></button>
                                 }
-                                <button  value="@item.idBien" style="height:60px; width:60px" class="tooltipT tooltiptt btnModifier btn btn-warning rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/hand-with-pen.png"><span class="tooltiptext">modifier</span></button>
+                                <button value="@item.idBien" style="height:60px; width:60px" class="tooltipT tooltiptt btnModifier btn btn-warning rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/hand-with-pen.png"><span class="tooltiptext">modifier</span></button>
                                 <button value="@item.idBien" style="height:60px; width:60px" class="tooltipT btnVoirBien btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"><span class="tooltiptext">voir le bien</span></button>
                                 <button value="@item.idBien" style="height:60px; width:60px" class="tooltipT btnSupprimerBien btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"><span class="tooltiptext">@Resource.supprime</span></button>
                             </td>
@@ -83,29 +83,136 @@
 
 
     $('.btnVendu').click(function () {
-        alert($(this).attr("value"));
-    })
+        var idBien = $(this).attr("value");
+
+
+        $('#modalTxt').html("confirmer vous que ce bien a été vendu?");
+
+        $('#modal_info').dialog({
+            open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+            resizable: false,
+            height: "auto",
+            width: "400",
+            modal: true,
+            title: "ATTENTION",
+
+            buttons: {
+                "oui": function () {
+                    $(this).dialog("close");
+                    $.ajax({
+                        type: 'POST',
+                        datatype: 'json',
+                        url: '@Url.Action("DeclareBienAsVendu", "Bien")',
+                        data: { "idBien": idBien },
+                        success: function (donnee) {
+                            if (donnee.res.result == "OK") {
+
+                                $('#modalFelicitationsTxt').html("Félicitations pour la vente de votre bien!");
+
+                                $('#modal_Felicitations').dialog({
+                                    open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+                                    resizable: false,
+                                    height: "auto",
+                                    width: "400",
+                                    modal: true,
+                                    title: "Congratulation",
+
+                                    buttons: {
+                                        "ok": function () {
+                                            GetListBiens(@ViewBag.idMembre);
+                                            $(this).dialog("close");
+                                        }
+
+                                    }
+                                });
+
+                            }
+                            else {
+                                alert("ca n a pas marché... pq???")
+                            }
+
+
+                        },
+                        error: function (error) {
+
+                            alert(error.text);
+                        }
+                    });
+
+
+                },
+                "non": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+    });
     $('.btnModifier').click(function () {
         alert($(this).attr("value"));
     })
     $('.btnVoirBien').click(function () {
-        alert($(this).attr("value"));
-    })
+        var idBien = $(this).attr("value");
+
+        var url = "../Bien/voirMonBien?idBien=" + idBien;
+        window.location.href = url;
+    });
     $('.btnSupprimerBien').click(function () {
         var idBien = $(this).attr("value");
-        $.ajax({
-            type: 'POST',
+
+        $('#modalDeleteTxt').html("Etes vous sure de vouloir supprimer ce bien?");
+
+        $('#modal_delete').dialog({
+            open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+            resizable: false,
+            height: "auto",
+            width: "400",
+            modal: true,
+            title: "ATTENTION",
+
+            buttons: {
+                "oui": function () {
+                    $(this).dialog("close");
+                    $.ajax({
+                        type: 'POST',
+                        datatype: 'json',
+                        url: '@Url.Action("DeleteBienByUser", "Bien")',
+                        data: { "idBien": idBien },
+                        success: function (donnee) {
+                            if (donnee.res.result == "OK") {
+                                GetListBiens(@ViewBag.idMembre);
+                            }
+                            else {
+                                alert("ca n a pas marché... pq???")
+                            }
+
+
+                        },
+                        error: function (error) {
+
+                            alert(error.text);
+                        }
+                    });
+
+
+                },
+                "non": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+
+    });
+
+    function GetListBiens(idMembre) {
+         $.ajax({
+            type: 'GET',
             datatype: 'json',
-            url: '@Url.Action("DeleteBienByUser", "Bien")',
-            data: { "idBien": idBien },
+            url: '@Url.Action("_MesBiensListe", "Bien")',
+            data: { "idMembre": idMembre },
             success: function (donnee) {
-                if (donnee.res.result == "OK") {
-                    GetListBiens(idMembre)
-                    alert("oki, le bien no " + idBien + " a bien été supprimé")
-                }
-                else {
-                    alert("ca n a pas marché... pq???")
-                }
+                    $('#PartialViewTableBiens').html(donnee);
 
 
             },
@@ -114,7 +221,9 @@
                 alert(error.text);
             }
         });
-    })
+    }
+
+
 </script>
 
 

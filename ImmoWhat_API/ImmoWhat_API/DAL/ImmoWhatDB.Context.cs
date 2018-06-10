@@ -1140,5 +1140,14 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteBienByUser", idBienParameter);
         }
+    
+        public virtual int DeclareBienAsVendu(Nullable<int> idBien)
+        {
+            var idBienParameter = idBien.HasValue ?
+                new ObjectParameter("idBien", idBien) :
+                new ObjectParameter("idBien", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeclareBienAsVendu", idBienParameter);
+        }
     }
 }

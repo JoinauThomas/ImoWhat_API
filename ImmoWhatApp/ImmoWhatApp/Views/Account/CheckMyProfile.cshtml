@@ -133,7 +133,7 @@
 
         </div>
         <div class="row mt-3">
-            
+
             <div class="col d-flex flex-row justify-content-end"><button class="btn btn-success" type="button">ajouter un bien</button></div>
         </div>
     </div>
@@ -143,6 +143,32 @@
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<!-- Modal Delete -->
+<div class="row" id="modal_delete" style="display:none;">
+    <div class="col-lg-3">
+        <img width="50" src="~/img/logos/attention.png" />
+    </div>
+    <div class="col-9">
+        <span id="modalDeleteTxt" class="modalTxt modal-contents"></span>
+    </div>
+
+</div>
+
+<!-- Modal message -->
+<div id="modal_info" style="display:none;">
+    <p id="modalTxt" class="modalTxt modal-contents"></p>
+</div>
+
+<!-- Modal message -->
+<div class="row" id="modal_Felicitations" style="display:none;">
+    <div class="col-lg-3">
+        <img width="50" src="~/img/logos/congratulation.png" />
+    </div>
+    <div class="col-9">
+        <span id="modalFelicitationsTxt" class="modalTxt modal-contents"></span>
+    </div>
+</div>
 
 <script>
 
@@ -160,16 +186,14 @@
             success: function (donnee) {
                 if (donnee.result == "OK") {
                     $('#nbNvMessages').html(donnee.nbNvMsg);
-                    $('#chargement').hide();
+                    
                 }
                 else {
-                    $('#chargement').hide();
                     alert("gros problème :\n"+donnee.msg);
                 }
 
             },
             error: function (error) {
-                $('#chargement').hide();
                 alert(error.responseText);
             }
         });
@@ -196,8 +220,7 @@
             data: { "idMembre": idMembre },
             success: function (donnee) {
                     $('#PartialViewTableBiens').html(donnee);
-
-
+                    $('#chargement').hide();
             },
             error: function (error) {
 

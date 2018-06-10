@@ -1,33 +1,12 @@
 ﻿@model ImmoWhatApp.Models.BienModels
 
-@{
-    ViewBag.Title = "voirLeBien";
-}
-
 
 <div class="container" style="background-color:#c3c3c3;">
     <div class="row pt-3">
         <div class="col-lg-12 mb-3">
-            @{
-                if (Model.typeBien == 1)
-                {
-                    <h2>@Resource.terrain a vendre à @Model.commune</h2>
-                }
-                else if (Model.typeBien == 2)
-                {
-                    <h2>@Resource.maison a vendre à @Model.commune</h2>
-                }
-                else if (Model.typeBien == 3)
-                {
-                    <h2>@Resource.villa a vendre à @Model.commune</h2>
-                }
-                else if (Model.typeBien == 4)
-                {
-                    <h2>@Resource.appartement a vendre à @Model.commune</h2>
-                }
-            }
+            <h2>Mon bien</h2>
         </div>
-        <div class="col-lg-9">
+        <div class="col-lg-12">
             <div class="row">
                 <div class="col">
                     <div class="jumbotron">
@@ -56,19 +35,20 @@
 
 
                                     </div>
-                                    <div>
-                                        <a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev">
-                                            <span class="carousel-control-prev-icon"></span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#carousel-1" role="button" data-slide="next">
-                                            <span class="carousel-control-next-icon"></span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </div>
+
                                     @{
                                         if (Model.nbPhotos > 1)
                                         {
+                                            <div>
+                                                <a class="carousel-control-prev" href="#carousel-1" role="button" data-slide="prev">
+                                                    <span class="carousel-control-prev-icon"></span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#carousel-1" role="button" data-slide="next">
+                                                    <span class="carousel-control-next-icon"></span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </div>
                                             <ol class="carousel-indicators pt-1 pb-1" style="background-color:rgba(0, 0, 0, 0.70);">
                                                 @{
 
@@ -286,6 +266,10 @@
                                             }
                                         </div>
                                     </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul class="list-group">
                                     <li class="list-group-item">
                                         <div class="row">
                                             <div class="col"><span>jardin</span></div>
@@ -339,42 +323,8 @@
             </div>
         </div>
 
-
-        @*   CONTACTER LE PROPRIETAIRE   *@
-        <div class="col-lg-3 border">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h5>Contacter le propriétaire</h5>
-                        </div>
-                        <div class="col-lg-12">
-                            <form id="formSendMail">
-                                <div class="form-group">
-                                    @{
-                                        ImmoWhatApp.Models.MembreModels moi = (ImmoWhatApp.Models.MembreModels)Session["moi"];
-                                    }
-                                    <input class="form-control" type="text" value="@moi.prenom" placeholder="@moi.prenom" disabled>
-                                    <input class="form-control" type="text" value="@moi.nom" placeholder="@moi.nom" disabled>
-                                    <input id="mailEmmeteur" class="form-control" value="@moi.mail" type="email" placeholder="@moi.mail" disabled>
-                                    <textarea id="msg" class="form-control" rows="10">Pourriez-vous me contacter concernant cette annonce publiée svp ?</textarea>
-                                    <button id="btnEnvoiMsg" class="btn btn-warning btn-block btn-lg" type="button">
-                                        <img src="https://png.icons8.com/dotty/30/000000/filled-sent.png"><span>   @Resource.envoyer</span>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
-<div>
-</div>
-<p>
-    @Html.ActionLink("retour", "MainPage", "Home", new { nomCommune = Model.commune, typeBien = Model.typeBien }, "")
-</p>
 
 <script>
     $(document).ready(function () {
@@ -387,41 +337,7 @@
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
-    $('#btnEnvoiMsg').click(function () {
 
-        var mailEmmeteur = $('#mailEmmeteur').val();
-        var message = $('#msg').val();
-        var idProprietaire = '@Model.idProprietaire';
-        var sujet = "demande d'information sur un bien";
 
-        var formData = new FormData();
-        formData.append("adresseMail", $('#mailEmmeteur').val());
-        formData.append("sujet", "demande d'information sur un bien");
-        formData.append("message", $('#msg').val());
-        formData.append("Recepteur", '@Model.idProprietaire');
 
-        $.ajax({
-            type: 'POST',
-            datatype: 'json',
-            url: '@Url.Action("SendMail", "Mail")',
-            data: {
-                "adresseMail": mailEmmeteur, "msg": message, "Recepteur": idProprietaire, "sujet": sujet },
-            success: function (donnee) {
-                if (donnee.result == "OK") {
-                    alert("oki")
-                }
-                else {
-                    alert(donnee.msg);
-                }
-
-            },
-            error: function (error) {
-                alert(error.responseText);
-            }
-        });
-
-    });
 </script>
-
-<script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
-

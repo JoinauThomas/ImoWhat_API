@@ -156,12 +156,13 @@
                 var tableString = "";
                 for (var x = 0; x < i; x++) {
                     var img = donnee.listeBiens[x].idBien + "-0.jpg";
+                    var prix = numberWithPoint(donnee.listeBiens[x].prix)
                     //alert(img);
                     tableString += '<a href="#" ><div  id="' + donnee.listeBiens[x].idBien +'" class="bien card bg-dark text-white">' +
                         '<img style="max-height:175px" id="img' + donnee.listeBiens[x].idBien + '" class="card-img" src="/img/bien/' + img +'" alt="pas d image" />' +
                         '<div class="card-img-overlay">' +
                         '<h5 class="card-title">Card title</h5>' +
-                        '<p style="color:black; background-color:rgba(177, 174, 174, 0.60)" class="card-text">' + donnee.listeBiens[x].prix + '€<br/>' + donnee.listeBiens[x].superficie + 'm²<br />' + donnee.listeBiens[x].nbChambres + ' chambres</p>'+
+                        '<p style="color:black; background-color:rgba(177, 174, 174, 0.60)" class="card-text">' + prix + '€<br/>' + donnee.listeBiens[x].superficie + 'm²<br />' + donnee.listeBiens[x].nbChambres + ' chambres</p>' +
 
                         '</div>' +
                         '</div ></a>';
@@ -206,6 +207,9 @@
             }
         })
     }
+
+    
+
     function voirLeBien(idBien) {
        
         $.ajax({
@@ -382,7 +386,9 @@
                 var x = 0
                 while (x < 10) {
                     $('#prix' + (x + 1)).css('background-color', donnee.tablePrix[x].refColor);
-                    $('#prix' + (x + 1)).text(donnee.tablePrix[x].valMin + " / " + donnee.tablePrix[x].valMax);
+                    $('#prix' + (x + 1)).text(numberWithPoint(donnee.tablePrix[x].valMin) + " / " + numberWithPoint(donnee.tablePrix[x].valMax));
+                    if (x == 9)
+                        $('#prix' + (x + 1)).text(numberWithPoint(donnee.tablePrix[x].valMin) + " / ...");
                     x += 1;
                 }
                 $('#listePrix a').css('border-style', 'none');
@@ -513,6 +519,12 @@
             }
         })
     });
+
+    //POUR METTRE UN POINT COMME SEPARATEUR DE MILLIERS
+    function numberWithPoint(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
 </script>
 
 <script src="assets/js/jquery.min.js"></script>

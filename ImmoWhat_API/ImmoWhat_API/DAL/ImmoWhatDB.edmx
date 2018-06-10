@@ -614,6 +614,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="mail" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="CommunesToLower" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="DeclareBienAsVendu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idBien" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteBienByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idBien" Type="int" Mode="In" />
         </Function>
@@ -1373,6 +1376,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="idMembre" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteBienByUser">
+          <Parameter Name="idBien" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeclareBienAsVendu">
             <Parameter Name="idBien" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
@@ -2820,6 +2826,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DeleteBienByUser" FunctionName="ImmoWhatModel.Store.DeleteBienByUser" />
+          <FunctionImportMapping FunctionImportName="DeclareBienAsVendu" FunctionName="ImmoWhatModel.Store.DeclareBienAsVendu" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
