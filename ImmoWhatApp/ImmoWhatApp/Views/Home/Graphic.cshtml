@@ -11,7 +11,7 @@
     <div class="col-lg-1" style="min-height:100%;width:20%;min-width:20%;max-width:20%;padding:0px;">
         <div class="float-left border rounded border-dark" style="position:fixed;width:20%;height:84%; left:0; ">
             <div class="row" style="height:5%;margin-left:0px;margin-right:0px;">
-                <div class="col"><span>waterloo</span></div>
+                <div class="col"><span>@Model.Localite</span></div>
             </div>
             <div class="row" style="height:10%;margin:0px; z-index:99">
                 <div class="col" style="padding:0px;">
@@ -344,18 +344,16 @@
         anneeMin = '@Request.RequestContext.HttpContext.Session["anneeMin"]';
 
         var anneeRecherche = currentYear - 3;
-        GetStat(anneeRecherche);
-
-        GetGraphiquePrixMoyen();
-
-        afficheCartePOICommune(home);
-
-        GetInfosGenerals();
 
         $('#poi').hide();
         $('#info').hide();
         $('#tablePrix').hide();
         $('#graphique').hide()
+
+        GetStat(anneeRecherche);
+        GetGraphiquePrixMoyen();
+        afficheCartePOICommune(home);
+        GetInfosGenerals();
 
         if (bouton == "graphique") {
             $(".nav").find(".active").removeClass("active");

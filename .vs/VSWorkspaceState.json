@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ImmoWhatApp",
+    "\\ImmoWhatApp\\ImmoWhatApp",
+    "\\ImmoWhatApp\\ImmoWhatApp\\Views",
+    "\\ImmoWhatApp\\ImmoWhatApp\\Views\\Home"
   ],
+  "SelectedNode": "\\ImmoWhatApp\\ImmoWhatApp\\Views\\Home\\MainPage.cshtml",
   "PreviewInSolutionExplorer": false
 }
