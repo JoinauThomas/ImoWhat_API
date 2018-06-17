@@ -1765,6 +1765,8 @@
     <Content Include="Global.asax" />
     <Content Include="img\Bruxelles.jpg" />
     <Content Include="img\house.png" />
+    <Content Include="img\iconeFemme.png" />
+    <Content Include="img\iconeHomme.png" />
     <Content Include="img\loaders\infini.gif" />
     <Content Include="img\loaders\infini2.gif" />
     <Content Include="img\loaders\loading.gif" />
@@ -3236,12 +3238,14 @@
     <Compile Include="Models\imageModels.cs" />
     <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\nbPieces.cs" />
+    <Compile Include="Models\PrenomsPopulaires.cs" />
     <Compile Include="Models\RechercheMoyennePrixCommune.cs" />
     <Compile Include="Models\RequestResultM.cs" />
     <Compile Include="Models\ResultRequest.cs" />
     <Compile Include="Models\Identification.cs" />
     <Compile Include="Models\MembreModels.cs" />
     <Compile Include="Models\ResultInscription.cs" />
+    <Compile Include="Models\StatCommune.cs" />
     <Compile Include="Models\TableGraphTransactionsModels.cs" />
     <Compile Include="Models\TablePrice.cs" />
     <Compile Include="Models\tablePriceStat.cs" />
@@ -3306,6 +3310,7 @@
     <Content Include="Views\Bien\_MesBiensListe.cshtml" />
     <Content Include="Scripts\popper.min" />
     <Content Include="Views\Bien\voirMonBien.cshtml" />
+    <Content Include="Views\Stat\PartialViewInfoCommune.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -155,6 +155,65 @@ namespace ImmoWhat_API.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet]
+        [Route("GetInfosCommune")]
+        public Models.StatCommune GetInfosCommune(string commune, int age)
+        {
+            
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                List<DAL.GetPrenomsPopulaires_Result> LstPrenomsTemp = dbContext.GetPrenomsPopulaires(commune).ToList();
+
+                List<DAL.GetStatCommune2_Result> statCommuneTemp = dbContext.GetStatCommune2(commune, age).ToList();
+
+                List<Models.PrenomsPopulaires> listePrenoms = new List<Models.PrenomsPopulaires>();
+                foreach (var x in LstPrenomsTemp)
+                {
+                    listePrenoms.Add(new Models.PrenomsPopulaires { prenom = x.prenom, nombreDePersonnes = (int)x.nbPersonnes, sexe = x.sexe });
+                }
+
+                Models.StatCommune statCommune = new Models.StatCommune
+                {
+                    nbHab = (int)statCommuneTemp[0].nbHab,
+                    nbFemmes = (int)statCommuneTemp[0].nbFemmes,
+                    nbHommes = (int)statCommuneTemp[0].nbHommes,
+                    nbHommesAge1 = (int)statCommuneTemp[0].nbHommesAge1,
+                    nbFemmesAge1 = (int)statCommuneTemp[0].nbFemmesAge1,
+                    nbHommesAge2 = (int)statCommuneTemp[0].nbHommesAge2,
+                    nbFemmesAge2 = (int)statCommuneTemp[0].nbFemmesAge2,
+                    nbHommesAge3 = (int)statCommuneTemp[0].nbHommesAge3,
+                    nbFemmesAge3 = (int)statCommuneTemp[0].nbFemmesAge3,
+                    nbHommesAge4 = (int)statCommuneTemp[0].nbHommesAge4,
+                    nbFemmesAge4 = (int)statCommuneTemp[0].nbFemmesAge4,
+                    nbHommesAge5 = (int)statCommuneTemp[0].nbHommesAge5,
+                    nbFemmesAge5 = (int)statCommuneTemp[0].nbFemmesAge5,
+                    nbHommesAge6 = (int)statCommuneTemp[0].nbHommesAge6,
+                    nbFemmesAge6 = (int)statCommuneTemp[0].nbFemmesAge6,
+                    nbHommesAge7 = (int)statCommuneTemp[0].nbHommesAge7,
+                    nbFemmesAge7 = (int)statCommuneTemp[0].nbFemmesAge7,
+                    nbHommesAge8 = (int)statCommuneTemp[0].nbHommesAge8,
+                    nbFemmesAge8 = (int)statCommuneTemp[0].nbFemmesAge8,
+                    nbHommesAge9 = (int)statCommuneTemp[0].nbHommesAge9,
+                    nbFemmesAge9 = (int)statCommuneTemp[0].nbFemmesAge9,
+                    nbHommesAge10 = (int)statCommuneTemp[0].nbHommesAge10,
+                    nbFemmesAge10 = (int)statCommuneTemp[0].nbFemmesAge10,
+                    NbFemmesCelib = (int)statCommuneTemp[0].nbFemmeCelibataire,
+                    NbHommesCelib = (int)statCommuneTemp[0].hommeCelibataire,
+                    listePrenoms = listePrenoms.ToList()
+                };
+
+                
+
+                return statCommune;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
     
 }

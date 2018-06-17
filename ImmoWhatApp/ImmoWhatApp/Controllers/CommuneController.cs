@@ -190,6 +190,16 @@ namespace ImmoWhatApp.Controllers
 
             return Json(new { result = "OK", listePoints = ListePoints }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult GetInfosCommune(string commune, int age)
+        {
+            
+            Models.StatCommune statCommune = BLL.CommuneBLL.GetInfosCommune(commune, age);
+
+            return Json(new { result = "OK", stat = statCommune, listPrenoms = statCommune.listePrenoms }, JsonRequestBehavior.AllowGet);
+        }
+
         
 
 

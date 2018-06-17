@@ -720,9 +720,20 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         <Function Name="GetOneBien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idBien" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetPrenomsPopulaires" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="commune" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="GetPriceTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="compareYear" Type="int" Mode="In" />
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetStatCommune" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="commune" Type="nvarchar" Mode="In" />
+          <Parameter Name="age" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetStatCommune2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="commune" Type="nvarchar" Mode="In" />
+          <Parameter Name="age" Type="int" Mode="In" />
         </Function>
         <Function Name="GetTableGraphique" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
@@ -1379,7 +1390,18 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="idBien" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeclareBienAsVendu">
-            <Parameter Name="idBien" Mode="In" Type="Int32" />
+          <Parameter Name="idBien" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetPrenomsPopulaires" ReturnType="Collection(ImmoWhatModel.GetPrenomsPopulaires_Result)">
+          <Parameter Name="commune" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetStatCommune" ReturnType="Collection(ImmoWhatModel.GetStatCommune_Result)">
+            <Parameter Name="commune" Mode="In" Type="String" />
+            <Parameter Name="age" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetStatCommune2" ReturnType="Collection(ImmoWhatModel.GetStatCommune2_Result)">
+            <Parameter Name="commune" Mode="In" Type="String" />
+            <Parameter Name="age" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -2170,6 +2192,62 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Type="String" Name="commune" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="CodePostal" Nullable="false" MaxLength="10" />
         </ComplexType>
+        <ComplexType Name="GetPrenomsPopulaires_Result">
+          <Property Type="Int32" Name="idCommune" Nullable="true" />
+          <Property Type="String" Name="nomCommuneFR" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="nomCommuneNL" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="prenom" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="nbPersonnes" Nullable="true" />
+          <Property Type="String" Name="sexe" Nullable="true" MaxLength="5" />
+        </ComplexType>
+        <ComplexType Name="GetStatCommune_Result">
+          <Property Type="Int32" Name="nbHab" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmes" Nullable="true" />
+          <Property Type="Int32" Name="nbHommes" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmeCelibataire" Nullable="true" />
+          <Property Type="Int32" Name="hommeCelibataire" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge1" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge1" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge2" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge2" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge3" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge3" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge4" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge4" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge5" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge5" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge6" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge6" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge7" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge7" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetStatCommune2_Result">
+          <Property Type="Int32" Name="nbHab" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmes" Nullable="true" />
+          <Property Type="Int32" Name="nbHommes" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmeCelibataire" Nullable="true" />
+          <Property Type="Int32" Name="hommeCelibataire" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge1" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge1" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge2" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge2" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge3" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge3" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge4" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge4" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge5" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge5" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge6" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge6" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge7" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge7" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge8" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge8" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge9" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge9" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge10" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge10" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2827,6 +2905,74 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DeleteBienByUser" FunctionName="ImmoWhatModel.Store.DeleteBienByUser" />
           <FunctionImportMapping FunctionImportName="DeclareBienAsVendu" FunctionName="ImmoWhatModel.Store.DeclareBienAsVendu" />
+          <FunctionImportMapping FunctionImportName="GetPrenomsPopulaires" FunctionName="ImmoWhatModel.Store.GetPrenomsPopulaires">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetPrenomsPopulaires_Result">
+                <ScalarProperty Name="idCommune" ColumnName="idCommune" />
+                <ScalarProperty Name="nomCommuneFR" ColumnName="nomCommuneFR" />
+                <ScalarProperty Name="nomCommuneNL" ColumnName="nomCommuneNL" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="nbPersonnes" ColumnName="nbPersonnes" />
+                <ScalarProperty Name="sexe" ColumnName="sexe" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetStatCommune" FunctionName="ImmoWhatModel.Store.GetStatCommune">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetStatCommune_Result">
+                <ScalarProperty Name="nbHab" ColumnName="nbHab" />
+                <ScalarProperty Name="nbFemmes" ColumnName="nbFemmes" />
+                <ScalarProperty Name="nbHommes" ColumnName="nbHommes" />
+                <ScalarProperty Name="nbFemmeCelibataire" ColumnName="nbFemmeCelibataire" />
+                <ScalarProperty Name="hommeCelibataire" ColumnName="hommeCelibataire" />
+                <ScalarProperty Name="nbHommesAge1" ColumnName="nbHommesAge1" />
+                <ScalarProperty Name="nbFemmesAge1" ColumnName="nbFemmesAge1" />
+                <ScalarProperty Name="nbHommesAge2" ColumnName="nbHommesAge2" />
+                <ScalarProperty Name="nbFemmesAge2" ColumnName="nbFemmesAge2" />
+                <ScalarProperty Name="nbHommesAge3" ColumnName="nbHommesAge3" />
+                <ScalarProperty Name="nbFemmesAge3" ColumnName="nbFemmesAge3" />
+                <ScalarProperty Name="nbHommesAge4" ColumnName="nbHommesAge4" />
+                <ScalarProperty Name="nbFemmesAge4" ColumnName="nbFemmesAge4" />
+                <ScalarProperty Name="nbHommesAge5" ColumnName="nbHommesAge5" />
+                <ScalarProperty Name="nbFemmesAge5" ColumnName="nbFemmesAge5" />
+                <ScalarProperty Name="nbHommesAge6" ColumnName="nbHommesAge6" />
+                <ScalarProperty Name="nbFemmesAge6" ColumnName="nbFemmesAge6" />
+                <ScalarProperty Name="nbHommesAge7" ColumnName="nbHommesAge7" />
+                <ScalarProperty Name="nbFemmesAge7" ColumnName="nbFemmesAge7" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetStatCommune2" FunctionName="ImmoWhatModel.Store.GetStatCommune2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetStatCommune2_Result">
+                <ScalarProperty Name="nbHab" ColumnName="nbHab" />
+                <ScalarProperty Name="nbFemmes" ColumnName="nbFemmes" />
+                <ScalarProperty Name="nbHommes" ColumnName="nbHommes" />
+                <ScalarProperty Name="nbFemmeCelibataire" ColumnName="nbFemmeCelibataire" />
+                <ScalarProperty Name="hommeCelibataire" ColumnName="hommeCelibataire" />
+                <ScalarProperty Name="nbHommesAge1" ColumnName="nbHommesAge1" />
+                <ScalarProperty Name="nbFemmesAge1" ColumnName="nbFemmesAge1" />
+                <ScalarProperty Name="nbHommesAge2" ColumnName="nbHommesAge2" />
+                <ScalarProperty Name="nbFemmesAge2" ColumnName="nbFemmesAge2" />
+                <ScalarProperty Name="nbHommesAge3" ColumnName="nbHommesAge3" />
+                <ScalarProperty Name="nbFemmesAge3" ColumnName="nbFemmesAge3" />
+                <ScalarProperty Name="nbHommesAge4" ColumnName="nbHommesAge4" />
+                <ScalarProperty Name="nbFemmesAge4" ColumnName="nbFemmesAge4" />
+                <ScalarProperty Name="nbHommesAge5" ColumnName="nbHommesAge5" />
+                <ScalarProperty Name="nbFemmesAge5" ColumnName="nbFemmesAge5" />
+                <ScalarProperty Name="nbHommesAge6" ColumnName="nbHommesAge6" />
+                <ScalarProperty Name="nbFemmesAge6" ColumnName="nbFemmesAge6" />
+                <ScalarProperty Name="nbHommesAge7" ColumnName="nbHommesAge7" />
+                <ScalarProperty Name="nbFemmesAge7" ColumnName="nbFemmesAge7" />
+                <ScalarProperty Name="nbHommesAge8" ColumnName="nbHommesAge8" />
+                <ScalarProperty Name="nbFemmesAge8" ColumnName="nbFemmesAge8" />
+                <ScalarProperty Name="nbHommesAge9" ColumnName="nbHommesAge9" />
+                <ScalarProperty Name="nbFemmesAge9" ColumnName="nbFemmesAge9" />
+                <ScalarProperty Name="nbHommesAge10" ColumnName="nbHommesAge10" />
+                <ScalarProperty Name="nbFemmesAge10" ColumnName="nbFemmesAge10" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

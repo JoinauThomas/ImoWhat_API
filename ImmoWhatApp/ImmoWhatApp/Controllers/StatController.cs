@@ -154,5 +154,25 @@ namespace ImmoWhatApp.Controllers
             return PartialView();
 
         }
+
+        [HttpGet]
+        public ActionResult PartialViewInfoCommune(string commune)
+        {
+            int age = -1;
+
+            Models.MembreModels moi = (Models.MembreModels)Session["moi"];
+            if(moi != null)
+            {
+                DateTime Naissance = moi.dateDeNaissance;
+                age = DateTime.Now.Year - Naissance.Year - (DateTime.Now.Month < Naissance.Month ? 1 : (DateTime.Now.Month == Naissance.Month && DateTime.Now.Day < Naissance.Day) ? 1 : 0);
+            }
+            
+
+            Models.StatCommune statCommune = BLL.CommuneBLL.GetInfosCommune(commune, age);
+            ViewBag.commune = commune;
+
+            return PartialView(statCommune);
+
+        }
     }
 }

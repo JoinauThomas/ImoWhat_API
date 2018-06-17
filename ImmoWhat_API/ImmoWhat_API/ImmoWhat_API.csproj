@@ -318,7 +318,16 @@
     <Compile Include="DAL\GetOneBien_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\GetPrenomsPopulaires_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetPriceTable_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GetStatCommune2_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GetStatCommune_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\GetTableGraphique2_Result.cs">
@@ -409,7 +418,9 @@
     <Compile Include="Models\imageModels.cs" />
     <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\MembreModels.cs" />
+    <Compile Include="Models\PrenomsPopulaires.cs" />
     <Compile Include="Models\ResultInscription.cs" />
+    <Compile Include="Models\StatCommune.cs" />
     <Compile Include="Models\TableGraphTransactions.cs" />
     <Compile Include="Models\TablePrice.cs" />
     <Compile Include="Models\tablePriceStat.cs" />

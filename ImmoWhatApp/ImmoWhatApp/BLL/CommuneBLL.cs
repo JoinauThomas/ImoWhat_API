@@ -330,5 +330,37 @@ namespace ImmoWhatApp.BLL
                 throw ex;
             }
         }
+
+        public static Models.StatCommune GetInfosCommune(string commune, int age)
+        {
+
+            Models.StatCommune statCommune = new Models.StatCommune();
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
+                    var responseTask = client.GetAsync("GetInfosCommune?commune="+commune+"&age="+age);
+                    var result = responseTask.Result;
+                    responseTask.Wait();
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<Models.StatCommune>();
+                        readTask.Wait();
+                        statCommune = readTask.Result;
+                    }
+                    else
+                    {
+                        statCommune = null;
+                    }
+                }
+                return statCommune;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

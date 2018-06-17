@@ -1,0 +1,217 @@
+﻿@model ImmoWhatApp.Models.StatCommune
+
+
+
+<div class="container">
+    <div class="row" style="margin:0px;">
+        <div class="col-lg-12">
+            <h4>proportions Hommes-femmes</h4>
+        </div>
+        <div id="GraphPropSexe" class="col-sm-6 col-md-3 col-lg-6 d-flex justify-content-center align-items-center align-content-center" style="height:300Px;">
+        </div>
+        <div class="col align-content-around align-self-center" style="padding:0px;">
+            <div class="container">
+                <div class="row" style="padding-right:15px;padding-left:15px;">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            @{ 
+                                var pcFemmesCelib = (Model.NbFemmesCelib * 100 / Model.nbFemmes);
+                                int pcHommesCelib = Model.NbHommesCelib * 100 / @Model.nbHommes;
+
+                            <div class="col-md-4 col-lg-12">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>hommes célibataires</h5>
+                                        <div class="progress" style="height:35px">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="@pcHommesCelib" aria-valuemin="0" aria-valuemax="100">@pcHommesCelib %</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>femmes célibataires</h5>
+                                        <div class="progress" style="height:35px">
+                                            <div class="progress-bar" role="progressbar" style="width: 0%; background-color:#e50cb9" aria-valuenow="@pcFemmesCelib" aria-valuemin="0" aria-valuemax="100">@pcFemmesCelib %</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row" style="margin:0px;">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <h4>pyramide des ages</h4>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center align-content-center">
+                <div id="graphAge" class="col-lg-12 d-flex justify-content-center align-items-center align-content-center" style="height:300Px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Prénoms les plus féquents</h4>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-lg-3">
+                    <img src="~/img/iconeHomme.png" style="max-width:100%;max-height:100%;">
+                    </div>
+                    <div class="col-lg-9">
+                        <ul>
+                            <li>@Model.listePrenoms[0].prenom : @Model.listePrenoms[0].nombreDePersonnes</li>
+                            <li>@Model.listePrenoms[1].prenom : @Model.listePrenoms[1].nombreDePersonnes</li>
+                            <li>@Model.listePrenoms[2].prenom : @Model.listePrenoms[2].nombreDePersonnes</li>
+                            <li>@Model.listePrenoms[3].prenom : @Model.listePrenoms[3].nombreDePersonnes</li>
+                            <li>@Model.listePrenoms[4].prenom : @Model.listePrenoms[4].nombreDePersonnes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-lg-3">
+                    <img src="~/img/iconeFemme.png" style="max-width:100%;max-height:100%;">
+                    </div>
+                    <div class="col-lg-9">
+                        <ul>
+                            <li>@Model.listePrenoms[5].prenom : @Model.listePrenoms[5].nombreDePersonnes</li>
+                            <li>@Model.listePrenoms[6].prenom : @Model.listePrenoms[6].nombreDePersonnes</li>
+                            <li>@Model.listePrenoms[7].prenom : @Model.listePrenoms[7].nombreDePersonnes</li>
+                            <li>@Model.listePrenoms[8].prenom : @Model.listePrenoms[8].nombreDePersonnes</li>
+                            <li>@Model.listePrenoms[9].prenom : @Model.listePrenoms[9].nombreDePersonnes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.progress .progress-bar').css("width",
+            function () {
+                return $(this).attr("aria-valuenow") + "%";
+            }
+        )
+    });
+        var age = 32;
+
+                var nbHab = @Model.nbHab;
+                var nbFemmes = @Model.nbFemmes;
+                var nbHommes = @Model.nbHommes;
+                var pcHommes = (nbHommes / nbHab * 100).toFixed(2);
+                var pcFemme = (nbFemmes / nbHab * 100).toFixed(2);
+
+
+                google.charts.load("current", { packages: ["corechart"] });
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([
+                        ['Sexe', 'nombre de personnes'],
+                        ['hommes ' + pcHommes + '%', nbHommes],
+                        ['femmes ' + pcFemme + '%', nbFemmes]
+                    ]);
+
+                    var options = {
+                        pieHole: 0.5,
+                        pieSliceTextStyle: {
+                            color: 'black',
+                        },
+                        colors: ['#0000FF','#e50cb9'],
+                        backgroundColor: 'transparent',
+                        pieSliceText: 'none',
+                        tooltip: { trigger: 'none' },
+                        chartArea: {
+                            width: '100%'
+                        },
+                        //animation: {
+                        //    duration: 1200,
+                        //    easing: 'linear',
+                        //    startup: true
+                        //},
+                        legend: { alignment: 'center', position: 'right', textStyle: { color: 'blue', fontSize: 16 } },
+                    };
+
+                    var chart = new google.visualization.PieChart(document.getElementById('GraphPropSexe'));
+                    chart.draw(data, options);
+                }
+
+
+                google.charts.load('current', { 'packages': ['bar'] });
+                google.charts.setOnLoadCallback(drawChartAge);
+
+                function drawChartAge() {
+
+                    var maxVal = Math.max(...[@Model.nbFemmesAge1, @Model.nbFemmesAge2, @Model.nbFemmesAge3, @Model.nbFemmesAge4, @Model.nbFemmesAge5, @Model.nbFemmesAge6, @Model.nbFemmesAge7,
+                    @Model.nbFemmesAge8, @Model.nbFemmesAge9, @Model.nbFemmesAge10, @Model.nbHommesAge1, @Model.nbHommesAge2, @Model.nbHommesAge3, @Model.nbHommesAge4, @Model.nbHommesAge5, @Model.nbHommesAge6,
+                     @Model.nbHommesAge7, @Model.nbHommesAge8, @Model.nbHommesAge9, @Model.nbHommesAge10]);
+                    
+
+                    var data = google.visualization.arrayToDataTable([
+                        ['age', 'hommes', 'femmes'],
+                        ['0 - 10', @Model.nbHommesAge1, @Model.nbFemmesAge1],
+                        ['11 - 20', @Model.nbHommesAge2, @Model.nbFemmesAge2],
+                        ['21 - 30', @Model.nbHommesAge3, @Model.nbFemmesAge3],
+                        ['31 - 40', @Model.nbHommesAge4, @Model.nbFemmesAge4],
+                        ['41 - 50', @Model.nbHommesAge5, @Model.nbFemmesAge5],
+                        ['51 - 60', @Model.nbHommesAge6, @Model.nbFemmesAge6],
+                        ['61 - 70', @Model.nbHommesAge7, @Model.nbFemmesAge7],
+                        ['71 - 80', @Model.nbHommesAge8, @Model.nbFemmesAge8],
+                        ['81 - 90', @Model.nbHommesAge9, @Model.nbFemmesAge9],
+                        ['91 +', @Model.nbHommesAge10, @Model.nbFemmesAge10]
+                    ]);
+
+
+                    var options = {
+
+                        //animation: {
+                        //    duration: 1200,
+                        //    easing: 'linear',
+                        //    startup: true
+                        //},
+                        legend: { alignment: 'center', position: 'top', textStyle: { color: 'blue', fontSize: 16 } },
+                        colors: ['#0000FF', '#e50cb9'],
+                        backgroundColor: 'transparent',
+                        hAxis: {
+                            format: 'decimal',
+                            gridlines: { count: 8 },
+                            viewWindow: {
+                                min: 0,
+                                max: maxVal
+                            },
+                        },
+                        bars: 'horizontal' // Required for Material Bar Charts.
+                    };
+
+                    var chart = new google.charts.Bar(document.getElementById('graphAge'));
+
+                    chart.draw(data, google.charts.Bar.convertOptions(options));
+                }
+
+
+
+
+
+
+
+</script>
+
+
+

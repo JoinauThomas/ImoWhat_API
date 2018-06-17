@@ -1149,5 +1149,40 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeclareBienAsVendu", idBienParameter);
         }
+    
+        public virtual ObjectResult<GetPrenomsPopulaires_Result> GetPrenomsPopulaires(string commune)
+        {
+            var communeParameter = commune != null ?
+                new ObjectParameter("commune", commune) :
+                new ObjectParameter("commune", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPrenomsPopulaires_Result>("GetPrenomsPopulaires", communeParameter);
+        }
+    
+        public virtual ObjectResult<GetStatCommune_Result> GetStatCommune(string commune, Nullable<int> age)
+        {
+            var communeParameter = commune != null ?
+                new ObjectParameter("commune", commune) :
+                new ObjectParameter("commune", typeof(string));
+    
+            var ageParameter = age.HasValue ?
+                new ObjectParameter("age", age) :
+                new ObjectParameter("age", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStatCommune_Result>("GetStatCommune", communeParameter, ageParameter);
+        }
+    
+        public virtual ObjectResult<GetStatCommune2_Result> GetStatCommune2(string commune, Nullable<int> age)
+        {
+            var communeParameter = commune != null ?
+                new ObjectParameter("commune", commune) :
+                new ObjectParameter("commune", typeof(string));
+    
+            var ageParameter = age.HasValue ?
+                new ObjectParameter("age", age) :
+                new ObjectParameter("age", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStatCommune2_Result>("GetStatCommune2", communeParameter, ageParameter);
+        }
     }
 }

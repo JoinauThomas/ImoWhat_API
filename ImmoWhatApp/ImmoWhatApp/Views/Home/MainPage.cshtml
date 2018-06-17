@@ -201,7 +201,7 @@
                 $('.bien').click(function () {
                     if ('@Session["moi"]' != "") {
                         var id = $(this).attr("id")
-
+                        
                         var url = "../Bien/voirLeBien?idBien=" + id;
                         window.location.href = url;
                     }

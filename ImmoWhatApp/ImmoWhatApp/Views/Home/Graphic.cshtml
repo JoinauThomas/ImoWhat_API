@@ -38,7 +38,7 @@
                     <ul class="nav nav-tabs">
                         <li id="tablePrix-tab" class="nav-item"><a id="ongletTablePrix" class="nav-link" role="tab" data-toggle="tab" href="#tablePrix">table prix</a></li>
                         <li id="graphique-tab" class="nav-item"><a id="ongletGraphique" class="nav-link" role="tab" data-toggle="tab" href="#graphique">graphique</a></li>
-                        <li id="poi-tab" class="nav-item"><a  id="ongletPOI" class="nav-link" role="tab" data-toggle="tab" href="#poi">POI</a></li>
+                        <li id="poi-tab" class="nav-item"><a id="ongletPOI" class="nav-link" role="tab" data-toggle="tab" href="#poi">POI</a></li>
                         <li id="info-tab" class="nav-item"><a id="ongletInfo" class="nav-link" role="tab" data-toggle="tab" href="#info">info</a></li>
                     </ul>
                     <div id="myTabContent" class="tab-content" style="height:auto;min-height:100%;">
@@ -143,7 +143,10 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col offset-lg-8"></div>
+                                        <div id="pageInfoGen" class="col-12" style="background-color:rgba(255, 255, 255, 0.5)">
+                                            
+                                            
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -179,7 +182,7 @@
 
 <img id="chargement" src="~/img/loaders/infini.gif" style="display: none" alt="Chargement en cours..." class="loaderConnection col-md-offset-5 col-md-2 col-md-offset-5" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
 
 <script>
 
@@ -347,6 +350,8 @@
 
         afficheCartePOICommune(home);
 
+        GetInfosGenerals();
+
         $('#poi').hide();
         $('#info').hide();
         $('#tablePrix').hide();
@@ -355,16 +360,18 @@
         if (bouton == "graphique") {
             $(".nav").find(".active").removeClass("active");
             $('#ongletGraphique').addClass("active");
-            
+            $('#graphique').show()
+
         }
         else if (bouton == "tablePrix") {
             $(".nav").find(".active").removeClass("active");
             $('#ongletTablePrix').addClass("active");
+            $('#tablePrix').show();
             currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
-            
+
         }
         else if (bouton == "POI") {
-            
+
 
             $(".nav").find(".active").removeClass("active");
             $('#ongletPOI').addClass("active");
@@ -373,6 +380,7 @@
             $('#poi').show()
         }
         else {
+            
             $(".nav").find(".active").removeClass("active");
             $('#ongletInfo').addClass("active");
 
@@ -396,7 +404,7 @@
         $('#tablePrix').hide();
         $('#graphique').addClass("show");
         $('#graphique').show()
-        GetGraphiquePrixMoyen();
+        //GetGraphiquePrixMoyen();
     });
     $('#tablePrix-tab').click(function () {
         $(".nav").find(".active").removeClass("active");
@@ -413,7 +421,7 @@
             currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
             anneeRecherche = currentYear - 3;
         }
-        GetStat(anneeRecherche);
+        //GetStat(anneeRecherche);
     });
     $('#poi-tab').click(function () {
         //afficheCartePOICommune(home);
@@ -425,12 +433,14 @@
         initMapPOI();
     });
     $('#info-tab').click(function () {
-
+        
         $('#graphique').hide();
         $('#poi').hide();
         $('#tablePrix').hide();
         $('#info').addClass("show");
         $('#info').show()
+        GetInfosGenerals();
+        
     });
 
     $('#btnSearchComparaisonYear').click(function () {
@@ -519,6 +529,11 @@
                                     italic: true
                                 }
                             },
+                            animation: {
+                                duration: 1200,
+                                easing: 'out',
+                                startup: true
+                            },
                             vAxis: {
                                 viewWindowMode: "explicit",
                                 viewWindow: { min: 0 },
@@ -552,7 +567,7 @@
     }
 
     function GetGraphiquePrixMoyen() {
-       
+
             $("#chargement").show();
             var codePost = $('#codePost').val();
             $.ajax({
@@ -591,6 +606,11 @@
                             height: 400,
                             curveType: 'function',
                             pointsVisible: true,
+                            animation: {
+                                duration: 1200,
+                                easing: 'out',
+                                startup: true
+                            },
                             hAxis: {
                                 format: '',
 
@@ -642,7 +662,7 @@
             });
     };
     function GetStat(anneeRecherche) {
-        
+
         $("#chargement").show();
 
          var codePost = $('#codePost').val();
@@ -666,6 +686,26 @@
                 $('#tablePrixView').html(donnee);
 
 
+            },
+            error: function () {
+                alert("une erreur s'est produite...")
+            }
+        });
+    }
+
+    function GetInfosGenerals() {
+        $("#chargement").show();
+        var commune = '@Model.Localite';
+        $.ajax({
+            type: 'GET',
+            datatype: 'html',
+            async: false,
+            url: '@Url.Action("PartialViewInfoCommune", "Stat")',
+            data: { commune: commune },
+            success: function (donnee) {
+                $("#chargement").hide();
+                $('#pageInfoGen').html(donnee);
+                
             },
             error: function () {
                 alert("une erreur s'est produite...")
@@ -712,6 +752,30 @@
         var autocomplete = new google.maps.places.Autocomplete(input, options);
     }
     google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    //google.charts.load("current", { packages: ["corechart"] });
+    //google.charts.setOnLoadCallback(drawChart);
+    //function drawChart() {
+    //    var data = google.visualization.arrayToDataTable([
+    //        ['Sexe', 'nombre de personnes'],
+    //        ['hommes', 32541],
+    //        ['femmes', 30247]
+    //    ]);
+
+    //    var options = {
+    //        title: 'Proportions homme-femme',
+    //        pieHole: 0.8,
+    //        colors: ['#FA58F4', '#0000FF'],
+    //        backgroundColor: 'transparent',
+    //        pieSliceText: 'none',
+    //        tooltip: { trigger: 'none' }
+    //    };
+
+    //    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+    //    chart.draw(data, options);
+    //}
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0&callback=myMap"></script>
