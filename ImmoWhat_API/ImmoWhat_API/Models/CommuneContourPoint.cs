@@ -7,9 +7,7 @@ namespace ImmoWhat_API.Models
 {
     public class CommuneContourPoint
     {
-        public int id { get; set; }
-        public string latitude { get; set; }
-        public string longitude { get; set; }
-        public string codePostal { get; set; }
+        public int typeBien { get; set; }
+        public List<Models.ContourPointsDonnees> donnees { get; set; }
     }
 }

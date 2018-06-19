@@ -135,20 +135,42 @@ namespace ImmoWhat_API.Controllers
 
         [HttpGet]
         [Route("GetCommuneContourPoints")]
-        public List<Models.CommuneContourPoint> GetCommuneContourPoints()
+        public Models.CommuneContourPoint GetCommuneContourPoints( int idType)
         {
-            List<Models.CommuneContourPoint> ListePoints = new List<Models.CommuneContourPoint>();
             try
             {
                 DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
-                List<DAL.GetCommuneContourPoints_Result> Result = dbContext.GetCommuneContourPoints().ToList();
+                List<DAL.GetJsonForType_Result> Result = dbContext.GetJsonForType(idType).ToList();
+                string CP = "";
+                string commune = "";
+                string couleur = "";
+                Models.coordonnees coordCentre = new Models.coordonnees();
+                List<Models.coordonnees> listePoints = new List<Models.coordonnees>();
+                List<Models.ContourPointsDonnees> donnees = new List<Models.ContourPointsDonnees>();
+                
 
                 foreach (var x in Result)
                 {
-                    ListePoints.Add(new Models.CommuneContourPoint { id = x.id, latitude = x.Latitude, longitude = x.Longitude, codePostal = x.Commune_CodePostal});
+                    if(x.codePostal != CP)
+                    {
+                        if(CP!="")
+                        {
+                            donnees.Add(new Models.ContourPointsDonnees { codePostal = CP, commune = commune, coordCentr = coordCentre, couleur = couleur, coordPts = listePoints });
+                        }
+                        CP = x.codePostal;
+                        couleur = x.couleur;
+                        commune = x.commune;
+                        coordCentre.lat = x.latCentre;
+                        coordCentre.lng = x.lngCentre;
+                        listePoints.Clear();
+                    }
+                    listePoints.Add(new Models.coordonnees { lat = x.latPt, lng = x.lngPt });
                 }
+                donnees.Add(new Models.ContourPointsDonnees { codePostal = CP, commune = commune, coordCentr = coordCentre, couleur = couleur, coordPts = listePoints });
 
-                return ListePoints;
+                Models.CommuneContourPoint contourPoints = new Models.CommuneContourPoint {donnees = donnees, typeBien = idType };
+
+                return contourPoints;
             }
             catch (Exception ex)
             {

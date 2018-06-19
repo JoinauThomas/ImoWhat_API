@@ -288,6 +288,9 @@
     <Compile Include="DAL\GetInfoEvolutionPrices_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\GetJsonForType_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetListBiensFromCPAndType1_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
@@ -414,6 +417,8 @@
     <Compile Include="Models\BienModels.cs" />
     <Compile Include="Models\CommuneComplet.cs" />
     <Compile Include="Models\CommuneContourPoint.cs" />
+    <Compile Include="Models\ContourPointsDonnees.cs" />
+    <Compile Include="Models\coordonnees.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\imageModels.cs" />
     <Compile Include="Models\Mail.cs" />

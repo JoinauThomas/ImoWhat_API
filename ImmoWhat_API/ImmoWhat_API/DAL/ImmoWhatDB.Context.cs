@@ -1184,5 +1184,14 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStatCommune2_Result>("GetStatCommune2", communeParameter, ageParameter);
         }
+    
+        public virtual ObjectResult<GetJsonForType_Result> GetJsonForType(Nullable<int> idType)
+        {
+            var idTypeParameter = idType.HasValue ?
+                new ObjectParameter("idType", idType) :
+                new ObjectParameter("idType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetJsonForType_Result>("GetJsonForType", idTypeParameter);
+        }
     }
 }

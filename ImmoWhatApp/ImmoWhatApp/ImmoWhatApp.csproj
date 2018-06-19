@@ -3234,6 +3234,8 @@
     <Compile Include="Models\BienModels.cs" />
     <Compile Include="Models\Commune.cs" />
     <Compile Include="Models\CommuneContourPoint.cs" />
+    <Compile Include="Models\ContourPointsDonnees.cs" />
+    <Compile Include="Models\coordonnees.cs" />
     <Compile Include="Models\coordonneesContourCommuneModels.cs" />
     <Compile Include="Models\imageModels.cs" />
     <Compile Include="Models\Mail.cs" />

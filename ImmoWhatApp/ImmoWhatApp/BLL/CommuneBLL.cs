@@ -299,28 +299,27 @@ namespace ImmoWhatApp.BLL
         }
 
 
-        public static List<Models.CommuneContourPoint> GetCommuneContourPoints()
+        public static Models.CommuneContourPoint GetCommuneContourPoints(int idType)
         {
-            List<Models.CommuneContourPoint> ListePoints = new List<Models.CommuneContourPoint>();
+            Models.CommuneContourPoint ListePoints = new Models.CommuneContourPoint();
             try
             {
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
-                    var responseTask = client.GetAsync("GetCommuneContourPoints");
+                    var responseTask = client.GetAsync("GetCommuneContourPoints?idType="+idType);
                     var result = responseTask.Result;
                     responseTask.Wait();
 
                     if (result.IsSuccessStatusCode)
                     {
-                        var readTask = result.Content.ReadAsAsync<List<Models.CommuneContourPoint>>();
+                        var readTask = result.Content.ReadAsAsync<Models.CommuneContourPoint>();
                         readTask.Wait();
-                        var maListe = readTask.Result;
-                        ListePoints = maListe.ToList();
+                        ListePoints = readTask.Result;
                     }
                     else
                     {
-                        ListePoints = new List<Models.CommuneContourPoint>();
+                        ListePoints = new Models.CommuneContourPoint();
                     }
                 }
                 return ListePoints;

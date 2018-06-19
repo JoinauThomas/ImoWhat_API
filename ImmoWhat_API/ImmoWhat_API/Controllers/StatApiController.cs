@@ -45,7 +45,7 @@ namespace ImmoWhat_API.Controllers
             try
             {
                 DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
-                List<DAL.GetTableGraphique2_Result> ListeStatDB = dbContext.GetTableGraphique2(codePostal).ToList();
+                List<DAL.GetTableGraphique_Result> ListeStatDB = dbContext.GetTableGraphique(codePostal).ToList();
 
                 foreach (var x in ListeStatDB)
                 {

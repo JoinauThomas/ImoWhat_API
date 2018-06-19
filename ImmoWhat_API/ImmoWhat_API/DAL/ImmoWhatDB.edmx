@@ -685,6 +685,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         <Function Name="GetInfoEvolutionPrices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="GetJsonForType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idType" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetListBiensFromCPAndType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
           <Parameter Name="type" Type="int" Mode="In" />
@@ -1402,6 +1405,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <FunctionImport Name="GetStatCommune2" ReturnType="Collection(ImmoWhatModel.GetStatCommune2_Result)">
             <Parameter Name="commune" Mode="In" Type="String" />
             <Parameter Name="age" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetJsonForType" ReturnType="Collection(ImmoWhatModel.GetJsonForType_Result)">
+            <Parameter Name="idType" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -2248,6 +2254,16 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Type="Int32" Name="nbHommesAge10" Nullable="true" />
           <Property Type="Int32" Name="nbFemmesAge10" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetJsonForType_Result">
+          <Property Type="Int32" Name="idType" Nullable="true" />
+          <Property Type="String" Name="codePostal" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="commune" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="couleur" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="latCentre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="lngCentre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="latPt" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="lngPt" Nullable="true" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2970,6 +2986,20 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
                 <ScalarProperty Name="nbFemmesAge9" ColumnName="nbFemmesAge9" />
                 <ScalarProperty Name="nbHommesAge10" ColumnName="nbHommesAge10" />
                 <ScalarProperty Name="nbFemmesAge10" ColumnName="nbFemmesAge10" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetJsonForType" FunctionName="ImmoWhatModel.Store.GetJsonForType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetJsonForType_Result">
+                <ScalarProperty Name="idType" ColumnName="idType" />
+                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
+                <ScalarProperty Name="commune" ColumnName="commune" />
+                <ScalarProperty Name="couleur" ColumnName="couleur" />
+                <ScalarProperty Name="latCentre" ColumnName="latCentre" />
+                <ScalarProperty Name="lngCentre" ColumnName="lngCentre" />
+                <ScalarProperty Name="latPt" ColumnName="latPt" />
+                <ScalarProperty Name="lngPt" ColumnName="lngPt" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
