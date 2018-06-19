@@ -401,12 +401,12 @@
     $(document).ready(function () {
         $.ajax({
             type: 'GET',
-            datatype: 'json',
-            contentType: "application/json; charset=utf-8",
             data: { idType: '@ViewBag.typeBien' },
             url: '@Url.Action("GetCommuneContourPointsInJson", "Commune")',
             success: function (donnee) {
-                alert(donnee);
+                var jsonRes = JSON.parse(donnee);
+                alert("ok   " + jsonRes.donnees);
+                
             },
             error: function (donnee) {
                 alert("probleme : " + donnee.status + "\n" + donnee.responseText);
@@ -415,6 +415,7 @@
 
         var typeBien = @ViewBag.typeBien;
         var codePostal = @Model.CodePostal;
+       
 
         loadListeBiens(codePostal, typeBien);
 

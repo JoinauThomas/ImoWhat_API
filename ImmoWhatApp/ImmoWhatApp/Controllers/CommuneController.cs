@@ -1,4 +1,5 @@
 ﻿using ImmoWhatApp.Helpers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -149,23 +150,13 @@ namespace ImmoWhatApp.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetCommuneContourPointsInJson(int idType)
+        public string GetCommuneContourPointsInJson(int idType)
         {
             Models.CommuneContourPoint ListePoints = new Models.CommuneContourPoint();
             ListePoints = BLL.CommuneBLL.GetCommuneContourPoints(idType);
 
-            Models.coordonneesContourCommuneModels maCoordonnee = new Models.coordonneesContourCommuneModels();
-            List<Models.coordonneesContourCommuneModels> listeDeCoord = new List<Models.coordonneesContourCommuneModels>();
-         
-
-            JObject xxx = new JObject();
-            xxx["result"] = "ok";
-            JArray coordonnee = new JArray();
-
-            
-
-
-            return Json(new { result = "OK", listePoints = ListePoints }, JsonRequestBehavior.AllowGet);
+            string jsonData = JsonConvert.SerializeObject(ListePoints);
+            return jsonData;
         }
 
         [HttpGet]

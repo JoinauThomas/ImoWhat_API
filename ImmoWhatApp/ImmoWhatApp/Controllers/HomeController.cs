@@ -58,15 +58,24 @@ namespace ImmoWhatApp.Controllers
 
         public ActionResult MainPage(string nomCommune, int? typeBien)
         {
+
             if(typeBien != null)
             {
                 ViewBag.typeBien = typeBien;
+                //Models.CommuneContourPoint contoutPts = CommuneController.GetCommuneContourPointsInJson((int)typeBien);
+                //var contoutPts = CommuneController.GetCommuneContourPointsInJson((int)typeBien);
+                //ViewBag.contoutPts = contoutPts;
             }
             else
             {
                 ViewBag.typeBien = 2;
+                typeBien = 2;
+                //Models.CommuneContourPoint contoutPts = CommuneController.GetCommuneContourPointsInJson((int)typeBien);
+                //var contoutPts = CommuneController.GetCommuneContourPointsInJson((int)typeBien);
+                //ViewBag.contoutPts = contoutPts;
             }
             Models.Commune maCommune = BLL.CommuneBLL.checkIfCommuneExistsBLL(nomCommune);
+            
             Session["commune"] = nomCommune;
             return View(maCommune);
         }
