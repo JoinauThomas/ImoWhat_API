@@ -151,10 +151,6 @@ namespace ImmoWhat_API.Controllers
 
                 foreach (var x in Result)
                 {
-                    if (x.codePostal == "1000")
-                    {
-                        int ww = 1;
-                    }
                         
                     if(x.codePostal != CP)
                     {

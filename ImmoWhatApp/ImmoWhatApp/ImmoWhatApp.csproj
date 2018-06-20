@@ -1773,6 +1773,7 @@
     <Content Include="img\loaders\infini.gif" />
     <Content Include="img\loaders\infini2.gif" />
     <Content Include="img\loaders\loading.gif" />
+    <Content Include="img\loaders\maps.gif" />
     <Content Include="img\logo.png" />
     <Content Include="img\logos\attention.png" />
     <Content Include="img\logos\checkbox-false.png" />

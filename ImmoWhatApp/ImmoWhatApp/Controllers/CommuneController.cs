@@ -168,7 +168,17 @@ namespace ImmoWhatApp.Controllers
             return Json(new { result = "OK", stat = statCommune, listPrenoms = statCommune.listePrenoms }, JsonRequestBehavior.AllowGet);
         }
 
-        
+        [HttpGet]
+        public static string GetCommuneContourPointsInJson2(int idType)
+        {
+            Models.CommuneContourPoint ListePoints = new Models.CommuneContourPoint();
+            ListePoints = BLL.CommuneBLL.GetCommuneContourPoints(idType);
+
+            string jsonData = JsonConvert.SerializeObject(ListePoints);
+            return jsonData;
+        }
+
+
 
 
 

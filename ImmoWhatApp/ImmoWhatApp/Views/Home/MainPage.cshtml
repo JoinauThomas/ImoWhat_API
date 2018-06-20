@@ -102,6 +102,7 @@
     @*  LA PARTIE CARTE  *@
     <div id="carte" class="col-md-7 col-lg-2 col-xl-7 col-lg-6 m-0 p-0" style="">
         <div id="map" style="width:100%; height:100%;"></div>
+        <img id="chargement" src="~/img/loaders/maps.gif" alt="Chargement en cours..." style="display:none; position:fixed;top:45%; left:45%; width:10%;"   />
     </div>
 
     @*  LA PARTIE BIENS A VENDRE  *@
@@ -129,9 +130,8 @@
         </div>
     </div>
 </div>
-<div id="progressBar" class="progress" style="height: 30px; position:fixed;top:50%; left:25%; width:50%; background-color:#69ff0e; display:none">
-    <div id="progressBarCount" class="progress-bar progress-bar-striped bg-danger progress-bar-animated" role="progressbar" style="width: 21%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">21%</div>
-</div>
+
+
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
@@ -292,40 +292,13 @@
         var langue = '@Model.langue';
         var province = '@Model.Province';
         var bouton = "tablePrix";
-        
+
     });
 
 
 
 
 </script>
-@*<script type="text/javascript">
-        google.charts.load('current', {
-            'packages': ['geochart'],
-            // Note: you will need to get a mapsApiKey for your project.
-            // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-            'mapsApiKey': 'AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0'
-        });
-        google.charts.setOnLoadCallback(drawRegionsMap);
-
-        function drawRegionsMap() {
-            var data = google.visualization.arrayToDataTable([
-                ['Country', 'Popularity'],
-                ['Germany', 200],
-                ['United States', 300],
-                ['Brazil', 400],
-                ['Canada', 500],
-                ['France', 600],
-                ['RU', 700]
-            ]);
-
-            var options = {};
-
-            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-
-            chart.draw(data, options);
-        }
-    </script>*@
 <script>
     var classCommune;
     var jsonRes;
@@ -367,7 +340,7 @@
     function initMap() {
 
         var x = 0;
-        
+
             var nb = jsonRes.donnees.length;
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: new google.maps.LatLng(@Model.latitude, @Model.longitude),
@@ -380,17 +353,10 @@
 
             while (x < nb) {
                 var pct = (x + 1) * pourcentagesParCommune;
+
                 // Define the LatLng coordinates for the polygon's path.
                 var CommunesCoord = jsonRes.donnees[x].coordPts;
                 var originalMapCenter = new google.maps.LatLng(jsonRes.donnees[x].coordCentr.lat, jsonRes.donnees[x].coordCentr.lng);
-
-                //var coo = CommunesCoord.length
-                //var str = "";
-                //for (var i = 0; i < coo; i++) {
-                //    str += "lat = " + CommunesCoord[i].lat + "     long = " + CommunesCoord[i].lng + "\n";
-                //}
-                //alert(str);
-                //alert("lat = " + CommunesCoord[x].lat + "\nlong = " + CommunesCoord[x].lng)
 
                 var nbCoord = jsonRes.donnees[x].coordPts.length;
                 var commune = jsonRes.donnees[x].commune.toString();
@@ -406,64 +372,37 @@
                 var infos = {
                     'commune': jsonRes.donnees[x].commune,
                     'latCtre': jsonRes.donnees[x].coordCentr.lat,
-                    'lngCtre': jsonRes.donnees[x].coordCentr.lng
-
+                    'lngCtre': jsonRes.donnees[x].coordCentr.lng,
+                    'codePostal' : jsonRes.donnees[x].codePostal
                 };
 
                 points.infosCommune = infos;
-                $('#progressBar').show();
+
+
                 $('#progressBarCount').attr('style', 'width:' + pct + '%');
                 $('#progressBarCount').html((x + 1) + "/" + nb);
 
-                
-
                 // Add a listener for the click event.
                 google.maps.event.addListener(points, 'click', function (event) {
-                    alert(this.infosCommune.commune + "\n" + this.infosCommune.latCtre + "\n" + this.infosCommune.lngCtre + "\n");
+                    map.setCenter(new google.maps.LatLng(this.infosCommune.latCtre, this.infosCommune.lngCtre));
+
+                    var typeBien = @ViewBag.typeBien;
+                    loadListeBiens(this.infosCommune.codePostal , typeBien);
+
                 });
-
-               
-                
                 points.setMap(map);
-
                 x++;
             }
             $('#progressBar').hide();
 
-
-
-            function showArrays(points) {
-
-                //map.setCenter({lat: -34.397, lng: 150.644})
-
-                var vertices = points;
-                alert(vertices)
-                //var contentString = '<b>Bermuda Triangle polygon</b><br>' +
-                //    'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() +
-                //    '<br>';
-
-                //for (var i = 0; i < vertices.getLength(); i++) {
-                //    var xy = vertices.getAt(i);
-                //    contentString += '<br>' + 'Coordinate ' + i + ':<br>' + xy.lat() + ',' +
-                //        xy.lng();
-                //}
-
-                //alert(contentString);
-
-                // Replace the info window's content and position.
-                infoWindow.setContent(contentString);
-                infoWindow.setPosition(event.latLng);
-
-                infoWindow.open(map);
-            }
-
-
     }
 
-    function loadMap(idType) {
+    function loadMap(data) {
 
-            var x = 0;
-            var nb = jsonRes.donnees.length;
+
+        var x = 0;
+
+            var nb = data.donnees.length;
             var map = new google.maps.Map(document.getElementById('map'), {
                 center: new google.maps.LatLng(@Model.latitude, @Model.longitude),
                 zoom: 13,
@@ -474,80 +413,73 @@
             var pourcentagesParCommune = 100.00 / nb;
 
             while (x < nb) {
-
-                if (jsonRes.donnees[x].CodePostal == '1310') {
-                    alert(jsonRes.donnees[x].commune)
-                }
                 var pct = (x + 1) * pourcentagesParCommune;
-
-                // Define the LatLng coordinates for the polygon's path.
-                var CommunesCoord = jsonRes.donnees[x].coordPts;
-                var originalMapCenter = new google.maps.LatLng(jsonRes.donnees[x].coordCentr.lat, jsonRes.donnees[x].coordCentr.lng);
-
-
-                var nbCoord = jsonRes.donnees[x].coordPts.length;
-                var commune = jsonRes.donnees[x].commune.toString();
-                this[commune] = new google.maps.Polygon({
-                    paths: CommunesCoord,
-                    strokeColor: '#A5A1A1',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: jsonRes.donnees[x].couleur,
-                    fillOpacity: 0.35
-                });
                 $('#progressBar').show();
                 $('#progressBarCount').attr('style', 'width:' + pct + '%');
                 $('#progressBarCount').html((x + 1) + "/" + nb);
 
-                // Add a listener for the click event.
-                //this["marker" + x].addListener('click', showArrays);
-                this[commune].addListener('click', function (event) {
-                    alert(commune);
-                    var contentString = '<b>Bermuda Triangle polygon</b><br>';
-                    infowindow.setContent("idsjvosofsoe");
-                    infoWindow.setPosition(event.latLng);
-                    //for (var i = 0; i < CommunesCoord.getLength(); i++) {
+                // Define the LatLng coordinates for the polygon's path.
+                var CommunesCoord = data.donnees[x].coordPts;
+                var originalMapCenter = new google.maps.LatLng(data.donnees[x].coordCentr.lat, data.donnees[x].coordCentr.lng);
 
-                    //}
+                var nbCoord = data.donnees[x].coordPts.length;
+                var commune = data.donnees[x].commune.toString();
+                var points = new google.maps.Polygon({
+                    paths: CommunesCoord,
+                    strokeColor: '#A5A1A1',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: data.donnees[x].couleur,
+                    fillOpacity: 0.35
                 });
 
+                var infos = {
+                    'commune': data.donnees[x].commune,
+                    'latCtre': data.donnees[x].coordCentr.lat,
+                    'lngCtre': data.donnees[x].coordCentr.lng,
+                    'codePostal' : data.donnees[x].codePostal
+                };
+
+                points.infosCommune = infos;
 
 
-                this[commune].setMap(map);
 
+                // Add a listener for the click event.
+                google.maps.event.addListener(points, 'click', function (event) {
+                    map.setCenter(new google.maps.LatLng(this.infosCommune.latCtre, this.infosCommune.lngCtre));
+
+                    var typeBien = @ViewBag.typeBien;
+                    loadListeBiens(this.infosCommune.codePostal , typeBien);
+
+                });
+                points.setMap(map);
                 x++;
             }
             $('#progressBar').hide();
 
+    }
 
-
-            function showArrays(event) {
-
-                //map.setCenter({lat: -34.397, lng: 150.644})
-
-                var vertices = this.getPath();
-                var contentString = '<b>Bermuda Triangle polygon</b><br>' +
-                    'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() +
-                    '<br>';
-
-                for (var i = 0; i < vertices.getLength(); i++) {
-                    var xy = vertices.getAt(i);
-                    contentString += '<br>' + 'Coordinate ' + i + ':<br>' + xy.lat() + ',' +
-                        xy.lng();
-                }
-
-                //alert(contentString);
-
-                // Replace the info window's content and position.
-                infoWindow.setContent(contentString);
-                infoWindow.setPosition(event.latLng);
-
-                infoWindow.open(map);
+    function GetMap(idTypeBien) {
+        $('#chargement').show();
+            $.ajax({
+            type: 'GET',
+            data: { idType: idTypeBien },
+            url: '@Url.Action("GetCommuneContourPointsInJson", "Commune")',
+            success: function (donnee) {
+                
+                loadMap(JSON.parse(donnee));
+                $('#chargement').hide();
+            },
+            error: function (donnee) {
+                alert("probleme : " + donnee.status + "\n" + donnee.responseText);
+                $('#chargement').hide();
             }
+        });
+    };
 
 
-        }
     $(document).ready(function () {
+        $('#chargement').show();
         $.ajax({
             type: 'GET',
             data: { idType: '@ViewBag.typeBien' },
@@ -555,11 +487,15 @@
             success: function (donnee) {
                 jsonRes = JSON.parse(donnee);
                 initMap();
+                $('#chargement').hide();
             },
             error: function (donnee) {
                 alert("probleme : " + donnee.status + "\n" + donnee.responseText);
+                $('#chargement').hide();
             }
         });
+
+
 
 
 
@@ -626,18 +562,8 @@
     $('#typeBien').click(function (event) {
         var type = $(event.target).attr('id');
 
-        $.ajax({
-            type: 'GET',
-            data: { idType: type },
-            url: '@Url.Action("GetCommuneContourPointsInJson", "Commune")',
-            success: function (donnee) {
-                jsonRes = JSON.parse(donnee);
-                initMap();
-            },
-            error: function (donnee) {
-                alert("probleme : " + donnee.status + "\n" + donnee.responseText);
-            }
-        });
+
+
 
         $('.btnTypeBien').removeClass("btn-outline-dark");
         $('.btnTypeBien').addClass("btn-outline-light");
@@ -653,6 +579,7 @@
             idType = 3;
         else if (type == "appartement")
             idType = 4;
+        GetMap(idType);
         loadListeBiens(@Model.CodePostal, idType)
         GetListeClassePrix(type)
 
