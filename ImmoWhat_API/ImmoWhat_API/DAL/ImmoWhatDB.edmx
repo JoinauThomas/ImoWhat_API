@@ -685,7 +685,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         <Function Name="GetInfoEvolutionPrices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="GetJsonForType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="GetJsonCoordForType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idType" Type="int" Mode="In" />
         </Function>
         <Function Name="GetListBiensFromCPAndType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1407,6 +1407,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <Parameter Name="age" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetJsonForType" ReturnType="Collection(ImmoWhatModel.GetJsonForType_Result)">
+          <Parameter Name="idType" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetJsonCoordForType" ReturnType="Collection(ImmoWhatModel.GetJsonCoordForType_Result)">
             <Parameter Name="idType" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
@@ -2264,6 +2267,17 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Type="String" Name="latPt" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="lngPt" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="GetJsonCoordForType_Result">
+          <Property Type="Int32" Name="idType" Nullable="true" />
+          <Property Type="String" Name="codePostal" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="commune" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="couleur" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="latCentre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="lngCentre" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="idCoord" Nullable="true" />
+          <Property Type="String" Name="latPt" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="lngPt" Nullable="true" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2989,15 +3003,16 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetJsonForType" FunctionName="ImmoWhatModel.Store.GetJsonForType">
+          <FunctionImportMapping FunctionImportName="GetJsonCoordForType" FunctionName="ImmoWhatModel.Store.GetJsonCoordForType">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="ImmoWhatModel.GetJsonForType_Result">
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetJsonCoordForType_Result">
                 <ScalarProperty Name="idType" ColumnName="idType" />
                 <ScalarProperty Name="codePostal" ColumnName="codePostal" />
                 <ScalarProperty Name="commune" ColumnName="commune" />
                 <ScalarProperty Name="couleur" ColumnName="couleur" />
                 <ScalarProperty Name="latCentre" ColumnName="latCentre" />
                 <ScalarProperty Name="lngCentre" ColumnName="lngCentre" />
+                <ScalarProperty Name="idCoord" ColumnName="idCoord" />
                 <ScalarProperty Name="latPt" ColumnName="latPt" />
                 <ScalarProperty Name="lngPt" ColumnName="lngPt" />
               </ComplexTypeMapping>

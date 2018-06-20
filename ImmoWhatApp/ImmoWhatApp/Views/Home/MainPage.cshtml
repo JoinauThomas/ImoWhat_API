@@ -129,6 +129,9 @@
         </div>
     </div>
 </div>
+<div id="progressBar" class="progress" style="height: 30px; position:fixed;top:50%; left:25%; width:50%; background-color:#69ff0e; display:none">
+    <div id="progressBarCount" class="progress-bar progress-bar-striped bg-danger progress-bar-animated" role="progressbar" style="width: 21%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">21%</div>
+</div>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
@@ -143,7 +146,7 @@
     $('.btnGraphique').click(function () {
         var bouton = $(this).attr("id");
         var url = "../Home/Graphic?codePostal=" + '@Model.CodePostal' + "&lat=" + '@Model.latitude' + "&lon=" + '@Model.longitude' + "&id=" + '@Model.id' + "&langue=" + '@Model.langue' + "&province=" + '@Model.Province' + "&bouton=" + bouton;
-        
+
         window.location.href = url;
     });
 
@@ -269,7 +272,7 @@
 
 <script>
     $('#envoiMail').click(function () {
-        
+
         location.href = '@Url.Action("envoiMail", "Account")';
     })
     //$(function () {
@@ -289,49 +292,12 @@
         var langue = '@Model.langue';
         var province = '@Model.Province';
         var bouton = "tablePrix";
-
-
-        @*window.location.href = '@Html.Action("Graphic", "Home", new { codePostal = Model.CodePostal, commune = @Model.Localite, lat = @Model.latitude, lon = @Model.longitude, id = @Model.id, langue = @Model.langue, province = @Model.Province, bouton = "graph" })';*@
-        @*$.ajax({
-            type: 'GET',
-            datatype: 'json',
-            url: '@Url.Action("Graphic", "Home")',
-            data: { codePostal: codePostal, commune: commune, lat: lat, lon: lon, id: id, langue: langue, province: province, bouton: bouton },
-            success: function (donnee) {
-
-            },
-            error: function (error) {
-                alert(error.responseText);
-            }
-        });*@
-
-
+        
     });
 
-    $('#testCoord').click(function () {
-        $.ajax({
-            type: 'GET',
-            datatype: 'json',
-            url: '@Url.Action("GetCommuneContourPointsInJson", "Commune")',
-            success: function (donnee) {
-                alert("oki")
-            },
-            error: function (error) {
-                alert(error.responseText);
-            }
-        }
 
-        )
-    });
-    
 
-    function myMap() {
-        var mapProp = {
-            center: new google.maps.LatLng(@Model.latitude, @Model.longitude),
-            zoom: 13,
-        };
-        var map = new google.maps.Map(document.getElementById("map"), mapProp);
-    }
+
 </script>
 @*<script type="text/javascript">
         google.charts.load('current', {
@@ -362,6 +328,7 @@
     </script>*@
 <script>
     var classCommune;
+    var jsonRes;
 
     function GetListeClassePrix(typeBien) {
         var annee = @Session["HighestYear"];
@@ -397,25 +364,208 @@
             }
         });
     }
+    function initMap() {
 
+        var x = 0;
+        
+            var nb = jsonRes.donnees.length;
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: new google.maps.LatLng(@Model.latitude, @Model.longitude),
+                zoom: 13,
+                mapTypeId: 'terrain'
+            });
+
+            var infoWindow = new google.maps.InfoWindow;
+            var pourcentagesParCommune = 100.00 / nb;
+
+            while (x < nb) {
+                var pct = (x + 1) * pourcentagesParCommune;
+                // Define the LatLng coordinates for the polygon's path.
+                var CommunesCoord = jsonRes.donnees[x].coordPts;
+                var originalMapCenter = new google.maps.LatLng(jsonRes.donnees[x].coordCentr.lat, jsonRes.donnees[x].coordCentr.lng);
+
+                //var coo = CommunesCoord.length
+                //var str = "";
+                //for (var i = 0; i < coo; i++) {
+                //    str += "lat = " + CommunesCoord[i].lat + "     long = " + CommunesCoord[i].lng + "\n";
+                //}
+                //alert(str);
+                //alert("lat = " + CommunesCoord[x].lat + "\nlong = " + CommunesCoord[x].lng)
+
+                var nbCoord = jsonRes.donnees[x].coordPts.length;
+                var commune = jsonRes.donnees[x].commune.toString();
+                var points = new google.maps.Polygon({
+                    paths: CommunesCoord,
+                    strokeColor: '#A5A1A1',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: jsonRes.donnees[x].couleur,
+                    fillOpacity: 0.35
+                });
+
+                var infos = {
+                    'commune': jsonRes.donnees[x].commune,
+                    'latCtre': jsonRes.donnees[x].coordCentr.lat,
+                    'lngCtre': jsonRes.donnees[x].coordCentr.lng
+
+                };
+
+                points.infosCommune = infos;
+                $('#progressBar').show();
+                $('#progressBarCount').attr('style', 'width:' + pct + '%');
+                $('#progressBarCount').html((x + 1) + "/" + nb);
+
+                
+
+                // Add a listener for the click event.
+                google.maps.event.addListener(points, 'click', function (event) {
+                    alert(this.infosCommune.commune + "\n" + this.infosCommune.latCtre + "\n" + this.infosCommune.lngCtre + "\n");
+                });
+
+               
+                
+                points.setMap(map);
+
+                x++;
+            }
+            $('#progressBar').hide();
+
+
+
+            function showArrays(points) {
+
+                //map.setCenter({lat: -34.397, lng: 150.644})
+
+                var vertices = points;
+                alert(vertices)
+                //var contentString = '<b>Bermuda Triangle polygon</b><br>' +
+                //    'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() +
+                //    '<br>';
+
+                //for (var i = 0; i < vertices.getLength(); i++) {
+                //    var xy = vertices.getAt(i);
+                //    contentString += '<br>' + 'Coordinate ' + i + ':<br>' + xy.lat() + ',' +
+                //        xy.lng();
+                //}
+
+                //alert(contentString);
+
+                // Replace the info window's content and position.
+                infoWindow.setContent(contentString);
+                infoWindow.setPosition(event.latLng);
+
+                infoWindow.open(map);
+            }
+
+
+    }
+
+    function loadMap(idType) {
+
+            var x = 0;
+            var nb = jsonRes.donnees.length;
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: new google.maps.LatLng(@Model.latitude, @Model.longitude),
+                zoom: 13,
+                mapTypeId: 'terrain'
+            });
+
+            var infoWindow = new google.maps.InfoWindow;
+            var pourcentagesParCommune = 100.00 / nb;
+
+            while (x < nb) {
+
+                if (jsonRes.donnees[x].CodePostal == '1310') {
+                    alert(jsonRes.donnees[x].commune)
+                }
+                var pct = (x + 1) * pourcentagesParCommune;
+
+                // Define the LatLng coordinates for the polygon's path.
+                var CommunesCoord = jsonRes.donnees[x].coordPts;
+                var originalMapCenter = new google.maps.LatLng(jsonRes.donnees[x].coordCentr.lat, jsonRes.donnees[x].coordCentr.lng);
+
+
+                var nbCoord = jsonRes.donnees[x].coordPts.length;
+                var commune = jsonRes.donnees[x].commune.toString();
+                this[commune] = new google.maps.Polygon({
+                    paths: CommunesCoord,
+                    strokeColor: '#A5A1A1',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: jsonRes.donnees[x].couleur,
+                    fillOpacity: 0.35
+                });
+                $('#progressBar').show();
+                $('#progressBarCount').attr('style', 'width:' + pct + '%');
+                $('#progressBarCount').html((x + 1) + "/" + nb);
+
+                // Add a listener for the click event.
+                //this["marker" + x].addListener('click', showArrays);
+                this[commune].addListener('click', function (event) {
+                    alert(commune);
+                    var contentString = '<b>Bermuda Triangle polygon</b><br>';
+                    infowindow.setContent("idsjvosofsoe");
+                    infoWindow.setPosition(event.latLng);
+                    //for (var i = 0; i < CommunesCoord.getLength(); i++) {
+
+                    //}
+                });
+
+
+
+                this[commune].setMap(map);
+
+                x++;
+            }
+            $('#progressBar').hide();
+
+
+
+            function showArrays(event) {
+
+                //map.setCenter({lat: -34.397, lng: 150.644})
+
+                var vertices = this.getPath();
+                var contentString = '<b>Bermuda Triangle polygon</b><br>' +
+                    'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() +
+                    '<br>';
+
+                for (var i = 0; i < vertices.getLength(); i++) {
+                    var xy = vertices.getAt(i);
+                    contentString += '<br>' + 'Coordinate ' + i + ':<br>' + xy.lat() + ',' +
+                        xy.lng();
+                }
+
+                //alert(contentString);
+
+                // Replace the info window's content and position.
+                infoWindow.setContent(contentString);
+                infoWindow.setPosition(event.latLng);
+
+                infoWindow.open(map);
+            }
+
+
+        }
     $(document).ready(function () {
         $.ajax({
             type: 'GET',
             data: { idType: '@ViewBag.typeBien' },
             url: '@Url.Action("GetCommuneContourPointsInJson", "Commune")',
             success: function (donnee) {
-                var jsonRes = JSON.parse(donnee);
-                alert("ok   " + jsonRes.donnees);
-                
+                jsonRes = JSON.parse(donnee);
+                initMap();
             },
             error: function (donnee) {
                 alert("probleme : " + donnee.status + "\n" + donnee.responseText);
             }
         });
 
+
+
         var typeBien = @ViewBag.typeBien;
         var codePostal = @Model.CodePostal;
-       
+
 
         loadListeBiens(codePostal, typeBien);
 
@@ -475,6 +625,20 @@
 
     $('#typeBien').click(function (event) {
         var type = $(event.target).attr('id');
+
+        $.ajax({
+            type: 'GET',
+            data: { idType: type },
+            url: '@Url.Action("GetCommuneContourPointsInJson", "Commune")',
+            success: function (donnee) {
+                jsonRes = JSON.parse(donnee);
+                initMap();
+            },
+            error: function (donnee) {
+                alert("probleme : " + donnee.status + "\n" + donnee.responseText);
+            }
+        });
+
         $('.btnTypeBien').removeClass("btn-outline-dark");
         $('.btnTypeBien').addClass("btn-outline-light");
         $("#" + type).removeClass("btn-outline-light");
@@ -494,9 +658,8 @@
 
     });
 
-    $('#btnValidCommune').click(function () {
-        var nomCommune = $('#inputComm').val();
-        $.ajax({
+    function changeCommune(nomCommune) {
+         $.ajax({
             type: 'GET',
             datatype: 'json',
             data: { nomCommune: nomCommune },
@@ -504,7 +667,7 @@
             success: function (donnee) {
                 if (donnee.result == "OK") {
                     var nom = donnee.nom;
-                    var url = "/Home/MainPage?nomCommune=" + nom;
+                    var url = "/Home/MainPage?nomCommune=" + nomCommune;
                     window.location.href = url;
                 }
                 else {
@@ -523,6 +686,10 @@
                 }
             }
         })
+    }
+    $('#btnValidCommune').click(function () {
+        var nomCommune = $('#inputComm').val();
+        changeCommune(nomCommune);
     });
 
     //POUR METTRE UN POINT COMME SEPARATEUR DE MILLIERS
@@ -535,4 +702,4 @@
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0&callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0&callback=initMap"></script>

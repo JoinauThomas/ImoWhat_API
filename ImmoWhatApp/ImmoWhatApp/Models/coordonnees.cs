@@ -7,7 +7,8 @@ namespace ImmoWhatApp.Models
 {
     public class coordonnees
     {
-        public string lat { get; set; }
-        public string lng { get; set; }
+        public int id { get; set; }
+        public double lat { get; set; }
+        public double lng { get; set; }
     }
 }

@@ -77,6 +77,8 @@ namespace ImmoWhatApp.Controllers
             Models.Commune maCommune = BLL.CommuneBLL.checkIfCommuneExistsBLL(nomCommune);
             
             Session["commune"] = nomCommune;
+            maCommune.longitude = maCommune.longitude.Replace(",", ".");
+            maCommune.latitude = maCommune.latitude.Replace(",", ".");
             return View(maCommune);
         }
 

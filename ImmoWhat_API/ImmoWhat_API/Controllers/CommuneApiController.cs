@@ -140,7 +140,7 @@ namespace ImmoWhat_API.Controllers
             try
             {
                 DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
-                List<DAL.GetJsonForType_Result> Result = dbContext.GetJsonForType(idType).ToList();
+                List<DAL.GetJsonCoordForType_Result> Result = dbContext.GetJsonCoordForType(idType).ToList();
                 string CP = "";
                 string commune = "";
                 string couleur = "";
@@ -151,6 +151,11 @@ namespace ImmoWhat_API.Controllers
 
                 foreach (var x in Result)
                 {
+                    if (x.codePostal == "1000")
+                    {
+                        int ww = 1;
+                    }
+                        
                     if(x.codePostal != CP)
                     {
                         if(CP!="")
@@ -160,11 +165,11 @@ namespace ImmoWhat_API.Controllers
                         CP = x.codePostal;
                         couleur = x.couleur;
                         commune = x.commune;
-                        coordCentre.lat = x.latCentre;
-                        coordCentre.lng = x.lngCentre;
-                        listePoints.Clear();
+                        coordCentre = new Models.coordonnees { lat = double.Parse(x.latCentre), lng = double.Parse(x.lngCentre) };
+                        listePoints = new List<Models.coordonnees>();
+                        //listePoints.Clear();
                     }
-                    listePoints.Add(new Models.coordonnees { lat = x.latPt, lng = x.lngPt });
+                    listePoints.Add(new Models.coordonnees { id= (int)x.idCoord, lat = double.Parse(x.latPt), lng = double.Parse(x.lngPt) });
                 }
                 donnees.Add(new Models.ContourPointsDonnees { codePostal = CP, commune = commune, coordCentr = coordCentre, couleur = couleur, coordPts = listePoints });
 

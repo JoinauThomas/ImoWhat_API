@@ -288,6 +288,9 @@
     <Compile Include="DAL\GetInfoEvolutionPrices_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\GetJsonCoordForType_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GetJsonForType_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>

@@ -1193,5 +1193,14 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetJsonForType_Result>("GetJsonForType", idTypeParameter);
         }
+    
+        public virtual ObjectResult<GetJsonCoordForType_Result> GetJsonCoordForType(Nullable<int> idType)
+        {
+            var idTypeParameter = idType.HasValue ?
+                new ObjectParameter("idType", idType) :
+                new ObjectParameter("idType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetJsonCoordForType_Result>("GetJsonCoordForType", idTypeParameter);
+        }
     }
 }
