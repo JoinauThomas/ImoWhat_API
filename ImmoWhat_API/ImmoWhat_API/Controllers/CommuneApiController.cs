@@ -36,8 +36,18 @@ namespace ImmoWhat_API.Controllers
         {
             DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
             List<DAL.GetAveragePrice1_Result> result = dbContext.GetAveragePrice1(annee, typeBien, codePostale).ToList();
+            int res = 0;
 
-            return (int)result[0].prixMoyen;
+            if (result[0].prixMoyen == null)
+            {
+                res = 180000;
+            }
+            else
+            {
+                res = (int)result[0].prixMoyen;
+            }
+                
+            return res;
         }
 
         [HttpGet]
@@ -59,8 +69,14 @@ namespace ImmoWhat_API.Controllers
 
                         con.Open();
                         var x = cmd.ExecuteScalar();
-                        classe = (int)x;
-
+                        if (x == null)
+                        {
+                            classe = 180000;
+                        }
+                        else
+                        {
+                            classe = (int)x;
+                        }
                         con.Close();
                     }
                 }

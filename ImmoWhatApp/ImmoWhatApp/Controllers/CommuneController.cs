@@ -152,11 +152,28 @@ namespace ImmoWhatApp.Controllers
         [HttpGet]
         public string GetCommuneContourPointsInJson(int idType)
         {
-            Models.CommuneContourPoint ListePoints = new Models.CommuneContourPoint();
-            ListePoints = BLL.CommuneBLL.GetCommuneContourPoints(idType);
+            //Models.CommuneContourPoint ListePoints = new Models.CommuneContourPoint();
+            //ListePoints = BLL.CommuneBLL.GetCommuneContourPoints(idType);
+            string ListePoints = "";
+            switch (idType)
+            {
+                case 1:
+                    ListePoints = (string)HttpContext.Cache["JsonContourterrain"];
+                    break;
+                case 2:
+                    ListePoints = (string)HttpContext.Cache["JsonContourMaison"];
+                    break;
+                case 3:
+                    ListePoints = (string)HttpContext.Cache["JsonContourVilla"];
+                    break;
+                case 4:
+                    ListePoints = (string)HttpContext.Cache["JsonContourappartement"];
+                    break;
+            }
+            
 
-            string jsonData = JsonConvert.SerializeObject(ListePoints);
-            return jsonData;
+            //string jsonData = JsonConvert.SerializeObject(ListePoints);
+            return ListePoints;
         }
 
         [HttpGet]

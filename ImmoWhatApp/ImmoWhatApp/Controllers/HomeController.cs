@@ -46,15 +46,29 @@ namespace ImmoWhatApp.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            string JsonContourterrain = CommuneController.GetCommuneContourPointsInJson2(1);
-            string JsonContourMaison = CommuneController.GetCommuneContourPointsInJson2(2);
-            string JsonContourVilla = CommuneController.GetCommuneContourPointsInJson2(3);
-            string JsonContourappartement = CommuneController.GetCommuneContourPointsInJson2(4);
+            if(HttpContext.Cache["JsonContourterrain"] == null)
+            {
+                string JsonContourterrain = CommuneController.GetCommuneContourPointsInJson2(1);
+                HttpContext.Cache.Insert("JsonContourterrain", JsonContourterrain);
+            }
+            if (HttpContext.Cache["JsonContourMaison"] == null)
+            {
+                string JsonContourMaison = CommuneController.GetCommuneContourPointsInJson2(2);
+                HttpContext.Cache.Insert("JsonContourMaison", JsonContourMaison);
+            }
+            if (HttpContext.Cache["JsonContourVilla"] == null)
+            {
+                string JsonContourVilla = CommuneController.GetCommuneContourPointsInJson2(3);
+                HttpContext.Cache.Insert("JsonContourVilla", JsonContourVilla);
+            }
+            if (HttpContext.Cache["JsonContourappartement"] == null)
+            {
+                string JsonContourappartement = CommuneController.GetCommuneContourPointsInJson2(4);
+                HttpContext.Cache.Insert("JsonContourappartement", JsonContourappartement);
+            }
 
-            HttpContext.Cache.Insert("JsonContourterrain", JsonContourterrain);
-            HttpContext.Cache.Insert("JsonContourMaison", JsonContourMaison);
-            HttpContext.Cache.Insert("JsonContourVilla", JsonContourVilla);
-            HttpContext.Cache.Insert("JsonContourappartement", JsonContourappartement);
+
+            
             Session["HighestYear"] = GetHighestYear();
             var langue = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
             List<Models.Commune> listeCommunes = new List<Models.Commune>();
