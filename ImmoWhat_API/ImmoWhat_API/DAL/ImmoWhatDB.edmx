@@ -621,6 +621,10 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="idBien" Type="int" Mode="In" />
         </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GetACommuneWithCodePostal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
+          <Parameter Name="langue" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="GetAverageAndTransactionTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="compareYear" Type="int" Mode="In" />
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
@@ -1410,7 +1414,11 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="idType" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetJsonCoordForType" ReturnType="Collection(ImmoWhatModel.GetJsonCoordForType_Result)">
-            <Parameter Name="idType" Mode="In" Type="Int32" />
+          <Parameter Name="idType" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetACommuneWithCodePostal" ReturnType="Collection(ImmoWhatModel.GetACommuneWithCodePostal_Result)">
+            <Parameter Name="codePostal" Mode="In" Type="String" />
+            <Parameter Name="langue" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -2278,6 +2286,15 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Type="String" Name="latPt" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="lngPt" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="GetACommuneWithCodePostal_Result">
+          <Property Type="Int32" Name="idCommune" Nullable="false" />
+          <Property Type="String" Name="CodePostal" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Localite" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Province" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="langue" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="longitude" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="latitude" Nullable="false" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3015,6 +3032,19 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
                 <ScalarProperty Name="idCoord" ColumnName="idCoord" />
                 <ScalarProperty Name="latPt" ColumnName="latPt" />
                 <ScalarProperty Name="lngPt" ColumnName="lngPt" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetACommuneWithCodePostal" FunctionName="ImmoWhatModel.Store.GetACommuneWithCodePostal">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.GetACommuneWithCodePostal_Result">
+                <ScalarProperty Name="idCommune" ColumnName="idCommune" />
+                <ScalarProperty Name="CodePostal" ColumnName="CodePostal" />
+                <ScalarProperty Name="Localite" ColumnName="Localite" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="langue" ColumnName="langue" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

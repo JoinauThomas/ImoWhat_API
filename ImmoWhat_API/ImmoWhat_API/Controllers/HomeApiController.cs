@@ -53,6 +53,10 @@ namespace ImmoWhat_API.Controllers
 
                         con.Open();
                         var anneeMin = cmd.ExecuteScalar();
+                        if(anneeMin == null)
+                        {
+                            anneeMin = 1950;
+                        }
                         con.Close();
 
                         return (int)anneeMin;

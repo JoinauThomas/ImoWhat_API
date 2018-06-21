@@ -19,6 +19,40 @@ namespace ImmoWhatApp.BLL
     {
         public static List<Models.Commune> ListeTtesCommunes = GetAllCommunesCompleteBLL();
 
+        public static Models.Commune GetACommuneWithCodePostal (string codePostal, string langue)
+        {
+            try
+            {
+                Models.Commune maCommune = new Commune();
+               
+                using (var client = new HttpClient())
+                {
+                    // récupération du tableau des prix
+                    client.BaseAddress = new Uri("http://localhost:49383/api/CommuneApi/");
+                    var responseTask1 = client.GetAsync("GetACommuneWithCodePostal?codePostal=" + codePostal+"&langue="+langue);
+                    var resultTable = responseTask1.Result;
+                    responseTask1.Wait();
+
+                    if (resultTable.IsSuccessStatusCode)
+                    {
+                        var readTask = resultTable.Content.ReadAsAsync<Models.Commune>();
+                        readTask.Wait();
+                        maCommune = readTask.Result;
+                    }
+                    else
+                    {
+                        maCommune = null;
+                    }
+                    
+                }
+                return maCommune;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static List<Models.Commune> GetAllCommunesCompleteBLL()
         {
             List<Models.Commune> Communes = new List<Models.Commune>();

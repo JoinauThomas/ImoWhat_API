@@ -105,11 +105,10 @@ namespace ImmoWhatApp.Controllers
             return View(maCommune);
         }
 
-        public ActionResult Graphic (string codePostal, string lat, string lon, int id, string langue, string province, string bouton)
+        public ActionResult Graphic (string codePostal , string bouton)
         {
-            string commune = (string)Session["commune"];
+            Models.Commune maCommune = CommuneController.GetACommuneWithCodePostal(codePostal);
             GetMinYear(codePostal);
-            Models.Commune maCommune = new Models.Commune{ CodePostal = codePostal, latitude = lat, longitude = lon, Localite = commune, id = id, langue = langue, Province = province };
             ViewBag.bouton = bouton;
 
             return View(maCommune);

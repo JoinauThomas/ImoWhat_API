@@ -152,6 +152,7 @@ else
 
     $('.btnGraphique').click(function () {
         var bouton = $(this).attr("id");
+
         if ($('#CP').val() == "") {
             var codePostal = '@Model.CodePostal';
         }
@@ -159,20 +160,9 @@ else
             var codePostal = $('#CP').val();
         }
 
-        if ($('#lat').val() == "") {
-            var latitude = '@Model.latitude';
-        }
-        else {
-            var latitude = $('#lat').val();
-        }
-        if ($('#lng').val() == "") {
-            var longitude = '@Model.longitude'
-        }
-        else {
-            var longitude = $('#lng').val();
-        }
-       
-        var url = "../Home/Graphic?codePostal=" + codePostal + "&lat=" + latitude + "&lon=" + longitude + "&id=" + '@Model.id' + "&langue=" + '@Model.langue' + "&province=" + '@Model.Province' + "&bouton=" + bouton;
+        
+
+        var url = "../Home/Graphic?codePostal=" + codePostal +  "&bouton=" + bouton;
 
         window.location.href = url;
     });
@@ -390,7 +380,7 @@ else
     }
 
     function loadMap(data) {
-        
+
         var x = 0;
             var nb = data.donnees.length;
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -498,14 +488,17 @@ else
         else {
             var typeBien = $('#typeB').val();
         }
+        if ($('#CP').val() == "") {
+            var codePostal = @Model.CodePostal.;
+        }
+        else {
+            var codePostal = $('#CP').val();
+        }
 
-
-        var codePostal = @Model.CodePostal;
-
-
+        GetListeClassePrix(typeBien);
         loadListeBiens(codePostal, typeBien);
 
-        GetListeClassePrix(typeBien)
+
 
         $("#inputComm").autocomplete({
                         autoFocus: true,

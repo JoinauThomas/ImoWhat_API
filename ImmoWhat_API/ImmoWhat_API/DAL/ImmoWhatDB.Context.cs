@@ -1202,5 +1202,18 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetJsonCoordForType_Result>("GetJsonCoordForType", idTypeParameter);
         }
+    
+        public virtual ObjectResult<GetACommuneWithCodePostal_Result> GetACommuneWithCodePostal(string codePostal, string langue)
+        {
+            var codePostalParameter = codePostal != null ?
+                new ObjectParameter("codePostal", codePostal) :
+                new ObjectParameter("codePostal", typeof(string));
+    
+            var langueParameter = langue != null ?
+                new ObjectParameter("langue", langue) :
+                new ObjectParameter("langue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetACommuneWithCodePostal_Result>("GetACommuneWithCodePostal", codePostalParameter, langueParameter);
+        }
     }
 }

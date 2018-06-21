@@ -4,9 +4,6 @@
     ViewBag.Title = "Graphic";
 }
 
-
-
-
 <div class="row" style="height:auto;min-height:100%;width:100%; ">
     <div class="col-lg-1" style="min-height:100%;width:20%;min-width:20%;max-width:20%;padding:0px;">
         <div class="float-left border rounded border-dark" style="position:fixed;width:20%;height:84%; left:0; ">
@@ -50,7 +47,7 @@
                                 <div class="col" style="padding:0px;">
                                     <div class="row mt-4" style="margin:0px;">
                                         <div class="col">
-                                            <h4 class="mt-3 mb-2">Average &amp; Transactions - waterloo</h4>
+                                            <h4 class="mt-3 mb-2">Average &amp; Transactions - @Model.Localite</h4>
                                         </div>
                                         <div class="col-lg-3 align-self-center" style="height:35px;padding:0px;">
                                             <div class="input-group">
@@ -62,7 +59,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="tablePrixView" class="table-responsive">
+                                    <div id="tablePrixView" class="table-responsive" style="background-color:rgba(209, 209, 209, 0.41)">
                                         @*ici, la table des prix*@
                                     </div>
                                 </div>
@@ -94,7 +91,7 @@
                                                 <div id="graphBatiments" class="col-lg-12">
                                                     @*ON TROUVERA LE GRAPHIQUE ICI*@
                                                 </div>
-                                                
+
 
                                             </div>
 
@@ -147,8 +144,8 @@
                                     </div>
                                     <div class="row">
                                         <div id="pageInfoGen" class="col-12" style="background-color:rgba(255, 255, 255, 0.5)">
-                                            
-                                            
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -169,8 +166,7 @@
     </div>
 </div>
 
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
 
 
 
@@ -185,82 +181,21 @@
 
 <img id="chargement" src="~/img/loaders/infini.gif" style="display: none" alt="Chargement en cours..." class="loaderConnection col-md-offset-5 col-md-2 col-md-offset-5" />
 
-
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
 <script>
 
     function myMap() {
+        var lt = @Model.latitude.Replace(',','.');
+        var ln = @Model.longitude.Replace(',', '.');
         var mapProp = {
-            center: new google.maps.LatLng(@Model.latitude, @Model.longitude),
+            center: new google.maps.LatLng(lt, ln),
             zoom: 13,
         };
         var map = new google.maps.Map(document.getElementById("map"), mapProp);
     }
 </script>
-
-
-@*----------SCRIPT POUR LA GESTION DU CHANGEMENT DE COMMUNE DANS LA BARRE DE NAVIGATION----------*@
-<script>
-    $("#inputComm").autocomplete({
-        autoFocus: true,
-        source: function (requete, reponse) {
-            var name = $('#inputComm').val();
-            $.ajax({
-                type: 'GET',
-                datatype: 'json',
-                data: { nom: name.toLowerCase() },
-                url: '@Url.Action("GetCommunesByNameInJson", "Commune")',
-                success: function (donnee) {
-                    reponse($.map(donnee.commune, function (objet) {
-                        return {
-                            label: objet.Localite + " ( " + objet.CodePostal + " )",
-                            value: objet.Localite,
-                            id: objet.id
-                        }
-                    }));
-                }
-            })
-        },
-        minLength: 3,
-
-        select: function (event, ui) {
-            idCommune = ui.item.id
-        }
-    });
-
-
-    $('#btnRechercheCommune').click(function () {
-        var nomCommune = $('#inputComm').val();
-        $.ajax({
-            type: 'GET',
-            datatype: 'json',
-            data: { nomCommune: nomCommune },
-            url: '@Url.Action("checkIfCommuneExists", "Commune")',
-            success: function (donnee) {
-                if (donnee.result == "OK") {
-                    var nom = donnee.nom;
-                    var url = "/Home/MainPage?nomCommune=" + nom;
-                    window.location.href = url;
-                }
-                else {
-                    $('#modalTexte').html("commune inexistante");
-                    $('#myModal').dialog({
-                        open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
-                        resizable: false,
-                        height: "auto",
-                        width: "400",
-                        modal: true,
-                        title: 'commune inexistante',
-                        buttons: {
-                            "ok": function () { $(this).dialog("close") }
-                        }
-                    })
-                }
-            }
-        })
-    });
-</script>
-
 
 <script type="text/javascript">
     var bouton;
@@ -273,8 +208,59 @@
     var markersBar = [];
     var marker;
     var imageIcon;
-    var home = { lat: @Model.latitude, lng: @Model.longitude };
+    var home = { lat: @Model.latitude.Replace(',', '.'), lng: @Model.longitude.Replace(',', '.') };
     var typePlace = "";
+     var anneeMin;
+    var currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
+
+
+    // A CHARGER LORS DE L'OUVERTURE DE LA PAGE
+    $(document).ready(function () {
+        bouton = '@ViewBag.bouton';
+        anneeMin = '@Request.RequestContext.HttpContext.Session["anneeMin"]';
+        var anneeRecherche = currentYear - 3;
+
+        $('#poi').hide();
+        $('#info').hide();
+        $('#tablePrix').hide();
+        $('#graphique').hide()
+
+        GetStat(anneeRecherche);
+        GetGraphiquePrixMoyen();
+        afficheCartePOICommune(home);
+        GetInfosGenerals();
+
+        if (bouton == "graphique") {
+            $(".nav").find(".active").removeClass("active");
+            $('#ongletGraphique').addClass("active");
+            $('#graphique').show()
+
+        }
+        else if (bouton == "tablePrix") {
+            $(".nav").find(".active").removeClass("active");
+            $('#ongletTablePrix').addClass("active");
+            $('#tablePrix').show();
+            currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
+
+        }
+        else if (bouton == "POI") {
+
+
+            $(".nav").find(".active").removeClass("active");
+            $('#ongletPOI').addClass("active");
+
+            $('#poi').addClass("show");
+            $('#poi').show()
+        }
+        else {
+
+            $(".nav").find(".active").removeClass("active");
+            $('#ongletInfo').addClass("active");
+
+            $('#info').addClass("show");
+            $('#info').show()
+        }
+    })
 
     // bouton pour rechercher par une adresse
 
@@ -316,7 +302,7 @@
             type: 'GET',
             datatype: 'html',
             url: '@Url.Action("PartialViewPoiCommune", "Stat")',
-            data: { latitude: @Model.latitude, longitude: @Model.longitude },
+            data: { latitude: @Model.latitude.Replace(",","."), longitude: @Model.longitude.Replace(",", ".") },
             success: function (donnee) {
 
 
@@ -330,66 +316,7 @@
             }
         });
     }
-
-
-
-
-
-
-    var anneeMin;
-    var currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
-
-
-    // A CHARGER LORS DE L'OUVERTURE DE LA PAGE
-    $(document).ready(function () {
-
-        bouton = '@ViewBag.bouton';
-        anneeMin = '@Request.RequestContext.HttpContext.Session["anneeMin"]';
-
-        var anneeRecherche = currentYear - 3;
-
-        $('#poi').hide();
-        $('#info').hide();
-        $('#tablePrix').hide();
-        $('#graphique').hide()
-
-        GetStat(anneeRecherche);
-        GetGraphiquePrixMoyen();
-        afficheCartePOICommune(home);
-        GetInfosGenerals();
-
-        if (bouton == "graphique") {
-            $(".nav").find(".active").removeClass("active");
-            $('#ongletGraphique').addClass("active");
-            $('#graphique').show()
-
-        }
-        else if (bouton == "tablePrix") {
-            $(".nav").find(".active").removeClass("active");
-            $('#ongletTablePrix').addClass("active");
-            $('#tablePrix').show();
-            currentYear = '@Request.RequestContext.HttpContext.Session["HighestYear"]';
-
-        }
-        else if (bouton == "POI") {
-
-
-            $(".nav").find(".active").removeClass("active");
-            $('#ongletPOI').addClass("active");
-
-            $('#poi').addClass("show");
-            $('#poi').show()
-        }
-        else {
-            
-            $(".nav").find(".active").removeClass("active");
-            $('#ongletInfo').addClass("active");
-
-            $('#info').addClass("show");
-            $('#info').show()
-        }
-    })
-
+    
 
     $('#btnTransactions').click(function () {
         GetGraphiqueTransactions();
@@ -404,8 +331,8 @@
         $('#info').hide();
         $('#tablePrix').hide();
         $('#graphique').addClass("show");
-        $('#graphique').show()
-        //GetGraphiquePrixMoyen();
+        $('#graphique').show();
+        GetGraphiquePrixMoyen();
     });
     $('#tablePrix-tab').click(function () {
         $(".nav").find(".active").removeClass("active");
@@ -434,14 +361,14 @@
         initMapPOI();
     });
     $('#info-tab').click(function () {
-        
+
         $('#graphique').hide();
         $('#poi').hide();
         $('#tablePrix').hide();
         $('#info').addClass("show");
         $('#info').show()
         GetInfosGenerals();
-        
+
     });
 
     $('#btnSearchComparaisonYear').click(function () {
@@ -568,9 +495,14 @@
     }
 
     function GetGraphiquePrixMoyen() {
-
-            $("#chargement").show();
+        
+        $("#chargement").show();
+        if ($('#codePost').val() == "") {
+            var codePost = @Model.CodePostal
+        }
+        else {
             var codePost = $('#codePost').val();
+        }
             $.ajax({
                 type: 'GET',
                 datatype: 'json',
@@ -654,7 +586,7 @@
                         chart.draw(data, options);
                     }
 
-                   
+
 
                     // Set a callback to run when the Google Visualization API is loaded.
                     google.charts.setOnLoadCallback(drawLineColorsTerrains);
@@ -780,7 +712,7 @@
             success: function (donnee) {
                 $("#chargement").hide();
                 $('#pageInfoGen').html(donnee);
-                
+
             },
             error: function () {
                 alert("une erreur s'est produite...")
@@ -790,6 +722,70 @@
 
 
 </script>
+@*----------SCRIPT POUR LA GESTION DU CHANGEMENT DE COMMUNE DANS LA BARRE DE NAVIGATION----------*@
+<script>
+    $("#inputComm").autocomplete({
+        autoFocus: true,
+        source: function (requete, reponse) {
+            var name = $('#inputComm').val();
+            $.ajax({
+                type: 'GET',
+                datatype: 'json',
+                data: { nom: name.toLowerCase() },
+                url: '@Url.Action("GetCommunesByNameInJson", "Commune")',
+                success: function (donnee) {
+                    reponse($.map(donnee.commune, function (objet) {
+                        return {
+                            label: objet.Localite + " ( " + objet.CodePostal + " )",
+                            value: objet.Localite,
+                            id: objet.id
+                        }
+                    }));
+                }
+            })
+        },
+        minLength: 3,
+
+        select: function (event, ui) {
+            idCommune = ui.item.id
+        }
+    });
+
+
+    $('#btnRechercheCommune').click(function () {
+        var nomCommune = $('#inputComm').val();
+        $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            data: { nomCommune: nomCommune },
+            url: '@Url.Action("checkIfCommuneExists", "Commune")',
+            success: function (donnee) {
+                if (donnee.result == "OK") {
+                    var nom = donnee.nom;
+                    var url = "/Home/MainPage?nomCommune=" + nom;
+                    window.location.href = url;
+                }
+                else {
+                    $('#modalTexte').html("commune inexistante");
+                    $('#myModal').dialog({
+                        open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
+                        resizable: false,
+                        height: "auto",
+                        width: "400",
+                        modal: true,
+                        title: 'commune inexistante',
+                        buttons: {
+                            "ok": function () { $(this).dialog("close") }
+                        }
+                    })
+                }
+            }
+        })
+    });
+</script>
+
+
+
 
 <script type="text/javascript">
 
@@ -830,27 +826,27 @@
 </script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-    //google.charts.load("current", { packages: ["corechart"] });
-    //google.charts.setOnLoadCallback(drawChart);
-    //function drawChart() {
-    //    var data = google.visualization.arrayToDataTable([
-    //        ['Sexe', 'nombre de personnes'],
-    //        ['hommes', 32541],
-    //        ['femmes', 30247]
-    //    ]);
+        //google.charts.load("current", { packages: ["corechart"] });
+        //google.charts.setOnLoadCallback(drawChart);
+        //function drawChart() {
+        //    var data = google.visualization.arrayToDataTable([
+        //        ['Sexe', 'nombre de personnes'],
+        //        ['hommes', 32541],
+        //        ['femmes', 30247]
+        //    ]);
 
-    //    var options = {
-    //        title: 'Proportions homme-femme',
-    //        pieHole: 0.8,
-    //        colors: ['#FA58F4', '#0000FF'],
-    //        backgroundColor: 'transparent',
-    //        pieSliceText: 'none',
-    //        tooltip: { trigger: 'none' }
-    //    };
+        //    var options = {
+        //        title: 'Proportions homme-femme',
+        //        pieHole: 0.8,
+        //        colors: ['#FA58F4', '#0000FF'],
+        //        backgroundColor: 'transparent',
+        //        pieSliceText: 'none',
+        //        tooltip: { trigger: 'none' }
+        //    };
 
-    //    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-    //    chart.draw(data, options);
-    //}
+        //    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        //    chart.draw(data, options);
+        //}
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHaJXOb3KVvODTc1FDLpY44cpoUctO0u0&callback=myMap"></script>

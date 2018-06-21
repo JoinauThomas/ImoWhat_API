@@ -61,6 +61,20 @@ namespace ImmoWhatApp.Controllers
             }
             return View(Communes);
         }
+
+        
+            [HttpGet]
+        public static Models.Commune GetACommuneWithCodePostal(string codePostal)
+        {
+            var langue = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+            if (langue == "en")
+            {
+                langue = "fr";
+            }
+            Models.Commune maCommune = BLL.CommuneBLL.GetACommuneWithCodePostal(codePostal, langue);
+
+            return maCommune;
+        }
         [HttpGet]
         public JsonResult GetCommunesInJson()
         {
