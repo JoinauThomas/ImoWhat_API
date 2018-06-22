@@ -53,7 +53,7 @@ namespace ImmoWhatApp.Controllers
                 ViewBag.ListeTypesBiens = new SelectList(typesBiensList, "idTypeBien", "libelle");
                 return View();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -115,11 +115,11 @@ namespace ImmoWhatApp.Controllers
             {
                 throw ex;
             }
-           
+
         }
 
         [HttpGet]
-        public int GetIdBien (string codePostale, string rue, string numero, string boite)
+        public int GetIdBien(string codePostale, string rue, string numero, string boite)
         {
             try
             {
@@ -166,7 +166,7 @@ namespace ImmoWhatApp.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetListBiensFromCPAndType (string codePostale, int type)
+        public JsonResult GetListBiensFromCPAndType(string codePostale, int type)
         {
             List<Models.BienModels> listeDeBiens = new List<Models.BienModels>();
             listeDeBiens = BLL.BienBLL.GetListBiensFromCPAndType(codePostale, type);
@@ -197,7 +197,7 @@ namespace ImmoWhatApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult _MesBiensListe (int idMembre)
+        public ActionResult _MesBiensListe(int idMembre)
         {
             try
             {
@@ -208,11 +208,11 @@ namespace ImmoWhatApp.Controllers
 
                 return PartialView(listeDeBiens);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
-           
+
         }
 
         [HttpPost]
@@ -221,8 +221,8 @@ namespace ImmoWhatApp.Controllers
             Models.RequestResultM resultRequest = new Models.RequestResultM();
 
             resultRequest = BLL.BienBLL.DeleteBienByUser(idBien);
-            
-                return Json(new { result = "OK", res = resultRequest });
+
+            return Json(new { result = "OK", res = resultRequest });
 
 
 
@@ -239,6 +239,13 @@ namespace ImmoWhatApp.Controllers
 
 
 
+        }
+
+        public ActionResult _GetAllBiens(string recherche)
+        {
+            List<Models.RechercheBienModels> lesBiens = BLL.BienBLL.SearchBien(recherche);
+
+            return PartialView(lesBiens);
         }
     }
 }

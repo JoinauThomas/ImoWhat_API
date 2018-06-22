@@ -61,6 +61,15 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à admin.
+        /// </summary>
+        public static string administrator {
+            get {
+                return ResourceManager.GetString("administrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à ajouter un bien.
         /// </summary>
         public static string ajouterUnBien {
@@ -196,6 +205,33 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à date d&apos;enregistrement.
+        /// </summary>
+        public static string dateEnregistrement {
+            get {
+                return ResourceManager.GetString("dateEnregistrement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à supprimé.
+        /// </summary>
+        public static string deleted {
+            get {
+                return ResourceManager.GetString("deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à dernière connection.
+        /// </summary>
+        public static string derniereConnection {
+            get {
+                return ResourceManager.GetString("derniereConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à déscription.
         /// </summary>
         public static string description {
@@ -268,6 +304,15 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à id.
+        /// </summary>
+        public static string id {
+            get {
+                return ResourceManager.GetString("id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à jardin.
         /// </summary>
         public static string jardin {
@@ -300,6 +345,15 @@ namespace ImmoWhatApp {
         public static string libelleDescription {
             get {
                 return ResourceManager.GetString("libelleDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à mail.
+        /// </summary>
+        public static string mail {
+            get {
+                return ResourceManager.GetString("mail", resourceCulture);
             }
         }
         
@@ -430,6 +484,15 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à nom.
+        /// </summary>
+        public static string nom {
+            get {
+                return ResourceManager.GetString("nom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à numero.
         /// </summary>
         public static string numero {
@@ -475,11 +538,29 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à prénom.
+        /// </summary>
+        public static string prenom {
+            get {
+                return ResourceManager.GetString("prenom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à prix.
         /// </summary>
         public static string prix {
             get {
                 return ResourceManager.GetString("prix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à propriétaire.
+        /// </summary>
+        public static string proprietaire {
+            get {
+                return ResourceManager.GetString("proprietaire", resourceCulture);
             }
         }
         
@@ -529,6 +610,15 @@ namespace ImmoWhatApp {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à supprimer.
+        /// </summary>
+        public static string supprimer {
+            get {
+                return ResourceManager.GetString("supprimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à terrain.
         /// </summary>
         public static string terrain {
@@ -561,6 +651,15 @@ namespace ImmoWhatApp {
         public static string villa {
             get {
                 return ResourceManager.GetString("villa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à voir le bien.
+        /// </summary>
+        public static string voirLeBien {
+            get {
+                return ResourceManager.GetString("voirLeBien", resourceCulture);
             }
         }
     }

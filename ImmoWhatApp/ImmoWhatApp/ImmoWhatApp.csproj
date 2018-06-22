@@ -3245,6 +3245,8 @@
     <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\nbPieces.cs" />
     <Compile Include="Models\PrenomsPopulaires.cs" />
+    <Compile Include="Models\RechercheBienModels.cs" />
+    <Compile Include="Models\RechercheMembreModels.cs" />
     <Compile Include="Models\RechercheMoyennePrixCommune.cs" />
     <Compile Include="Models\RequestResultM.cs" />
     <Compile Include="Models\ResultRequest.cs" />
@@ -3317,6 +3319,9 @@
     <Content Include="Scripts\popper.min" />
     <Content Include="Views\Bien\voirMonBien.cshtml" />
     <Content Include="Views\Stat\PartialViewInfoCommune.cshtml" />
+    <Content Include="Views\Home\AdminPage.cshtml" />
+    <Content Include="Views\Bien\_GetAllBiens.cshtml" />
+    <Content Include="Views\Account\_GetAllMembres.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

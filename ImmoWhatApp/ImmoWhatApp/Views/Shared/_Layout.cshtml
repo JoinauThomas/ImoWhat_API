@@ -71,7 +71,7 @@
                                     <a class="nav-link checkProfile" href="#">mon profile</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">admin</a>
+                                    <a id="admin" class="nav-link" href="#">admin</a>
                                 </li>
                             }
                             else
@@ -147,7 +147,9 @@
 
     <script>
 
-
+        $('#admin').click(function () {
+             window.location = '@Url.Action("AdminPage", "Home")';
+        })
         $('#backToHome').click(function () {
             window.location = '@Url.Action("Index", "Home")';
         });

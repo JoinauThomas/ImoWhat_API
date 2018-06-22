@@ -208,5 +208,34 @@ namespace ImmoWhat_API.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("SearchBiens")]
+        public List<Models.RechercheBienModels> SearchBiens(string recherche)
+        {
+            try
+            {
+                if (recherche == null)
+                    recherche = "";
+
+
+                List<Models.RechercheBienModels> lesBiens = new List<Models.RechercheBienModels>();
+
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                List<DAL.SearchBiens2_Result> result = dbContext.SearchBiens2(recherche).ToList();
+
+                foreach (var x in result)
+                {
+                    lesBiens.Add(new Models.RechercheBienModels { idBien = (int)x.idBien, nom = x.nom, prenom = x.prenom, commune = x.commune, codePostal = x.CodePostal, rue = x.rue, numero = x.numero, boite = x.boite, prix = (int)x.prix, deleted = x.deleted, vendu = x.vendu });
+                }
+
+                return lesBiens;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

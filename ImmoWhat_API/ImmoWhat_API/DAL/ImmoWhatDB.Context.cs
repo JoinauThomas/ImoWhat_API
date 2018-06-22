@@ -37,6 +37,7 @@ namespace ImmoWhat_API.DAL
         public virtual DbSet<BIEN_PIECES> BIEN_PIECES { get; set; }
         public virtual DbSet<COMMUNE> COMMUNE { get; set; }
         public virtual DbSet<COMMUNES_CONTOUR_POINT> COMMUNES_CONTOUR_POINT { get; set; }
+        public virtual DbSet<Connections> Connections { get; set; }
         public virtual DbSet<mail> mail { get; set; }
         public virtual DbSet<MEMBRE> MEMBRE { get; set; }
         public virtual DbSet<OPTIONS> OPTIONS { get; set; }
@@ -47,8 +48,11 @@ namespace ImmoWhat_API.DAL
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TYPEBIEN> TYPEBIEN { get; set; }
         public virtual DbSet<VAL_PRIX_MOYEN_BIEN> VAL_PRIX_MOYEN_BIEN { get; set; }
+        public virtual DbSet<COMMUNE_Prenoms> COMMUNE_Prenoms { get; set; }
         public virtual DbSet<MapsParams> MapsParams { get; set; }
+        public virtual DbSet<STAT_COMMUNES> STAT_COMMUNES { get; set; }
         public virtual DbSet<StatImmo> StatImmo { get; set; }
+        public virtual DbSet<TableJSON> TableJSON { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -1214,6 +1218,51 @@ namespace ImmoWhat_API.DAL
                 new ObjectParameter("langue", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetACommuneWithCodePostal_Result>("GetACommuneWithCodePostal", codePostalParameter, langueParameter);
+        }
+    
+        public virtual int EnregistrerNvlleConnection(string login)
+        {
+            var loginParameter = login != null ?
+                new ObjectParameter("login", login) :
+                new ObjectParameter("login", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EnregistrerNvlleConnection", loginParameter);
+        }
+    
+        public virtual ObjectResult<SearchBiens_Result> SearchBiens(string search)
+        {
+            var searchParameter = search != null ?
+                new ObjectParameter("search", search) :
+                new ObjectParameter("search", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchBiens_Result>("SearchBiens", searchParameter);
+        }
+    
+        public virtual ObjectResult<SearchMembres_Result> SearchMembres(string search)
+        {
+            var searchParameter = search != null ?
+                new ObjectParameter("search", search) :
+                new ObjectParameter("search", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchMembres_Result>("SearchMembres", searchParameter);
+        }
+    
+        public virtual ObjectResult<SearchBiens2_Result> SearchBiens2(string search)
+        {
+            var searchParameter = search != null ?
+                new ObjectParameter("search", search) :
+                new ObjectParameter("search", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchBiens2_Result>("SearchBiens2", searchParameter);
+        }
+    
+        public virtual ObjectResult<SearchMembres2_Result> SearchMembres2(string search)
+        {
+            var searchParameter = search != null ?
+                new ObjectParameter("search", search) :
+                new ObjectParameter("search", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchMembres2_Result>("SearchMembres2", searchParameter);
         }
     }
 }

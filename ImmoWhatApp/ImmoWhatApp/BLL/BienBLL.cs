@@ -46,11 +46,11 @@ namespace ImmoWhatApp.BLL
 
                         if (exist == false)
                         {
-                            
+
                             using (var client2 = new HttpClient())
                             {
 
-                               
+
                                 client2.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
                                 client2.DefaultRequestHeaders.Accept.Clear();
                                 client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -180,11 +180,11 @@ namespace ImmoWhatApp.BLL
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
-            
+
         }
 
         public static List<Models.BienModels> GetListBiensFromCPAndType(string codePostale, int type)
@@ -195,7 +195,7 @@ namespace ImmoWhatApp.BLL
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
-                    var responseTask = client.GetAsync("GetListBiensFromCPAndType?codePostale=" + codePostale + "&type=" + type );
+                    var responseTask = client.GetAsync("GetListBiensFromCPAndType?codePostale=" + codePostale + "&type=" + type);
                     responseTask.Wait();
                     var result = responseTask.Result;
 
@@ -205,7 +205,7 @@ namespace ImmoWhatApp.BLL
                         var readTask = result.Content.ReadAsAsync<List<Models.BienModels>>();
                         readTask.Wait();
                         listeDeBiens = readTask.Result;
-                        
+
 
                     }
                     return listeDeBiens;
@@ -394,6 +394,55 @@ namespace ImmoWhatApp.BLL
                 throw ex;
             }
 
+        }
+
+        public static List<Models.RechercheBienModels> SearchBien(string recherche)
+        {
+            List<Models.RechercheBienModels> lesBiens = new List<Models.RechercheBienModels>();
+            try
+            {
+                if (recherche == null)
+                    recherche = "";
+
+
+                using (var client = new HttpClient())
+                {
+
+                    // CHECK IF MEMBER IS CONNECTED
+
+                    var currentSession = HttpContext.Current.Session;
+                    var token = currentSession["monToken"];
+                    Models.MembreModels moi = new Models.MembreModels();
+                    client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                    // GET THE LIST OF BIENs
+
+                    client.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
+                    var responseTask = client.GetAsync("SearchBiens?recherche=" + recherche);
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<List<Models.RechercheBienModels>>();
+                        readTask.Wait();
+                        lesBiens = readTask.Result;
+
+
+                    }
+                    return lesBiens;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

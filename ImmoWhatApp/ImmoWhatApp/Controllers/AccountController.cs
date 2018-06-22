@@ -85,10 +85,18 @@ namespace ImmoWhatApp.Controllers
             {
                 Models.MembreModels monProfile = BLL.MembreBLL.GetMyProfile(moi.login);
                 Session["moi"] = monProfile;
-                
+
+                Models.ResultRequest resultRequest2 = BLL.MembreBLL.EnregistrerNvlleConnection(moi);
+                if (resultRequest2.msg == "ok")
+                {
+                    return Json(new { result = "OK", nom = monProfile.nom, prenom = monProfile.prenom });
+                }
+                else
+                {
+                    return null;
+                }
 
 
-                return Json(new { result = "OK", nom = monProfile.nom, prenom = monProfile.prenom });
             }
             else
             {
@@ -135,7 +143,12 @@ namespace ImmoWhatApp.Controllers
             return View(moi);
         }
 
-       
-    
-}
+        public ActionResult _GetAllMembres(string recherche)
+        {
+            List<Models.RechercheMembreModels> lesMembres = BLL.MembreBLL.SearchMembres(recherche);
+
+            return PartialView(lesMembres);
+        }
+
+    }
 }

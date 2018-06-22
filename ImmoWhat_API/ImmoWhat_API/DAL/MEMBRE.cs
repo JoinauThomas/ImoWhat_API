@@ -18,6 +18,7 @@ namespace ImmoWhat_API.DAL
         public MEMBRE()
         {
             this.BIEN = new HashSet<BIEN>();
+            this.Connections = new HashSet<Connections>();
             this.mail1 = new HashSet<mail>();
         }
     
@@ -41,6 +42,8 @@ namespace ImmoWhat_API.DAL
         public virtual AspNetRoles AspNetRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BIEN> BIEN { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Connections> Connections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<mail> mail1 { get; set; }
     }

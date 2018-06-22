@@ -264,6 +264,12 @@
     <Compile Include="DAL\COMMUNES_CONTOUR_POINT.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\COMMUNE_Prenoms.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Connections.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\C__MigrationHistory.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
@@ -393,6 +399,18 @@
     <Compile Include="DAL\RefCouleurTerrain.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\SearchBiens2_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\SearchBiens_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\SearchMembres2_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\SearchMembres_Result.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
@@ -402,7 +420,13 @@
     <Compile Include="DAL\StatImmo.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\STAT_COMMUNES.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\sysdiagrams.cs">
+      <DependentUpon>ImmoWhatDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\TableJSON.cs">
       <DependentUpon>ImmoWhatDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\TYPEBIEN.cs">
@@ -425,11 +449,14 @@
     <Compile Include="Models\CommuneContourPoint.cs" />
     <Compile Include="Models\ContourPointsDonnees.cs" />
     <Compile Include="Models\coordonnees.cs" />
+    <Compile Include="Models\Identification.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\imageModels.cs" />
     <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\MembreModels.cs" />
     <Compile Include="Models\PrenomsPopulaires.cs" />
+    <Compile Include="Models\RechercheBienModels.cs" />
+    <Compile Include="Models\RechercheMembreModels.cs" />
     <Compile Include="Models\ResultInscription.cs" />
     <Compile Include="Models\StatCommune.cs" />
     <Compile Include="Models\TableGraphTransactions.cs" />

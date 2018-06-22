@@ -30,6 +30,23 @@ namespace ImmoWhat_API.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("EnregistrerNvlleConnection")]
+        public IHttpActionResult EnregistrerNvlleConnection(Models.Identification Membre)
+        {
+
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                dbContext.EnregistrerNvlleConnection(Membre.login);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         [HttpGet]
         [Route("GetMyId")]
         public int GetMyId(string mail)
@@ -83,6 +100,41 @@ namespace ImmoWhat_API.Controllers
                     estProprietaire = moiDB[0].estProprietaire
                 };
                 return moi;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("SearchMembres")]
+        public List<Models.RechercheMembreModels> SearchMembres(string recherche)
+        {
+            try
+            {
+                if (recherche == null)
+                    recherche = "";
+
+                List<Models.RechercheMembreModels> lesMembres = new List<Models.RechercheMembreModels>();
+
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                List<DAL.SearchMembres2_Result> result = dbContext.SearchMembres2(recherche).ToList();
+
+                foreach (var x in result)
+                {
+                    DateTime dateDerConn;
+                    if (x.derConn == null)
+                        dateDerConn = new DateTime(1900, 01, 01);
+                    else
+                        dateDerConn = (DateTime)x.derConn;
+
+                    lesMembres.Add(new Models.RechercheMembreModels { idMembre = (int)x.id, nom = x.nom, prenom = x.prenom, email = x.email, dateEnregistrement = (DateTime)x.enregistrement, dateDerniereConnection = dateDerConn, administrator = (bool)x.administrator, deleted = (bool)x.deleted });
+                }
+
+                return lesMembres;
             }
             catch (Exception ex)
             {

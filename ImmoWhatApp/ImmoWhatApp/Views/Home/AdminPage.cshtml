@@ -1,0 +1,141 @@
+﻿@model ImmoWhatApp.Models.MembreModels
+
+@{
+    ViewBag.Title = "AdminPage";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col mt-3">
+            <h1>Zone administrateur</h1>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Membres</a></li>
+                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">biens</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" role="tabpanel" id="tab-1">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="mt-4">Liste des membres</h3>
+                            </div>
+                        </div>
+                        <div class="row d-flex flex-row justify-content-end align-items-center mb-3 mt-3">
+                            <div class="col-lg-3">
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center align-content-end" style="padding:0px;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;" for="Membredeleted">
+                                    <label for="Membredeleted" style="margin:0px;width:90%;">membres supprimés<br>
+                                        </label>
+                                    <input type="checkbox" id="Membredeleted" style="width:10%;">
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 offset-lg-5">
+                                <div class="input-group">
+                                    <div class="input-group-prepend"></div><input class="form-control" type="text">
+                                    <div class="input-group-append"><button class="btn btn-primary" type="button" style="height:100%;">Go!</button></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="table-responsive">
+                                    <table id="tableMembres" class="table">
+                                        
+                                        @*TABLE DES MEMBRES*@
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="tab-2">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="mt-4">Liste des biens</h3>
+                            </div>
+                        </div>
+                        <div class="row d-flex flex-row justify-content-end align-items-center mb-3 mt-3">
+                            <div class="col-lg-3">
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center align-content-end" style="padding:0px;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;"><label for="Biendeleted" style="margin:0px;width:90%;">biens supprimés<br></label><input type="checkbox" id="Biendeleted" style="width:10%;"></li>
+                                    <li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center align-content-end"
+                                        style="padding:0px;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;"><label for="vendu" style="margin:0px;width:90%;">vendu</label><input type="checkbox" id="vendu" style="width:10%;"></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-4 offset-lg-5">
+                                <div class="input-group">
+                                    <div class="input-group-prepend"></div><input class="form-control" type="text">
+                                    <div class="input-group-append"><button class="btn btn-primary" type="button" style="height:100%;">Go!</button></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="table-responsive">
+                                    <table id="tableBiens" class="table">
+                                       
+                                        @*TABLE DES BIENS*@
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        getBiens("");
+        getMembres("");
+    });
+    
+
+   
+
+
+    function getBiens(recherche) {
+        if (recherche == null)
+            recherche = "";
+
+        $.ajax({
+            type: 'GET',
+            datatype: 'html',
+            url: '@Url.Action("_GetAllBiens", "Bien")',
+            data: { recherche: recherche },
+            success: function (donnee) {
+                $('#tableBiens').html(donnee);
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        })
+    }
+
+    function getMembres(recherche) {
+        if (recherche == null)
+            recherche = "";
+
+        $.ajax({
+            type: 'GET',
+            datatype: 'html',
+            url: '@Url.Action("_GetAllMembres", "Account")',
+            data: { recherche: recherche },
+            success: function (donnee) {
+                $('#tableMembres').html(donnee);
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        })
+    }
+</script>
+

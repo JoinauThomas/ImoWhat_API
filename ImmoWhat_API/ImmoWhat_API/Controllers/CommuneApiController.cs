@@ -37,7 +37,6 @@ namespace ImmoWhat_API.Controllers
             
             DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
             List<DAL.GetACommuneWithCodePostal_Result> result = dbContext.GetACommuneWithCodePostal(codePostal, langue).ToList();
-            int res = 0;
 
             Models.CommuneComplet maCommune = new Models.CommuneComplet { id = result[0].idCommune, CodePostal = result[0].CodePostal, langue = result[0].langue, latitude = result[0].latitude, Localite = result[0].Localite, longitude = result[0].longitude, Province = result[0].Province };
 

@@ -124,6 +124,24 @@
           <Property Name="longitude" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="latitude" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'ImmoWhat.dbo.COMMUNE_Prenoms' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="COMMUNE_Prenoms">
+          <Key>
+            <PropertyRef Name="IdCommune" />
+            <PropertyRef Name="NomCommuneFR" />
+            <PropertyRef Name="NomCommuneNL" />
+            <PropertyRef Name="Prenom" />
+            <PropertyRef Name="NombreDePersonnes" />
+            <PropertyRef Name="Sexe" />
+          </Key>
+          <Property Name="IdCommune" Type="int" Nullable="false" />
+          <Property Name="NomCommuneFR" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="NomCommuneNL" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Prenom" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="NombreDePersonnes" Type="int" Nullable="false" />
+          <Property Name="Sexe" Type="nvarchar" MaxLength="5" Nullable="false" />
+        </EntityType>
         <EntityType Name="COMMUNES_CONTOUR_POINT">
           <Key>
             <PropertyRef Name="id" />
@@ -132,6 +150,14 @@
           <Property Name="Latitude" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Longitude" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Commune_CodePostal" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Connections">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idMembre" Type="int" Nullable="false" />
+          <Property Name="dateConnection" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="mail">
           <Key>
@@ -233,6 +259,56 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.MapsParams' n'a pas de clé prima
           <Property Name="valeurMax" Type="int" Nullable="false" />
         </EntityType>
         <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'ImmoWhat.dbo.STAT_COMMUNES' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="STAT_COMMUNES">
+          <Key>
+            <PropertyRef Name="IdCommune" />
+            <PropertyRef Name="NomCommuneNL" />
+            <PropertyRef Name="NomCommuneFR" />
+            <PropertyRef Name="IdArrondissement" />
+            <PropertyRef Name="ArrondissementNL" />
+            <PropertyRef Name="ArrondissementFR" />
+            <PropertyRef Name="IdProvince" />
+            <PropertyRef Name="ProvinceNL" />
+            <PropertyRef Name="ProvinceFR" />
+            <PropertyRef Name="IdRegion" />
+            <PropertyRef Name="RegionNL" />
+            <PropertyRef Name="RegionFR" />
+            <PropertyRef Name="SEXE" />
+            <PropertyRef Name="CodeNational" />
+            <PropertyRef Name="NationaliteFR" />
+            <PropertyRef Name="NationaliteNL" />
+            <PropertyRef Name="CodeEtatCivil" />
+            <PropertyRef Name="EtatCivilFR" />
+            <PropertyRef Name="EtatCivilNL" />
+            <PropertyRef Name="Age" />
+            <PropertyRef Name="NombreDePersonnes" />
+            <PropertyRef Name="AnneeDeReference" />
+          </Key>
+          <Property Name="IdCommune" Type="int" Nullable="false" />
+          <Property Name="NomCommuneNL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NomCommuneFR" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdArrondissement" Type="int" Nullable="false" />
+          <Property Name="ArrondissementNL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ArrondissementFR" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdProvince" Type="int" Nullable="false" />
+          <Property Name="ProvinceNL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProvinceFR" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdRegion" Type="int" Nullable="false" />
+          <Property Name="RegionNL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RegionFR" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SEXE" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CodeNational" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NationaliteFR" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NationaliteNL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CodeEtatCivil" Type="int" Nullable="false" />
+          <Property Name="EtatCivilFR" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EtatCivilNL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="NombreDePersonnes" Type="int" Nullable="false" />
+          <Property Name="AnneeDeReference" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
 avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
         <EntityType Name="StatImmo">
           <Key>
@@ -331,6 +407,31 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'ImmoWhat.dbo.TableJSON' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="TableJSON">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="CodePostal" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Color" Type="nvarchar" MaxLength="255" />
+          <Property Name="GMapPartRecord_Id" Type="int" />
+          <Property Name="StartZoom" Type="int" />
+          <Property Name="StopZoom" Type="int" />
+          <Property Name="Commune" Type="nvarchar" MaxLength="255" />
+          <Property Name="Quarter" Type="nvarchar" MaxLength="255" />
+          <Property Name="Price" Type="decimal" Precision="19" Scale="5" />
+          <Property Name="ColorA" Type="nvarchar" MaxLength="255" />
+          <Property Name="ColorT" Type="nvarchar" MaxLength="255" />
+          <Property Name="ColorV" Type="nvarchar" MaxLength="255" />
+          <Property Name="PriceA" Type="decimal" Precision="19" Scale="5" />
+          <Property Name="PriceT" Type="decimal" Precision="19" Scale="5" />
+          <Property Name="PriceV" Type="decimal" Precision="19" Scale="5" />
+          <Property Name="CenterLat" Type="decimal" Precision="19" Scale="5" />
+          <Property Name="CenterLng" Type="decimal" Precision="19" Scale="5" />
         </EntityType>
         <EntityType Name="TYPEBIEN">
           <Key>
@@ -443,6 +544,18 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             </Principal>
             <Dependent Role="BIEN">
               <PropertyRef Name="BIEN_IdType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Connections_MEMBRE">
+          <End Role="MEMBRE" Type="Self.MEMBRE" Multiplicity="1" />
+          <End Role="Connections" Type="Self.Connections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEMBRE">
+              <PropertyRef Name="idMembre" />
+            </Principal>
+            <Dependent Role="Connections">
+              <PropertyRef Name="idMembre" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -620,6 +733,9 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
         <Function Name="DeleteBienByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idBien" Type="int" Mode="In" />
         </Function>
+        <Function Name="EnregistrerNvlleConnection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="login" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetACommuneWithCodePostal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codePostal" Type="nvarchar" Mode="In" />
@@ -796,6 +912,18 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Parameter Name="idBien" Type="int" Mode="In" />
           <Parameter Name="lien" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SearchBiens" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="search" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SearchBiens2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="search" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SearchMembres" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="search" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SearchMembres2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="search" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SendMail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idEmetteur" Type="int" Mode="In" />
           <Parameter Name="mailAddress" Type="nvarchar" Mode="In" />
@@ -858,6 +986,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <EntitySet Name="BIEN_PIECES" EntityType="Self.BIEN_PIECES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="COMMUNE" EntityType="Self.COMMUNE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="COMMUNES_CONTOUR_POINT" EntityType="Self.COMMUNES_CONTOUR_POINT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Connections" EntityType="Self.Connections" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="mail" EntityType="Self.mail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MEMBRE" EntityType="Self.MEMBRE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OPTIONS" EntityType="Self.OPTIONS" Schema="dbo" store:Type="Tables" />
@@ -868,6 +997,16 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TYPEBIEN" EntityType="Self.TYPEBIEN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VAL_PRIX_MOYEN_BIEN" EntityType="Self.VAL_PRIX_MOYEN_BIEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="COMMUNE_Prenoms" EntityType="Self.COMMUNE_Prenoms" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [COMMUNE_Prenoms].[IdCommune] AS [IdCommune], 
+    [COMMUNE_Prenoms].[NomCommuneFR] AS [NomCommuneFR], 
+    [COMMUNE_Prenoms].[NomCommuneNL] AS [NomCommuneNL], 
+    [COMMUNE_Prenoms].[Prenom] AS [Prenom], 
+    [COMMUNE_Prenoms].[NombreDePersonnes] AS [NombreDePersonnes], 
+    [COMMUNE_Prenoms].[Sexe] AS [Sexe]
+    FROM [dbo].[COMMUNE_Prenoms] AS [COMMUNE_Prenoms]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="MapsParams" EntityType="Self.MapsParams" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [MapsParams].[codePostal] AS [codePostal], 
@@ -886,6 +1025,32 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
     [MapsParams].[PriceT] AS [PriceT], 
     [MapsParams].[PriceV] AS [PriceV]
     FROM [dbo].[MapsParams] AS [MapsParams]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="STAT_COMMUNES" EntityType="Self.STAT_COMMUNES" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [STAT_COMMUNES].[IdCommune] AS [IdCommune], 
+    [STAT_COMMUNES].[NomCommuneNL] AS [NomCommuneNL], 
+    [STAT_COMMUNES].[NomCommuneFR] AS [NomCommuneFR], 
+    [STAT_COMMUNES].[IdArrondissement] AS [IdArrondissement], 
+    [STAT_COMMUNES].[ArrondissementNL] AS [ArrondissementNL], 
+    [STAT_COMMUNES].[ArrondissementFR] AS [ArrondissementFR], 
+    [STAT_COMMUNES].[IdProvince] AS [IdProvince], 
+    [STAT_COMMUNES].[ProvinceNL] AS [ProvinceNL], 
+    [STAT_COMMUNES].[ProvinceFR] AS [ProvinceFR], 
+    [STAT_COMMUNES].[IdRegion] AS [IdRegion], 
+    [STAT_COMMUNES].[RegionNL] AS [RegionNL], 
+    [STAT_COMMUNES].[RegionFR] AS [RegionFR], 
+    [STAT_COMMUNES].[SEXE] AS [SEXE], 
+    [STAT_COMMUNES].[CodeNational] AS [CodeNational], 
+    [STAT_COMMUNES].[NationaliteFR] AS [NationaliteFR], 
+    [STAT_COMMUNES].[NationaliteNL] AS [NationaliteNL], 
+    [STAT_COMMUNES].[CodeEtatCivil] AS [CodeEtatCivil], 
+    [STAT_COMMUNES].[EtatCivilFR] AS [EtatCivilFR], 
+    [STAT_COMMUNES].[EtatCivilNL] AS [EtatCivilNL], 
+    [STAT_COMMUNES].[Age] AS [Age], 
+    [STAT_COMMUNES].[NombreDePersonnes] AS [NombreDePersonnes], 
+    [STAT_COMMUNES].[AnneeDeReference] AS [AnneeDeReference]
+    FROM [dbo].[STAT_COMMUNES] AS [STAT_COMMUNES]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="StatImmo" EntityType="Self.StatImmo" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -933,6 +1098,28 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
     [StatImmo].[Terrain_P90Prix] AS [Terrain_P90Prix]
     FROM [dbo].[StatImmo] AS [StatImmo]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="TableJSON" EntityType="Self.TableJSON" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TableJSON].[Id] AS [Id], 
+    [TableJSON].[CodePostal] AS [CodePostal], 
+    [TableJSON].[Description] AS [Description], 
+    [TableJSON].[Color] AS [Color], 
+    [TableJSON].[GMapPartRecord_Id] AS [GMapPartRecord_Id], 
+    [TableJSON].[StartZoom] AS [StartZoom], 
+    [TableJSON].[StopZoom] AS [StopZoom], 
+    [TableJSON].[Commune] AS [Commune], 
+    [TableJSON].[Quarter] AS [Quarter], 
+    [TableJSON].[Price] AS [Price], 
+    [TableJSON].[ColorA] AS [ColorA], 
+    [TableJSON].[ColorT] AS [ColorT], 
+    [TableJSON].[ColorV] AS [ColorV], 
+    [TableJSON].[PriceA] AS [PriceA], 
+    [TableJSON].[PriceT] AS [PriceT], 
+    [TableJSON].[PriceV] AS [PriceV], 
+    [TableJSON].[CenterLat] AS [CenterLat], 
+    [TableJSON].[CenterLng] AS [CenterLng]
+    FROM [dbo].[TableJSON] AS [TableJSON]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_BIEN_OPTION_BIENS" Association="Self.FK_BIEN_OPTION_BIENS">
             <End Role="BIEN" EntitySet="BIEN" />
             <End Role="BIEN_OPTION" EntitySet="BIEN_OPTION" />
@@ -964,6 +1151,10 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <AssociationSet Name="FK_BIENS_TYPEBIEN" Association="Self.FK_BIENS_TYPEBIEN">
             <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
             <End Role="BIEN" EntitySet="BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connections_MEMBRE" Association="Self.FK_Connections_MEMBRE">
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+            <End Role="Connections" EntitySet="Connections" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1303,84 +1494,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             <Parameter Name="message" Mode="In" Type="String" />
             <Parameter Name="idRecepteur" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="C__MigrationHistory" EntityType="ImmoWhatModel.C__MigrationHistory" />
-          <EntitySet Name="AspNetRoles" EntityType="ImmoWhatModel.AspNetRoles" />
-          <EntitySet Name="AspNetUserClaims" EntityType="ImmoWhatModel.AspNetUserClaims" />
-          <EntitySet Name="AspNetUserLogins" EntityType="ImmoWhatModel.AspNetUserLogins" />
-          <EntitySet Name="AspNetUsers" EntityType="ImmoWhatModel.AspNetUsers" />
-          <EntitySet Name="BIEN" EntityType="ImmoWhatModel.BIEN" />
-          <EntitySet Name="BIEN_PHOTOS" EntityType="ImmoWhatModel.BIEN_PHOTOS" />
-          <EntitySet Name="BIEN_PIECES" EntityType="ImmoWhatModel.BIEN_PIECES" />
-          <EntitySet Name="COMMUNE" EntityType="ImmoWhatModel.COMMUNE" />
-          <EntitySet Name="COMMUNES_CONTOUR_POINT" EntityType="ImmoWhatModel.COMMUNES_CONTOUR_POINT" />
-          <EntitySet Name="mail" EntityType="ImmoWhatModel.mail" />
-          <EntitySet Name="MEMBRE" EntityType="ImmoWhatModel.MEMBRE" />
-          <EntitySet Name="OPTIONS" EntityType="ImmoWhatModel.OPTIONS" />
-          <EntitySet Name="PIECES" EntityType="ImmoWhatModel.PIECES" />
-          <EntitySet Name="RefCouleur" EntityType="ImmoWhatModel.RefCouleur" />
-          <EntitySet Name="RefCouleurAppart" EntityType="ImmoWhatModel.RefCouleurAppart" />
-          <EntitySet Name="RefCouleurTerrain" EntityType="ImmoWhatModel.RefCouleurTerrain" />
-          <EntitySet Name="sysdiagrams" EntityType="ImmoWhatModel.sysdiagrams" />
-          <EntitySet Name="TYPEBIEN" EntityType="ImmoWhatModel.TYPEBIEN" />
-          <EntitySet Name="VAL_PRIX_MOYEN_BIEN" EntityType="ImmoWhatModel.VAL_PRIX_MOYEN_BIEN" />
-          <EntitySet Name="MapsParams" EntityType="ImmoWhatModel.MapsParams" />
-          <EntitySet Name="StatImmo" EntityType="ImmoWhatModel.StatImmo" />
-          <AssociationSet Name="FK_MEMBRE_AspNetRoles" Association="ImmoWhatModel.FK_MEMBRE_AspNetRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="MEMBRE" EntitySet="MEMBRE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="ImmoWhatModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="ImmoWhatModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BIEN_PHOTOS_BIEN" Association="ImmoWhatModel.FK_BIEN_PHOTOS_BIEN">
-            <End Role="BIEN" EntitySet="BIEN" />
-            <End Role="BIEN_PHOTOS" EntitySet="BIEN_PHOTOS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BIEN_PIECES_BIEN" Association="ImmoWhatModel.FK_BIEN_PIECES_BIEN">
-            <End Role="BIEN" EntitySet="BIEN" />
-            <End Role="BIEN_PIECES" EntitySet="BIEN_PIECES" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BIENS_COMMUNE" Association="ImmoWhatModel.FK_BIENS_COMMUNE">
-            <End Role="COMMUNE" EntitySet="COMMUNE" />
-            <End Role="BIEN" EntitySet="BIEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BIENS_MEMBRE" Association="ImmoWhatModel.FK_BIENS_MEMBRE">
-            <End Role="MEMBRE" EntitySet="MEMBRE" />
-            <End Role="BIEN" EntitySet="BIEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BIENS_TYPEBIEN" Association="ImmoWhatModel.FK_BIENS_TYPEBIEN">
-            <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
-            <End Role="BIEN" EntitySet="BIEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BIEN_PIECES_PIECES" Association="ImmoWhatModel.FK_BIEN_PIECES_PIECES">
-            <End Role="PIECES" EntitySet="PIECES" />
-            <End Role="BIEN_PIECES" EntitySet="BIEN_PIECES" />
-          </AssociationSet>
-          <AssociationSet Name="FK_mail_MEMBRE" Association="ImmoWhatModel.FK_mail_MEMBRE">
-            <End Role="MEMBRE" EntitySet="MEMBRE" />
-            <End Role="mail" EntitySet="mail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VAL_PRIX_MOYEN_BIEN_RefCouleur" Association="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_RefCouleur">
-            <End Role="RefCouleur" EntitySet="RefCouleur" />
-            <End Role="VAL_PRIX_MOYEN_BIEN" EntitySet="VAL_PRIX_MOYEN_BIEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN" Association="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN">
-            <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
-            <End Role="VAL_PRIX_MOYEN_BIEN" EntitySet="VAL_PRIX_MOYEN_BIEN" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="ImmoWhatModel.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="BIEN_OPTION" Association="ImmoWhatModel.BIEN_OPTION">
-            <End Role="BIEN" EntitySet="BIEN" />
-            <End Role="OPTIONS" EntitySet="OPTIONS" />
-          </AssociationSet>
           <FunctionImport Name="changeStatutMailToRepondu">
           <Parameter Name="idMail" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1419,6 +1532,107 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <FunctionImport Name="GetACommuneWithCodePostal" ReturnType="Collection(ImmoWhatModel.GetACommuneWithCodePostal_Result)">
             <Parameter Name="codePostal" Mode="In" Type="String" />
             <Parameter Name="langue" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="EnregistrerNvlleConnection">
+          <Parameter Name="login" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SearchBiens" ReturnType="Collection(ImmoWhatModel.SearchBiens_Result)">
+          <Parameter Name="search" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SearchMembres" ReturnType="Collection(ImmoWhatModel.SearchMembres_Result)">
+          <Parameter Name="search" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="C__MigrationHistory" EntityType="ImmoWhatModel.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="ImmoWhatModel.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="ImmoWhatModel.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="ImmoWhatModel.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="ImmoWhatModel.AspNetUsers" />
+          <EntitySet Name="BIEN" EntityType="ImmoWhatModel.BIEN" />
+          <EntitySet Name="BIEN_PHOTOS" EntityType="ImmoWhatModel.BIEN_PHOTOS" />
+          <EntitySet Name="BIEN_PIECES" EntityType="ImmoWhatModel.BIEN_PIECES" />
+          <EntitySet Name="COMMUNE" EntityType="ImmoWhatModel.COMMUNE" />
+          <EntitySet Name="COMMUNES_CONTOUR_POINT" EntityType="ImmoWhatModel.COMMUNES_CONTOUR_POINT" />
+          <EntitySet Name="Connections" EntityType="ImmoWhatModel.Connections" />
+          <EntitySet Name="mail" EntityType="ImmoWhatModel.mail" />
+          <EntitySet Name="MEMBRE" EntityType="ImmoWhatModel.MEMBRE" />
+          <EntitySet Name="OPTIONS" EntityType="ImmoWhatModel.OPTIONS" />
+          <EntitySet Name="PIECES" EntityType="ImmoWhatModel.PIECES" />
+          <EntitySet Name="RefCouleur" EntityType="ImmoWhatModel.RefCouleur" />
+          <EntitySet Name="RefCouleurAppart" EntityType="ImmoWhatModel.RefCouleurAppart" />
+          <EntitySet Name="RefCouleurTerrain" EntityType="ImmoWhatModel.RefCouleurTerrain" />
+          <EntitySet Name="sysdiagrams" EntityType="ImmoWhatModel.sysdiagrams" />
+          <EntitySet Name="TYPEBIEN" EntityType="ImmoWhatModel.TYPEBIEN" />
+          <EntitySet Name="VAL_PRIX_MOYEN_BIEN" EntityType="ImmoWhatModel.VAL_PRIX_MOYEN_BIEN" />
+          <EntitySet Name="COMMUNE_Prenoms" EntityType="ImmoWhatModel.COMMUNE_Prenoms" />
+          <EntitySet Name="MapsParams" EntityType="ImmoWhatModel.MapsParams" />
+          <EntitySet Name="STAT_COMMUNES" EntityType="ImmoWhatModel.STAT_COMMUNES" />
+          <EntitySet Name="StatImmo" EntityType="ImmoWhatModel.StatImmo" />
+          <EntitySet Name="TableJSON" EntityType="ImmoWhatModel.TableJSON" />
+          <AssociationSet Name="FK_MEMBRE_AspNetRoles" Association="ImmoWhatModel.FK_MEMBRE_AspNetRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="ImmoWhatModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="ImmoWhatModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BIEN_PHOTOS_BIEN" Association="ImmoWhatModel.FK_BIEN_PHOTOS_BIEN">
+            <End Role="BIEN" EntitySet="BIEN" />
+            <End Role="BIEN_PHOTOS" EntitySet="BIEN_PHOTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BIEN_PIECES_BIEN" Association="ImmoWhatModel.FK_BIEN_PIECES_BIEN">
+            <End Role="BIEN" EntitySet="BIEN" />
+            <End Role="BIEN_PIECES" EntitySet="BIEN_PIECES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BIENS_COMMUNE" Association="ImmoWhatModel.FK_BIENS_COMMUNE">
+            <End Role="COMMUNE" EntitySet="COMMUNE" />
+            <End Role="BIEN" EntitySet="BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BIENS_MEMBRE" Association="ImmoWhatModel.FK_BIENS_MEMBRE">
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+            <End Role="BIEN" EntitySet="BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BIENS_TYPEBIEN" Association="ImmoWhatModel.FK_BIENS_TYPEBIEN">
+            <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
+            <End Role="BIEN" EntitySet="BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BIEN_PIECES_PIECES" Association="ImmoWhatModel.FK_BIEN_PIECES_PIECES">
+            <End Role="PIECES" EntitySet="PIECES" />
+            <End Role="BIEN_PIECES" EntitySet="BIEN_PIECES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connections_MEMBRE" Association="ImmoWhatModel.FK_Connections_MEMBRE">
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+            <End Role="Connections" EntitySet="Connections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_mail_MEMBRE" Association="ImmoWhatModel.FK_mail_MEMBRE">
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+            <End Role="mail" EntitySet="mail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VAL_PRIX_MOYEN_BIEN_RefCouleur" Association="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_RefCouleur">
+            <End Role="RefCouleur" EntitySet="RefCouleur" />
+            <End Role="VAL_PRIX_MOYEN_BIEN" EntitySet="VAL_PRIX_MOYEN_BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN" Association="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN">
+            <End Role="TYPEBIEN" EntitySet="TYPEBIEN" />
+            <End Role="VAL_PRIX_MOYEN_BIEN" EntitySet="VAL_PRIX_MOYEN_BIEN" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="ImmoWhatModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="BIEN_OPTION" Association="ImmoWhatModel.BIEN_OPTION">
+            <End Role="BIEN" EntitySet="BIEN" />
+            <End Role="OPTIONS" EntitySet="OPTIONS" />
+          </AssociationSet>
+          <FunctionImport Name="SearchBiens2" ReturnType="Collection(ImmoWhatModel.SearchBiens2_Result)">
+          <Parameter Name="search" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SearchMembres2" ReturnType="Collection(ImmoWhatModel.SearchMembres2_Result)">
+          <Parameter Name="search" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -1662,6 +1876,149 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Type="Int32" Name="idEmetteur" Nullable="false" />
           <Property Type="Boolean" Name="deleted" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="GetMyBiensList_Result">
+          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_IdType" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_IdProprietaire" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_idCommune" Nullable="false" />
+          <Property Type="String" Name="Bien_Rue" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="BIEN_Numero" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="BIEN_Boite" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="BIEN_Vendu" Nullable="false" />
+          <Property Type="Boolean" Name="BIEN_Supprime" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Etages" Nullable="false" />
+          <Property Type="String" Name="BIEN_Libelle" Nullable="true" MaxLength="550" />
+          <Property Type="Int32" Name="BIEN_AnneeDeConstruction" Nullable="false" />
+          <Property Type="String" Name="BIEN_Energie" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="BIEN_PhotoPrincipale" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetMyBiensList2_Result">
+          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_IdType" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_IdProprietaire" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_idCommune" Nullable="false" />
+          <Property Type="String" Name="Bien_Rue" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="BIEN_Numero" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="BIEN_Boite" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="BIEN_Vendu" Nullable="false" />
+          <Property Type="Boolean" Name="BIEN_Supprime" Nullable="false" />
+          <Property Type="Int32" Name="BIEN_Etages" Nullable="false" />
+          <Property Type="String" Name="BIEN_Libelle" Nullable="true" MaxLength="550" />
+          <Property Type="Int32" Name="BIEN_AnneeDeConstruction" Nullable="false" />
+          <Property Type="String" Name="BIEN_Energie" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="BIEN_PhotoPrincipale" Nullable="false" />
+          <Property Type="String" Name="commune" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="CodePostal" Nullable="false" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="GetPrenomsPopulaires_Result">
+          <Property Type="Int32" Name="idCommune" Nullable="true" />
+          <Property Type="String" Name="nomCommuneFR" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="nomCommuneNL" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="prenom" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="nbPersonnes" Nullable="true" />
+          <Property Type="String" Name="sexe" Nullable="true" MaxLength="5" />
+        </ComplexType>
+        <ComplexType Name="GetStatCommune_Result">
+          <Property Type="Int32" Name="nbHab" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmes" Nullable="true" />
+          <Property Type="Int32" Name="nbHommes" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmeCelibataire" Nullable="true" />
+          <Property Type="Int32" Name="hommeCelibataire" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge1" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge1" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge2" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge2" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge3" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge3" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge4" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge4" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge5" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge5" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge6" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge6" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge7" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge7" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetStatCommune2_Result">
+          <Property Type="Int32" Name="nbHab" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmes" Nullable="true" />
+          <Property Type="Int32" Name="nbHommes" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmeCelibataire" Nullable="true" />
+          <Property Type="Int32" Name="hommeCelibataire" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge1" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge1" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge2" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge2" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge3" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge3" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge4" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge4" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge5" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge5" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge6" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge6" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge7" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge7" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge8" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge8" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge9" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge9" Nullable="true" />
+          <Property Type="Int32" Name="nbHommesAge10" Nullable="true" />
+          <Property Type="Int32" Name="nbFemmesAge10" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetJsonForType_Result">
+          <Property Type="Int32" Name="idType" Nullable="true" />
+          <Property Type="String" Name="codePostal" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="commune" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="couleur" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="latCentre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="lngCentre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="latPt" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="lngPt" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetJsonCoordForType_Result">
+          <Property Type="Int32" Name="idType" Nullable="true" />
+          <Property Type="String" Name="codePostal" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="commune" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="couleur" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="latCentre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="lngCentre" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="idCoord" Nullable="true" />
+          <Property Type="String" Name="latPt" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="lngPt" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetACommuneWithCodePostal_Result">
+          <Property Type="Int32" Name="idCommune" Nullable="false" />
+          <Property Type="String" Name="CodePostal" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Localite" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Province" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="langue" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="longitude" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="latitude" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SearchBiens_Result">
+          <Property Type="Int32" Name="idBien" Nullable="false" />
+          <Property Type="String" Name="nom" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="prenom" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="commune" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="CodePostal" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="rue" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="numero" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="boite" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="prix" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SearchMembres_Result">
+          <Property Type="Int32" Name="id" Nullable="true" />
+          <Property Type="String" Name="nom" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="prenom" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="enregistrement" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="derConn" Nullable="true" Precision="23" />
+        </ComplexType>
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -1791,6 +2148,15 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Name="Longitude" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Commune_CodePostal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Connections">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idMembre" Type="Int32" Nullable="false" />
+          <Property Name="dateConnection" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MEMBRE" Relationship="ImmoWhatModel.FK_Connections_MEMBRE" FromRole="Connections" ToRole="MEMBRE" />
+        </EntityType>
         <EntityType Name="mail">
           <Key>
             <PropertyRef Name="idMail" />
@@ -1829,6 +2195,7 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Name="RoleMembre" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetRoles" Relationship="ImmoWhatModel.FK_MEMBRE_AspNetRoles" FromRole="MEMBRE" ToRole="AspNetRoles" />
           <NavigationProperty Name="BIEN" Relationship="ImmoWhatModel.FK_BIENS_MEMBRE" FromRole="MEMBRE" ToRole="BIEN" />
+          <NavigationProperty Name="Connections" Relationship="ImmoWhatModel.FK_Connections_MEMBRE" FromRole="MEMBRE" ToRole="Connections" />
           <NavigationProperty Name="mail1" Relationship="ImmoWhatModel.FK_mail_MEMBRE" FromRole="MEMBRE" ToRole="mail" />
         </EntityType>
         <EntityType Name="OPTIONS">
@@ -1907,6 +2274,22 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <NavigationProperty Name="RefCouleur" Relationship="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_RefCouleur" FromRole="VAL_PRIX_MOYEN_BIEN" ToRole="RefCouleur" />
           <NavigationProperty Name="TYPEBIEN" Relationship="ImmoWhatModel.FK_VAL_PRIX_MOYEN_BIEN_TYPEBIEN" FromRole="VAL_PRIX_MOYEN_BIEN" ToRole="TYPEBIEN" />
         </EntityType>
+        <EntityType Name="COMMUNE_Prenoms">
+          <Key>
+            <PropertyRef Name="IdCommune" />
+            <PropertyRef Name="NomCommuneFR" />
+            <PropertyRef Name="NomCommuneNL" />
+            <PropertyRef Name="Prenom" />
+            <PropertyRef Name="NombreDePersonnes" />
+            <PropertyRef Name="Sexe" />
+          </Key>
+          <Property Name="IdCommune" Type="Int32" Nullable="false" />
+          <Property Name="NomCommuneFR" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="NomCommuneNL" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Prenom" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="NombreDePersonnes" Type="Int32" Nullable="false" />
+          <Property Name="Sexe" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="MapsParams">
           <Key>
             <PropertyRef Name="codePostal" />
@@ -1926,6 +2309,54 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Name="PriceA" Type="Int64" />
           <Property Name="PriceT" Type="Int64" />
           <Property Name="PriceV" Type="Int64" />
+        </EntityType>
+        <EntityType Name="STAT_COMMUNES">
+          <Key>
+            <PropertyRef Name="IdCommune" />
+            <PropertyRef Name="NomCommuneNL" />
+            <PropertyRef Name="NomCommuneFR" />
+            <PropertyRef Name="IdArrondissement" />
+            <PropertyRef Name="ArrondissementNL" />
+            <PropertyRef Name="ArrondissementFR" />
+            <PropertyRef Name="IdProvince" />
+            <PropertyRef Name="ProvinceNL" />
+            <PropertyRef Name="ProvinceFR" />
+            <PropertyRef Name="IdRegion" />
+            <PropertyRef Name="RegionNL" />
+            <PropertyRef Name="RegionFR" />
+            <PropertyRef Name="SEXE" />
+            <PropertyRef Name="CodeNational" />
+            <PropertyRef Name="NationaliteFR" />
+            <PropertyRef Name="NationaliteNL" />
+            <PropertyRef Name="CodeEtatCivil" />
+            <PropertyRef Name="EtatCivilFR" />
+            <PropertyRef Name="EtatCivilNL" />
+            <PropertyRef Name="Age" />
+            <PropertyRef Name="NombreDePersonnes" />
+            <PropertyRef Name="AnneeDeReference" />
+          </Key>
+          <Property Name="IdCommune" Type="Int32" Nullable="false" />
+          <Property Name="NomCommuneNL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NomCommuneFR" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdArrondissement" Type="Int32" Nullable="false" />
+          <Property Name="ArrondissementNL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ArrondissementFR" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdProvince" Type="Int32" Nullable="false" />
+          <Property Name="ProvinceNL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProvinceFR" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdRegion" Type="Int32" Nullable="false" />
+          <Property Name="RegionNL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegionFR" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SEXE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CodeNational" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NationaliteFR" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NationaliteNL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodeEtatCivil" Type="Int32" Nullable="false" />
+          <Property Name="EtatCivilFR" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EtatCivilNL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="NombreDePersonnes" Type="Int32" Nullable="false" />
+          <Property Name="AnneeDeReference" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="StatImmo">
           <Key>
@@ -2014,6 +2445,29 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <Property Name="Terrain_Q50Prix" Type="Int32" Nullable="false" />
           <Property Name="Terrain_Q75Prix" Type="Int32" Nullable="false" />
           <Property Name="Terrain_P90Prix" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TableJSON">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="CodePostal" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="GMapPartRecord_Id" Type="Int32" />
+          <Property Name="StartZoom" Type="Int32" />
+          <Property Name="StopZoom" Type="Int32" />
+          <Property Name="Commune" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Quarter" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="ColorA" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ColorT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ColorV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PriceA" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="PriceT" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="PriceV" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="CenterLat" Type="Decimal" Precision="19" Scale="5" />
+          <Property Name="CenterLng" Type="Decimal" Precision="19" Scale="5" />
         </EntityType>
         <Association Name="FK_MEMBRE_AspNetRoles">
           <End Type="ImmoWhatModel.AspNetRoles" Role="AspNetRoles" Multiplicity="1" />
@@ -2127,6 +2581,18 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Connections_MEMBRE">
+          <End Type="ImmoWhatModel.MEMBRE" Role="MEMBRE" Multiplicity="1" />
+          <End Type="ImmoWhatModel.Connections" Role="Connections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEMBRE">
+              <PropertyRef Name="idMembre" />
+            </Principal>
+            <Dependent Role="Connections">
+              <PropertyRef Name="idMembre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_mail_MEMBRE">
           <End Type="ImmoWhatModel.MEMBRE" Role="MEMBRE" Multiplicity="1" />
           <End Type="ImmoWhatModel.mail" Role="mail" Multiplicity="*" />
@@ -2171,129 +2637,28 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
           <End Type="ImmoWhatModel.BIEN" Role="BIEN" Multiplicity="*" />
           <End Type="ImmoWhatModel.OPTIONS" Role="OPTIONS" Multiplicity="*" />
         </Association>
-        <ComplexType Name="GetMyBiensList_Result">
-          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_IdType" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_IdProprietaire" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_idCommune" Nullable="false" />
-          <Property Type="String" Name="Bien_Rue" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="BIEN_Numero" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="BIEN_Boite" Nullable="false" MaxLength="50" />
-          <Property Type="Boolean" Name="BIEN_Vendu" Nullable="false" />
-          <Property Type="Boolean" Name="BIEN_Supprime" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_Etages" Nullable="false" />
-          <Property Type="String" Name="BIEN_Libelle" Nullable="true" MaxLength="550" />
-          <Property Type="Int32" Name="BIEN_AnneeDeConstruction" Nullable="false" />
-          <Property Type="String" Name="BIEN_Energie" Nullable="false" MaxLength="5" />
-          <Property Type="Int32" Name="BIEN_PhotoPrincipale" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="GetMyBiensList2_Result">
-          <Property Type="Int32" Name="BIEN_Id" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_IdType" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_IdProprietaire" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_Prix" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_Superficie" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_idCommune" Nullable="false" />
-          <Property Type="String" Name="Bien_Rue" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="BIEN_Numero" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="BIEN_Boite" Nullable="false" MaxLength="50" />
-          <Property Type="Boolean" Name="BIEN_Vendu" Nullable="false" />
-          <Property Type="Boolean" Name="BIEN_Supprime" Nullable="false" />
-          <Property Type="Int32" Name="BIEN_Etages" Nullable="false" />
-          <Property Type="String" Name="BIEN_Libelle" Nullable="true" MaxLength="550" />
-          <Property Type="Int32" Name="BIEN_AnneeDeConstruction" Nullable="false" />
-          <Property Type="String" Name="BIEN_Energie" Nullable="false" MaxLength="5" />
-          <Property Type="Int32" Name="BIEN_PhotoPrincipale" Nullable="false" />
+        <ComplexType Name="SearchBiens2_Result">
+          <Property Type="Int32" Name="idBien" Nullable="false" />
+          <Property Type="String" Name="nom" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="prenom" Nullable="false" MaxLength="250" />
           <Property Type="String" Name="commune" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="CodePostal" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="rue" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="numero" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="boite" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="prix" Nullable="false" />
+          <Property Type="Boolean" Name="deleted" Nullable="false" />
+          <Property Type="Boolean" Name="vendu" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="GetPrenomsPopulaires_Result">
-          <Property Type="Int32" Name="idCommune" Nullable="true" />
-          <Property Type="String" Name="nomCommuneFR" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="nomCommuneNL" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="prenom" Nullable="true" MaxLength="250" />
-          <Property Type="Int32" Name="nbPersonnes" Nullable="true" />
-          <Property Type="String" Name="sexe" Nullable="true" MaxLength="5" />
-        </ComplexType>
-        <ComplexType Name="GetStatCommune_Result">
-          <Property Type="Int32" Name="nbHab" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmes" Nullable="true" />
-          <Property Type="Int32" Name="nbHommes" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmeCelibataire" Nullable="true" />
-          <Property Type="Int32" Name="hommeCelibataire" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge1" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge1" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge2" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge2" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge3" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge3" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge4" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge4" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge5" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge5" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge6" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge6" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge7" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge7" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetStatCommune2_Result">
-          <Property Type="Int32" Name="nbHab" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmes" Nullable="true" />
-          <Property Type="Int32" Name="nbHommes" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmeCelibataire" Nullable="true" />
-          <Property Type="Int32" Name="hommeCelibataire" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge1" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge1" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge2" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge2" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge3" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge3" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge4" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge4" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge5" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge5" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge6" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge6" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge7" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge7" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge8" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge8" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge9" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge9" Nullable="true" />
-          <Property Type="Int32" Name="nbHommesAge10" Nullable="true" />
-          <Property Type="Int32" Name="nbFemmesAge10" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetJsonForType_Result">
-          <Property Type="Int32" Name="idType" Nullable="true" />
-          <Property Type="String" Name="codePostal" Nullable="true" MaxLength="5" />
-          <Property Type="String" Name="commune" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="couleur" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="latCentre" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="lngCentre" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="latPt" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="lngPt" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="GetJsonCoordForType_Result">
-          <Property Type="Int32" Name="idType" Nullable="true" />
-          <Property Type="String" Name="codePostal" Nullable="true" MaxLength="5" />
-          <Property Type="String" Name="commune" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="couleur" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="latCentre" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="lngCentre" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="idCoord" Nullable="true" />
-          <Property Type="String" Name="latPt" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="lngPt" Nullable="true" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="GetACommuneWithCodePostal_Result">
-          <Property Type="Int32" Name="idCommune" Nullable="false" />
-          <Property Type="String" Name="CodePostal" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="Localite" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="Province" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="langue" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="longitude" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="latitude" Nullable="false" MaxLength="50" />
+        <ComplexType Name="SearchMembres2_Result">
+          <Property Type="Int32" Name="id" Nullable="true" />
+          <Property Type="String" Name="nom" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="prenom" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="enregistrement" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="derConn" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="deleted" Nullable="true" />
+          <Property Type="Boolean" Name="administrator" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2608,322 +2973,6 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SendMail2" FunctionName="ImmoWhatModel.Store.SendMail2" />
-          <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="ImmoWhatModel.C__MigrationHistory">
-              <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="ImmoWhatModel.AspNetRoles">
-              <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="ImmoWhatModel.AspNetUserClaims">
-              <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="ImmoWhatModel.AspNetUserLogins">
-              <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="ImmoWhatModel.AspNetUsers">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BIEN">
-            <EntityTypeMapping TypeName="ImmoWhatModel.BIEN">
-              <MappingFragment StoreEntitySet="BIEN">
-                <ScalarProperty Name="BIEN_PhotoPrincipale" ColumnName="BIEN_PhotoPrincipale" />
-                <ScalarProperty Name="BIEN_Energie" ColumnName="BIEN_Energie" />
-                <ScalarProperty Name="BIEN_AnneeDeConstruction" ColumnName="BIEN_AnneeDeConstruction" />
-                <ScalarProperty Name="BIEN_Libelle" ColumnName="BIEN_Libelle" />
-                <ScalarProperty Name="BIEN_Etages" ColumnName="BIEN_Etages" />
-                <ScalarProperty Name="BIEN_Supprime" ColumnName="BIEN_Supprime" />
-                <ScalarProperty Name="BIEN_Vendu" ColumnName="BIEN_Vendu" />
-                <ScalarProperty Name="BIEN_Boite" ColumnName="BIEN_Boite" />
-                <ScalarProperty Name="BIEN_Numero" ColumnName="BIEN_Numero" />
-                <ScalarProperty Name="Bien_Rue" ColumnName="Bien_Rue" />
-                <ScalarProperty Name="BIEN_idCommune" ColumnName="BIEN_idCommune" />
-                <ScalarProperty Name="BIEN_Superficie" ColumnName="BIEN_Superficie" />
-                <ScalarProperty Name="BIEN_Prix" ColumnName="BIEN_Prix" />
-                <ScalarProperty Name="BIEN_IdProprietaire" ColumnName="BIEN_IdProprietaire" />
-                <ScalarProperty Name="BIEN_IdType" ColumnName="BIEN_IdType" />
-                <ScalarProperty Name="BIEN_Id" ColumnName="BIEN_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BIEN_PHOTOS">
-            <EntityTypeMapping TypeName="ImmoWhatModel.BIEN_PHOTOS">
-              <MappingFragment StoreEntitySet="BIEN_PHOTOS">
-                <ScalarProperty Name="lien" ColumnName="lien" />
-                <ScalarProperty Name="idBien" ColumnName="idBien" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BIEN_PIECES">
-            <EntityTypeMapping TypeName="ImmoWhatModel.BIEN_PIECES">
-              <MappingFragment StoreEntitySet="BIEN_PIECES">
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="idPiece" ColumnName="idPiece" />
-                <ScalarProperty Name="idBien" ColumnName="idBien" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="COMMUNE">
-            <EntityTypeMapping TypeName="ImmoWhatModel.COMMUNE">
-              <MappingFragment StoreEntitySet="COMMUNE">
-                <ScalarProperty Name="latitude" ColumnName="latitude" />
-                <ScalarProperty Name="longitude" ColumnName="longitude" />
-                <ScalarProperty Name="langue" ColumnName="langue" />
-                <ScalarProperty Name="Province" ColumnName="Province" />
-                <ScalarProperty Name="Localite" ColumnName="Localite" />
-                <ScalarProperty Name="CodePostal" ColumnName="CodePostal" />
-                <ScalarProperty Name="idCommune" ColumnName="idCommune" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="COMMUNES_CONTOUR_POINT">
-            <EntityTypeMapping TypeName="ImmoWhatModel.COMMUNES_CONTOUR_POINT">
-              <MappingFragment StoreEntitySet="COMMUNES_CONTOUR_POINT">
-                <ScalarProperty Name="Commune_CodePostal" ColumnName="Commune_CodePostal" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="mail">
-            <EntityTypeMapping TypeName="ImmoWhatModel.mail">
-              <MappingFragment StoreEntitySet="mail">
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="idEmetteur" ColumnName="idEmetteur" />
-                <ScalarProperty Name="idRecepteur" ColumnName="idRecepteur" />
-                <ScalarProperty Name="repondu" ColumnName="repondu" />
-                <ScalarProperty Name="lu" ColumnName="lu" />
-                <ScalarProperty Name="msg" ColumnName="msg" />
-                <ScalarProperty Name="sujet" ColumnName="sujet" />
-                <ScalarProperty Name="dateEnvoi" ColumnName="dateEnvoi" />
-                <ScalarProperty Name="adresseMail" ColumnName="adresseMail" />
-                <ScalarProperty Name="idMail" ColumnName="idMail" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MEMBRE">
-            <EntityTypeMapping TypeName="ImmoWhatModel.MEMBRE">
-              <MappingFragment StoreEntitySet="MEMBRE">
-                <ScalarProperty Name="RoleMembre" ColumnName="RoleMembre" />
-                <ScalarProperty Name="DateSuppression" ColumnName="DateSuppression" />
-                <ScalarProperty Name="DateEnregistrement" ColumnName="DateEnregistrement" />
-                <ScalarProperty Name="idUser" ColumnName="idUser" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="photo" ColumnName="photo" />
-                <ScalarProperty Name="estProprietaire" ColumnName="estProprietaire" />
-                <ScalarProperty Name="dateDeNaissance" ColumnName="dateDeNaissance" />
-                <ScalarProperty Name="boite" ColumnName="boite" />
-                <ScalarProperty Name="numero" ColumnName="numero" />
-                <ScalarProperty Name="rue" ColumnName="rue" />
-                <ScalarProperty Name="Commune" ColumnName="Commune" />
-                <ScalarProperty Name="prenom" ColumnName="prenom" />
-                <ScalarProperty Name="nom" ColumnName="nom" />
-                <ScalarProperty Name="mail" ColumnName="mail" />
-                <ScalarProperty Name="idMembre" ColumnName="idMembre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OPTIONS">
-            <EntityTypeMapping TypeName="ImmoWhatModel.OPTIONS">
-              <MappingFragment StoreEntitySet="OPTIONS">
-                <ScalarProperty Name="Libelle" ColumnName="Libelle" />
-                <ScalarProperty Name="IdOption" ColumnName="IdOption" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PIECES">
-            <EntityTypeMapping TypeName="ImmoWhatModel.PIECES">
-              <MappingFragment StoreEntitySet="PIECES">
-                <ScalarProperty Name="libelle" ColumnName="libelle" />
-                <ScalarProperty Name="idPiece" ColumnName="idPiece" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RefCouleur">
-            <EntityTypeMapping TypeName="ImmoWhatModel.RefCouleur">
-              <MappingFragment StoreEntitySet="RefCouleur">
-                <ScalarProperty Name="valeurMax" ColumnName="valeurMax" />
-                <ScalarProperty Name="valeurMin" ColumnName="valeurMin" />
-                <ScalarProperty Name="refColor" ColumnName="refColor" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RefCouleurAppart">
-            <EntityTypeMapping TypeName="ImmoWhatModel.RefCouleurAppart">
-              <MappingFragment StoreEntitySet="RefCouleurAppart">
-                <ScalarProperty Name="valeurMax" ColumnName="valeurMax" />
-                <ScalarProperty Name="valeurMin" ColumnName="valeurMin" />
-                <ScalarProperty Name="refColor" ColumnName="refColor" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RefCouleurTerrain">
-            <EntityTypeMapping TypeName="ImmoWhatModel.RefCouleurTerrain">
-              <MappingFragment StoreEntitySet="RefCouleurTerrain">
-                <ScalarProperty Name="valeurMax" ColumnName="valeurMax" />
-                <ScalarProperty Name="valeurMin" ColumnName="valeurMin" />
-                <ScalarProperty Name="refColor" ColumnName="refColor" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ImmoWhatModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TYPEBIEN">
-            <EntityTypeMapping TypeName="ImmoWhatModel.TYPEBIEN">
-              <MappingFragment StoreEntitySet="TYPEBIEN">
-                <ScalarProperty Name="Libelle" ColumnName="Libelle" />
-                <ScalarProperty Name="idTypeBien" ColumnName="idTypeBien" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VAL_PRIX_MOYEN_BIEN">
-            <EntityTypeMapping TypeName="ImmoWhatModel.VAL_PRIX_MOYEN_BIEN">
-              <MappingFragment StoreEntitySet="VAL_PRIX_MOYEN_BIEN">
-                <ScalarProperty Name="idClasse" ColumnName="idClasse" />
-                <ScalarProperty Name="valMax" ColumnName="valMax" />
-                <ScalarProperty Name="valMin" ColumnName="valMin" />
-                <ScalarProperty Name="idCouleur" ColumnName="idCouleur" />
-                <ScalarProperty Name="idType" ColumnName="idType" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MapsParams">
-            <EntityTypeMapping TypeName="ImmoWhatModel.MapsParams">
-              <MappingFragment StoreEntitySet="MapsParams">
-                <ScalarProperty Name="PriceV" ColumnName="PriceV" />
-                <ScalarProperty Name="PriceT" ColumnName="PriceT" />
-                <ScalarProperty Name="PriceA" ColumnName="PriceA" />
-                <ScalarProperty Name="idCouleurVilla" ColumnName="idCouleurVilla" />
-                <ScalarProperty Name="idCouleurTer" ColumnName="idCouleurTer" />
-                <ScalarProperty Name="idCouleurApp" ColumnName="idCouleurApp" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
-                <ScalarProperty Name="Commune" ColumnName="Commune" />
-                <ScalarProperty Name="StopZoom" ColumnName="StopZoom" />
-                <ScalarProperty Name="StartZoom" ColumnName="StartZoom" />
-                <ScalarProperty Name="GMapPartRecord_Id" ColumnName="GMapPartRecord_Id" />
-                <ScalarProperty Name="idCouleur" ColumnName="idCouleur" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StatImmo">
-            <EntityTypeMapping TypeName="ImmoWhatModel.StatImmo">
-              <MappingFragment StoreEntitySet="StatImmo">
-                <ScalarProperty Name="Terrain_P90Prix" ColumnName="Terrain_P90Prix" />
-                <ScalarProperty Name="Terrain_Q75Prix" ColumnName="Terrain_Q75Prix" />
-                <ScalarProperty Name="Terrain_Q50Prix" ColumnName="Terrain_Q50Prix" />
-                <ScalarProperty Name="Terrain_Q25Prix" ColumnName="Terrain_Q25Prix" />
-                <ScalarProperty Name="Terrain_P10Prix" ColumnName="Terrain_P10Prix" />
-                <ScalarProperty Name="Terrain_prixMoyen" ColumnName="Terrain_prixMoyen" />
-                <ScalarProperty Name="Terrain_superficieTotale" ColumnName="Terrain_superficieTotale" />
-                <ScalarProperty Name="Terrain_prixTotal" ColumnName="Terrain_prixTotal" />
-                <ScalarProperty Name="Terrain_nbTransactions" ColumnName="Terrain_nbTransactions" />
-                <ScalarProperty Name="Appart_P90Prix" ColumnName="Appart_P90Prix" />
-                <ScalarProperty Name="Appart_Q75Prix" ColumnName="Appart_Q75Prix" />
-                <ScalarProperty Name="Appart_Q50Prix" ColumnName="Appart_Q50Prix" />
-                <ScalarProperty Name="Appart_Q25Prix" ColumnName="Appart_Q25Prix" />
-                <ScalarProperty Name="Appart_P10Prix" ColumnName="Appart_P10Prix" />
-                <ScalarProperty Name="Appart_prixMoyen" ColumnName="Appart_prixMoyen" />
-                <ScalarProperty Name="Appart_superficieTotale" ColumnName="Appart_superficieTotale" />
-                <ScalarProperty Name="Appart_prixTotal" ColumnName="Appart_prixTotal" />
-                <ScalarProperty Name="Appart_nbTransactions" ColumnName="Appart_nbTransactions" />
-                <ScalarProperty Name="Villa_P90Prix" ColumnName="Villa_P90Prix" />
-                <ScalarProperty Name="Villa_Q75Prix" ColumnName="Villa_Q75Prix" />
-                <ScalarProperty Name="Villa_Q50Prix" ColumnName="Villa_Q50Prix" />
-                <ScalarProperty Name="Villa_Q25Prix" ColumnName="Villa_Q25Prix" />
-                <ScalarProperty Name="Villa_P10Prix" ColumnName="Villa_P10Prix" />
-                <ScalarProperty Name="Villa_prixMoyen" ColumnName="Villa_prixMoyen" />
-                <ScalarProperty Name="Villa_superficieTotale" ColumnName="Villa_superficieTotale" />
-                <ScalarProperty Name="Villa_prixTotal" ColumnName="Villa_prixTotal" />
-                <ScalarProperty Name="Villa_nbTransactions" ColumnName="Villa_nbTransactions" />
-                <ScalarProperty Name="Maison_P90Prix" ColumnName="Maison_P90Prix" />
-                <ScalarProperty Name="Maison_Q75Prix" ColumnName="Maison_Q75Prix" />
-                <ScalarProperty Name="Maison_Q50Prix" ColumnName="Maison_Q50Prix" />
-                <ScalarProperty Name="Maison_Q25Prix" ColumnName="Maison_Q25Prix" />
-                <ScalarProperty Name="Maison_P10Prix" ColumnName="Maison_P10Prix" />
-                <ScalarProperty Name="Maison_prixMoyen" ColumnName="Maison_prixMoyen" />
-                <ScalarProperty Name="Maison_superficieTotal" ColumnName="Maison_superficieTotal" />
-                <ScalarProperty Name="Maison_prixTotal" ColumnName="Maison_prixTotal" />
-                <ScalarProperty Name="Maison_nbTransactions" ColumnName="Maison_nbTransactions" />
-                <ScalarProperty Name="classeDeSuperficie" ColumnName="classeDeSuperficie" />
-                <ScalarProperty Name="trimestre" ColumnName="trimestre" />
-                <ScalarProperty Name="annee" ColumnName="annee" />
-                <ScalarProperty Name="localite" ColumnName="localite" />
-                <ScalarProperty Name="refnis" ColumnName="refnis" />
-                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="ImmoWhatModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="BIEN_OPTION" TypeName="ImmoWhatModel.BIEN_OPTION" StoreEntitySet="BIEN_OPTION">
-            <EndProperty Name="OPTIONS">
-              <ScalarProperty Name="IdOption" ColumnName="IdOption" />
-            </EndProperty>
-            <EndProperty Name="BIEN">
-              <ScalarProperty Name="BIEN_Id" ColumnName="IdBien" />
-            </EndProperty>
-          </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="changeStatutMailToRepondu" FunctionName="ImmoWhatModel.Store.changeStatutMailToRepondu" />
           <FunctionImportMapping FunctionImportName="changeStatutMailToDeleted" FunctionName="ImmoWhatModel.Store.changeStatutMailToDeleted" />
           <FunctionImportMapping FunctionImportName="GetMyBiensList2" FunctionName="ImmoWhatModel.Store.GetMyBiensList2">
@@ -3045,6 +3094,454 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.StatImmo' n'a pas de clé primair
                 <ScalarProperty Name="langue" ColumnName="langue" />
                 <ScalarProperty Name="longitude" ColumnName="longitude" />
                 <ScalarProperty Name="latitude" ColumnName="latitude" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EnregistrerNvlleConnection" FunctionName="ImmoWhatModel.Store.EnregistrerNvlleConnection" />
+          <FunctionImportMapping FunctionImportName="SearchBiens" FunctionName="ImmoWhatModel.Store.SearchBiens">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.SearchBiens_Result">
+                <ScalarProperty Name="idBien" ColumnName="idBien" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="commune" ColumnName="commune" />
+                <ScalarProperty Name="CodePostal" ColumnName="CodePostal" />
+                <ScalarProperty Name="rue" ColumnName="rue" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="boite" ColumnName="boite" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SearchMembres" FunctionName="ImmoWhatModel.Store.SearchMembres">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.SearchMembres_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="enregistrement" ColumnName="enregistrement" />
+                <ScalarProperty Name="derConn" ColumnName="derConn" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="ImmoWhatModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="ImmoWhatModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="ImmoWhatModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="ImmoWhatModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="ImmoWhatModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BIEN">
+            <EntityTypeMapping TypeName="ImmoWhatModel.BIEN">
+              <MappingFragment StoreEntitySet="BIEN">
+                <ScalarProperty Name="BIEN_PhotoPrincipale" ColumnName="BIEN_PhotoPrincipale" />
+                <ScalarProperty Name="BIEN_Energie" ColumnName="BIEN_Energie" />
+                <ScalarProperty Name="BIEN_AnneeDeConstruction" ColumnName="BIEN_AnneeDeConstruction" />
+                <ScalarProperty Name="BIEN_Libelle" ColumnName="BIEN_Libelle" />
+                <ScalarProperty Name="BIEN_Etages" ColumnName="BIEN_Etages" />
+                <ScalarProperty Name="BIEN_Supprime" ColumnName="BIEN_Supprime" />
+                <ScalarProperty Name="BIEN_Vendu" ColumnName="BIEN_Vendu" />
+                <ScalarProperty Name="BIEN_Boite" ColumnName="BIEN_Boite" />
+                <ScalarProperty Name="BIEN_Numero" ColumnName="BIEN_Numero" />
+                <ScalarProperty Name="Bien_Rue" ColumnName="Bien_Rue" />
+                <ScalarProperty Name="BIEN_idCommune" ColumnName="BIEN_idCommune" />
+                <ScalarProperty Name="BIEN_Superficie" ColumnName="BIEN_Superficie" />
+                <ScalarProperty Name="BIEN_Prix" ColumnName="BIEN_Prix" />
+                <ScalarProperty Name="BIEN_IdProprietaire" ColumnName="BIEN_IdProprietaire" />
+                <ScalarProperty Name="BIEN_IdType" ColumnName="BIEN_IdType" />
+                <ScalarProperty Name="BIEN_Id" ColumnName="BIEN_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BIEN_PHOTOS">
+            <EntityTypeMapping TypeName="ImmoWhatModel.BIEN_PHOTOS">
+              <MappingFragment StoreEntitySet="BIEN_PHOTOS">
+                <ScalarProperty Name="lien" ColumnName="lien" />
+                <ScalarProperty Name="idBien" ColumnName="idBien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BIEN_PIECES">
+            <EntityTypeMapping TypeName="ImmoWhatModel.BIEN_PIECES">
+              <MappingFragment StoreEntitySet="BIEN_PIECES">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idPiece" ColumnName="idPiece" />
+                <ScalarProperty Name="idBien" ColumnName="idBien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="COMMUNE">
+            <EntityTypeMapping TypeName="ImmoWhatModel.COMMUNE">
+              <MappingFragment StoreEntitySet="COMMUNE">
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="langue" ColumnName="langue" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Localite" ColumnName="Localite" />
+                <ScalarProperty Name="CodePostal" ColumnName="CodePostal" />
+                <ScalarProperty Name="idCommune" ColumnName="idCommune" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="COMMUNES_CONTOUR_POINT">
+            <EntityTypeMapping TypeName="ImmoWhatModel.COMMUNES_CONTOUR_POINT">
+              <MappingFragment StoreEntitySet="COMMUNES_CONTOUR_POINT">
+                <ScalarProperty Name="Commune_CodePostal" ColumnName="Commune_CodePostal" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Connections">
+            <EntityTypeMapping TypeName="ImmoWhatModel.Connections">
+              <MappingFragment StoreEntitySet="Connections">
+                <ScalarProperty Name="dateConnection" ColumnName="dateConnection" />
+                <ScalarProperty Name="idMembre" ColumnName="idMembre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mail">
+            <EntityTypeMapping TypeName="ImmoWhatModel.mail">
+              <MappingFragment StoreEntitySet="mail">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="idEmetteur" ColumnName="idEmetteur" />
+                <ScalarProperty Name="idRecepteur" ColumnName="idRecepteur" />
+                <ScalarProperty Name="repondu" ColumnName="repondu" />
+                <ScalarProperty Name="lu" ColumnName="lu" />
+                <ScalarProperty Name="msg" ColumnName="msg" />
+                <ScalarProperty Name="sujet" ColumnName="sujet" />
+                <ScalarProperty Name="dateEnvoi" ColumnName="dateEnvoi" />
+                <ScalarProperty Name="adresseMail" ColumnName="adresseMail" />
+                <ScalarProperty Name="idMail" ColumnName="idMail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MEMBRE">
+            <EntityTypeMapping TypeName="ImmoWhatModel.MEMBRE">
+              <MappingFragment StoreEntitySet="MEMBRE">
+                <ScalarProperty Name="RoleMembre" ColumnName="RoleMembre" />
+                <ScalarProperty Name="DateSuppression" ColumnName="DateSuppression" />
+                <ScalarProperty Name="DateEnregistrement" ColumnName="DateEnregistrement" />
+                <ScalarProperty Name="idUser" ColumnName="idUser" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="estProprietaire" ColumnName="estProprietaire" />
+                <ScalarProperty Name="dateDeNaissance" ColumnName="dateDeNaissance" />
+                <ScalarProperty Name="boite" ColumnName="boite" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="rue" ColumnName="rue" />
+                <ScalarProperty Name="Commune" ColumnName="Commune" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="idMembre" ColumnName="idMembre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OPTIONS">
+            <EntityTypeMapping TypeName="ImmoWhatModel.OPTIONS">
+              <MappingFragment StoreEntitySet="OPTIONS">
+                <ScalarProperty Name="Libelle" ColumnName="Libelle" />
+                <ScalarProperty Name="IdOption" ColumnName="IdOption" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PIECES">
+            <EntityTypeMapping TypeName="ImmoWhatModel.PIECES">
+              <MappingFragment StoreEntitySet="PIECES">
+                <ScalarProperty Name="libelle" ColumnName="libelle" />
+                <ScalarProperty Name="idPiece" ColumnName="idPiece" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RefCouleur">
+            <EntityTypeMapping TypeName="ImmoWhatModel.RefCouleur">
+              <MappingFragment StoreEntitySet="RefCouleur">
+                <ScalarProperty Name="valeurMax" ColumnName="valeurMax" />
+                <ScalarProperty Name="valeurMin" ColumnName="valeurMin" />
+                <ScalarProperty Name="refColor" ColumnName="refColor" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RefCouleurAppart">
+            <EntityTypeMapping TypeName="ImmoWhatModel.RefCouleurAppart">
+              <MappingFragment StoreEntitySet="RefCouleurAppart">
+                <ScalarProperty Name="valeurMax" ColumnName="valeurMax" />
+                <ScalarProperty Name="valeurMin" ColumnName="valeurMin" />
+                <ScalarProperty Name="refColor" ColumnName="refColor" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RefCouleurTerrain">
+            <EntityTypeMapping TypeName="ImmoWhatModel.RefCouleurTerrain">
+              <MappingFragment StoreEntitySet="RefCouleurTerrain">
+                <ScalarProperty Name="valeurMax" ColumnName="valeurMax" />
+                <ScalarProperty Name="valeurMin" ColumnName="valeurMin" />
+                <ScalarProperty Name="refColor" ColumnName="refColor" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ImmoWhatModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TYPEBIEN">
+            <EntityTypeMapping TypeName="ImmoWhatModel.TYPEBIEN">
+              <MappingFragment StoreEntitySet="TYPEBIEN">
+                <ScalarProperty Name="Libelle" ColumnName="Libelle" />
+                <ScalarProperty Name="idTypeBien" ColumnName="idTypeBien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VAL_PRIX_MOYEN_BIEN">
+            <EntityTypeMapping TypeName="ImmoWhatModel.VAL_PRIX_MOYEN_BIEN">
+              <MappingFragment StoreEntitySet="VAL_PRIX_MOYEN_BIEN">
+                <ScalarProperty Name="idClasse" ColumnName="idClasse" />
+                <ScalarProperty Name="valMax" ColumnName="valMax" />
+                <ScalarProperty Name="valMin" ColumnName="valMin" />
+                <ScalarProperty Name="idCouleur" ColumnName="idCouleur" />
+                <ScalarProperty Name="idType" ColumnName="idType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="COMMUNE_Prenoms">
+            <EntityTypeMapping TypeName="ImmoWhatModel.COMMUNE_Prenoms">
+              <MappingFragment StoreEntitySet="COMMUNE_Prenoms">
+                <ScalarProperty Name="Sexe" ColumnName="Sexe" />
+                <ScalarProperty Name="NombreDePersonnes" ColumnName="NombreDePersonnes" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="NomCommuneNL" ColumnName="NomCommuneNL" />
+                <ScalarProperty Name="NomCommuneFR" ColumnName="NomCommuneFR" />
+                <ScalarProperty Name="IdCommune" ColumnName="IdCommune" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MapsParams">
+            <EntityTypeMapping TypeName="ImmoWhatModel.MapsParams">
+              <MappingFragment StoreEntitySet="MapsParams">
+                <ScalarProperty Name="PriceV" ColumnName="PriceV" />
+                <ScalarProperty Name="PriceT" ColumnName="PriceT" />
+                <ScalarProperty Name="PriceA" ColumnName="PriceA" />
+                <ScalarProperty Name="idCouleurVilla" ColumnName="idCouleurVilla" />
+                <ScalarProperty Name="idCouleurTer" ColumnName="idCouleurTer" />
+                <ScalarProperty Name="idCouleurApp" ColumnName="idCouleurApp" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
+                <ScalarProperty Name="Commune" ColumnName="Commune" />
+                <ScalarProperty Name="StopZoom" ColumnName="StopZoom" />
+                <ScalarProperty Name="StartZoom" ColumnName="StartZoom" />
+                <ScalarProperty Name="GMapPartRecord_Id" ColumnName="GMapPartRecord_Id" />
+                <ScalarProperty Name="idCouleur" ColumnName="idCouleur" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STAT_COMMUNES">
+            <EntityTypeMapping TypeName="ImmoWhatModel.STAT_COMMUNES">
+              <MappingFragment StoreEntitySet="STAT_COMMUNES">
+                <ScalarProperty Name="AnneeDeReference" ColumnName="AnneeDeReference" />
+                <ScalarProperty Name="NombreDePersonnes" ColumnName="NombreDePersonnes" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="EtatCivilNL" ColumnName="EtatCivilNL" />
+                <ScalarProperty Name="EtatCivilFR" ColumnName="EtatCivilFR" />
+                <ScalarProperty Name="CodeEtatCivil" ColumnName="CodeEtatCivil" />
+                <ScalarProperty Name="NationaliteNL" ColumnName="NationaliteNL" />
+                <ScalarProperty Name="NationaliteFR" ColumnName="NationaliteFR" />
+                <ScalarProperty Name="CodeNational" ColumnName="CodeNational" />
+                <ScalarProperty Name="SEXE" ColumnName="SEXE" />
+                <ScalarProperty Name="RegionFR" ColumnName="RegionFR" />
+                <ScalarProperty Name="RegionNL" ColumnName="RegionNL" />
+                <ScalarProperty Name="IdRegion" ColumnName="IdRegion" />
+                <ScalarProperty Name="ProvinceFR" ColumnName="ProvinceFR" />
+                <ScalarProperty Name="ProvinceNL" ColumnName="ProvinceNL" />
+                <ScalarProperty Name="IdProvince" ColumnName="IdProvince" />
+                <ScalarProperty Name="ArrondissementFR" ColumnName="ArrondissementFR" />
+                <ScalarProperty Name="ArrondissementNL" ColumnName="ArrondissementNL" />
+                <ScalarProperty Name="IdArrondissement" ColumnName="IdArrondissement" />
+                <ScalarProperty Name="NomCommuneFR" ColumnName="NomCommuneFR" />
+                <ScalarProperty Name="NomCommuneNL" ColumnName="NomCommuneNL" />
+                <ScalarProperty Name="IdCommune" ColumnName="IdCommune" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatImmo">
+            <EntityTypeMapping TypeName="ImmoWhatModel.StatImmo">
+              <MappingFragment StoreEntitySet="StatImmo">
+                <ScalarProperty Name="Terrain_P90Prix" ColumnName="Terrain_P90Prix" />
+                <ScalarProperty Name="Terrain_Q75Prix" ColumnName="Terrain_Q75Prix" />
+                <ScalarProperty Name="Terrain_Q50Prix" ColumnName="Terrain_Q50Prix" />
+                <ScalarProperty Name="Terrain_Q25Prix" ColumnName="Terrain_Q25Prix" />
+                <ScalarProperty Name="Terrain_P10Prix" ColumnName="Terrain_P10Prix" />
+                <ScalarProperty Name="Terrain_prixMoyen" ColumnName="Terrain_prixMoyen" />
+                <ScalarProperty Name="Terrain_superficieTotale" ColumnName="Terrain_superficieTotale" />
+                <ScalarProperty Name="Terrain_prixTotal" ColumnName="Terrain_prixTotal" />
+                <ScalarProperty Name="Terrain_nbTransactions" ColumnName="Terrain_nbTransactions" />
+                <ScalarProperty Name="Appart_P90Prix" ColumnName="Appart_P90Prix" />
+                <ScalarProperty Name="Appart_Q75Prix" ColumnName="Appart_Q75Prix" />
+                <ScalarProperty Name="Appart_Q50Prix" ColumnName="Appart_Q50Prix" />
+                <ScalarProperty Name="Appart_Q25Prix" ColumnName="Appart_Q25Prix" />
+                <ScalarProperty Name="Appart_P10Prix" ColumnName="Appart_P10Prix" />
+                <ScalarProperty Name="Appart_prixMoyen" ColumnName="Appart_prixMoyen" />
+                <ScalarProperty Name="Appart_superficieTotale" ColumnName="Appart_superficieTotale" />
+                <ScalarProperty Name="Appart_prixTotal" ColumnName="Appart_prixTotal" />
+                <ScalarProperty Name="Appart_nbTransactions" ColumnName="Appart_nbTransactions" />
+                <ScalarProperty Name="Villa_P90Prix" ColumnName="Villa_P90Prix" />
+                <ScalarProperty Name="Villa_Q75Prix" ColumnName="Villa_Q75Prix" />
+                <ScalarProperty Name="Villa_Q50Prix" ColumnName="Villa_Q50Prix" />
+                <ScalarProperty Name="Villa_Q25Prix" ColumnName="Villa_Q25Prix" />
+                <ScalarProperty Name="Villa_P10Prix" ColumnName="Villa_P10Prix" />
+                <ScalarProperty Name="Villa_prixMoyen" ColumnName="Villa_prixMoyen" />
+                <ScalarProperty Name="Villa_superficieTotale" ColumnName="Villa_superficieTotale" />
+                <ScalarProperty Name="Villa_prixTotal" ColumnName="Villa_prixTotal" />
+                <ScalarProperty Name="Villa_nbTransactions" ColumnName="Villa_nbTransactions" />
+                <ScalarProperty Name="Maison_P90Prix" ColumnName="Maison_P90Prix" />
+                <ScalarProperty Name="Maison_Q75Prix" ColumnName="Maison_Q75Prix" />
+                <ScalarProperty Name="Maison_Q50Prix" ColumnName="Maison_Q50Prix" />
+                <ScalarProperty Name="Maison_Q25Prix" ColumnName="Maison_Q25Prix" />
+                <ScalarProperty Name="Maison_P10Prix" ColumnName="Maison_P10Prix" />
+                <ScalarProperty Name="Maison_prixMoyen" ColumnName="Maison_prixMoyen" />
+                <ScalarProperty Name="Maison_superficieTotal" ColumnName="Maison_superficieTotal" />
+                <ScalarProperty Name="Maison_prixTotal" ColumnName="Maison_prixTotal" />
+                <ScalarProperty Name="Maison_nbTransactions" ColumnName="Maison_nbTransactions" />
+                <ScalarProperty Name="classeDeSuperficie" ColumnName="classeDeSuperficie" />
+                <ScalarProperty Name="trimestre" ColumnName="trimestre" />
+                <ScalarProperty Name="annee" ColumnName="annee" />
+                <ScalarProperty Name="localite" ColumnName="localite" />
+                <ScalarProperty Name="refnis" ColumnName="refnis" />
+                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TableJSON">
+            <EntityTypeMapping TypeName="ImmoWhatModel.TableJSON">
+              <MappingFragment StoreEntitySet="TableJSON">
+                <ScalarProperty Name="CenterLng" ColumnName="CenterLng" />
+                <ScalarProperty Name="CenterLat" ColumnName="CenterLat" />
+                <ScalarProperty Name="PriceV" ColumnName="PriceV" />
+                <ScalarProperty Name="PriceT" ColumnName="PriceT" />
+                <ScalarProperty Name="PriceA" ColumnName="PriceA" />
+                <ScalarProperty Name="ColorV" ColumnName="ColorV" />
+                <ScalarProperty Name="ColorT" ColumnName="ColorT" />
+                <ScalarProperty Name="ColorA" ColumnName="ColorA" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quarter" ColumnName="Quarter" />
+                <ScalarProperty Name="Commune" ColumnName="Commune" />
+                <ScalarProperty Name="StopZoom" ColumnName="StopZoom" />
+                <ScalarProperty Name="StartZoom" ColumnName="StartZoom" />
+                <ScalarProperty Name="GMapPartRecord_Id" ColumnName="GMapPartRecord_Id" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CodePostal" ColumnName="CodePostal" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="ImmoWhatModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="BIEN_OPTION" TypeName="ImmoWhatModel.BIEN_OPTION" StoreEntitySet="BIEN_OPTION">
+            <EndProperty Name="OPTIONS">
+              <ScalarProperty Name="IdOption" ColumnName="IdOption" />
+            </EndProperty>
+            <EndProperty Name="BIEN">
+              <ScalarProperty Name="BIEN_Id" ColumnName="IdBien" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="SearchBiens2" FunctionName="ImmoWhatModel.Store.SearchBiens2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.SearchBiens2_Result">
+                <ScalarProperty Name="idBien" ColumnName="idBien" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="commune" ColumnName="commune" />
+                <ScalarProperty Name="CodePostal" ColumnName="CodePostal" />
+                <ScalarProperty Name="rue" ColumnName="rue" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="boite" ColumnName="boite" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="vendu" ColumnName="vendu" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SearchMembres2" FunctionName="ImmoWhatModel.Store.SearchMembres2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImmoWhatModel.SearchMembres2_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="enregistrement" ColumnName="enregistrement" />
+                <ScalarProperty Name="derConn" ColumnName="derConn" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="administrator" ColumnName="administrator" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

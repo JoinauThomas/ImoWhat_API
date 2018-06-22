@@ -299,4 +299,37 @@
   <data name="envoyer" xml:space="preserve">
     <value>sturen</value>
   </data>
+  <data name="administrator" xml:space="preserve">
+    <value>admin</value>
+  </data>
+  <data name="dateEnregistrement" xml:space="preserve">
+    <value>datum van registratie</value>
+  </data>
+  <data name="deleted" xml:space="preserve">
+    <value>verwijderde</value>
+  </data>
+  <data name="derniereConnection" xml:space="preserve">
+    <value>laatste verbinding</value>
+  </data>
+  <data name="id" xml:space="preserve">
+    <value>id</value>
+  </data>
+  <data name="mail" xml:space="preserve">
+    <value>e-mail</value>
+  </data>
+  <data name="nom" xml:space="preserve">
+    <value>naam</value>
+  </data>
+  <data name="prenom" xml:space="preserve">
+    <value>voornaam</value>
+  </data>
+  <data name="proprietaire" xml:space="preserve">
+    <value>eigenaar</value>
+  </data>
+  <data name="supprimer" xml:space="preserve">
+    <value>verwijderen</value>
+  </data>
+  <data name="voirLeBien" xml:space="preserve">
+    <value>zie de eigenschap</value>
+  </data>
 </root>

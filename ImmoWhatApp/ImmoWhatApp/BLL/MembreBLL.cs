@@ -158,6 +158,45 @@ namespace ImmoWhatApp.BLL
            
         }
 
+        public static Models.ResultRequest EnregistrerNvlleConnection( Models.Identification moi )
+        {
+            try
+            {
+                Models.ResultRequest resultRequest = new Models.ResultRequest();
+                using (var client = new HttpClient())
+                {
+
+                    // enregistrement de la connection dans la DB
+
+                    client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    //client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                    var responseTask2 = client.PostAsJsonAsync("EnregistrerNvlleConnection", moi);
+                    responseTask2.Wait();
+                    var result2 = responseTask2.Result;
+
+                    if (!result2.IsSuccessStatusCode)
+                    {
+                        var responseString2 = result2.Content.ReadAsStringAsync();
+                        resultRequest.msg = responseString2.Result;
+                        resultRequest.idError = responseString2.Id;
+
+                        return resultRequest;
+                    }
+                    else
+                    {
+                        resultRequest.idError = 0;
+                        resultRequest.msg = "ok";
+                        return resultRequest;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static Models.MembreModels GetMyProfile(string mail)
         {
             try
@@ -235,6 +274,54 @@ namespace ImmoWhatApp.BLL
             }
         }
 
-        
+        public static List<Models.RechercheMembreModels> SearchMembres(string recherche)
+        {
+            List<Models.RechercheMembreModels> lesMembres = new List<Models.RechercheMembreModels>();
+            try
+            {
+                if (recherche == null)
+                    recherche = "";
+
+
+                using (var client = new HttpClient())
+                {
+
+                    // CHECK IF MEMBER IS CONNECTED
+
+                    var currentSession = HttpContext.Current.Session;
+                    var token = currentSession["monToken"];
+                    Models.MembreModels moi = new Models.MembreModels();
+                    client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                    // GET THE LIST OF BIENs
+
+                    client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+                    var responseTask = client.GetAsync("SearchMembres?recherche=" + recherche);
+                    responseTask.Wait();
+                    var result = responseTask.Result;
+
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var readTask = result.Content.ReadAsAsync<List<Models.RechercheMembreModels>>();
+                        readTask.Wait();
+                        lesMembres = readTask.Result;
+
+
+                    }
+                    return lesMembres;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

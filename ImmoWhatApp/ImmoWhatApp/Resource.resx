@@ -299,4 +299,37 @@
   <data name="envoyer" xml:space="preserve">
     <value>envoyer</value>
   </data>
+  <data name="administrator" xml:space="preserve">
+    <value>admin</value>
+  </data>
+  <data name="dateEnregistrement" xml:space="preserve">
+    <value>date d'enregistrement</value>
+  </data>
+  <data name="deleted" xml:space="preserve">
+    <value>supprimé</value>
+  </data>
+  <data name="derniereConnection" xml:space="preserve">
+    <value>dernière connection</value>
+  </data>
+  <data name="id" xml:space="preserve">
+    <value>id</value>
+  </data>
+  <data name="mail" xml:space="preserve">
+    <value>mail</value>
+  </data>
+  <data name="nom" xml:space="preserve">
+    <value>nom</value>
+  </data>
+  <data name="prenom" xml:space="preserve">
+    <value>prénom</value>
+  </data>
+  <data name="proprietaire" xml:space="preserve">
+    <value>propriétaire</value>
+  </data>
+  <data name="supprimer" xml:space="preserve">
+    <value>supprimer</value>
+  </data>
+  <data name="voirLeBien" xml:space="preserve">
+    <value>voir le bien</value>
+  </data>
 </root>
