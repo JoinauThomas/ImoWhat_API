@@ -444,5 +444,45 @@ namespace ImmoWhatApp.BLL
                 throw ex;
             }
         }
+
+        public static Models.RequestResultM DeleteBienByAdmin(int idBien)
+        {
+            Models.BienModels bienASupprimer = new Models.BienModels { idBien = idBien };
+            Models.RequestResultM resultat = new Models.RequestResultM();
+
+            using (var client = new HttpClient())
+            {
+                var currentSession = HttpContext.Current.Session;
+                var token = currentSession["monToken"];
+                Models.MembreModels moi = new Models.MembreModels();
+                client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+
+                client.BaseAddress = new Uri("http://localhost:49383/api/BienAPI/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                //client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                var responseTask = client.PostAsJsonAsync("DeleteBienByAdmin", bienASupprimer);
+                responseTask.Wait();
+                var result = responseTask.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    resultat.result = "OK";
+                }
+                else
+                {
+                    var content = result.Content.ReadAsStringAsync();
+                    content.Wait();
+                    resultat.result = "NotOK";
+                    resultat.msg = content.ToString();
+                }
+
+                return resultat;
+            }
+        }
+
     }
 }

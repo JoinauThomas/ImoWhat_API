@@ -4,10 +4,10 @@
     ViewBag.Title = "AdminPage";
 }
 
-<div class="container">
+<div class="container" style="min-height:100%">
     <div class="row">
         <div class="col mt-3">
-            <h1>Zone administrateur</h1>
+            <h1>Page administrateur</h1>
         </div>
     </div>
     <div class="row mt-4">
@@ -15,7 +15,7 @@
             <div>
                 <ul class="nav nav-tabs">
                     <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">Membres</a></li>
-                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">biens</a></li>
+                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Biens</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" role="tabpanel" id="tab-1">
@@ -28,16 +28,23 @@
                             <div class="col-lg-3">
                                 <ul class="list-group">
                                     <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center align-content-end" style="padding:0px;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;" for="Membredeleted">
-                                    <label for="Membredeleted" style="margin:0px;width:90%;">membres supprimés<br>
-                                        </label>
-                                    <input type="checkbox" id="Membredeleted" style="width:10%;">
+                                        <label for="Membredel" style="margin:0px;width:90%;"><span id="nbMembresSup" class="badge badge-light"></span>   membres supprimés<br></label>
+                                        <input type="checkbox" id="Membredel" style="width:10%;" checked="checked">
+                                    </li>
+                                    <li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center align-content-end" style="padding:0px;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;" for="MembresAd">
+                                        <label for="MembreAd" style="margin:0px;width:90%;"><span id="nbMembresAdministr" class="badge badge-light"></span>   administrateurs<br></label>
+                                        <input type="checkbox" id="MembreAd" style="width:10%;" checked="checked">
+                                    </li>
+                                    <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center align-content-end" style="padding:0px;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;" for="MembreActif">
+                                        <label for="MembreActif" style="margin:0px;width:90%;"><span id="nbMembresAct" class="badge badge-light"></span>   membres actifs<br></label>
+                                        <input type="checkbox" id="MembreActif" style="width:10%;" checked="checked">
                                     </li>
                                 </ul>
                             </div>
                             <div class="col-lg-4 offset-lg-5">
                                 <div class="input-group">
-                                    <div class="input-group-prepend"></div><input class="form-control" type="text">
-                                    <div class="input-group-append"><button class="btn btn-primary" type="button" style="height:100%;">Go!</button></div>
+                                    <div class="input-group-prepend"></div><input id="rechercheMembre" class="form-control" type="text">
+                                    <div class="input-group-append"><button id="btnRechercheMembre" class="btn btn-primary" type="button" style="height:100%;">Go!</button></div>
                                 </div>
                             </div>
                         </div>
@@ -45,7 +52,7 @@
                             <div class="col">
                                 <div class="table-responsive">
                                     <table id="tableMembres" class="table">
-                                        
+
                                         @*TABLE DES MEMBRES*@
 
                                     </table>
@@ -62,15 +69,24 @@
                         <div class="row d-flex flex-row justify-content-end align-items-center mb-3 mt-3">
                             <div class="col-lg-3">
                                 <ul class="list-group">
-                                    <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center align-content-end" style="padding:0px;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;"><label for="Biendeleted" style="margin:0px;width:90%;">biens supprimés<br></label><input type="checkbox" id="Biendeleted" style="width:10%;"></li>
-                                    <li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center align-content-end"
-                                        style="padding:0px;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;"><label for="vendu" style="margin:0px;width:90%;">vendu</label><input type="checkbox" id="vendu" style="width:10%;"></li>
+                                    <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center align-content-end" style="padding:0px;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;">
+                                        <label for="Biendeleted" style="margin:0px;width:90%;"><span id="nbBiensSupp" class="badge badge-light"></span>   biens supprimés</label>
+                                        <input type="checkbox" id="Biendeleted" style="width:10%;">
+                                    </li>
+                                    <li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center align-content-end" style="padding:0px;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;">
+                                        <label for="vendu" style="margin:0px;width:90%;"><span id="nbBiensVendus" class="badge badge-light"></span>   vendu</label>
+                                        <input type="checkbox" id="vendu" style="width:10%;">
+                                    </li>
+                                    <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center align-content-end" style="padding:0px;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px;">
+                                        <label for="BiensEnVente" style="margin:0px;width:90%;"><span id="nbBiensEnActivite" class="badge badge-light"></span>   en vente</label>
+                                        <input type="checkbox" id="BiensEnVente" style="width:10%;">
+                                    </li>
                                 </ul>
                             </div>
                             <div class="col-lg-4 offset-lg-5">
                                 <div class="input-group">
-                                    <div class="input-group-prepend"></div><input class="form-control" type="text">
-                                    <div class="input-group-append"><button class="btn btn-primary" type="button" style="height:100%;">Go!</button></div>
+                                    <div class="input-group-prepend"></div><input id="inputRecharcheBien" class="form-control" type="text">
+                                    <div class="input-group-append"><button id="btnRechBien" class="btn btn-primary" type="button" style="height:100%;">Go!</button></div>
                                 </div>
                             </div>
                         </div>
@@ -78,7 +94,7 @@
                             <div class="col">
                                 <div class="table-responsive">
                                     <table id="tableBiens" class="table">
-                                       
+
                                         @*TABLE DES BIENS*@
 
                                     </table>
@@ -92,14 +108,115 @@
     </div>
 </div>
 
+<!-- Modal delete -->
+<div class="row" id="modal_delete" style="display:none;">
+    <div class="col-lg-3">
+        <img width="50" src="~/img/logos/attention.png" />
+    </div>
+    <div class="col-9">
+        <span id="modalDeleteTxt" class="modalTxt modal-contents"></span>
+    </div>
+
+</div>
+
+<!-- Modal message -->
+<div id="modal_info" style="display:none;">
+    <p id="modalTxt" class="modalTxt modal-contents"></p>
+</div>
+
 <script>
     $(document).ready(function () {
         getBiens("");
         getMembres("");
-    });
-    
 
-   
+
+
+        //POUR LA PAGE MEMBRE
+
+        $('#Membredel').attr('checked', 'checked');
+        $('#MembreAd').attr('checked', 'checked');
+        $('#MembreActif').attr('checked', 'checked');
+
+        //POUR LA PAGE BIEN
+
+        $('#Biendeleted').attr('checked', 'checked');
+        $('#vendu').attr('checked', 'checked');
+        $('#BiensEnVente').attr('checked', 'checked');
+    });
+
+    $('#btnRechercheMembre').click(function () {
+        getMembres($('#rechercheMembre').val());
+    });
+    $('#btnRechBien').click(function () {
+        getBiens($('#inputRecharcheBien').val());
+    });
+
+
+    $('#Membredel').change(function () {
+        if (this.checked) {
+            $('.memDeleted').addClass("d-table-row")
+            $('.memDeleted').removeClass("d-none")
+        }
+        else {
+            $('.memDeleted').removeClass("d-table-row")
+            $('.memDeleted').addClass("d-none")
+        }
+    });
+
+    $('#MembreAd').change(function () {
+        if (this.checked) {
+            $('.Adm').addClass("d-table-row")
+            $('.Adm').removeClass("d-none")
+        }
+        else {
+            $('.Adm').removeClass("d-table-row")
+            $('.Adm').addClass("d-none")
+        }
+    });
+
+    $('#MembreActif').change(function () {
+        if (this.checked) {
+            $('.Actifs').addClass("d-table-row")
+            $('.Actifs').removeClass("d-none")
+        }
+        else {
+            $('.Actifs').removeClass("d-table-row")
+            $('.Actifs').addClass("d-none")
+        }
+    });
+
+    $('#Biendeleted').change(function () {
+        if (this.checked) {
+            $('.deleted').addClass("d-table-row")
+            $('.deleted').removeClass("d-none")
+        }
+        else {
+            $('.deleted').removeClass("d-table-row")
+            $('.deleted').addClass("d-none")
+        }
+    });
+
+    $('#vendu').change(function () {
+        if (this.checked) {
+            $('.vendu').addClass("d-table-row")
+            $('.vendu').removeClass("d-none")
+        }
+        else {
+            $('.vendu').removeClass("d-table-row")
+            $('.vendu').addClass("d-none")
+        }
+    });
+
+    $('#BiensEnVente').change(function () {
+        if (this.checked) {
+            $('.enVente').addClass("d-table-row")
+            $('.enVente').removeClass("d-none")
+        }
+        else {
+            $('.enVente').removeClass("d-table-row")
+            $('.enVente').addClass("d-none")
+        }
+    });
 
 
     function getBiens(recherche) {
@@ -113,6 +230,12 @@
             data: { recherche: recherche },
             success: function (donnee) {
                 $('#tableBiens').html(donnee);
+
+                $('#nbBiensSupp').html($('#nbBiensSupprimes').val());
+                $('#nbBiensVendus').html($('#nbBiensVend').val());
+                $('#nbBiensEnActivite').html($('#nbBienEnACTion').val());
+
+
             },
             error: function (error) {
                 alert(error.responseText);
@@ -131,6 +254,10 @@
             data: { recherche: recherche },
             success: function (donnee) {
                 $('#tableMembres').html(donnee);
+
+                $('#nbMembresSup').html($('#nbMembresSupprimes').val());
+                $('#nbMembresAdministr').html($('#nbMembresAdmin').val());
+                $('#nbMembresAct').html($('#nbMembresActifs').val());
             },
             error: function (error) {
                 alert(error.responseText);

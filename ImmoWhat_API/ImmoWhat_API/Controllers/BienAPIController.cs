@@ -15,7 +15,10 @@ namespace ImmoWhat_API.Controllers
         [Route("addNewBien")]
         public IHttpActionResult addNewBien(Models.BienModels newBien)
         {
-           
+           if(newBien.boite == null)
+            {
+                newBien.boite = "-1";
+            }
 
             try
             {
@@ -231,6 +234,25 @@ namespace ImmoWhat_API.Controllers
                 }
 
                 return lesBiens;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("DeleteBienByAdmin")]
+        public IHttpActionResult DeleteBienByAdmin(Models.BienModels bienASupprimer)
+        {
+            int idBien = bienASupprimer.idBien;
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                dbContext.DeleteBienByAdmin(idBien);
+
+                return Ok();
             }
             catch (Exception ex)
             {

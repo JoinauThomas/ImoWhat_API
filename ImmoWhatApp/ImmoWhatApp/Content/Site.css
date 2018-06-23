@@ -19,7 +19,7 @@ input::-webkit-inner-spin-button {
 
 /* Set width on the form input elements since they're 100% wide by default */
 
-.zoneMaison {
+#zoneMaison {
     overflow-y: scroll;
 }
 #entete-immowhat {

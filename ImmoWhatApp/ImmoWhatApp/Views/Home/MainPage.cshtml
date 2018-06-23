@@ -14,10 +14,10 @@
                 <div class="col" style="padding-right:0px;padding-left:0px;width:100%;">
                     <div class="d-flex flex-row justify-content-center align-items-center" style="height:100%;background-color:rgba(0,0,0,0.35);color:rgba(255,255,255,0);width:100%;">
                         <div class="input-group" style="width:100%;height:100%;">
-                            <div class="input-group-prepend"></div>
+                            
                             <input id="inputComm" class="form-control" type="text" style="font-size:0.8em;">
                             <div class="input-group-append">
-                                <button id="btnValidCommune" class="btn btn-primary d-flex" type="button"><span class="oi" data-glyph="magnifying-glass" title="magnifying-glass" aria-hidden="true"></button>
+                                <button style="height:100%" id="btnValidCommune" class="btn btn-primary d-flex" type="button"><span class="oi" data-glyph="magnifying-glass" title="magnifying-glass" aria-hidden="true"></button>
                             </div>
                         </div>
                     </div>
@@ -98,8 +98,8 @@
             </div>
         </div>
     </div>
-   
-    
+
+
     @*  LA PARTIE CARTE  *@
     <div id="carte" class="col-md-7 col-lg-2 col-xl-7 col-lg-6 m-0 p-0" style="">
         <div id="map" style="width:100%; height:100%;"></div>
@@ -117,21 +117,17 @@
             <div class="col-12 ">
                 @{
 
-        if (Session["moi"] != null)
-        {
-            <button id="btnAjoutBien" class="btn btn-outline-light col-8 offset-2">ajouter un bien</button>
-}
-else
-{
-            <a tabindex="0" class="btn btn-lg btn-danger col-8 offset-2" role="button" data-toggle="popover" data-trigger="focus" title="attention" data-content="Veuillez vous connecter pour mettre votre bien en vente!">@Resource.ajouterUnBien</a>
+                    if (Session["moi"] != null)
+                    {
+                        <button id="btnAjoutBien" class="btn btn-outline-light col-8 offset-2">ajouter un bien</button>
+                    }
+                    else
+                    {
+                        <a tabindex="0" class="btn btn-lg btn-danger col-8 offset-2" role="button" data-toggle="popover" data-trigger="focus" title="attention" data-content="Veuillez vous connecter pour mettre votre bien en vente!">@Resource.ajouterUnBien</a>
 
-}
+                    }
                 }
-                <input id="commune" type="text" style="display:normal" />
-                <input id="CP" type="text" style="display:normal" />
-                <input id="typeB" type="text" style="display:normal" />
-                <input id="lat" type="text" style="display:normal" />
-                <input id="lng" type="text" style="display:normal" />
+
 
             </div>
         </div>
@@ -146,91 +142,104 @@ else
 <div id="modal_commune" style="display:none; ">
     <p id="modalTexte" class="modal-contents"></p>
 </div>
-@*<img class="imgHouse" src="~/img/Bruxelles.jpg" alt="Photo de montagne" />*@
-@*<img src="~/img/Bruxelles.jpg" />*@
+
+<input id="commune" type="text" style="display:none" />
+<input id="CP" type="text" style="display:none" />
+<input id="typeB" type="text" style="display:none" />
+<input id="lat" type="text" style="display:none" />
+<input id="lng" type="text" style="display:none" />
+
 <script type="text/javascript">
 
     $('.btnGraphique').click(function () {
         var bouton = $(this).attr("id");
 
         if ($('#CP').val() == "") {
+            /**/
             var codePostal = '@Model.CodePostal';
+    /**/
+}
+else {
+    var codePostal = $('#CP').val();
+}
+
+
+
+var url = "../Home/Graphic?codePostal=" + codePostal + "&bouton=" + bouton;
+
+window.location.href = url;
+});
+
+//CHARGER LA LISTE DE BIENS EN FONCTION DU CODE POSTEL ET DU TYPE
+
+function loadListeBiens(codePostal, type) {
+$.ajax({
+    type: 'GET',
+    datatype: 'json',
+    /**/
+    url: '@Url.Action("GetListBiensFromCPAndType", "Bien")',
+    /**/
+    data: { codePostale: codePostal, type: type },
+    success: function (donnee) {
+
+        var i = donnee.listeBiens.length;
+        var tableString = "";
+        for (var x = 0; x < i; x++) {
+            var img = donnee.listeBiens[x].idBien + "-0.jpg";
+            var prix = numberWithPoint(donnee.listeBiens[x].prix)
+
+            tableString += '<a href="#" ><div  id="' + donnee.listeBiens[x].idBien + '" class="bien card bg-dark text-white">' +
+                '<img style="max-height:175px" id="img' + donnee.listeBiens[x].idBien + '" class="card-img" src="/img/bien/' + img + '" alt="pas d image" />' +
+                '<div class="card-img-overlay">' +
+                '<h5 class="card-title">' + prix+' €</h5>' +
+                '<p style="color:black; background-color:rgba(177, 174, 174, 0.60)" class="card-text">' + donnee.listeBiens[x].superficie + 'm²<br />' + donnee.listeBiens[x].nbChambres + ' chambres</p>' +
+
+                '</div>' +
+                '</div ></a>';
         }
-        else {
-            var codePostal = $('#CP').val();
-        }
+        $('#zoneMaison').html(tableString);
 
-        
+        $('.bien').click(function () {
+            /**/
+            if ('@Session["moi"]' != "") {
+        /**/
+        var id = $(this).attr("id")
 
-        var url = "../Home/Graphic?codePostal=" + codePostal +  "&bouton=" + bouton;
-
+        var url = "../Bien/voirLeBien?idBien=" + id;
         window.location.href = url;
-    });
-
-    //CHARGER LA LISTE DE BIENS EN FONCTION DU CODE POSTEL ET DU TYPE
-
-    function loadListeBiens(codePostal, type) {
-        $.ajax({
-            type: 'GET',
-            datatype: 'json',
-            url: '@Url.Action("GetListBiensFromCPAndType", "Bien")',
-            data: { codePostale: codePostal, type: type },
-            success: function (donnee) {
-
-                var i = donnee.listeBiens.length;
-                var tableString = "";
-                for (var x = 0; x < i; x++) {
-                    var img = donnee.listeBiens[x].idBien + "-0.jpg";
-                    var prix = numberWithPoint(donnee.listeBiens[x].prix)
-
-                    tableString += '<a href="#" ><div  id="' + donnee.listeBiens[x].idBien + '" class="bien card bg-dark text-white">' +
-                        '<img style="max-height:175px" id="img' + donnee.listeBiens[x].idBien + '" class="card-img" src="/img/bien/' + img + '" alt="pas d image" />' +
-                        '<div class="card-img-overlay">' +
-                        '<h5 class="card-title">Card title</h5>' +
-                        '<p style="color:black; background-color:rgba(177, 174, 174, 0.60)" class="card-text">' + prix + '€<br/>' + donnee.listeBiens[x].superficie + 'm²<br />' + donnee.listeBiens[x].nbChambres + ' chambres</p>' +
-
-                        '</div>' +
-                        '</div ></a>';
-                }
-                $('#zoneMaison').html(tableString);
-
-                $('.bien').click(function () {
-                    if ('@Session["moi"]' != "") {
-                        var id = $(this).attr("id")
-
-                        var url = "../Bien/voirLeBien?idBien=" + id;
-                        window.location.href = url;
-                    }
-                    else {
-                        alert("pas connecté");
-                    }
-
-                    //voirLeBien(id);
-                })
-            },
-            error: function (error) {
-                alert(error.responseText);
-            }
-        });
+    }
+    else {
+        alert("pas connecté");
     }
 
+    //voirLeBien(id);
+})
+},
+error: function (error) {
+alert(error.responseText);
+}
+});
+}
 
 
-    function voirLeBien(idBien) {
 
-        $.ajax({
-            type: 'GET',
-            datatype: 'json',
-            url: '@Url.Action("voirLeBien", "Bien")',
-            data: { idBien: idBien },
-            success: function (donnee) {
-                alert('ok')
-            },
-            error: function (error) {
-                alert(error.responseText);
-            }
-        })
+function voirLeBien(idBien) {
+
+$.ajax({
+type: 'GET',
+datatype: 'json',
+/**/
+url: '@Url.Action("voirLeBien", "Bien")',
+    /**/
+    data: { idBien: idBien },
+    success: function (donnee) {
+        alert('ok')
+    },
+    error: function (error) {
+        alert(error.responseText);
     }
+})
+}
 
 
 
@@ -239,15 +248,19 @@ else
 <script>
     $('#envoiMail').click(function () {
 
+        /**/
         location.href = '@Url.Action("envoiMail", "Account")';
-    })
-    //$(function () {
-    //    $('[data-toggle="popover"]').popover({ delay: { "show": 50, "hide": 10 }, placement: 'top' })
-    //})
+    /**/
+})
+//$(function () {
+//    $('[data-toggle="popover"]').popover({ delay: { "show": 50, "hide": 10 }, placement: 'top' })
+//})
 
-    $('#btnAjoutBien').click(function () {
-        location.href = '@Url.Action("AddNewBien", "Bien")';
-    });
+$('#btnAjoutBien').click(function () {
+    /**/
+    location.href = '@Url.Action("AddNewBien", "Bien")';
+    /**/
+});
 
 
 
@@ -287,312 +300,354 @@ else
             type = "appartement"
         }
 
+        /**/
         var annee = @Session["HighestYear"];
-        var codePostal = $('#CP').val();
+    /**/
+    var codePostal = $('#CP').val();
 
-        $.ajax({
-            type: 'GET',
-            datatype: 'json',
-            url: '@Url.Action("GetAverageClass2", "Commune")',
-            data: { annee: annee, typeBien: type, codePostale: codePostal },
-            success: function (donnee) {
-                var x = 0
-                while (x < 10) {
-                    //$('#prix' + (x + 1)).css('background-color', donnee.tablePrix[x].refColor);
-                    $('#prix' + (x + 1)).text(numberWithPoint(donnee.tablePrix[x].valMin) + " / " + numberWithPoint(donnee.tablePrix[x].valMax));
-                    if (x == 9)
-                        $('#prix' + (x + 1)).text(numberWithPoint(donnee.tablePrix[x].valMin) + " / ...");
-                    x += 1;
-                }
-                $('#listePrix a').css('border-style', 'none');
-                $('#prix' + (donnee.classePrix)).css('border-style', 'inset');
-                $('#prix' + (donnee.classePrix)).css('border-color', 'black');
-                $('#prixMoyen').html(donnee.prixMoyen+"€")
+    $.ajax({
+        type: 'GET',
+        datatype: 'json',
+        /**/
+        url: '@Url.Action("GetAverageClass2", "Commune")',
+    /**/
+    data: { annee: annee, typeBien: type, codePostale: codePostal },
+    success: function (donnee) {
+        var x = 0
+        while (x < 10) {
+            //$('#prix' + (x + 1)).css('background-color', donnee.tablePrix[x].refColor);
+            $('#prix' + (x + 1)).text(numberWithPoint(donnee.tablePrix[x].valMin) + " / " + numberWithPoint(donnee.tablePrix[x].valMax));
+            if (x == 9)
+                $('#prix' + (x + 1)).text(numberWithPoint(donnee.tablePrix[x].valMin) + " / ...");
+            x += 1;
+        }
+        $('#listePrix a').css('border-style', 'none');
+        $('#prix' + (donnee.classePrix)).css('border-style', 'inset');
+        $('#prix' + (donnee.classePrix)).css('border-color', 'black');
+        if (donnee.prixMoyen == 0) {
+            $('#prixMoyen').html("NA")
+        }
+        else {
+            $('#prixMoyen').html(donnee.prixMoyen + "€")
+        }
 
 
-                reponse($.map(donnee.commune, function (objet) {
-                    return {
-                        label: objet.Localite + " ( " + objet.CodePostal + " )",
-                        value: objet.Localite,
-                        id: objet.id
-                    }
-                }));
+
+        reponse($.map(donnee.commune, function (objet) {
+            return {
+                label: objet.Localite + " ( " + objet.CodePostal + " )",
+                value: objet.Localite,
+                id: objet.id
             }
-        });
+        }));
     }
-    function initMap() {
-        var x = 0;
+});
+}
+function initMap() {
+var x = 0;
 
-            var nb = jsonRes.donnees.length;
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: new google.maps.LatLng(@Model.latitude, @Model.longitude),
-                zoom: 13,
-                mapTypeId: 'terrain'
-            });
+var nb = jsonRes.donnees.length;
+var map = new google.maps.Map(document.getElementById('map'), {
+    /**/
+    /**/
+    center: new google.maps.LatLng(@Model.latitude, @Model.longitude),
+    /**/
+    /**/
+    zoom: 13,
+    mapTypeId: 'terrain'
+});
 
-            var infoWindow = new google.maps.InfoWindow;
+var infoWindow = new google.maps.InfoWindow;
 
-            while (x < nb) {
+while (x < nb) {
 
-                // Define the LatLng coordinates for the polygon's path.
-                var CommunesCoord = jsonRes.donnees[x].coordPts;
-                var originalMapCenter = new google.maps.LatLng(jsonRes.donnees[x].coordCentr.lat, jsonRes.donnees[x].coordCentr.lng);
+    // Define the LatLng coordinates for the polygon's path.
+    var CommunesCoord = jsonRes.donnees[x].coordPts;
+    var originalMapCenter = new google.maps.LatLng(jsonRes.donnees[x].coordCentr.lat, jsonRes.donnees[x].coordCentr.lng);
 
-                var commune = jsonRes.donnees[x].commune.toString();
-                var points = new google.maps.Polygon({
-                    paths: CommunesCoord,
-                    strokeColor: '#A5A1A1',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: jsonRes.donnees[x].couleur,
-                    fillOpacity: 0.35
-                });
+    var commune = jsonRes.donnees[x].commune.toString();
+    var points = new google.maps.Polygon({
+        paths: CommunesCoord,
+        strokeColor: '#A5A1A1',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: jsonRes.donnees[x].couleur,
+        fillOpacity: 0.35
+    });
 
-                var infos = {
-                    'commune': jsonRes.donnees[x].commune,
-                    'latCtre': jsonRes.donnees[x].coordCentr.lat,
-                    'lngCtre': jsonRes.donnees[x].coordCentr.lng,
-                    'codePostal': jsonRes.donnees[x].codePostal,
-                    'typeBien': jsonRes.typeBien
-                };
-
-                points.infosCommune = infos;
-
-
-                // Add a listener for the click event.
-                google.maps.event.addListener(points, 'click', function (event) {
-                    map.setCenter(new google.maps.LatLng(this.infosCommune.latCtre, this.infosCommune.lngCtre));
-                    $('#commune').val(this.infosCommune.commune);
-                    $('#CP').val(this.infosCommune.codePostal);
-                    $('#typeB').val(this.infosCommune.typeBien);
-                    $('#lat').val(this.infosCommune.latCtre);
-                    $('#lng').val(this.infosCommune.lngCtre);
-
-                    GetListeClassePrix(this.infosCommune.typeBien);
-
-                    loadListeBiens(this.infosCommune.codePostal, this.infosCommune.typeBien);
-                    changementAffichage(this.infosCommune.commune, this.infosCommune.codePostal)
-
-                });
-                points.setMap(map);
-                x++;
-            }
-    }
-
-    function loadMap(data) {
-
-        var x = 0;
-            var nb = data.donnees.length;
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: new google.maps.LatLng($('#lat').val(), $('#lng').val()),
-                zoom: 13,
-                mapTypeId: 'terrain'
-            });
-
-            var infoWindow = new google.maps.InfoWindow;
-
-            while (x < nb) {
-
-
-                // Define the LatLng coordinates for the polygon's path.
-                var CommunesCoord = data.donnees[x].coordPts;
-                var originalMapCenter = new google.maps.LatLng(data.donnees[x].coordCentr.lat, data.donnees[x].coordCentr.lng);
-
-                var nbCoord = data.donnees[x].coordPts.length;
-                var commune = data.donnees[x].commune.toString();
-                var points = new google.maps.Polygon({
-                    paths: CommunesCoord,
-                    strokeColor: '#A5A1A1',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: data.donnees[x].couleur,
-                    fillOpacity: 0.35
-                });
-
-                var infos = {
-                    'commune': data.donnees[x].commune,
-                    'latCtre': data.donnees[x].coordCentr.lat,
-                    'lngCtre': data.donnees[x].coordCentr.lng,
-                    'codePostal': data.donnees[x].codePostal,
-                    'typeBien': data.typeBien
-                };
-
-                points.infosCommune = infos;
-
-
-
-                // Add a listener for the click event.
-                google.maps.event.addListener(points, 'click', function (event) {
-                    $('#commune').val(this.infosCommune.commune);
-                    $('#CP').val(this.infosCommune.codePostal);
-                    $('#typeB').val(this.infosCommune.typeBien);
-                    $('#lat').val(this.infosCommune.latCtre);
-                    $('#lng').val(this.infosCommune.lngCtre);
-                    map.setCenter(new google.maps.LatLng(this.infosCommune.latCtre, this.infosCommune.lngCtre));
-
-                    loadListeBiens(this.infosCommune.codePostal, this.infosCommune.typeBien);
-                    GetListeClassePrix(this.infosCommune.typeBien);
-                    changementAffichage(this.infosCommune.commune, this.infosCommune.codePostal)
-
-                });
-                points.setMap(map);
-                x++;
-            }
-
-    }
-
-    function GetMap(idTypeBien) {
-        $('#chargement').show();
-            $.ajax({
-            type: 'GET',
-            data: { idType: idTypeBien },
-            url: '@Url.Action("GetCommuneContourPointsInJson", "Commune")',
-            success: function (donnee) {
-                loadMap(JSON.parse(donnee));
-                $('#chargement').hide();
-            },
-            error: function (donnee) {
-                alert("probleme : " + donnee.status + "\n" + donnee.responseText);
-                $('#chargement').hide();
-            }
-        });
+    var infos = {
+        'commune': jsonRes.donnees[x].commune,
+        'latCtre': jsonRes.donnees[x].coordCentr.lat,
+        'lngCtre': jsonRes.donnees[x].coordCentr.lng,
+        'codePostal': jsonRes.donnees[x].codePostal,
+        'typeBien': jsonRes.typeBien
     };
 
+    points.infosCommune = infos;
 
-    $(document).ready(function () {
-        $('#CP').val(@Model.CodePostal);
-        $('#typeB').val('@ViewBag.typeBien');
 
-        $('#chargement').show();
+    // Add a listener for the click event.
+    google.maps.event.addListener(points, 'click', function (event) {
+        map.setCenter(new google.maps.LatLng(this.infosCommune.latCtre, this.infosCommune.lngCtre));
+        $('#commune').val(this.infosCommune.commune);
+        $('#CP').val(this.infosCommune.codePostal);
+        $('#typeB').val(this.infosCommune.typeBien);
+        $('#lat').val(this.infosCommune.latCtre);
+        $('#lng').val(this.infosCommune.lngCtre);
+
+        GetListeClassePrix(this.infosCommune.typeBien);
+
+        loadListeBiens(this.infosCommune.codePostal, this.infosCommune.typeBien);
+        changementAffichage(this.infosCommune.commune, this.infosCommune.codePostal)
+
+    });
+    points.setMap(map);
+    x++;
+}
+}
+
+function loadMap(data) {
+
+
+
+var x = 0;
+var nb = data.donnees.length;
+var map = new google.maps.Map(document.getElementById('map'), {
+    center: new google.maps.LatLng($('#lat').val(), $('#lng').val()),
+    zoom: 13,
+    mapTypeId: 'terrain'
+});
+
+var infoWindow = new google.maps.InfoWindow;
+
+while (x < nb) {
+
+
+    // Define the LatLng coordinates for the polygon's path.
+    var CommunesCoord = data.donnees[x].coordPts;
+    var originalMapCenter = new google.maps.LatLng(data.donnees[x].coordCentr.lat, data.donnees[x].coordCentr.lng);
+
+    var nbCoord = data.donnees[x].coordPts.length;
+    var commune = data.donnees[x].commune.toString();
+    var points = new google.maps.Polygon({
+        paths: CommunesCoord,
+        strokeColor: '#A5A1A1',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: data.donnees[x].couleur,
+        fillOpacity: 0.35
+    });
+
+    var infos = {
+        'commune': data.donnees[x].commune,
+        'latCtre': data.donnees[x].coordCentr.lat,
+        'lngCtre': data.donnees[x].coordCentr.lng,
+        'codePostal': data.donnees[x].codePostal,
+        'typeBien': data.typeBien
+    };
+
+    points.infosCommune = infos;
+
+
+
+    // Add a listener for the click event.
+    google.maps.event.addListener(points, 'click', function (event) {
+        $('#commune').val(this.infosCommune.commune);
+        $('#CP').val(this.infosCommune.codePostal);
+        $('#typeB').val(this.infosCommune.typeBien);
+        $('#lat').val(this.infosCommune.latCtre);
+        $('#lng').val(this.infosCommune.lngCtre);
+        map.setCenter(new google.maps.LatLng(this.infosCommune.latCtre, this.infosCommune.lngCtre));
+
+        loadListeBiens(this.infosCommune.codePostal, this.infosCommune.typeBien);
+        GetListeClassePrix(this.infosCommune.typeBien);
+        changementAffichage(this.infosCommune.commune, this.infosCommune.codePostal)
+
+    });
+    points.setMap(map);
+    x++;
+}
+
+}
+
+function GetMap(idTypeBien) {
+$('#chargement').show();
+$.ajax({
+    type: 'GET',
+    data: { idType: idTypeBien },
+    /**/
+    url: '@Url.Action("GetCommuneContourPointsInJson", "Commune")',
+    /**/
+    success: function (donnee) {
+        loadMap(JSON.parse(donnee));
+        $('#chargement').hide();
+    },
+    error: function (donnee) {
+        alert("probleme : " + donnee.status + "\n" + donnee.responseText);
+        $('#chargement').hide();
+    }
+});
+};
+
+
+$(document).ready(function () {
+/**/
+$('#CP').val(@Model.CodePostal);
+    /**/
+    /**/
+    $('#typeB').val('@ViewBag.typeBien');
+    /**/
+    /**/
+    $('#lat').val(@Model.latitude);
+    /**/
+    /**/
+    $('#lng').val(@Model.longitude);
+    /**/
+
+    $('#chargement').show();
+    $.ajax({
+        type: 'GET',
+        /**/
+        data: { idType: '@ViewBag.typeBien' },
+    /**/
+    /**/
+    url: '@Url.Action("GetCommuneContourPointsInJson", "Commune")',
+    /**/
+    success: function (donnee) {
+        jsonRes = JSON.parse(donnee);
+        initMap();
+        $('#chargement').hide();
+    },
+    error: function (donnee) {
+        alert("probleme : " + donnee.status + "\n" + donnee.responseText);
+        $('#chargement').hide();
+    }
+});
+
+
+
+
+if ($('#typeB').val() == "") {
+    /**/
+    var typeBien = @ViewBag.typeBien;
+    /**/
+}
+else {
+    var typeBien = $('#typeB').val();
+}
+if ($('#CP').val() == "") {
+    /**/
+    var codePostal = @Model.CodePostal.;
+    /**/
+}
+else {
+    var codePostal = $('#CP').val();
+}
+
+GetListeClassePrix(typeBien);
+loadListeBiens(codePostal, typeBien);
+
+
+
+$("#inputComm").autocomplete({
+    autoFocus: true,
+    source: function (requete, reponse) {
+        var name = $('#inputComm').val();
+        //alert(name);
         $.ajax({
             type: 'GET',
-            data: { idType: '@ViewBag.typeBien' },
-            url: '@Url.Action("GetCommuneContourPointsInJson", "Commune")',
-            success: function (donnee) {
-                jsonRes = JSON.parse(donnee);
-                initMap();
-                $('#chargement').hide();
-            },
-            error: function (donnee) {
-                alert("probleme : " + donnee.status + "\n" + donnee.responseText);
-                $('#chargement').hide();
-            }
-        });
-
-
-
-
-        if ($('#typeB').val() == "") {
-            var typeBien = @ViewBag.typeBien;
-        }
-        else {
-            var typeBien = $('#typeB').val();
-        }
-        if ($('#CP').val() == "") {
-            var codePostal = @Model.CodePostal.;
-        }
-        else {
-            var codePostal = $('#CP').val();
-        }
-
-        GetListeClassePrix(typeBien);
-        loadListeBiens(codePostal, typeBien);
-
-
-
-        $("#inputComm").autocomplete({
-                        autoFocus: true,
-                        source: function (requete, reponse) {
-                            var name = $('#inputComm').val();
-                            //alert(name);
-                            $.ajax({
-                                type: 'GET',
-                                datatype: 'json',
-                                data: { nom: name.toLowerCase() },
-                                url: '@Url.Action("GetCommunesByNameInJson", "Commune")',
-                                success: function (donnee) {
-                                    reponse($.map(donnee.commune, function (objet) {
-                                        return {
-                                            label: objet.Localite + " ( " + objet.CodePostal + " )",
-                                            value: objet.Localite,
-                                            id: objet.id
-                                        }
-                                    }));
-                                }
-                            })
-                        },
-            minLength: 3,
-
-            select: function (event, ui) { // lors de la sélection d'une proposition
-                    idCommune = ui.item.id
-            }
-
-                })
-
-    });
-
-    $('#typeBien').click(function (event) {
-        var type = $(event.target).attr('id');
-
-        $('.btnTypeBien').removeClass("btn-outline-dark");
-        $('.btnTypeBien').addClass("btn-outline-light");
-        $("#" + type).removeClass("btn-outline-light");
-        $("#" + type).addClass("btn-outline-dark");
-
-        var idType = 0;
-        if (type == "terrain")
-            idType = 1;
-        else if (type == "maison")
-            idType = 2;
-        else if (type == "villa")
-            idType = 3;
-        else if (type == "appartement")
-            idType = 4;
-
-        GetMap(idType);
-        loadListeBiens(@Model.CodePostal, idType)
-        GetListeClassePrix(idType)
-
-    });
-
-    function changeCommune(nomCommune) {
-         $.ajax({
-            type: 'GET',
             datatype: 'json',
-            data: { nomCommune: nomCommune },
-            url: '@Url.Action("checkIfCommuneExists", "Commune")',
-            success: function (donnee) {
-                if (donnee.result == "OK") {
-                    var nom = donnee.nom;
-                    var url = "/Home/MainPage?nomCommune=" + nomCommune;
-                    window.location.href = url;
-                }
-                else {
-                    $('#modalTexte').html("commune inexistante");
-                    $('#modal_commune').dialog({
-                        open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
-                        resizable: false,
-                        height: "auto",
-                        width: "400",
-                        modal: true,
-                        title: 'commune inexistante',
-                        buttons: {
-                            "ok": function () { $(this).dialog("close") }
-                        }
-                    })
-                }
+            data: { nom: name.toLowerCase() },
+            /**/
+            url: '@Url.Action("GetCommunesByNameInJson", "Commune")',
+    /**/
+    success: function (donnee) {
+        reponse($.map(donnee.commune, function (objet) {
+            return {
+                label: objet.Localite + " ( " + objet.CodePostal + " )",
+                value: objet.Localite,
+                id: objet.id
             }
-        })
+        }));
     }
-    $('#btnValidCommune').click(function () {
-        var nomCommune = $('#inputComm').val();
-        changeCommune(nomCommune);
-    });
+})
+},
+minLength: 3,
 
-    //POUR METTRE UN POINT COMME SEPARATEUR DE MILLIERS
-    function numberWithPoint(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+select: function (event, ui) { // lors de la sélection d'une proposition
+idCommune = ui.item.id
+}
+
+})
+
+});
+
+$('#typeBien').click(function (event) {
+var type = $(event.target).attr('id');
+
+$('.btnTypeBien').removeClass("btn-outline-dark");
+$('.btnTypeBien').addClass("btn-outline-light");
+$("#" + type).removeClass("btn-outline-light");
+$("#" + type).addClass("btn-outline-dark");
+
+var idType = 0;
+if (type == "terrain")
+idType = 1;
+else if (type == "maison")
+idType = 2;
+else if (type == "villa")
+idType = 3;
+else if (type == "appartement")
+idType = 4;
+
+GetMap(idType);
+/**/
+loadListeBiens(@Model.CodePostal, idType)
+    /**/
+    GetListeClassePrix(idType)
+
+});
+
+function changeCommune(nomCommune) {
+    $.ajax({
+        type: 'GET',
+        datatype: 'json',
+        data: { nomCommune: nomCommune },
+        /**/
+        url: '@Url.Action("checkIfCommuneExists", "Commune")',
+    /**/
+    success: function (donnee) {
+        if (donnee.result == "OK") {
+            var nom = donnee.nom;
+            var url = "/Home/MainPage?nomCommune=" + nomCommune;
+            window.location.href = url;
+        }
+        else {
+            $('#modalTexte').html("commune inexistante");
+            $('#modal_commune').dialog({
+                open: function (event, ui, e) { $(".ui-dialog-titlebar-close").hide(); },
+                resizable: false,
+                height: "auto",
+                width: "400",
+                modal: true,
+                title: 'commune inexistante',
+                buttons: {
+                    "ok": function () { $(this).dialog("close") }
+                }
+            })
+        }
     }
+})
+}
+$('#btnValidCommune').click(function () {
+var nomCommune = $('#inputComm').val();
+changeCommune(nomCommune);
+});
+
+//POUR METTRE UN POINT COMME SEPARATEUR DE MILLIERS
+function numberWithPoint(x) {
+return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 
 </script>
 

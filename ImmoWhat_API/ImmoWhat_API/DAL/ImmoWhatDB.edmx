@@ -730,8 +730,14 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.TableJSON' n'a pas de clé primai
         <Function Name="DeclareBienAsVendu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idBien" Type="int" Mode="In" />
         </Function>
+        <Function Name="DeleteBienByAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idBien" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteBienByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idBien" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteMembreByAdmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idMembre" Type="int" Mode="In" />
         </Function>
         <Function Name="EnregistrerNvlleConnection" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="login" Type="nvarchar" Mode="In" />
@@ -1633,6 +1639,12 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.TableJSON' n'a pas de clé primai
           </FunctionImport>
           <FunctionImport Name="SearchMembres2" ReturnType="Collection(ImmoWhatModel.SearchMembres2_Result)">
           <Parameter Name="search" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteBienByAdmin">
+            <Parameter Name="idBien" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteMembreByAdmin">
+            <Parameter Name="idMembre" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -3545,6 +3557,8 @@ avertissement 6002: La table/vue 'ImmoWhat.dbo.TableJSON' n'a pas de clé primai
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DeleteBienByAdmin" FunctionName="ImmoWhatModel.Store.DeleteBienByAdmin" />
+          <FunctionImportMapping FunctionImportName="DeleteMembreByAdmin" FunctionName="ImmoWhatModel.Store.DeleteMembreByAdmin" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

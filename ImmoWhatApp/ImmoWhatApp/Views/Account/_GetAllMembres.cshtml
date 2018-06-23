@@ -17,106 +17,222 @@
     <tbody>
         @foreach (var item in Model)
         {
-            
-                if (item.deleted == true)
-                {
-                    <tr class="deleted table-danger d-table-row" style="text-align:center; vertical-align: middle;">
-                        <td style="vertical-align:middle">
-                            <div class="row">
-                                <div class="col-lg-12 d-flex flex-row justify-content-center align-items-center align-content-center"><span>Admin</span></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center align-content-center">
-                                    @{
-                                        if (item.administrator == true)
-                                        {
-                                            <img src="~/img/logos/checkbox-true.png" style="width:20px;">
-                                        }
-                                        else
-                                        {
-                                            <img src="~/img/logos/checkbox-false.png" style="width:20px;">
-                                        }
-                                    }
 
-                                </div>
-                            </div>
-                        </td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.idMembre)</td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.nom)</td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.prenom)</td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.email)</td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.dateEnregistrement)</td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.dateDerniereConnection)</td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">
-                            <button value="@item.idMembre" style="height:60px; width:60px" class="tooltipT btnVoirBien btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"><span class="tooltiptext">@Resource.voirLeBien</span></button>
-                            <button value="@item.idMembre" style="height:60px; width:60px" class="tooltipT btnSupprimerBien btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"><span class="tooltiptext">@Resource.supprimer</span></button>
-                        </td>
-                    </tr>
-                }
-                else
-                {
-                    <tr class="normal d-table-row" style="text-align:center; vertical-align: middle">
-                        <td style="vertical-align:middle">
-                            <div class="row">
-                                <div class="col-lg-12 d-flex flex-row justify-content-center align-items-center align-content-center"><span>Admin</span></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center align-content-center">
-                                    @{
-                                        if (item.administrator == true)
-                                        {
-                                            <img src="~/img/logos/checkbox-true.png" style="width:20px;">
-                                        }
-                                        else
-                                        {
-                                            <img src="~/img/logos/checkbox-false.png" style="width:20px;">
-                                        }
+            if (item.deleted == true)
+            {
+                <tr class="memDeleted table-danger d-table-row" style="text-align:center; vertical-align: middle;">
+                    <td style="vertical-align:middle">
+                        <div class="row">
+                            <div class="col-lg-12 d-flex flex-row justify-content-center align-items-center align-content-center"><span>Admin</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center align-content-center">
+                                @{
+                                    if (item.administrator == true)
+                                    {
+                                        <img src="~/img/logos/checkbox-true.png" style="width:20px;">
                                     }
+                                    else
+                                    {
+                                        <img src="~/img/logos/checkbox-false.png" style="width:20px;">
+                                    }
+                                }
 
-                                </div>
                             </div>
-                        </td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.idMembre)</td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.nom)</td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.prenom)</td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.email)</td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.dateEnregistrement)</td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.dateDerniereConnection)</td>
-                        <td class="d-table-cell align-self-center" style="vertical-align:middle">
-                            <button value="@item.idMembre" style="height:60px; width:60px" class="tooltipT btnVoirBien btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"><span class="tooltiptext">@Resource.voirLeBien</span></button>
-                            <button value="@item.idMembre" style="height:60px; width:60px" class="tooltipT btnSupprimerBien btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"><span class="tooltiptext">@Resource.supprimer</span></button>
-                        </td>
-                    </tr>
-                }
-            
+                        </div>
+                    </td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.idMembre)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.nom)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.prenom)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.email)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.dateEnregistrement)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.dateDerniereConnection)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">
+                        <button id=@item.idMembre style="height:60px; width:60px" class="tooltipT btnVoirMembre btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"><span class="tooltiptext">@Resource.voirLeBien</span></button>
+                        <button id=@item.idMembre style="height:60px; width:60px" class="tooltipT btnSupprimerMembre btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"><span class="tooltiptext">@Resource.supprimer</span></button>
+                    </td>
+                </tr>
+            }
+            else if (item.administrator == true)
+            {
+                <tr class="Adm d-table-row table-success" style="text-align:center; vertical-align: middle">
+                    <td style="vertical-align:middle">
+                        <div class="row">
+                            <div class="col-lg-12 d-flex flex-row justify-content-center align-items-center align-content-center"><span>Admin</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center align-content-center">
+                                @{
+                                    if (item.administrator == true)
+                                    {
+                                        <img src="~/img/logos/checkbox-true.png" style="width:20px;">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/img/logos/checkbox-false.png" style="width:20px;">
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.idMembre)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.nom)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.prenom)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.email)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.dateEnregistrement)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.dateDerniereConnection)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">
+                        <button id=@item.idMembre style="height:60px; width:60px" class="tooltipT btnVoirMembre btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"><span class="tooltiptext">@Resource.voirLeBien</span></button>
+                        <button id=@item.idMembre style="height:60px; width:60px" class="tooltipT btnSupprimerMembre btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"><span class="tooltiptext">@Resource.supprimer</span></button>
+                    </td>
+                </tr>
+            }
+
+            else
+            {
+                <tr class="Actifs d-table-row" style="text-align:center; vertical-align: middle">
+                    <td style="vertical-align:middle">
+                        <div class="row">
+                            <div class="col-lg-12 d-flex flex-row justify-content-center align-items-center align-content-center"><span>Admin</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center align-content-center">
+                                @{
+                                    if (item.administrator == true)
+                                    {
+                                        <img src="~/img/logos/checkbox-true.png" style="width:20px;">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/img/logos/checkbox-false.png" style="width:20px;">
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.idMembre)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.nom)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.prenom)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.email)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.dateEnregistrement)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.dateDerniereConnection)</td>
+                    <td class="d-table-cell align-self-center" style="vertical-align:middle">
+                        <button id=@item.idMembre style="height:60px; width:60px" class="tooltipT btnVoirMembre btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"><span class="tooltiptext">@Resource.voirLeBien</span></button>
+                        <button id=@item.idMembre style="height:60px; width:60px" class="tooltipT btnSupprimerMembre btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"><span class="tooltiptext">@Resource.supprimer</span></button>
+                    </td>
+                </tr>
+            }
+
 
         }
     </tbody>
 
 </table>
 
+<input id="nbMembresSupprimes" value='@ViewBag.nbMembresSupp' style="display:none" />
+<input id="nbMembresAdmin" value='@ViewBag.nbMembresAdmin' style="display:none" />
+<input id="nbMembresActifs" value='@ViewBag.nbMembresActifs' style="display:none" />
+
+
 
 <script>
-    $(document).ready(function () {
-        if ($('#Membredeleted').checked) {
-            $('.deleted').addClass("d-table-row")
-            $('.deleted').removeClass("d-none")
-        }
-        else {
-            $('.deleted').removeClass("d-table-row")
-            $('.deleted').addClass("d-none")
-        }
 
+    $('.btnVoirMembre').click(function () {
+        var idBien = $(this).attr("id");
+        alert("a faire plus tard");
 
-    })
-    $('#Membredeleted').change(function () {
-        if (this.checked) {
-            $('.deleted').addClass("d-table-row")
-            $('.deleted').removeClass("d-none")
-        }
-        else {
-            $('.deleted').removeClass("d-table-row")
-            $('.deleted').addClass("d-none")
-        }
     });
+
+    $('.btnSupprimerMembre').click(function () {
+        //$('#chargement').show();
+
+        var id = $(this).attr("id");
+        $('#modalDeleteTxt').html("Etes vous sure de vouloir supprimer définitivement ce membre?");
+
+        $('#modal_delete').dialog({
+            open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+            resizable: false,
+            height: "auto",
+            width: "400",
+            modal: true,
+            title: "ATTENTION",
+
+            buttons: {
+                "oui": function () {
+                    $.ajax({
+                        type: 'POST',
+                        data: { idMembre: id },
+                        /**/
+                        url: '@Url.Action("DeleteMembreByAdmin", "Account")',
+                        /**/
+                        success: function (donnee) {
+
+                            $('#modalTxt').html("membre supprimé avec succès!");
+
+                            $('#modal_info').dialog({
+                                open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+                                resizable: false,
+                                height: "auto",
+                                width: "400",
+                                modal: true,
+                                title: "bravo!",
+                                buttons: {
+                                    "ok": function () {
+                                        window.location = '@Url.Action("AdminPage", "Home")';
+                                    }
+                                }
+                            });
+
+
+
+                        },
+                        error: function (donnee) {
+                            alert("probleme : " + donnee.status + "\n" + donnee.responseText);
+                        }
+                    });
+
+
+                },
+                "non": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+    });
+
+    $(document).ready(function () {
+        //if ($('#Membredel').checked) {
+        //    $('.memDeleted').addClass("d-table-row")
+        //    $('.memDeleted').removeClass("d-none")
+        //}
+        //else {
+        //    $('.memDeleted').removeClass("d-table-row")
+        //    $('.memDeleted').addClass("d-none")
+        //}
+
+        //if ($('#MembreAd').checked) {
+        //    $('.Adm').addClass("d-table-row")
+        //    $('.Adm').removeClass("d-none")
+        //}
+        //else {
+        //    $('.Adm').removeClass("d-table-row")
+        //    $('.Adm').addClass("d-none")
+        //}
+
+        //if ($('#MembreActif').checked) {
+        //    $('.Actifs').addClass("d-table-row")
+        //    $('.Actifs').removeClass("d-none")
+        //}
+        //else {
+        //    $('.Actifs').removeClass("d-table-row")
+        //    $('.Actifs').addClass("d-none")
+        //}
+
+    });
+
+
+
 </script>

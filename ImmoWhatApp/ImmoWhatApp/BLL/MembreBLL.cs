@@ -323,5 +323,35 @@ namespace ImmoWhatApp.BLL
             }
         }
 
+        public static Models.RequestResultM DeleteMembreByAdmin(int idMembre)
+        {
+            Models.MembreModels membreASupp = new Models.MembreModels { idMembre = idMembre };
+            Models.RequestResultM resultat = new Models.RequestResultM();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:49383/api/MembreAPI/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                //client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                var responseTask = client.PostAsJsonAsync("DeleteMembreByAdmin", membreASupp);
+                responseTask.Wait();
+                var result = responseTask.Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    resultat.result = "OK";
+                }
+                else
+                {
+                    var content = result.Content.ReadAsStringAsync();
+                    content.Wait();
+                    resultat.result = "NotOK";
+                    resultat.msg = content.ToString();
+                }
+
+                return resultat;
+            }
+        }
+
     }
 }

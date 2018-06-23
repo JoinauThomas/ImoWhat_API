@@ -134,15 +134,11 @@
         </div>
         <div class="row mt-3">
 
-            <div class="col d-flex flex-row justify-content-end"><button class="btn btn-success" type="button">ajouter un bien</button></div>
+            <div class="col d-flex flex-row justify-content-end"><button id="btnAjouterUnBien" class="btn btn-success" type="button">ajouter un bien</button></div>
         </div>
     </div>
 </div>
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
 
 <!-- Modal Delete -->
 <div class="row" id="modal_delete" style="display:none;">
@@ -186,10 +182,10 @@
             success: function (donnee) {
                 if (donnee.result == "OK") {
                     $('#nbNvMessages').html(donnee.nbNvMsg);
-                    
+
                 }
                 else {
-                    alert("gros problème :\n"+donnee.msg);
+                    alert("gros problème :\n" + donnee.msg);
                 }
 
             },
@@ -205,6 +201,10 @@
 
         @*var x = @Model.dateEnregistrement.Day+"/"+@Model.dateEnregistrement.Month+"/"+@Model.dateEnregistrement.Year;
         $('#dateEnr').html("enregistré depuis le " + x)*@
+    });
+
+    $('#btnAjouterUnBien').click(function () {
+        location.href = '@Url.Action("AddNewBien", "Bien")';
     })
 
     $('#btnMesMessages').click(function () {

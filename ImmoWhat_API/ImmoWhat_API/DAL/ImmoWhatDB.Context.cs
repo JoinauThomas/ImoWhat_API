@@ -1264,5 +1264,23 @@ namespace ImmoWhat_API.DAL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchMembres2_Result>("SearchMembres2", searchParameter);
         }
+    
+        public virtual int DeleteBienByAdmin(Nullable<int> idBien)
+        {
+            var idBienParameter = idBien.HasValue ?
+                new ObjectParameter("idBien", idBien) :
+                new ObjectParameter("idBien", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteBienByAdmin", idBienParameter);
+        }
+    
+        public virtual int DeleteMembreByAdmin(Nullable<int> idMembre)
+        {
+            var idMembreParameter = idMembre.HasValue ?
+                new ObjectParameter("idMembre", idMembre) :
+                new ObjectParameter("idMembre", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteMembreByAdmin", idMembreParameter);
+        }
     }
 }

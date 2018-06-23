@@ -147,7 +147,32 @@ namespace ImmoWhatApp.Controllers
         {
             List<Models.RechercheMembreModels> lesMembres = BLL.MembreBLL.SearchMembres(recherche);
 
+            int nbMembresSupp = lesMembres.FindAll(e => e.deleted == true).Count;
+            int nbMembresAdmin = lesMembres.FindAll(e => e.administrator == true).Count;
+            int nbMembresActifs = lesMembres.Count - nbMembresSupp - nbMembresAdmin;
+
+            ViewBag.nbMembresSupp = nbMembresSupp;
+            ViewBag.nbMembresAdmin = nbMembresAdmin;
+            ViewBag.nbMembresActifs = nbMembresActifs;
+
             return PartialView(lesMembres);
+        }
+
+        [HttpPost]
+        public Models.RequestResultM DeleteMembreByAdmin(int idMembre)
+        {
+            try
+            {
+                Models.RequestResultM resultRequest = BLL.MembreBLL.DeleteMembreByAdmin(idMembre);
+
+                return resultRequest;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+            
         }
 
     }

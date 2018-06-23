@@ -229,6 +229,19 @@ namespace ImmoWhatApp.Controllers
         }
 
         [HttpPost]
+        public Models.RequestResultM DeleteBienByAdmin(int idBien)
+        {
+            Models.RequestResultM resultRequest = new Models.RequestResultM();
+
+            resultRequest = BLL.BienBLL.DeleteBienByAdmin(idBien);
+
+            return resultRequest;
+
+
+
+        }
+
+        [HttpPost]
         public JsonResult DeclareBienAsVendu(int idBien)
         {
             Models.RequestResultM resultRequest = new Models.RequestResultM();
@@ -244,6 +257,13 @@ namespace ImmoWhatApp.Controllers
         public ActionResult _GetAllBiens(string recherche)
         {
             List<Models.RechercheBienModels> lesBiens = BLL.BienBLL.SearchBien(recherche);
+            int nbBiensSupp = lesBiens.FindAll(e => e.deleted == true).Count;
+            int nbBiensVendus = lesBiens.FindAll(e => e.vendu == true).Count;
+            int nbBienEnACT = lesBiens.Count - nbBiensSupp - nbBiensVendus;
+
+            ViewBag.nbBiensSupp = nbBiensSupp;
+            ViewBag.nbBiensVendus = nbBiensVendus;
+            ViewBag.nbBienEnACT = nbBienEnACT;
 
             return PartialView(lesBiens);
         }

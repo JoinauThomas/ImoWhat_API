@@ -186,7 +186,24 @@ namespace ImmoWhat_API.Controllers
             }
         }
 
-        
+        [HttpPost]
+        [Route("DeleteMembreByAdmin")]
+        public IHttpActionResult DeleteMembreByAdmin(Models.MembreModels newMembre)
+        {
+            Models.ResultInscription resultInscription = new Models.ResultInscription();
+
+            try
+            {
+                DAL.ImmoWhatEntities dbContext = new DAL.ImmoWhatEntities();
+                dbContext.DeleteMembreByAdmin(newMembre.idMembre);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         //[HttpPost]
         //[Route("changeStatutMailToLu")]

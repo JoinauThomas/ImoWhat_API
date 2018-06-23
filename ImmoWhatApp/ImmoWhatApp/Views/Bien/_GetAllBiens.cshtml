@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<ImmoWhatApp.Models.RechercheBienModels>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <thead>
         <tr class="d-table-row" style="text-align:center">
@@ -41,8 +38,8 @@
 
                     <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.prix)</td>
                     <td class="d-table-cell align-self-center" style="vertical-align:middle">
-                        <button value="@item.idBien" style="height:60px; width:60px" class="tooltipT btnVoirBien btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"><span class="tooltiptext">@Resource.voirLeBien</span></button>
-                        <button value="@item.idBien" style="height:60px; width:60px" class="tooltipT btnSupprimerBien btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"><span class="tooltiptext">@Resource.supprimer</span></button>
+                        <button id="@item.idBien" style="height:60px; width:60px" class="tooltipT btnVoirBien btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"><span class="tooltiptext">@Resource.voirLeBien</span></button>
+                        <button id="@item.idBien" style="height:60px; width:60px" class="tooltipT btnSupprimerBien btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"><span class="tooltiptext">@Resource.supprimer</span></button>
                     </td>
                 </tr>
             }
@@ -67,14 +64,14 @@
 
                     <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.prix)</td>
                     <td class="d-table-cell align-self-center" style="vertical-align:middle">
-                        <button value="@item.idBien" style="height:60px; width:60px" class="tooltipT btnVoirBien btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"><span class="tooltiptext">@Resource.voirLeBien</span></button>
-                        <button value="@item.idBien" style="height:60px; width:60px" class="tooltipT btnSupprimerBien btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"><span class="tooltiptext">@Resource.supprimer</span></button>
+                        <button id="@item.idBien" style="height:60px; width:60px" class="tooltipT btnVoirBien btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"><span class="tooltiptext">@Resource.voirLeBien</span></button>
+                        <button id="@item.idBien" style="height:60px; width:60px" class="tooltipT btnSupprimerBien btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"><span class="tooltiptext">@Resource.supprimer</span></button>
                     </td>
                 </tr>
             }
             else
             {
-                <tr class="normal d-table-row" style="text-align:center; vertical-align: middle">
+                <tr class="enVente d-table-row" style="text-align:center; vertical-align: middle">
                     <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.idBien)</td>
                     <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.nom)<br />@Html.DisplayFor(modelItem => item.prenom) </td>
                     <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.commune)</td>
@@ -93,8 +90,8 @@
 
                     <td class="d-table-cell align-self-center" style="vertical-align:middle">@Html.DisplayFor(modelItem => item.prix)</td>
                     <td class="d-table-cell align-self-center" style="vertical-align:middle">
-                        <button value="@item.idBien" style="height:60px; width:60px" class="tooltipT btnVoirBien btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"><span class="tooltiptext">@Resource.voirLeBien</span></button>
-                        <button value="@item.idBien" style="height:60px; width:60px" class="tooltipT btnSupprimerBien btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"><span class="tooltiptext">@Resource.supprimer</span></button>
+                        <button id="@item.idBien" style="height:60px; width:60px" class="tooltipT btnVoirBien btn btn-light rounded-circle" type="button"><img src="https://png.icons8.com/ios/40/000000/detective.png"><span class="tooltiptext">@Resource.voirLeBien</span></button>
+                        <button id="@item.idBien" style="height:60px; width:60px" class="tooltipT btnSupprimerBien btn btn-danger rounded-circle" type="button"><img src="https://png.icons8.com/ios/35/000000/trash.png"><span class="tooltiptext">@Resource.supprimer</span></button>
                     </td>
                 </tr>
             }
@@ -103,48 +100,107 @@
     </tbody>
 </table>
 
+<input id="nbBiensSupprimes" value='@ViewBag.nbBiensSupp' style="display:none" />
+<input id="nbBiensVend" value='@ViewBag.nbBiensVendus' style="display:none" />
+<input id="nbBienEnACTion" value='@ViewBag.nbBienEnACT' style="display:none" />
+
 <script>
+
+    $('.btnVoirBien').click(function () {
+        var idBien = $(this).attr("id");
+
+        var url = "../Bien/voirMonBien?idBien=" + idBien;
+        window.location.href = url;
+    });
+
+     $('.btnSupprimerBien').click(function () {
+        //$('#chargement').show();
+
+         var id = $(this).attr("id");
+        $('#modalDeleteTxt').html("Etes vous sure de vouloir supprimer définitivement ce bien?");
+
+        $('#modal_delete').dialog({
+            open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+            resizable: false,
+            height: "auto",
+            width: "400",
+            modal: true,
+            title: "ATTENTION",
+
+            buttons: {
+                "oui": function () {
+                    $.ajax({
+                        type: 'POST',
+                        data: { idBien: id },
+                        url: '@Url.Action("DeleteBienByAdmin", "Bien")',
+                        success: function (donnee) {
+
+                            $('#modalTxt').html("Bien supprimé avec succès!");
+
+                            $('#modal_info').dialog({
+                                open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); },
+                                resizable: false,
+                                height: "auto",
+                                width: "400",
+                                modal: true,
+                                title: "bravo!",
+                                buttons: {
+                                    "ok": function () {
+                                        window.location = '@Url.Action("AdminPage", "Home")';
+                                    }
+                                }
+                            });
+
+
+
+                        },
+                        error: function (donnee) {
+                            alert("probleme : " + donnee.status + "\n" + donnee.responseText);
+                        }
+                    });
+
+
+                },
+                "non": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+    });
+
     $(document).ready(function () {
-        if ($('#Biendeleted').checked) {
-            $('.deleted').addClass("d-table-row")
-            $('.deleted').removeClass("d-none")
-        }
-        else {
-            $('.deleted').removeClass("d-table-row")
-            $('.deleted').addClass("d-none")
-        }
 
-        if ($('#vendu').checked) {
-            $('.vendu').addClass("d-table-row")
-            $('.vendu').removeClass("d-none")
-        }
-        else {
-            $('.vendu').removeClass("d-table-row")
-            $('.vendu').addClass("d-none")
-        }
 
+
+        //if ($('#Biendeleted').checked) {
+        //    $('.deleted').addClass("d-table-row")
+        //    $('.deleted').removeClass("d-none")
+        //}
+        //else {
+        //    $('.deleted').removeClass("d-table-row")
+        //    $('.deleted').addClass("d-none")
+        //}
+
+        //if ($('#vendu').checked) {
+        //    $('.vendu').addClass("d-table-row")
+        //    $('.vendu').removeClass("d-none")
+        //}
+        //else {
+        //    $('.vendu').removeClass("d-table-row")
+        //    $('.vendu').addClass("d-none")
+        //}
+
+        //if ($('#BiensEnVente').checked) {
+        //    $('.enVente').addClass("d-table-row")
+        //    $('.enVente').removeClass("d-none")
+        //}
+        //else {
+        //    $('.enVente').removeClass("d-table-row")
+        //    $('.enVente').addClass("d-none")
+        //}
 
     });
 
-    $('#Biendeleted').change(function () {
-        if (this.checked) {
-            $('.deleted').addClass("d-table-row")
-            $('.deleted').removeClass("d-none")
-        }
-        else {
-            $('.deleted').removeClass("d-table-row")
-            $('.deleted').addClass("d-none")
-        }
-    });
 
-    $('#vendu').change(function () {
-        if (this.checked) {
-            $('.vendu').addClass("d-table-row")
-            $('.vendu').removeClass("d-none")
-        }
-        else {
-            $('.vendu').removeClass("d-table-row")
-            $('.vendu').addClass("d-none")
-        }
-    });
 </script>
