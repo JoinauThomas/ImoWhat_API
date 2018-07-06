@@ -80,9 +80,9 @@ namespace ImmoWhatApp.Controllers
             try
             {
                 Models.MembreModels moi = (Models.MembreModels)Session["Moi"];
+                
 
-
-                Models.Mail newMail = new Models.Mail {idMail = (int)idMail, adresseMail = adresseMail, message = msg, idRecepteur = Recepteur, sujet = sujet, idEmetteur = moi.idMembre };
+                Models.Mail newMail = new Models.Mail { adresseMail = adresseMail, message = msg, idRecepteur = Recepteur, sujet = sujet, idEmetteur = moi.idMembre };
 
                 Models.RequestResultM resultRequest = BLL.MailBLL.sendMail(newMail);
 
